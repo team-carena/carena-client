@@ -1,4 +1,3 @@
-# CI 워크플로우: PR 및 Push 시 코드 품질 검사 및 빌드 수행
 name: ci
 
 on:
