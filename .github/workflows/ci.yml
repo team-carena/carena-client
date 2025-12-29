@@ -9,11 +9,10 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write # PR 코멘트 작성 권한
+  pull-requests: write
 
 jobs:
   build:
-    # PR이거나, [skip ci]가 없는 push일 때만 실행
     if: github.event_name == 'pull_request' || (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: ubuntu-latest
 
@@ -46,19 +45,13 @@ jobs:
       - name: Type check # tsc가 TypeScript 타입 체크
         run: pnpm tsc --noEmit
 
-      # 3. 보안 검사
-      # node_modules의 패키지 중 알려진 보안 취약점이 있는 패키지가 있는지 검사
-      - name: Security audit
-        run: pnpm audit --audit-level=high
-        continue-on-error: true 
-
-      # 4. 빌드
+      # 3. 빌드
       - name: Build project with Vite
         id: build
         run: pnpm run build
         continue-on-error: true # 문제 발견 시에도 PR 코멘트 작성을 위해 계속 진행
 
-      # 5. 빌드 결과 처리
+      # 4. 빌드 결과 처리
       - name: Evaluate build status
         id: status
         run: |

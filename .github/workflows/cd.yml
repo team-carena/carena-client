@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: creates output
-        run: sh ./build.sh # build.sh가 실행돼 output/ 폴더 생성
+        run: sh ./build.sh # build.sh가 실행되어 output/ 폴더 생성
       - name: Pushes to another repository # 생성된 output 폴더를 설정한 레포에 push
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@v1.7.3
