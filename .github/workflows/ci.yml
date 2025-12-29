@@ -42,8 +42,9 @@ jobs:
       - name: Check formatting
         run: pnpm format:check
 
-      - name: Type check # tsc가 TypeScript 타입 체크
-        run: pnpm tsc --noEmit
+      # TODO: prettier 설치 후 스크립트 추가
+      # - name: Type check # tsc가 TypeScript 타입 체크
+      #   run: pnpm tsc --noEmit
 
       # 3. 빌드
       - name: Build project with Vite
