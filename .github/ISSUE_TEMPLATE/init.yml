@@ -1,6 +1,6 @@
 name: 'init: 개발 환경 세팅'
 description: '개발 환경 설정 관련 이슈를 생성할 때 사용하는 템플릿입니다'
-title: '[chore] '
+title: '[init] '
 labels: ['init']
 body:
   - type: textarea
