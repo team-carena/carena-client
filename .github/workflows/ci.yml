@@ -39,12 +39,12 @@ jobs:
       - name: Run lint
         run: pnpm lint
 
-      - name: Check formatting
-        run: pnpm format:check
+      # TODO: prettier 설치 후 스크립트 추가 
+      # - name: Check formatting
+      #   run: pnpm format:check
 
-      # TODO: prettier 설치 후 스크립트 추가
-      # - name: Type check # tsc가 TypeScript 타입 체크
-      #   run: pnpm tsc --noEmit
+      - name: Type check # tsc가 TypeScript 타입 체크
+        run: pnpm tsc --noEmit
 
       # 3. 빌드
       - name: Build project with Vite
