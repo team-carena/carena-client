@@ -8,6 +8,17 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@app': path.resolve(__dirname, './src/app'),
+      '@pages': path.resolve(__dirname, './src/pages'),
+      '@widgets': path.resolve(__dirname, './src/widgets'),
+      '@shared': path.resolve(__dirname, './src/shared'),
+      '@apis': path.resolve(__dirname, './src/shared/apis'),
+      '@svg': path.resolve(__dirname, './src/shared/assets/svg'),
+      '@img': path.resolve(__dirname, './src/shared/assets/img'),
+      '@styles': path.resolve(__dirname, './src/shared/styles'),
+      '@libs': path.resolve(__dirname, './src/shared/libs'),
+      '@configs': path.resolve(__dirname, './src/shared/configs'),
+      '@ui': path.resolve(__dirname, './src/shared/ui'),
     },
   },
 })

@@ -27,7 +27,18 @@
     /* Path alias */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@pages/*": ["src/pages/*"],
+      "@widgets/*": ["src/widgets/*"],
+      "@shared/*": ["src/shared/*"],
+      "@apis/*": ["src/shared/apis/*"],
+      "@svg/*": ["src/shared/assets/svg/*"],
+      "@img/*": ["src/shared/assets/img/*"],
+      "@styles/*": ["src/shared/styles/*"],
+      "@libs/*": ["src/shared/libs/*"],
+      "@configs/*": ["src/shared/configs/*"],
+      "@ui/*": ["src/shared/ui/*"]
     }
   },
   "include": ["src"]
