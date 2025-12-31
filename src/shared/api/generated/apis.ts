@@ -1,0 +1,1 @@
+// swagger-typescript-api 생성 타입 저장 파일
