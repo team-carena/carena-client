@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: "ko-KR"
+early_access: true
+
+# 리뷰 옵션 
+request_changes_workflow: false
+high_level_summary: true        # PR 요약 생성
+review_status: true             # 리뷰 상태 표시
+assess_linked_issues: true      # 연결된 이슈 분석
+related_prs: true               # 관련 PR 표시
+suggested_labels: true          # 라벨 제안
+changed_files_summary: true     # 변경된 파일 요약
+poem: false                     # 시 생성 비활성화
+
+# 파일 경로 필터 
+path_filters:
+  - "!node_modules/**"
+  - "!dist/**"
+  - "!build/**"
+  - "!coverage/**"
+  - "!pnpm-lock.yaml"
+  - "src/**"
+  - ".github/**"
+  - "docs/**"
+  
+tone_instructions: |
+  당신은 TypeScript/React 코드 리뷰어다.
+  한국어로 명확하고 건설적인 피드백을 제공한다.
+  의료/민감정보 서비스 전제로 보안, 안정성, 유지보수성에 우선순위를 둔다.
+  불필요한 장문은 피하고, 수정 방향과 근거를 함께 제시한다.
+
+reviews:
+  profile: "assertive"
+
+  # 경로별 특별 지침
+  path_instructions:
+    - path: "src/pages/**"
+      instructions: |
+        pages 레이어는 도메인별 페이지 단위 책임을 가진다.
+        - ui/api/model/config/lib의 역할 분리가 지켜지는지
+        - api(queries/mutations)는 page 내부에서만 쓰고, 공통 인프라는 shared/apis를 사용하도록 구성되는지
+        - 페이지에서 shared의 공통 UI/토큰을 재사용하고, widgets를 적절히 조합하는지
+
+    - path: "src/shared/ui/**"
+      instructions: |
+        shared/ui는 전역 공통 컴포넌트 영역이다.
+        - 접근성(a11y) 준수(aria, role, keyboard)
+        - props 타입 안정성
+        - 재사용성을 해치지 않는 기본값/옵션 설계
+        - 스타일은 shared/styles/tokens 또는 규칙(Tailwind/shadcn)에 맞추는지
+        - 성능: 불필요한 리렌더 유발 여부(memo/useMemo/useCallback 남용 포함)
+
+auto_review:
+  enabled: true                  # 자동 리뷰 활성화
+  drafts: false                  # 초안 PR 자동 리뷰 비활성화
+  ignore_title_keywords:         # 제목 키워드로 자동 리뷰 무시
+    - "[docs]"
+    - "[skip-review]"
+
+# 활성화된 도구 설정
+tools:
+  markdownlint:
+    enabled: true # 문서 검사 
+  actionlint:
+    enabled: true # GitHub Actions 검사
+  gitleaks:
+    enabled: true # 민감정보 검사
+
