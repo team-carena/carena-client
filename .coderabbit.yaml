@@ -10,7 +10,7 @@ tone_instructions: |
   불필요한 장문은 피하고, 수정 방향과 근거를 함께 제시한다.
 
 reviews:
-  # 리뷰 옵션 
+# 리뷰 옵션 
 request_changes_workflow: false
 high_level_summary: true        # PR 요약 생성
 review_status: true             # 리뷰 상태 표시
