@@ -1,0 +1,27 @@
+name: cd
+
+on:
+  push:
+    branches: [main, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - name: creates output
+        run: sh ./build.sh # build.sh가 실행되어 output/ 폴더 생성
+      - name: Pushes to another repository # 생성된 output 폴더를 설정한 레포에 push
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@v1.7.3
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
+        with:
+          source-directory: 'output'
+          destination-github-username: jstar000
+          destination-repository-name: carena-client
+          user-email: ${{ secrets.EMAIL }}
+          commit-message: ${{ github.event.commits[0].message }}
+          target-branch: ${{ github.ref_name }}
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
