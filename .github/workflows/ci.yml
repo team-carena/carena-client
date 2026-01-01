@@ -1,0 +1,86 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build:
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
+    runs-on: ubuntu-24.04
+
+    steps:
+      # 1. 환경 설정
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.x
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 2. 코드 품질 검사, 실패 시 CI 실패
+      - name: Run lint
+        run: pnpm lint
+
+      # TODO: prettier 설치 후 스크립트 추가 
+      # - name: Check formatting
+      #   run: pnpm format:check
+
+      - name: Type check # tsc가 TypeScript 타입 체크
+        run: pnpm tsc --noEmit
+
+      # 3. 빌드
+      - name: Build project with Vite
+        id: build
+        run: pnpm run build
+        continue-on-error: true # 문제 발견 시에도 PR 코멘트 작성을 위해 계속 진행
+
+      # 4. 빌드 결과 처리
+      - name: Evaluate build status
+        id: status
+        run: |
+          result="failed"
+          message="빌드 실패 ⚠️"
+
+          if [ "${{ steps.build.outcome }}" == "success" ]; then
+            result="success"
+            message="빌드 성공 🎉"
+          fi
+
+          echo "result=$result" >> $GITHUB_OUTPUT
+          echo "message=$message" >> $GITHUB_OUTPUT
+
+      # 5. PR에 빌드 결과 코멘트
+      - name: Add comment to PR with build status
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const message = `${{ steps.status.outputs.message }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `### 빌드 결과\n${message}`
+            });
+
+      - name: Fail job if build failed
+        if: steps.build.outcome == 'failure'
+        run: exit 1
