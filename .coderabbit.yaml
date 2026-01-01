@@ -2,8 +2,15 @@
 
 language: "ko-KR"
 early_access: true
+  
+tone_instructions: |
+  당신은 TypeScript/React 코드 리뷰어다.
+  한국어로 명확하고 건설적인 피드백을 제공한다.
+  의료/민감정보 서비스 전제로 보안, 안정성, 유지보수성에 우선순위를 둔다.
+  불필요한 장문은 피하고, 수정 방향과 근거를 함께 제시한다.
 
-# 리뷰 옵션 
+reviews:
+  # 리뷰 옵션 
 request_changes_workflow: false
 high_level_summary: true        # PR 요약 생성
 review_status: true             # 리뷰 상태 표시
@@ -23,18 +30,11 @@ path_filters:
   - "src/**"
   - ".github/**"
   - "docs/**"
-  
-tone_instructions: |
-  당신은 TypeScript/React 코드 리뷰어다.
-  한국어로 명확하고 건설적인 피드백을 제공한다.
-  의료/민감정보 서비스 전제로 보안, 안정성, 유지보수성에 우선순위를 둔다.
-  불필요한 장문은 피하고, 수정 방향과 근거를 함께 제시한다.
 
-reviews:
-  profile: "assertive"
+profile: "assertive"
 
   # 경로별 특별 지침
-  path_instructions:
+path_instructions:
     - path: "src/pages/**"
       instructions: |
         pages 레이어는 도메인별 페이지 단위 책임을 가진다.
