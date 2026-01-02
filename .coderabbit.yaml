@@ -2,7 +2,7 @@
 
 language: "ko-KR"
 early_access: true
-  
+
 tone_instructions: |
   당신은 TypeScript/React 코드 리뷰어다.
   한국어로 명확하고 건설적인 피드백을 제공한다.
@@ -10,31 +10,32 @@ tone_instructions: |
   불필요한 장문은 피하고, 수정 방향과 근거를 함께 제시한다.
 
 reviews:
-# 리뷰 옵션 
-request_changes_workflow: false
-high_level_summary: true        # PR 요약 생성
-review_status: true             # 리뷰 상태 표시
-assess_linked_issues: true      # 연결된 이슈 분석
-related_prs: true               # 관련 PR 표시
-suggested_labels: true          # 라벨 제안
-changed_files_summary: true     # 변경된 파일 요약
-poem: false                     # 시 생성 비활성화
+  profile: "assertive"
+  # 리뷰 옵션 
+  request_changes_workflow: false
+  high_level_summary: true        # PR 요약 생성
+  review_status: true             # 리뷰 상태 표시
+  assess_linked_issues: true      # 연결된 이슈 분석
+  related_prs: true               # 관련 PR 표시
+  changed_files_summary: true     # 변경된 파일 요약
+  poem: false                     # 시 생성 비활성화
 
-# 파일 경로 필터 
-path_filters:
-  - "!node_modules/**"
-  - "!dist/**"
-  - "!build/**"
-  - "!coverage/**"
-  - "!pnpm-lock.yaml"
-  - "src/**"
-  - ".github/**"
-  - "docs/**"
-
-profile: "assertive"
-
-  # 경로별 특별 지침
-path_instructions:
+  # 파일 경로 필터 
+  path_filters:
+    - "!node_modules/**"
+    - "!dist/**"
+    - "!build/**"
+    - "!coverage/**"
+    - "!pnpm-lock.yaml"
+    - "src/**"
+    - ".github/**"
+    - "docs/**"
+  
+  instructions: |
+    - 의료 데이터 노출 위험이 있는 console.log / 디버깅 코드는 엄격히 제한할 것.
+    - 클라이언트 사이드에서 민감정보(주민번호, 전화번호 등)를 가공할 때 유출 가능성을 검토할 것.
+    - XSS/CSRF 취약점이 발생할 수 있는 DOM 조작 및 API 호출 패턴을 점검할 것.
+  path_instructions:
     - path: "src/pages/**"
       instructions: |
         pages 레이어는 도메인별 페이지 단위 책임을 가진다.
@@ -51,19 +52,30 @@ path_instructions:
         - 스타일은 shared/styles/tokens 또는 규칙(Tailwind/shadcn)에 맞추는지
         - 성능: 불필요한 리렌더 유발 여부(memo/useMemo/useCallback 남용 포함)
 
-auto_review:
-  enabled: true                  # 자동 리뷰 활성화
-  drafts: false                  # 초안 PR 자동 리뷰 비활성화
-  ignore_title_keywords:         # 제목 키워드로 자동 리뷰 무시
-    - "[docs]"
-    - "[skip-review]"
+    - path: "src/app/**"
+      instructions: |
+        app 레이어는 앱 초기화 책임을 가진다.
+        - providers 구성이 적절한지
+        - routes 설정이 올바른지
 
-# 활성화된 도구 설정
-tools:
-  markdownlint:
-    enabled: true # 문서 검사 
-  actionlint:
-    enabled: true # GitHub Actions 검사
-  gitleaks:
-    enabled: true # 민감정보 검사
+    - path: "src/widgets/**"
+      instructions: |
+        widgets는 여러 페이지에서 재사용되는 독립적 UI 블록이다.
+        - 자체 완결성 확인
+        - shared만 의존하는지 (pages 의존 금지)
 
+  auto_review:
+    enabled: true                  # 자동 리뷰 활성화
+    drafts: false                  # 초안 PR 자동 리뷰 비활성화
+    ignore_title_keywords:         # 제목 키워드로 자동 리뷰 무시
+      - "[docs]"
+      - "[skip-review]"
+
+  # 활성화된 도구 설정
+  tools:
+    markdownlint:
+      enabled: true # 문서 검사 
+    actionlint:
+      enabled: true # GitHub Actions 검사
+    gitleaks:
+      enabled: true # 민감정보 검사
