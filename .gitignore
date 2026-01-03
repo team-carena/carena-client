@@ -15,6 +15,9 @@ node_modules
 dist
 dist-ssr
 
+# Hooks
+.lefthook/
+
 # Local files
 *.local
 
