@@ -2,7 +2,6 @@ module.exports = {
   extends: ['@commitlint/config-conventional'],
   parserPreset: {
     parserOpts: {
-      // allow leading "!" and spaces in type (e.g., "!BREAKING CHANGE")
       headerPattern: /^(!?[A-Za-z ]+)(?:\(([^)]+)\))?(!?): (.+)$/,
       headerCorrespondence: ['type', 'scope', 'breaking', 'subject'],
     },
@@ -28,7 +27,7 @@ module.exports = {
         '!BREAKING CHANGE',
       ],
     ],
-    'type-case': [0, 'always'], // allow uppercase + leading ! types
+    'type-case': [0, 'always'], 
     'subject-empty': [2, 'never'],
   },
 };
