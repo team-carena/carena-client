@@ -15,12 +15,16 @@ node_modules
 dist
 dist-ssr
 
+# Hooks
+.lefthook/
+
 # Local files
 *.local
 
 # Editor
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 *.suo
 *.ntvs*
