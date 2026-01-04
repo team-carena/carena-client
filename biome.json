@@ -1,0 +1,49 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+	"files": {
+		"includes": [
+			"**/*.{ts,tsx}",
+			"!**/*.d.ts",
+			"!dist",
+			"!node_modules",
+			"!**/*.js"
+		]
+	},
+	"formatter": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": "warn",
+			"correctness": {
+				"useHookAtTopLevel": "error",
+				"useExhaustiveDependencies": "error",
+				"noUnusedVariables": "warn",
+				"noUnusedImports": "warn"
+			},
+			"suspicious": {
+				"noConfusingVoidType": "off",
+				"noConsole": "warn"
+			},
+			"nursery": {
+				"noFloatingPromises": "error"
+			}
+		}
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"defaultBranch": "develop",
+		"useIgnoreFile": true
+	},
+	"assist": {
+		"actions": {
+			"recommended": true,
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	}
+}
