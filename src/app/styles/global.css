@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './layout.css';
 @import '../../shared/styles/tokens/color.css';
 @import '../../shared/styles/tokens/font.css';
 @import '../../shared/styles/typography.css';
