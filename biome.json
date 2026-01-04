@@ -32,6 +32,12 @@
 			}
 		}
 	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"defaultBranch": "develop",
+		"useIgnoreFile": true
+	},
 	"assist": {
 		"actions": {
 			"recommended": true,
