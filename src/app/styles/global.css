@@ -2,4 +2,4 @@
 @import '/src/shared/styles/tokens/color.css';
 @import '/src/shared/styles/tokens/font.css';
 @import '/src/shared/styles/typography.css';
-@import '/src/shared/styles/layout.css';
+@import './layout.css';
