@@ -8,7 +8,7 @@
 }
 
 :root {
-  --font-base: 'Pretendard', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Noto Sans KR',
-    'Malgun Gothic', Arial, sans-serif;
+  --font-base:
+    'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif;
 }
