@@ -12,6 +12,10 @@ export const router = createBrowserRouter([
 				element: <Navigate to={routePath.HOME} replace />,
 			},
 			{
+				path: routePath.HOME,
+				element: <></>,
+			},
+			{
 				path: routePath.MY_PAGE,
 				element: <></>,
 			},
