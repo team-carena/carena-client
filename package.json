@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "swagger-typescript-api": "^13.2.16"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.10",
