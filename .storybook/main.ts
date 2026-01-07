@@ -16,8 +16,8 @@ const config: StorybookConfig = {
 
 	framework: "@storybook/react-vite",
 
-	viteFinal: async (config_, { configType }) =>
-		mergeConfig(config_, {
+	viteFinal: async (viteConfig) =>
+		mergeConfig(viteConfig, {
 			plugins: [tsconfigPaths()],
 		}),
 
