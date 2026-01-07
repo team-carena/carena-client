@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+@import '@shared/styles/reset.css';
+@import '@shared/styles/base.css';
+
 /* shadcn CSS variables */
 @import '@shared/styles/shadcn.css';
 
