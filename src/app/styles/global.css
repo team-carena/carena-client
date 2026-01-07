@@ -1,14 +1,14 @@
 @import 'tailwindcss';
 
-@import '@shared/styles/reset.css';
-@import '@shared/styles/base.css';
+@import '@app/styles/reset.css';
+@import '@app/styles/base.css';
 
 /* shadcn CSS variables */
-@import '@shared/styles/shadcn.css';
+@import '@styles/shadcn.css';
 
 /* Design tokens */
-@import '@shared/styles/tokens/color.css';
-@import '@shared/styles/tokens/font.css';
+@import '@styles/tokens/color.css';
+@import '@styles/tokens/font.css';
 
 /* Typography */
-@import '@shared/styles/typography.css';
+@import '@styles/typography.css';
