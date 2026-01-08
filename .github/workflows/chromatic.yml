@@ -28,7 +28,10 @@ jobs:
           fetch-depth: 0
 
       # 2. PNPM 패키지 매니저 설정
-      - uses: pnpm/action-setup@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.0.0
 
       # 3. Node.js 환경 설정
       - name: Setup Node.js
