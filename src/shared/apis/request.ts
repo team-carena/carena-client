@@ -43,7 +43,7 @@ export const request = async <T>(config: RequestConfig): Promise<T> => {
 		if (!isAxiosError(error)) {
 			if (import.meta.env.DEV) {
 				// biome-ignore lint/suspicious/noConsole: 개발 단계 디버깅
-				console.error(`[실패] ${url}: 네트워크 오류`);
+				console.error(`[실패] ${url}: 예상치 못한 오류`);
 			}
 			throw error;
 		}
