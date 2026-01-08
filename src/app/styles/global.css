@@ -1,2 +1,14 @@
-// tailwind, global + reset
-// pretendard
+@import 'tailwindcss';
+
+@import '@app/styles/reset.css';
+@import '@app/styles/base.css';
+
+/* shadcn CSS variables */
+@import '@styles/shadcn.css';
+
+/* Design tokens */
+@import '@styles/tokens/color.css';
+@import '@styles/tokens/font.css';
+
+/* Typography */
+@import '@styles/typography.css';
