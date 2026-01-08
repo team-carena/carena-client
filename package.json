@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "chromatic:ci": "chromatic --only-changed --exit-zero-on-changes"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
