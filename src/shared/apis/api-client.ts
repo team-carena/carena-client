@@ -20,5 +20,5 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
 	(response: AxiosResponse<BaseResponse<unknown>>) => response,
-	(error: AxiosError<BaseResponse<unknown>>) => Promise.reject(error),
+	(error: AxiosError) => Promise.reject(error),
 );
