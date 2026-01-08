@@ -1,0 +1,127 @@
+name: 'Chromatic'
+
+on:
+  # develop 및 main 브랜치에 push될 때 실행
+  push:
+    branches: [develop, main]
+
+  # PR이 생성, 업데이트, 재오픈될 때 실행
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# GitHub 토큰 권한 설정
+permissions:
+  contents: read # 코드 저장소 콘텐츠 읽기 권한
+  pull-requests: write # PR에 대한 쓰기 권한
+
+jobs:
+  chromatic:
+    # Ubuntu 최신 버전 환경에서 실행
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 저장소 체크아웃
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # 전체 Git 히스토리를 가져오기
+          fetch-depth: 0
+
+      # 2. PNPM 패키지 매니저 설정
+      - uses: pnpm/action-setup@v4
+
+      # 3. Node.js 환경 설정
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'pnpm'
+
+      # 4. 의존성 캐싱
+      - name: Cache node modules
+        id: cache-node
+        uses: actions/cache@v3
+        with:
+          # 캐시할 경로들
+          path: "**/node_modules"
+          # 캐시 키: OS + pnpm-lock.yaml 해시값
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+          # 정확한 키가 없을 때 사용할 대체 키
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # pnpm store 캐시
+      - name: Cache pnpm store
+        id: cache-pnpm-store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      # 5. 의존성 설치
+      - name: Install Dependencies
+        if: steps.cache-node.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+      # 6. Storybook 빌드
+      - name: Build Storybook
+        run: pnpm build-storybook
+
+      # 7. Chromatic 배포
+      - name: Publish to Chromatic
+        id: chromatic
+        uses: chromaui/action@latest
+        with:
+          # Chromatic 프로젝트 토큰
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          # 이미 빌드된 스토리북 디렉토리 지정 (빌드 시간 절약)
+          storybookBuildDir: storybook-static
+          # PR에서만 변경된 스토리만 테스트
+          onlyChanged: ${{ github.event_name == 'pull_request' }}
+          # develop 브랜치에서는 변경사항 자동 승인
+          autoAcceptChanges: ${{ github.ref == 'refs/heads/develop' }}
+          # 시각적 변경이 있어도 CI 실패 방지
+          exitZeroOnChanges: true
+
+      # 8. 커버리지 리포트
+      - name: Create Coverage Report
+        id: coverage
+        # always(): 이전 단계 실패 여부와 관계없이 항상 실행
+        if: always()
+        run: |
+          # GITHUB_STEP_SUMMARY: GitHub Actions 요약 페이지에 표시될 내용
+          echo "## 📊 Storybook Coverage Report" >> $GITHUB_STEP_SUMMARY
+          # 스토리 파일 개수 계산
+          echo "- **Total Components**: $(find src -name "*.stories.tsx" | wc -l)" >> $GITHUB_STEP_SUMMARY
+          # Chromatic 단계의 실행 결과 (success/failure)
+          echo "- **Build Status**: ${{ steps.chromatic.outcome }}" >> $GITHUB_STEP_SUMMARY
+          # 배포된 스토리북 URL (없으면 N/A 표시)
+          echo "- **Storybook URL**: ${{ steps.chromatic.outputs.storybookUrl || 'N/A' }}" >> $GITHUB_STEP_SUMMARY
+          # Chromatic 빌드 URL
+          echo "- **Chromatic Build**: ${{ steps.chromatic.outputs.buildUrl || 'N/A' }}" >> $GITHUB_STEP_SUMMARY
+          # 빌드 시간 기록
+          echo "- **Build Time**: $(date)" >> $GITHUB_STEP_SUMMARY
+
+      # 9. PR 코멘트
+      - name: Comment PR
+        # PR 이벤트일 때만 실행
+        if: github.event_name == 'pull_request'
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          # comment_tag: 동일한 태그의 기존 코멘트를 업데이트 (중복 방지)
+          comment_tag: chromatic-build
+          # 코멘트 내용
+          message: |
+            ## 🎨 Storybook 빌드 완료!
+
+            🔖 **Storybook**: ${{ steps.chromatic.outputs.storybookUrl }}
+            🧪 **Chromatic**: ${{ steps.chromatic.outputs.buildUrl }}
+
+            ### 📊 빌드 정보
+            - **빌드 상태**: ${{ steps.chromatic.outcome }}
+            - **테스트된 스토리**: ${{ steps.chromatic.outputs.actualTestCount || '0' }}개
+            - **변경된 컴포넌트**: ${{ steps.chromatic.outputs.actualCaptureCount || '0' }}개
+
+            ${{ steps.chromatic.outputs.changeCount && format('> 🔍 **시각적 변경사항**: {0}개 발견', steps.chromatic.outputs.changeCount) || '' }}
