@@ -1,4 +1,4 @@
-import axios, { type AxiosError } from "axios";
+import axios, { type AxiosError, type AxiosResponse } from "axios";
 import type { BaseResponse } from "./api-types";
 
 export const apiClient = axios.create({
@@ -7,10 +7,11 @@ export const apiClient = axios.create({
 		"Content-Type": "application/json",
 	},
 	withCredentials: true,
+	timeout: 10000,
 });
 
 apiClient.interceptors.response.use(
-	(response) => response,
+	(response: AxiosResponse<BaseResponse<unknown>>) => response,
 	(error: AxiosError<BaseResponse<unknown>>) => {
 		if (import.meta.env.DEV) {
 			const status = error.response?.status ?? "알 수 없음";
