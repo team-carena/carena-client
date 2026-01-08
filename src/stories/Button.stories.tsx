@@ -34,32 +34,20 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {
-	args: {
-		variant: "default",
-	},
-};
+export const Default: Story = {};
 
 export const Secondary: Story = {
-	args: {
-		variant: "secondary",
-	},
+	args: { variant: "secondary" },
 };
 
 export const Outline: Story = {
-	args: {
-		variant: "outline",
-	},
+	args: { variant: "outline" },
 };
 
 export const Destructive: Story = {
-	args: {
-		variant: "destructive",
-	},
+	args: { variant: "destructive" },
 };
 
 export const Disabled: Story = {
-	args: {
-		disabled: true,
-	},
+	args: { disabled: true },
 };
