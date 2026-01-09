@@ -75,10 +75,10 @@ src/
 ## 컨벤션
 
 <details>
-<summary><strong>브랜치 전략</strong></summary>
+<summary><strong>깃 컨벤션</strong></summary>
 <br/>
 
-### 3 브랜치 전략 (`main`, `develop`, `feat`)
+### 3 브랜치 (`main`, `develop`, `feat`)
 
 - **`main`** : 오직 배포를 위한 브랜치
 - **`develop`** : 팀원끼리 작업한 내용(feature)을 합치는 곳
