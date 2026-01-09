@@ -11,4 +11,4 @@
 @import '@styles/tokens/font.css';
 
 /* Typography */
-@import '@styles/typography.css';
+@import '@styles/tokens/typography.css';
