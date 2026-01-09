@@ -25,20 +25,20 @@
 
 ## 기술 스택
 
-| 역할                 | 종류                                                                                                 | 선정 근거                                                                  |
-| :------------------: | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------- |
-| Build Tool           | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)      | ESBuild 기반의 빠른 번들링과 HMR로 개발 생산성 향상                        |
-| Library              | ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)   | 컴포넌트 기반 아키텍처로 UI 구축을 간소화하고 효율적인 상태 관리           |
-| Programming Language | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) | 정적 타입 검사로 런타임 오류를 사전에 방지하고 코드 안정성 확보            |
-| Styling              | ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white) | 제로 런타임 유틸리티 기반 스타일링으로 빠르고 일관된 UI 구현               |
-| Data Fetching        | ![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white) | 서버 상태와 캐싱을 선언적으로 관리                                         |
-| Development Tools    | ![Storybook](https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white) | 독립 환경에서 UI 컴포넌트를 개발·테스트하고 디자이너와 협업 강화           |
-|                      | ![Swagger](https://img.shields.io/badge/Swagger_TS_API-85EA2D?style=for-the-badge&logo=swagger&logoColor=black) | OpenAPI 기반 API 함수와 타입 자동 생성으로 개발 생산성 및 타입 안정성 확보 |
-| Code Quality         | ![Biome](https://img.shields.io/badge/Biome-60A5FA?style=for-the-badge&logo=biome&logoColor=white)   | Linting과 Formatting을 단일 도구로 통합하여 빠른 속도와 간편한 설정        |
-|                      | ![Lefthook](https://img.shields.io/badge/Lefthook-FF1E1E?style=for-the-badge&logoColor=white)        | Git hooks를 통한 커밋 전 코드 품질 자동 검사                               |
-| Package Manager      | ![pnpm](https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white)      | 심볼릭 링크 기반 글로벌 저장소로 디스크 절약 및 빠른 설치 속도             |
-| Deployment           | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) | Git 연동을 통한 자동 배포와 간편한 CI/CD 설정                              |
-| Version Control      | ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white) | 분산 버전 관리와 PR 기반 협업으로 코드 품질 및 팀 생산성 향상              |
+| 역할                     | 종류                                                                                                 | 선정 근거                                                                  |
+| :----------------------: | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------- |
+| **Build Tool**           | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)      | ESBuild 기반의 빠른 번들링과 HMR로 개발 생산성 향상                        |
+| **Library**              | ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)   | 컴포넌트 기반 아키텍처로 UI 구축을 간소화하고 효율적인 상태 관리           |
+| **Programming Language** | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) | 정적 타입 검사로 런타임 오류를 사전에 방지하고 코드 안정성 확보            |
+| **Styling**              | ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white) | 제로 런타임 유틸리티 기반 스타일링으로 빠르고 일관된 UI 구현               |
+| **Data Fetching**        | ![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white) | 서버 상태와 캐싱을 선언적으로 관리                                         |
+| **Development Tools**    | ![Storybook](https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white) | 독립 환경에서 UI 컴포넌트를 개발·테스트하고 디자이너와 협업 강화           |
+|                          | ![Swagger](https://img.shields.io/badge/Swagger_TS_API-85EA2D?style=for-the-badge&logo=swagger&logoColor=black) | OpenAPI 기반 API 함수와 타입 자동 생성으로 개발 생산성 및 타입 안정성 확보 |
+| **Code Quality**         | ![Biome](https://img.shields.io/badge/Biome-60A5FA?style=for-the-badge&logo=biome&logoColor=white)   | Linting과 Formatting을 단일 도구로 통합하여 빠른 속도와 간편한 설정        |
+|                          | ![Lefthook](https://img.shields.io/badge/Lefthook-FF1E1E?style=for-the-badge&logoColor=white)        | Git hooks를 통한 커밋 전 코드 품질 자동 검사                               |
+| **Package Manager**      | ![pnpm](https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white)      | 심볼릭 링크 기반 글로벌 저장소로 디스크 절약 및 빠른 설치 속도             |
+| **Deployment**           | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) | Git 연동을 통한 자동 배포와 간편한 CI/CD 설정                              |
+| **Version Control**      | ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white) | 분산 버전 관리와 PR 기반 협업으로 코드 품질 및 팀 생산성 향상              |
 
 <br/>
 
