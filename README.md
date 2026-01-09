@@ -6,9 +6,20 @@
 
 ## 팀원
 
-| <img src="https://github.com/jstar000.png" width="120" /> | <img src="https://github.com/eojindesu.png" width="120" /> | <img src="https://github.com/wonpark1.png" width="120" /> | <img src="https://github.com/mimizae.png" width="120" /> |
-| :-------------------------------------------------------: | :--------------------------------------------------------: | :-------------------------------------------------------: | :------------------------------------------------------: |
-| [임지성 👑](https://github.com/jstar000)                 | [김어진](https://github.com/eojindesu)                     | [박원](https://github.com/wonpark1)                       | [지민재](https://github.com/mimizae)                     |
+<table width="100%">
+  <tr>
+    <td align="center"><img src="https://github.com/jstar000.png" width="120" /></td>
+    <td align="center"><img src="https://github.com/eojindesu.png" width="120" /></td>
+    <td align="center"><img src="https://github.com/wonpark1.png" width="120" /></td>
+    <td align="center"><img src="https://github.com/mimizae.png" width="120" /></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/jstar000">임지성 👑</a></td>
+    <td align="center"><a href="https://github.com/eojindesu">김어진</a></td>
+    <td align="center"><a href="https://github.com/wonpark1">박원</a></td>
+    <td align="center"><a href="https://github.com/mimizae">지민재</a></td>
+  </tr>
+</table>
 
 <br/>
 
