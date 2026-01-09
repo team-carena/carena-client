@@ -9,7 +9,24 @@ export default defineConfig({
 	plugins: [
 		svgr({
 			svgrOptions: {
-				svgoConfig: { floatPrecision: 2 },
+				svgoConfig: {
+					plugins: [
+						{
+							name: "preset-default",
+							params: {
+								overrides: {
+									removeViewBox: false,
+								},
+							},
+						},
+						{
+							name: "cleanupNumericValues",
+							params: {
+								floatPrecision: 2,
+							},
+						},
+					],
+				},
 			},
 		}),
 		react(),
