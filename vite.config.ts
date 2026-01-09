@@ -9,6 +9,8 @@ export default defineConfig({
 	plugins: [
 		svgr({
 			svgrOptions: {
+				ref: true,
+				titleProp: true,
 				svgoConfig: {
 					plugins: [
 						{
