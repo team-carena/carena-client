@@ -43,7 +43,7 @@ jobs:
       # 4. 의존성 캐싱
       - name: Cache node modules
         id: cache-node
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           # 캐시할 경로들
           path: "**/node_modules"
