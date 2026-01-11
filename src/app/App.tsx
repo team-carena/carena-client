@@ -1,7 +1,6 @@
-// AppProvider 사용
-import { HomePage } from "@/pages/home/ui/home-page";
 import "@app/styles/global.css";
+import { RouterProvider } from "./providers/router-provider";
 
 export const App = () => {
-	return <HomePage />;
+	return <RouterProvider />;
 };
