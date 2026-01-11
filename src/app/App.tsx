@@ -1,6 +1,6 @@
 import "@app/styles/global.css";
-import { RouterProvider } from "./providers/router-provider";
+import { AppProvider } from "./providers/app-provider";
 
 export const App = () => {
-	return <RouterProvider />;
+	return <AppProvider />;
 };
