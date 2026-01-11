@@ -1,4 +1,4 @@
-import { cn } from "@shared/libs/utils";
+import { cn } from "@shared/libs/cn";
 import { Button, type ButtonProps } from "@shared/ui/Button";
 import * as React from "react";
 
