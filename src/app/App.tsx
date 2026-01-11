@@ -1,14 +1,12 @@
-import { Modal } from "@shared/ui/Modal";
 import "@app/styles/global.css";
+import { ErrorBoundary } from "react-error-boundary";
+import { AppProvider } from "./providers/app-provider";
+import { GlobalErrorFallback } from "./ui/global-error-fallback";
 
 export const App = () => {
 	return (
-		<Modal
-			open={true}
-			title="내용"
-			description="두줄 가능"
-			primaryAction={{ label: "버튼", onClick: () => {} }}
-			secondaryAction={{ label: "버튼", onClick: () => {} }}
-		/>
+		<ErrorBoundary FallbackComponent={GlobalErrorFallback}>
+			<AppProvider />
+		</ErrorBoundary>
 	);
 };
