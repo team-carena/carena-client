@@ -1,12 +1,12 @@
-import { AppProvider } from "@app/providers/app-provider";
-import { HomePage } from "@/pages/home/ui/home-page";
 import "@app/styles/global.css";
+import { ErrorBoundary } from "react-error-boundary";
+import { AppProvider } from "./providers/app-provider";
+import { GlobalErrorFallback } from "./ui/global-error-fallback";
 
 export const App = () => {
 	return (
-		// TODO: QueryProvider, RouterProvider 머지 후 수정
-		<AppProvider>
-			<HomePage />
-		</AppProvider>
+		<ErrorBoundary FallbackComponent={GlobalErrorFallback}>
+			<AppProvider />
+		</ErrorBoundary>
 	);
 };

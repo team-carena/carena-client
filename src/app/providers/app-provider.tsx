@@ -1,14 +1,10 @@
-import type { ReactNode } from "react";
+import { QueryProvider } from "./query-provider";
+import { RouterProvider } from "./router-provider";
 
-interface AppProviderProps {
-	children: ReactNode;
-}
-
-export const AppProvider = ({ children }: AppProviderProps) => {
-	// TODO: QueryProvider, RouterProvider 머지 후 추가
-	// <QueryProvider>
-	//   <RouterProvider router={router} />
-	// </QueryProvider>
-
-	return <>{children}</>;
+export const AppProvider = () => {
+	return (
+		<QueryProvider>
+			<RouterProvider />
+		</QueryProvider>
+	);
 };
