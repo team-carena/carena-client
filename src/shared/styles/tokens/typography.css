@@ -86,6 +86,13 @@
     letter-spacing: 0;
   }
 
+  .body06-r-10 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0;
+  }
+
   /* label */
   .label01-sb-14 {
     font-size: 1.4rem;
