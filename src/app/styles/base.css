@@ -27,11 +27,8 @@
     -webkit-user-select: none;
     user-select: none;
 
-    /* iOS 오버스크롤 바운스 효과 */
+    /* 스크롤 체이닝, 바운스 방지 (앱처럼 동작) */
     overscroll-behavior: none;
-
-    /* 당겨서 새로고침 방지 */
-    overscroll-behavior-y: contain;
   }
 
   /* 입력 필드는 텍스트 선택 허용 */
