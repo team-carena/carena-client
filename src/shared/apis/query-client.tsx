@@ -18,9 +18,11 @@ export const createQueryClient = () => {
 				staleTime: 60 * 1000,
 				retry: 1,
 				refetchOnWindowFocus: false,
+				throwOnError: true,
 			},
 			mutations: {
 				retry: 0,
+				throwOnError: true,
 			},
 		},
 	});
