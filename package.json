@@ -11,12 +11,11 @@
     "format": "biome format .",
     "type-check": "tsc --noEmit -p tsconfig.json",
     "preview": "vite preview",
-    "api:generate": "swagger-typescript-api -p {Swagger 문서 Path 추후 추가} -o src/shared/apis/generated --modular -d --extract-request-body --extract-response-body --extract-response-error"
+    "api:generate": "swagger-typescript-api generate -p {Swagger 문서 Path 추후 추가} -o src/shared/apis/generated --modular -d --extract-request-body --extract-response-body --extract-response-error"
   },
   "dependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "swagger-typescript-api": "^13.2.16"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.10",
@@ -28,6 +27,7 @@
     "@vitejs/plugin-react-swc": "^4.2.2",
     "lefthook": "^2.0.13",
     "typescript": "~5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4", 
+    "swagger-typescript-api": "^13.2.16"
   }
 }
