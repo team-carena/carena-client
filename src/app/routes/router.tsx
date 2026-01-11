@@ -12,6 +12,10 @@ export const router = createBrowserRouter([
 				element: <Navigate to={ROUTE_PATH.HOME} replace />,
 			},
 			{
+				path: "*",
+				element: <></>, // 추후 NotFound 컴포넌트 추가
+			},
+			{
 				path: ROUTE_PATH.HOME,
 				element: <></>,
 			},
