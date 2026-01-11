@@ -1,0 +1,38 @@
+@layer base {
+  html {
+    /* 1rem = 10px */
+    font-size: 62.5%;
+    width: 100%;
+    height: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    width: 100%;
+    margin: 0;
+
+    font-family: var(--font-base);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100dvh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* 스크롤바 숨김 (필요한 경우 클래스 단위로 사용 가능) */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE, Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+}
