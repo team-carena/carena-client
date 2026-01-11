@@ -1,8 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { type ReactNode, useState } from "react";
+import { QueryClient } from "@tanstack/react-query";
 
-const createQueryClient = () => {
+export const createQueryClient = () => {
 	return new QueryClient({
 		defaultOptions: {
 			queries: {
@@ -16,16 +14,3 @@ const createQueryClient = () => {
 		},
 	});
 };
-
-export function QueryProvider({ children }: { children: ReactNode }) {
-	const [queryClient] = useState(() => createQueryClient());
-
-	return (
-		<QueryClientProvider client={queryClient}>
-			{children}
-			{import.meta.env.DEV ? (
-				<ReactQueryDevtools initialIsOpen={false} />
-			) : null}
-		</QueryClientProvider>
-	);
-}
