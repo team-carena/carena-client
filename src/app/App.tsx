@@ -1,6 +1,7 @@
 import "@app/styles/global.css";
 import { ErrorBoundary } from "react-error-boundary";
-import { LargeBadge } from "@/shared/ui/badge/large-badge";
+import { LargeBadge } from "@/shared/ui/badges/large-badge";
+import Chip from "@/shared/ui/chips/chip";
 // import { SmallBadge } from "@/shared/ui/badge/small-badge";
 // import { AppProvider } from "./providers/app-provider";
 import { GlobalErrorFallback } from "./ui/global-error-fallback";
@@ -8,7 +9,7 @@ import { GlobalErrorFallback } from "./ui/global-error-fallback";
 export const App = () => {
 	return (
 		<ErrorBoundary FallbackComponent={GlobalErrorFallback}>
-			<LargeBadge variant="normal">정상A</LargeBadge>
+			<Chip status="on">생활습관</Chip>
 		</ErrorBoundary>
 	);
 };

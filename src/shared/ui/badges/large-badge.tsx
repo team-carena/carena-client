@@ -17,6 +17,7 @@ const largeBadgeVariants = cva(
 	},
 );
 
+// LargeBadgeProps['variant'] == "normal" | "borderline" | "suspicious" | null
 export interface LargeBadgeProps
 	extends React.HTMLAttributes<HTMLSpanElement>,
 		VariantProps<typeof largeBadgeVariants> {
