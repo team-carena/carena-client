@@ -40,39 +40,15 @@ jobs:
           node-version: '22.x'
           cache: 'pnpm'
 
-      # 4. 의존성 캐싱
-      - name: Cache node modules
-        id: cache-node
-        uses: actions/cache@v4
-        with:
-          # 캐시할 경로들
-          path: "**/node_modules"
-          # 캐시 키: OS + pnpm-lock.yaml 해시값
-          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
-          # 정확한 키가 없을 때 사용할 대체 키
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # pnpm store 캐시
-      - name: Cache pnpm store
-        id: cache-pnpm-store
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      # 5. 의존성 설치
+      # 4. 의존성 설치
       - name: Install Dependencies
-        if: steps.cache-node.outputs.cache-hit != 'true'
         run: pnpm install --frozen-lockfile
 
-      # 6. Storybook 빌드
+      # 5. Storybook 빌드
       - name: Build Storybook
         run: pnpm build-storybook
 
-      # 7. Chromatic 배포
+      # 6. Chromatic 배포
       - name: Publish to Chromatic
         id: chromatic
         uses: chromaui/action@latest
@@ -88,7 +64,7 @@ jobs:
           # 시각적 변경이 있어도 CI 실패 방지
           exitZeroOnChanges: true
 
-      # 8. 커버리지 리포트
+      # 7. 커버리지 리포트
       - name: Create Coverage Report
         id: coverage
         # always(): 이전 단계 실패 여부와 관계없이 항상 실행
@@ -107,7 +83,7 @@ jobs:
           # 빌드 시간 기록
           echo "- **Build Time**: $(date)" >> $GITHUB_STEP_SUMMARY
 
-      # 9. PR 코멘트
+      # 8. PR 코멘트
       - name: Comment PR
         # PR 이벤트일 때만 실행
         if: github.event_name == 'pull_request'
