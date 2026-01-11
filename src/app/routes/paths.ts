@@ -1,5 +1,6 @@
 export const ROUTE_PATH = {
 	LAYOUT: "/",
+	LOGIN: "/login",
 	HOME: "/home",
 	MY_PAGE: "/my-page",
 	// 페이지 작업 시 추가
