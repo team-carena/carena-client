@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
 					},
 					{
 						path: "*",
-						element: <></>, // 추후 NotFound 컴포넌트 추가
+						element: <></>, // TODO: 추후 NotFound 컴포넌트 추가
 					},
 				],
 			},
