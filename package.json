@@ -12,7 +12,7 @@
     "type-check": "tsc --noEmit -p tsconfig.json",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build --stats-json",
     "chromatic": "chromatic --exit-zero-on-changes",
     "chromatic:ci": "chromatic --only-changed --exit-zero-on-changes"
   },
