@@ -1,9 +1,10 @@
 name: 'Chromatic'
 
 on:
-  # develop 및 main 브랜치에 push될 때 실행
+  # develop 브랜치에 push될 때 실행
   push:
-    branches: [develop, main]
+    branches:
+      - develop
 
   # PR이 생성, 업데이트, 재오픈될 때 실행
   pull_request:
