@@ -1,1 +1,10 @@
-// 모든 provider 통합
+import { QueryProvider } from "./query-provider";
+import { RouterProvider } from "./router-provider";
+
+export const AppProvider = () => {
+	return (
+		<QueryProvider>
+			<RouterProvider />
+		</QueryProvider>
+	);
+};

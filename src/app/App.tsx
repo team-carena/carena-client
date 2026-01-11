@@ -1,6 +1,12 @@
 import "@app/styles/global.css";
-import { RouterProvider } from "./providers/router-provider";
+import { ErrorBoundary } from "react-error-boundary";
+import { AppProvider } from "./providers/app-provider";
+import { GlobalErrorFallback } from "./ui/global-error-fallback";
 
 export const App = () => {
-	return <RouterProvider />;
+	return (
+		<ErrorBoundary FallbackComponent={GlobalErrorFallback}>
+			<AppProvider />
+		</ErrorBoundary>
+	);
 };
