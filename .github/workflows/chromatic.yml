@@ -52,7 +52,7 @@ jobs:
       # 6. Chromatic 배포
       - name: Publish to Chromatic
         id: chromatic
-        uses: chromaui/action@latest
+        uses: chromaui/action@v11
         with:
           # Chromatic 프로젝트 토큰
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
