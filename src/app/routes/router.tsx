@@ -1,22 +1,22 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { Layout } from "./layout";
-import { routePath } from "./paths";
+import { ROUTE_PATH } from "./paths";
 
 export const router = createBrowserRouter([
 	{
-		path: routePath.LAYOUT,
+		path: ROUTE_PATH.LAYOUT,
 		element: <Layout />,
 		children: [
 			{
 				index: true,
-				element: <Navigate to={routePath.HOME} replace />,
+				element: <Navigate to={ROUTE_PATH.HOME} replace />,
 			},
 			{
-				path: routePath.HOME,
+				path: ROUTE_PATH.HOME,
 				element: <></>,
 			},
 			{
-				path: routePath.MY_PAGE,
+				path: ROUTE_PATH.MY_PAGE,
 				element: <></>,
 			},
 		],
