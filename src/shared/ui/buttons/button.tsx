@@ -6,7 +6,7 @@ const buttonVariants = cva(
 	[
 		"inline-flex w-full items-center justify-center",
 		"bg-primary-400 text-white",
-		"hover:bg-primary-600 active:bg-primary-700",
+		"active:bg-primary-600",
 		"disabled:bg-gray-300 disabled:text-gray-600",
 	].join(" "),
 	{
