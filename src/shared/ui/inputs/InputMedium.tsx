@@ -75,11 +75,12 @@ export const InputMedium = React.forwardRef<HTMLInputElement, InputMediumProps>(
 	) => {
 		const [isFocused, setIsFocused] = React.useState(false);
 
+		const inputId = React.useId();
+
 		const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 			onChange(event.target.value);
 		};
 
-		// 입력창 wrapper와 필드의 상태 결정
 		const wrapperState = (() => {
 			if (isDisabled || isReadOnly) return "disabled";
 			if (isError) return "error";
@@ -96,17 +97,15 @@ export const InputMedium = React.forwardRef<HTMLInputElement, InputMediumProps>(
 
 		return (
 			<>
-				{/* label + input */}
 				<div className="flex items-start justify-between">
 					{/* label */}
-					<label className="shrink-0 body03-r-16 text-black">
+					<label htmlFor={inputId} className="shrink-0 body03-r-16 text-black">
 						{label}
 						{isRequired && <span className="ml-[0.2rem]">*</span>}
 					</label>
 
 					{/* input wrapper */}
 					<div className="w-[22.2rem] shrink-0">
-						{/* input */}
 						<div
 							className={cn(
 								inputMediumVariants({ state: wrapperState }),
@@ -114,6 +113,7 @@ export const InputMedium = React.forwardRef<HTMLInputElement, InputMediumProps>(
 							)}
 						>
 							<input
+								id={inputId}
 								ref={ref}
 								type="text"
 								value={value}
@@ -145,8 +145,8 @@ export const InputMedium = React.forwardRef<HTMLInputElement, InputMediumProps>(
 						{isError && errorMessage && (
 							<div className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12">
 								<SystemDangerIcon
-									width={16}
-									height={16}
+									width={24}
+									height={24}
 									fill="currentColor"
 									title="error"
 								/>
