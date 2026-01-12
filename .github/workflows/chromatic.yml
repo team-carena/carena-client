@@ -13,7 +13,6 @@ on:
 # GitHub 토큰 권한 설정
 permissions:
   contents: read # 코드 저장소 콘텐츠 읽기 권한
-  pull-requests: write # PR에 대한 쓰기 권한
 
 jobs:
   chromatic:
@@ -84,24 +83,3 @@ jobs:
           # 빌드 시간 기록
           echo "- **Build Time**: $(date)" >> $GITHUB_STEP_SUMMARY
 
-      # 8. PR 코멘트
-      - name: Comment PR
-        # PR 이벤트일 때만 실행
-        if: github.event_name == 'pull_request'
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          # comment_tag: 동일한 태그의 기존 코멘트를 업데이트 (중복 방지)
-          comment_tag: chromatic-build
-          # 코멘트 내용
-          message: |
-            ## 🎨 Storybook 빌드 완료!
-
-            🔖 **Storybook**: ${{ steps.chromatic.outputs.storybookUrl }}
-            🧪 **Chromatic**: ${{ steps.chromatic.outputs.buildUrl }}
-
-            ### 📊 빌드 정보
-            - **빌드 상태**: ${{ steps.chromatic.outcome }}
-            - **테스트된 스토리**: ${{ steps.chromatic.outputs.actualTestCount || '0' }}개
-            - **변경된 컴포넌트**: ${{ steps.chromatic.outputs.actualCaptureCount || '0' }}개
-
-            ${{ steps.chromatic.outputs.changeCount && format('> 🔍 **시각적 변경사항**: {0}개 발견', steps.chromatic.outputs.changeCount) || '' }}
