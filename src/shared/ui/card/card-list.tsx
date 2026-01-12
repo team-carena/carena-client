@@ -18,7 +18,7 @@ const CardList = ({
 		<button
 			type="button"
 			className={cn(
-				"flex justify-between items-center bg-white w-full px-[2rem] py-[1.6rem] rounded-[12px] border border-transparent",
+				"flex justify-between items-center bg-white w-full px-[2rem] py-[1.6rem] rounded-[12px] border border-transparent transition-default",
 				more
 					? "cursor-pointer active:bg-gray-100 active:border-gray-300"
 					: "cursor-default",
