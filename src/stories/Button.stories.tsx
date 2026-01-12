@@ -1,53 +1,32 @@
-import { Button } from "@shared/ui/Button";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "@/shared/ui/buttons/button";
 
 const meta: Meta<typeof Button> = {
-	title: "Common/Button",
+	title: "Shared/Button",
 	component: Button,
-	tags: ["autodocs"],
-	args: {
-		children: "Button",
-		disabled: false,
+	parameters: {
+		layout: "centered",
 	},
 	argTypes: {
-		variant: {
-			control: "select",
-			options: ["default", "secondary", "outline", "destructive"],
-			description: "버튼 스타일",
-		},
 		size: {
-			control: "select",
-			options: ["sm", "md", "lg"],
-			description: "버튼 크기",
+			control: "radio",
+			options: ["sm", "lg"],
 		},
 		disabled: {
 			control: "boolean",
-			description: "비활성화 여부",
 		},
-		onClick: {
-			action: "clicked",
-			description: "버튼 클릭 이벤트",
+		children: {
+			control: "text",
 		},
+		onClick: { action: "clicked" },
+	},
+	args: {
+		children: "Button",
+		size: "lg",
+		disabled: false,
 	},
 };
 
 export default meta;
 type Story = StoryObj<typeof Button>;
-
 export const Default: Story = {};
-
-export const Secondary: Story = {
-	args: { variant: "secondary" },
-};
-
-export const Outline: Story = {
-	args: { variant: "outline" },
-};
-
-export const Destructive: Story = {
-	args: { variant: "destructive" },
-};
-
-export const Disabled: Story = {
-	args: { disabled: true },
-};
