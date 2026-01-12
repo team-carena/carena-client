@@ -27,7 +27,8 @@ module.exports = {
         '!BREAKING CHANGE',
       ],
     ],
-    'type-case': [0, 'always'], 
+    'type-case': [0, 'always'],
+    'subject-case': [0, 'always'],
     'subject-empty': [2, 'never'],
   },
 };
