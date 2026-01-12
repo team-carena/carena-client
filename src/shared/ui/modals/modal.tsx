@@ -43,6 +43,8 @@ export const Modal = ({
 		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, [open, onClose]);
 
+	const hasTitle = size === "lg" && Boolean(title);
+
 	return (
 		<div
 			className={cn(
@@ -71,33 +73,27 @@ export const Modal = ({
 					open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
 				)}
 			>
-				{(() => {
-					const hasTitle = size === "lg" && Boolean(title);
-
-					return (
-						<div
-							className={cn(
-								"p-[2.4rem] flex flex-1 flex-col justify-center",
-								hasTitle ? "text-left" : "text-center",
-							)}
-						>
-							{hasTitle ? (
-								<div className="label01-sb-14 text-center text-gray-900">
-									{title}
-								</div>
-							) : null}
-							<div
-								className={cn(
-									"body04-r-14 whitespace-pre-line text-gray-900",
-									hasTitle ? "mt-[2rem]" : undefined,
-									hasTitle ? "text-left" : "text-center",
-								)}
-							>
-								{description}
-							</div>
+				<div
+					className={cn(
+						"p-[2.4rem] flex flex-1 flex-col justify-center",
+						hasTitle ? "text-left" : "text-center",
+					)}
+				>
+					{hasTitle ? (
+						<div className="label01-sb-14 text-center text-gray-900">
+							{title}
 						</div>
-					);
-				})()}
+					) : null}
+					<div
+						className={cn(
+							"body04-r-14 whitespace-pre-line text-gray-900",
+							hasTitle ? "mt-[2rem]" : undefined,
+							hasTitle ? "text-left" : "text-center",
+						)}
+					>
+						{description}
+					</div>
+				</div>
 				<div
 					className={cn(
 						"border-t border-gray-200",
