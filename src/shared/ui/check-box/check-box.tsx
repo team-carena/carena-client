@@ -1,6 +1,11 @@
+import type * as React from "react";
 import { CheckW } from "@/shared/assets/svg";
 
-interface CheckBoxProps {
+interface CheckBoxProps
+	extends Omit<
+		React.InputHTMLAttributes<HTMLInputElement>,
+		"type" | "onChange"
+	> {
 	checked: boolean;
 	onChange: (checked: boolean) => void;
 }
