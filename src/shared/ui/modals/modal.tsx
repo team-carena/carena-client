@@ -74,7 +74,7 @@ export const Modal = ({
 				<div
 					className={cn(
 						"p-[2.4rem] flex flex-col gap-[2rem]",
-						size === "lg" && "flex-1 min-h-0 overflow-hidden",
+						size === "lg" && "flex-1 min-h-0",
 					)}
 				>
 					{hasTitle && (
