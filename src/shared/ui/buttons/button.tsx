@@ -4,7 +4,7 @@ import { cn } from "@/shared/libs/cn";
 
 const buttonVariants = cva(
 	`flex w-full items-center justify-center
-	bg-primary-400 text-white active:bg-primary-600
+	bg-primary-400 text-white active:bg-primary-600 transition-default
 	disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed`,
 	{
 		variants: {

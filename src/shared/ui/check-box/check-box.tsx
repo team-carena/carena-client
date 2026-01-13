@@ -23,6 +23,7 @@ export const CheckBox = ({ checked, onChange }: CheckBoxProps) => {
           peer-checked:bg-primary-500
           [&>svg]:opacity-0
           peer-checked:[&>svg]:opacity-100
+		  transition-default
         "
 			>
 				<CheckW />
