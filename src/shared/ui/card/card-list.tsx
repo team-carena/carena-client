@@ -28,7 +28,7 @@ const CardList = ({
 			{...props}
 		>
 			<span className="head04-m-16 text-gray-900">{children}</span>
-			{more && <ChevronSRight className="ml-[1rem]" />}
+			{more && <ChevronSRight className="ml-[1rem] shrink-0" />}
 		</button>
 	);
 };
