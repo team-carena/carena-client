@@ -10,7 +10,7 @@ export const AddButton = ({ onClick, className, ...props }: AddButtonProps) => {
 			onClick={onClick}
 			{...props}
 			className={cn(
-				"flex px-[0.8rem] py-[0.4rem] items-center justify-center gap-[0.4rem] rounded-[0.4rem] bg-white active:bg-gray-200",
+				"w-fit flex px-[0.8rem] py-[0.4rem] items-center justify-center gap-[0.4rem] rounded-[0.4rem] bg-white active:bg-gray-200",
 				className,
 			)}
 		>
