@@ -7,6 +7,7 @@ interface OcrButtonProps
 export const OcrButton = ({ onClick, className, ...props }: OcrButtonProps) => {
 	return (
 		<button
+			type="button"
 			onClick={onClick}
 			{...props}
 			className={cn(
