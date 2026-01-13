@@ -43,6 +43,17 @@ export const Modal = ({
 		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, [open, onClose]);
 
+	React.useEffect(() => {
+		if (open) {
+			const originalOverflow = document.body.style.overflow;
+			document.body.style.overflow = "hidden";
+
+			return () => {
+				document.body.style.overflow = originalOverflow;
+			};
+		}
+	}, [open]);
+
 	const hasTitle = Boolean(title);
 
 	return (
