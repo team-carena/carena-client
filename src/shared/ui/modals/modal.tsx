@@ -57,7 +57,7 @@ export const Modal = ({
 				type="button"
 				aria-label="Close modal"
 				className={cn(
-					"absolute inset-0 bg-black/40 transition-opacity duration-200",
+					"absolute inset-0 bg-black-30 transition-opacity duration-200",
 					open ? "opacity-100" : "opacity-0",
 				)}
 				onClick={onClose}
@@ -66,7 +66,7 @@ export const Modal = ({
 				role="dialog"
 				aria-modal="true"
 				className={cn(
-					"relative flex w-full flex-col overflow-hidden rounded-[12px] border border-gray-200 bg-white text-gray-900 shadow-lg transition-all duration-200",
+					"relative flex w-full flex-col overflow-hidden rounded-[12px] border border-gray-200 bg-white text-gray-900 transition-[opacity,transform] duration-200",
 					size === "sm"
 						? "h-[16rem] max-w-[28rem]"
 						: "h-[19rem] max-w-[31.1rem]",
