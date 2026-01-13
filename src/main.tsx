@@ -1,4 +1,3 @@
-import { OverlayProvider } from "overlay-kit";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -12,8 +11,6 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
 	<StrictMode>
-		<OverlayProvider>
-			<App />
-		</OverlayProvider>
+		<App />
 	</StrictMode>,
 );
