@@ -18,6 +18,7 @@
     "api:generate": "swagger-typescript-api generate -p {Swagger 문서 Path 추후 추가} -o src/shared/apis/generated --modular -d --extract-request-body --extract-response-body --extract-response-error"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tooltip": "^1.2.8",
     "axios": "^1.13.2",
