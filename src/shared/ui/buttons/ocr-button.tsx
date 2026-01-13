@@ -1,3 +1,4 @@
+import type * as React from "react";
 import { Scan } from "@/shared/assets/svg";
 import { cn } from "@/shared/libs/cn";
 
