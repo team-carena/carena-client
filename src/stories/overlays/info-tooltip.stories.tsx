@@ -1,4 +1,4 @@
-import { InfoTooltip } from "@shared/ui/overlays/popover";
+import { InfoTooltip } from "@shared/ui/overlays/info-tooltip";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof InfoTooltip> = {
