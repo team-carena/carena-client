@@ -2,8 +2,7 @@ import type * as React from "react";
 import { Scan } from "@/shared/assets/svg";
 import { cn } from "@/shared/libs/cn";
 
-interface OcrButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+type OcrButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const OcrButton = ({ className, ...props }: OcrButtonProps) => {
 	return (
