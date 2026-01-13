@@ -4,11 +4,10 @@ import { cn } from "@/shared/libs/cn";
 interface OcrButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const OcrButton = ({ onClick, className, ...props }: OcrButtonProps) => {
+export const OcrButton = ({ className, ...props }: OcrButtonProps) => {
 	return (
 		<button
 			type="button"
-			onClick={onClick}
 			{...props}
 			className={cn(
 				"flex w-[23.6rem] px-[1.6rem] py-[1.2rem] items-center justify-center gap-[1.2rem] rounded-[8px] border border-primary-600 bg-primary-50 active:bg-primary-100",

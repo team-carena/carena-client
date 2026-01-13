@@ -1,4 +1,4 @@
-import { clsx } from "clsx";
+import { cn } from "@/shared/libs/cn";
 
 interface RadioButtonProps {
 	text?: string;
@@ -17,9 +17,10 @@ export const RadioButton = ({
 }: RadioButtonProps) => {
 	return (
 		<label
-			className={clsx(
+			className={cn(
 				"w-fit flex items-center cursor-pointer",
 				text && "gap-[1.2rem] py-[1.2rem] pl-[1.2rem]",
+				disabled && "cursor-not-allowed",
 			)}
 		>
 			<input
