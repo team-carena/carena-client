@@ -3,5 +3,8 @@
   "editor.formatOnSave": true,
   "editor.quickSuggestions": {
     "strings": true
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   }
 }
