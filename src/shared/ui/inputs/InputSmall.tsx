@@ -78,6 +78,9 @@ export const InputSmall = ({
 }: InputSmallProps) => {
 	const [focused, setFocused] = React.useState<"left" | "right" | null>(null);
 
+	const leftInputId = React.useId();
+	const rightInputId = React.useId();
+
 	const getState = (value: string, isFocused: boolean) => {
 		if (isDisabled || isReadOnly) return "disabled";
 		if (isError) return "error";
@@ -94,12 +97,14 @@ export const InputSmall = ({
 
 	return (
 		<div className="w-full">
-			{/* input row */}
 			<div className="flex items-start gap-[1.6rem]">
 				{/* left */}
 				<div className="flex-1">
 					<div className="flex items-start justify-between">
-						<label className="body03-r-16 text-black shrink-0">
+						<label
+							htmlFor={leftInputId}
+							className="body03-r-16 text-black shrink-0"
+						>
 							{labelLeft}
 						</label>
 
@@ -113,6 +118,7 @@ export const InputSmall = ({
 								)}
 							>
 								<input
+									id={leftInputId}
 									value={valueLeft}
 									placeholder={placeholderLeft}
 									disabled={isDisabled}
@@ -129,7 +135,10 @@ export const InputSmall = ({
 
 							{/* error message */}
 							{isError && errorMessage && (
-								<div className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12 whitespace-nowrap">
+								<div
+									className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12 whitespace-nowrap"
+									role="alert"
+								>
 									<SystemDangerIcon
 										width={24}
 										height={24}
@@ -146,7 +155,10 @@ export const InputSmall = ({
 				{/* right */}
 				<div className="flex-1">
 					<div className="flex items-start justify-between">
-						<label className="body03-r-16 text-black shrink-0">
+						<label
+							htmlFor={rightInputId}
+							className="body03-r-16 text-black shrink-0"
+						>
 							{labelRight}
 						</label>
 
@@ -159,6 +171,7 @@ export const InputSmall = ({
 								)}
 							>
 								<input
+									id={rightInputId}
 									value={valueRight}
 									placeholder={placeholderRight}
 									disabled={isDisabled}
