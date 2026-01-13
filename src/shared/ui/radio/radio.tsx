@@ -1,14 +1,16 @@
 import { cn } from "@/shared/libs/cn";
 
 interface RadioButtonProps {
+	value: string;
 	text?: string;
 	checked: boolean;
-	onChange: () => void;
+	onChange: (value: string) => void;
 	name: string;
 	disabled?: boolean;
 }
 
 export const RadioButton = ({
+	value,
 	text,
 	checked,
 	onChange,
@@ -28,7 +30,8 @@ export const RadioButton = ({
 				name={name}
 				checked={checked}
 				disabled={disabled}
-				onChange={onChange}
+				value={value}
+				onChange={() => onChange(value)}
 				className="peer sr-only"
 			/>
 
