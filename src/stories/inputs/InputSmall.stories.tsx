@@ -11,8 +11,6 @@ const meta: Meta<typeof InputSmall> = {
 	args: {
 		labelLeft: "키",
 		labelRight: "몸무게",
-		placeholderLeft: "입력",
-		placeholderRight: "입력",
 		unitLeft: "cm",
 		unitRight: "kg",
 		isError: false,

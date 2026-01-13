@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 const inputSmallVariants = cva(
-	"flex items-center justify-between rounded-[0.6rem] border transition-colors px-[1.2rem] py-[0.8rem]",
+	"flex items-center gap-[1rem] rounded-[0.6rem] border transition-colors px-[1.2rem] py-[0.6rem]",
 	{
 		variants: {
 			state: {
@@ -22,7 +22,7 @@ const inputSmallVariants = cva(
 );
 
 const inputFieldVariants = cva(
-	"flex-1 min-w-0 bg-transparent outline-none placeholder-gray-500 label04-r-16",
+	"flex-1 min-w-0 h-full bg-transparent outline-none label04-r-16",
 	{
 		variants: {
 			state: {
@@ -44,9 +44,6 @@ interface InputSmallProps extends VariantProps<typeof inputSmallVariants> {
 	valueLeft: string;
 	valueRight: string;
 
-	placeholderLeft?: string;
-	placeholderRight?: string;
-
 	unitLeft: string;
 	unitRight: string;
 
@@ -65,8 +62,6 @@ export const InputSmall = ({
 	labelRight,
 	valueLeft,
 	valueRight,
-	placeholderLeft,
-	placeholderRight,
 	unitLeft,
 	unitRight,
 	isError = false,
@@ -98,7 +93,7 @@ export const InputSmall = ({
 	return (
 		<div className="w-full">
 			<div className="flex items-start gap-[1.6rem]">
-				{/* left */}
+				{/* LEFT */}
 				<div className="flex-1">
 					<div className="flex items-start justify-between">
 						<label
@@ -120,7 +115,6 @@ export const InputSmall = ({
 								<input
 									id={leftInputId}
 									value={valueLeft}
-									placeholder={placeholderLeft}
 									disabled={isDisabled}
 									readOnly={isReadOnly}
 									onChange={(e) => onChangeLeft(e.target.value)}
@@ -133,7 +127,6 @@ export const InputSmall = ({
 								<span className="shrink-0 label03-m-12">{unitLeft}</span>
 							</div>
 
-							{/* error message */}
 							{isError && errorMessage && (
 								<div
 									className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12 whitespace-nowrap"
@@ -143,7 +136,6 @@ export const InputSmall = ({
 										width={24}
 										height={24}
 										fill="currentColor"
-										title="error"
 									/>
 									<span>{errorMessage}</span>
 								</div>
@@ -152,7 +144,7 @@ export const InputSmall = ({
 					</div>
 				</div>
 
-				{/* right */}
+				{/* RIGHT */}
 				<div className="flex-1">
 					<div className="flex items-start justify-between">
 						<label
@@ -173,7 +165,6 @@ export const InputSmall = ({
 								<input
 									id={rightInputId}
 									value={valueRight}
-									placeholder={placeholderRight}
 									disabled={isDisabled}
 									readOnly={isReadOnly}
 									onChange={(e) => onChangeRight(e.target.value)}

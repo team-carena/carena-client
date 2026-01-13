@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import * as React from "react";
 
 const dateInputVariants = cva(
-	"flex items-center rounded-[0.6rem] border transition-colors px-[1.6rem] py-[0.8rem]",
+	"flex items-center rounded-[1.6rem] border transition-colors px-[1.6rem] py-[0.8rem]",
 	{
 		variants: {
 			state: {
