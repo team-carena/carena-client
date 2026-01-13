@@ -16,9 +16,9 @@ export const OcrButton = ({ onClick, className, ...props }: OcrButtonProps) => {
 			)}
 		>
 			<Scan />
-			<p className="label03-m-12 text-primary-600">
+			<span className="label03-m-12 text-primary-600">
 				검진 결과지 스캔하고 자동 입력받기
-			</p>
+			</span>
 		</button>
 	);
 };
