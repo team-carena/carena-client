@@ -7,6 +7,7 @@ interface AddButtonProps
 export const AddButton = ({ onClick, className, ...props }: AddButtonProps) => {
 	return (
 		<button
+			type="button"
 			onClick={onClick}
 			{...props}
 			className={cn(
