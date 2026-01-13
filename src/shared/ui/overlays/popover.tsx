@@ -19,17 +19,17 @@ function PopoverTrigger({
 function PopoverContent({
 	className,
 	align = "center",
-	sideOffset = 8,
+	sideOffset = 12,
 	...props
 }: React.ComponentProps<typeof PopoverPrimitive.Content>) {
 	return (
 		<PopoverPrimitive.Portal>
 			<PopoverPrimitive.Content
 				data-slot="popover-content"
-				align={align} //
+				align={align}
 				sideOffset={sideOffset}
 				className={cn(
-					"z-50 w-[25.6rem] rounded-[12px] border border-gray-300 bg-white p-[2.4rem] body05-r-12 text-gray-900",
+					"group z-50 w-[25.6rem] rounded-[12px] border border-gray-300 bg-white p-[2.4rem] body05-r-12 text-gray-900",
 					"data-[state=open]:animate-in data-[state=closed]:animate-out",
 					"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
 					"data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -40,7 +40,50 @@ function PopoverContent({
 				{...props}
 			>
 				{props.children}
-				<PopoverPrimitive.Arrow className="fill-white stroke-gray-200" />
+				{/* 삼각형 - border용 (뒤, 더 큰 삼각형) */}
+				<span
+					className={cn(
+						"absolute w-0 h-0",
+						// side=top: 삼각형이 아래쪽에 위치 (가로 22px, 세로 12px)
+						"group-data-[side=top]:bottom-[-12px] group-data-[side=top]:left-[24px]",
+						"group-data-[side=top]:border-l-[11px] group-data-[side=top]:border-r-[11px] group-data-[side=top]:border-t-[12px]",
+						"group-data-[side=top]:border-l-transparent group-data-[side=top]:border-r-transparent group-data-[side=top]:border-t-gray-300",
+						// side=bottom: 삼각형이 위쪽에 위치
+						"group-data-[side=bottom]:top-[-12px] group-data-[side=bottom]:left-[24px]",
+						"group-data-[side=bottom]:border-l-[11px] group-data-[side=bottom]:border-r-[11px] group-data-[side=bottom]:border-b-[12px]",
+						"group-data-[side=bottom]:border-l-transparent group-data-[side=bottom]:border-r-transparent group-data-[side=bottom]:border-b-gray-300",
+						// side=left: 삼각형이 오른쪽에 위치 (가로 12px, 세로 22px)
+						"group-data-[side=left]:right-[-12px] group-data-[side=left]:top-[24px]",
+						"group-data-[side=left]:border-t-[11px] group-data-[side=left]:border-b-[11px] group-data-[side=left]:border-l-[12px]",
+						"group-data-[side=left]:border-t-transparent group-data-[side=left]:border-b-transparent group-data-[side=left]:border-l-gray-300",
+						// side=right: 삼각형이 왼쪽에 위치
+						"group-data-[side=right]:left-[-12px] group-data-[side=right]:top-[24px]",
+						"group-data-[side=right]:border-t-[11px] group-data-[side=right]:border-b-[11px] group-data-[side=right]:border-r-[12px]",
+						"group-data-[side=right]:border-t-transparent group-data-[side=right]:border-b-transparent group-data-[side=right]:border-r-gray-300",
+					)}
+				/>
+				{/* 삼각형 - 배경용 (앞, 더 작은 삼각형으로 테두리 두께 표현) */}
+				<span
+					className={cn(
+						"absolute w-0 h-0",
+						// side=top
+						"group-data-[side=top]:bottom-[-11px] group-data-[side=top]:left-[25px]",
+						"group-data-[side=top]:border-l-[10px] group-data-[side=top]:border-r-[10px] group-data-[side=top]:border-t-[11px]",
+						"group-data-[side=top]:border-l-transparent group-data-[side=top]:border-r-transparent group-data-[side=top]:border-t-white",
+						// side=bottom
+						"group-data-[side=bottom]:top-[-11px] group-data-[side=bottom]:left-[25px]",
+						"group-data-[side=bottom]:border-l-[10px] group-data-[side=bottom]:border-r-[10px] group-data-[side=bottom]:border-b-[11px]",
+						"group-data-[side=bottom]:border-l-transparent group-data-[side=bottom]:border-r-transparent group-data-[side=bottom]:border-b-white",
+						// side=left
+						"group-data-[side=left]:right-[-11px] group-data-[side=left]:top-[25px]",
+						"group-data-[side=left]:border-t-[10px] group-data-[side=left]:border-b-[10px] group-data-[side=left]:border-l-[11px]",
+						"group-data-[side=left]:border-t-transparent group-data-[side=left]:border-b-transparent group-data-[side=left]:border-l-white",
+						// side=right
+						"group-data-[side=right]:left-[-11px] group-data-[side=right]:top-[25px]",
+						"group-data-[side=right]:border-t-[10px] group-data-[side=right]:border-b-[10px] group-data-[side=right]:border-r-[11px]",
+						"group-data-[side=right]:border-t-transparent group-data-[side=right]:border-b-transparent group-data-[side=right]:border-r-white",
+					)}
+				/>
 			</PopoverPrimitive.Content>
 		</PopoverPrimitive.Portal>
 	);
