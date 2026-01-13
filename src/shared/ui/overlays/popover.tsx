@@ -18,8 +18,8 @@ function PopoverTrigger({
 
 function PopoverContent({
 	className,
-	align = "center",
-	sideOffset = 12,
+	align = "center", // 삼각형 위치 (start, center, end)
+	sideOffset = 14, // PopoverTrigger(여기서는 info 아이콘)으로부터 얼마나 떨어져있는가
 	...props
 }: React.ComponentProps<typeof PopoverPrimitive.Content>) {
 	return (
@@ -29,7 +29,9 @@ function PopoverContent({
 				align={align}
 				sideOffset={sideOffset}
 				className={cn(
+					// Popover 내용을 나타내는 영역의 css
 					"group z-50 w-[25.6rem] rounded-[12px] border border-gray-300 bg-white p-[2.4rem] body05-r-12 text-gray-900",
+					// Popover가 열리고 닫힐 때의 애니메이션 (tw-animate-css 패키지가 제공, popover 기본제공 코드)
 					"data-[state=open]:animate-in data-[state=closed]:animate-out",
 					"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
 					"data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -40,7 +42,8 @@ function PopoverContent({
 				{...props}
 			>
 				{props.children}
-				{/* 삼각형 - border용 (뒤, 더 큰 삼각형) */}
+
+				{/* 삼각형의 border용 (Popover 테두리와 같은 색, 테두리와 연결되는 외곽선 역할) */}
 				<span
 					className={cn(
 						"absolute w-0 h-0",
@@ -62,25 +65,25 @@ function PopoverContent({
 						"group-data-[side=right]:border-t-transparent group-data-[side=right]:border-b-transparent group-data-[side=right]:border-r-gray-300",
 					)}
 				/>
-				{/* 삼각형 - 배경용 (앞, 더 작은 삼각형으로 테두리 두께 표현) */}
+				{/* 삼각형의 배경용 (흰색, Popover와 회색 삼각형 사이의 경계선을 덮어서 자연스럽게 연결) */}
 				<span
 					className={cn(
 						"absolute w-0 h-0",
-						// side=top
+						// side=top: 테두리 삼각형보다 1px 안쪽에서 시작 (bottom: -12px + 1px = -11px)
 						"group-data-[side=top]:bottom-[-11px] group-data-[side=top]:left-[25px]",
-						"group-data-[side=top]:border-l-[10px] group-data-[side=top]:border-r-[10px] group-data-[side=top]:border-t-[11px]",
+						"group-data-[side=top]:border-l-[10px] group-data-[side=top]:border-r-[10px] group-data-[side=top]:border-t-[12px]",
 						"group-data-[side=top]:border-l-transparent group-data-[side=top]:border-r-transparent group-data-[side=top]:border-t-white",
 						// side=bottom
 						"group-data-[side=bottom]:top-[-11px] group-data-[side=bottom]:left-[25px]",
-						"group-data-[side=bottom]:border-l-[10px] group-data-[side=bottom]:border-r-[10px] group-data-[side=bottom]:border-b-[11px]",
+						"group-data-[side=bottom]:border-l-[10px] group-data-[side=bottom]:border-r-[10px] group-data-[side=bottom]:border-b-[12px]",
 						"group-data-[side=bottom]:border-l-transparent group-data-[side=bottom]:border-r-transparent group-data-[side=bottom]:border-b-white",
 						// side=left
 						"group-data-[side=left]:right-[-11px] group-data-[side=left]:top-[25px]",
-						"group-data-[side=left]:border-t-[10px] group-data-[side=left]:border-b-[10px] group-data-[side=left]:border-l-[11px]",
+						"group-data-[side=left]:border-t-[10px] group-data-[side=left]:border-b-[10px] group-data-[side=left]:border-l-[12px]",
 						"group-data-[side=left]:border-t-transparent group-data-[side=left]:border-b-transparent group-data-[side=left]:border-l-white",
 						// side=right
 						"group-data-[side=right]:left-[-11px] group-data-[side=right]:top-[25px]",
-						"group-data-[side=right]:border-t-[10px] group-data-[side=right]:border-b-[10px] group-data-[side=right]:border-r-[11px]",
+						"group-data-[side=right]:border-t-[10px] group-data-[side=right]:border-b-[10px] group-data-[side=right]:border-r-[12px]",
 						"group-data-[side=right]:border-t-transparent group-data-[side=right]:border-b-transparent group-data-[side=right]:border-r-white",
 					)}
 				/>
@@ -99,17 +102,20 @@ function PopoverAnchor({
 // InfoTooltip: info-gray 아이콘을 트리거로 사용하는 툴팁
 type InfoTooltipProps = {
 	children: React.ReactNode;
-	side?: "top" | "bottom" | "left" | "right";
-	align?: "start" | "center" | "end";
+	side?: "top" | "bottom" | "left" | "right"; // PopoverTrigger를 기준으로 한 popover의 위치
+	align?: "start" | "center" | "end"; // 삼각형 위치
 	className?: string;
 };
 
 function InfoTooltip({
 	children,
 	side = "top",
-	align = "center",
+	align = "start",
 	className,
 }: InfoTooltipProps) {
+	// 삼각형 중앙(left 24px + 11px = 35px)이 아이콘 중앙(약 8px)을 가리키도록 offset 조정
+	const alignOffset = -25;
+
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
@@ -117,8 +123,12 @@ function InfoTooltip({
 					<InfoGray />
 				</button>
 			</PopoverTrigger>
-			{/* PopoverContent: Popover 컴포넌트 UI */}
-			<PopoverContent side={side} align={align} className={className}>
+			<PopoverContent
+				side={side}
+				align={align}
+				alignOffset={alignOffset} // 삼각형이 아이콘 정중앙을 가리키도록 조절 (기본값 있으므로 값 전달 불필요)
+				className={className}
+			>
 				{children}
 			</PopoverContent>
 		</Popover>
