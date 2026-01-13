@@ -1,6 +1,9 @@
 import { ChevronSRight } from "@/shared/assets/svg";
 import { cn } from "@/shared/libs/cn";
 
+/**
+ * @param more - true일 때만 onClick이 동작합니다
+ */
 export interface CardListProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
