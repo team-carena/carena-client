@@ -1,7 +1,7 @@
 import * as SelectPrimitive from "@radix-ui/react-select";
 import type * as React from "react";
-import { ChevronSDown } from "../assets/svg";
-import { cn } from "../libs/cn";
+import { ChevronSDown } from "../../assets/svg";
+import { cn } from "../../libs/cn";
 
 const focusReset = `
   outline-none
@@ -40,16 +40,17 @@ function SelectTrigger({
 			data-slot="select-trigger"
 			className={cn(
 				`
-        group
-        flex w-[33.5rem] h-[4.7rem]
-        px-[2rem] py-[1.2rem]
-        items-center
-        rounded-[1.2rem]
-        head03-sb-16 border border-gray-500
-        bg-white cursor-pointer
+				group
+				flex w-[33.5rem] h-[4.7rem]
+				px-[2rem] py-[1.2rem]
+				items-center
+				rounded-[1.2rem]
+				head03-sb-16 border border-gray-500
+				bg-white cursor-pointer
 
-        data-[state=open]:border-primary-500
-        `,
+				data-[state=open]:border-primary-500
+				data-[disabled]:head03-sb-16
+        	`,
 				focusReset,
 				className,
 			)}
@@ -61,6 +62,7 @@ function SelectTrigger({
 				className="
           transition-transform duration-450 ease-in-out
           group-data-[state=open]:rotate-180
+		  group-data-[disabled]:hidden
           ml-[1.2rem]
         "
 			>
@@ -85,6 +87,7 @@ function SelectContent({
 					`
           flex flex-col
           w-[var(--radix-select-trigger-width)]
+		  h-[18.4rem]
           p-[0.8rem]
           rounded-[0.8rem]
           bg-white
@@ -112,15 +115,15 @@ function SelectItem({
 			data-slot="select-item"
 			className={cn(
 				`
-        flex w-full
-        px-[0.8rem] py-[1rem] gap-[1rem]
-        items-center rounded-[0.8rem]
-        bg-white body03-r-16
-        cursor-pointer transition-colors
-        `,
+				flex w-full
+				px-[0.8rem] py-[1rem] gap-[1rem]
+				items-center rounded-[0.8rem]
+				bg-white body03-r-16
+				cursor-pointer transition-colors
+				hover:bg-gray-100
+				active:bg-gray-100
+        		`,
 				focusReset,
-				"data-[highlighted]:bg-gray-100",
-				"data-[state=checked]:bg-primary-50 data-[state=checked]:text-primary-800",
 				className,
 			)}
 			{...props}
