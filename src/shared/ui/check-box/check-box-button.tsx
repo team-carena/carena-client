@@ -18,7 +18,7 @@ export const CheckBox = ({ checked, onChange }: CheckBoxProps) => {
 			<span
 				className="
           w-[2rem] h-[2rem]
-          border border-gray-900 rounded-[0.4rem]
+          border border-gray-900 rounded-[4px]
           flex items-center justify-center
           peer-checked:bg-primary-500
           [&>svg]:opacity-0
