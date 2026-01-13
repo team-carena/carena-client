@@ -11,5 +11,8 @@
 /* Typography */
 @import '@styles/tokens/typography.css';
 
+/* Transition */
+@import '@styles/tokens/transition.css';
+
 /* shadcn CSS variables */
 @import '@styles/shadcn.css';
