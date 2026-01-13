@@ -30,7 +30,7 @@ function PopoverContent({
 				sideOffset={sideOffset}
 				className={cn(
 					// Popover 내용을 나타내는 영역의 css
-					"group z-50 w-[25.6rem] rounded-[12px] border border-gray-300 bg-white p-[2.4rem] body05-r-12 text-gray-900",
+					"group z-50 w-[25.6rem] rounded-[12px] border border-gray-300 bg-white p-[2.4rem] body05-r-12 text-gray-900 whitespace-pre-wrap",
 					// Popover가 열리고 닫힐 때의 애니메이션 (tw-animate-css 패키지가 제공, popover 기본제공 코드)
 					"data-[state=open]:animate-in data-[state=closed]:animate-out",
 					"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
