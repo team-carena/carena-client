@@ -8,7 +8,7 @@ const dateInputVariants = cva(
 	{
 		variants: {
 			state: {
-				default: "border-gray-200 bg-white",
+				default: "border-gray-200",
 				focused: "border-primary-500",
 				completed: "border-gray-900",
 				error: "border-red-500",
@@ -85,7 +85,7 @@ export const DateInput = ({
 		<div className="w-full">
 			{/* input row */}
 			<div className="flex items-center gap-[0.4rem]">
-				{/* 연도 */}
+				{/* year */}
 				<div
 					className={cn(
 						"w-full min-w-[12.5rem]",
@@ -106,7 +106,7 @@ export const DateInput = ({
 					/>
 				</div>
 
-				{/* 월 */}
+				{/* month */}
 				<div
 					className={cn(
 						"w-full min-w-[10.1rem]",
@@ -127,7 +127,7 @@ export const DateInput = ({
 					/>
 				</div>
 
-				{/* 일 */}
+				{/* day */}
 				<div
 					className={cn(
 						"w-full min-w-[10.1rem]",
@@ -152,7 +152,12 @@ export const DateInput = ({
 			{/* error message */}
 			{isError && errorMessage && (
 				<div className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12">
-					<SystemDangerIcon width={24} height={24} />
+					<SystemDangerIcon
+						width={24}
+						height={24}
+						fill="currentColor"
+						title="error"
+					/>
 					<span>{errorMessage}</span>
 				</div>
 			)}

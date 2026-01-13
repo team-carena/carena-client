@@ -8,7 +8,7 @@ const inputMediumVariants = cva(
 	{
 		variants: {
 			state: {
-				default: "border-gray-200 bg-white",
+				default: "border-gray-200",
 				focused: "border-primary-500",
 				completed: "border-gray-900",
 				error: "border-red-500",
@@ -28,7 +28,7 @@ const inputFieldVariants = cva(
 			state: {
 				default: "text-gray-900",
 				disabled: "text-gray-500 cursor-not-allowed",
-				readonly: "text-gray-500 cursor-default",
+				readonly: "text-gray-900 cursor-default",
 			},
 		},
 		defaultVariants: {

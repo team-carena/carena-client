@@ -1,14 +1,14 @@
 import { cn } from "@shared/libs/cn";
 import SystemDangerIcon from "@svg/system-danger.svg?react";
-import { cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 const inputSmallVariants = cva(
-	"flex items-center justify-between rounded-[0.6rem] border transition-colors px-[1.2rem] py-[0.6rem]",
+	"flex items-center justify-between rounded-[0.6rem] border transition-colors px-[1.2rem] py-[0.8rem]",
 	{
 		variants: {
 			state: {
-				default: "border-gray-200 bg-white",
+				default: "border-gray-200",
 				focused: "border-primary-500",
 				completed: "border-gray-900",
 				error: "border-red-500",
@@ -22,7 +22,7 @@ const inputSmallVariants = cva(
 );
 
 const inputFieldVariants = cva(
-	"flex-1 min-w-0 bg-transparent outline-none placeholder-gray-500 label05-r-14",
+	"flex-1 min-w-0 bg-transparent outline-none placeholder-gray-500 label04-r-16",
 	{
 		variants: {
 			state: {
@@ -37,7 +37,7 @@ const inputFieldVariants = cva(
 	},
 );
 
-interface InputSmallProps {
+interface InputSmallProps extends VariantProps<typeof inputSmallVariants> {
 	labelLeft: string;
 	labelRight: string;
 
@@ -78,10 +78,6 @@ export const InputSmall = ({
 }: InputSmallProps) => {
 	const [focused, setFocused] = React.useState<"left" | "right" | null>(null);
 
-	// ✅ LEFT / RIGHT 각각 고유 ID
-	const leftInputId = React.useId();
-	const rightInputId = React.useId();
-
 	const getState = (value: string, isFocused: boolean) => {
 		if (isDisabled || isReadOnly) return "disabled";
 		if (isError) return "error";
@@ -98,84 +94,88 @@ export const InputSmall = ({
 
 	return (
 		<div className="w-full">
-			{/* INPUT ROW */}
-			<div className="flex items-center gap-[1.6rem]">
-				{/* LEFT */}
-				<div className="flex items-start justify-between flex-1">
-					<label
-						htmlFor={leftInputId}
-						className="body03-r-16 text-black shrink-0"
-					>
-						{labelLeft}
-					</label>
+			{/* input row */}
+			<div className="flex items-start gap-[1.6rem]">
+				{/* left */}
+				<div className="flex-1">
+					<div className="flex items-start justify-between">
+						<label className="body03-r-16 text-black shrink-0">
+							{labelLeft}
+						</label>
 
-					<div className="w-[10.4rem] shrink-0">
-						<div
-							className={cn(
-								inputSmallVariants({
-									state: getState(valueLeft, focused === "left"),
-								}),
+						{/* input + error */}
+						<div className="flex flex-col w-[10.4rem] shrink-0">
+							<div
+								className={cn(
+									inputSmallVariants({
+										state: getState(valueLeft, focused === "left"),
+									}),
+								)}
+							>
+								<input
+									value={valueLeft}
+									placeholder={placeholderLeft}
+									disabled={isDisabled}
+									readOnly={isReadOnly}
+									onChange={(e) => onChangeLeft(e.target.value)}
+									onFocus={() =>
+										!isDisabled && !isReadOnly && setFocused("left")
+									}
+									onBlur={() => setFocused(null)}
+									className={cn(inputFieldVariants({ state: fieldState }))}
+								/>
+								<span className="shrink-0 label03-m-12">{unitLeft}</span>
+							</div>
+
+							{/* error message */}
+							{isError && errorMessage && (
+								<div className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12 whitespace-nowrap">
+									<SystemDangerIcon
+										width={24}
+										height={24}
+										fill="currentColor"
+										title="error"
+									/>
+									<span>{errorMessage}</span>
+								</div>
 							)}
-						>
-							<input
-								id={leftInputId}
-								value={valueLeft}
-								placeholder={placeholderLeft}
-								disabled={isDisabled}
-								readOnly={isReadOnly}
-								onChange={(e) => onChangeLeft(e.target.value)}
-								onFocus={() => !isDisabled && !isReadOnly && setFocused("left")}
-								onBlur={() => setFocused(null)}
-								className={cn(inputFieldVariants({ state: fieldState }))}
-							/>
-							<span className="shrink-0 label03-m-12">{unitLeft}</span>
 						</div>
 					</div>
 				</div>
 
-				{/* RIGHT */}
-				<div className="flex items-start justify-between flex-1">
-					<label
-						htmlFor={rightInputId}
-						className="body03-r-16 text-black shrink-0"
-					>
-						{labelRight}
-					</label>
+				{/* right */}
+				<div className="flex-1">
+					<div className="flex items-start justify-between">
+						<label className="body03-r-16 text-black shrink-0">
+							{labelRight}
+						</label>
 
-					<div className="w-[10.4rem] shrink-0">
-						<div
-							className={cn(
-								inputSmallVariants({
-									state: getState(valueRight, focused === "right"),
-								}),
-							)}
-						>
-							<input
-								id={rightInputId}
-								value={valueRight}
-								placeholder={placeholderRight}
-								disabled={isDisabled}
-								readOnly={isReadOnly}
-								onChange={(e) => onChangeRight(e.target.value)}
-								onFocus={() =>
-									!isDisabled && !isReadOnly && setFocused("right")
-								}
-								onBlur={() => setFocused(null)}
-								className={cn(inputFieldVariants({ state: fieldState }))}
-							/>
-							<span className="shrink-0 label03-m-12">{unitRight}</span>
+						<div className="w-[10.4rem] shrink-0">
+							<div
+								className={cn(
+									inputSmallVariants({
+										state: getState(valueRight, focused === "right"),
+									}),
+								)}
+							>
+								<input
+									value={valueRight}
+									placeholder={placeholderRight}
+									disabled={isDisabled}
+									readOnly={isReadOnly}
+									onChange={(e) => onChangeRight(e.target.value)}
+									onFocus={() =>
+										!isDisabled && !isReadOnly && setFocused("right")
+									}
+									onBlur={() => setFocused(null)}
+									className={cn(inputFieldVariants({ state: fieldState }))}
+								/>
+								<span className="shrink-0 label03-m-12">{unitRight}</span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			{/* error message */}
-			{isError && errorMessage && (
-				<div className="mt-[0.4rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12 whitespace-nowrap">
-					<SystemDangerIcon width={24} height={24} />
-					<span>{errorMessage}</span>
-				</div>
-			)}
 		</div>
 	);
 };
