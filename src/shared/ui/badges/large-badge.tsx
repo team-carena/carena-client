@@ -28,9 +28,10 @@ export const LargeBadge = ({
 	className,
 	variant,
 	children,
+	...props
 }: LargeBadgeProps) => {
 	return (
-		<span className={cn(largeBadgeVariants({ variant }), className)}>
+		<span className={cn(largeBadgeVariants({ variant }), className)} {...props}>
 			{children}
 		</span>
 	);
