@@ -10,7 +10,7 @@ const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 const meta: Meta<typeof DateInput> = {
-	title: "Components/Input/DateInput",
+	title: "Shared/Input/DateInput",
 	component: DateInput,
 	parameters: {
 		layout: "centered",
