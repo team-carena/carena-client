@@ -16,7 +16,7 @@ export const AddButton = ({ className, ...props }: AddButtonProps) => {
 			)}
 		>
 			<span className="label06-r-12 text-gray-900">검진결과추가</span>
-			<Plus />
+			<Plus aria-hidden="true" />
 		</button>
 	);
 };

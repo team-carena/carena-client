@@ -14,7 +14,7 @@ export const OcrButton = ({ className, ...props }: OcrButtonProps) => {
 				className,
 			)}
 		>
-			<Scan />
+			<Scan aria-hidden="true" />
 			<span className="label03-m-12 text-primary-600">
 				검진 결과지 스캔하고 자동 입력받기
 			</span>
