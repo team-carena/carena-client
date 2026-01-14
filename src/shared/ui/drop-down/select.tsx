@@ -87,7 +87,7 @@ function SelectContent({
 					`
           flex flex-col
           w-[var(--radix-select-trigger-width)]
-		  h-[18.4rem]
+		  max-h-[18.4rem]
           p-[0.8rem]
           rounded-[0.8rem]
           bg-white
