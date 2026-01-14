@@ -1,4 +1,4 @@
-import CardTip from "@shared/ui/card/card-tip";
+import CardTip from "@/shared/ui/cards/card-tip";
 
 export const TipDetailPage = () => {
 	return (
