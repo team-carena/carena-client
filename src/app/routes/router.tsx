@@ -1,3 +1,4 @@
+import { TipPage } from "@pages/tips/tip-page";
 import { createBrowserRouter, Navigate } from "react-router";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
 					{
 						path: ROUTE_PATH.MY_PAGE,
 						element: <></>,
+					},
+					{
+						path: ROUTE_PATH.TIP,
+						element: <TipPage />,
 					},
 					{
 						path: "*",
