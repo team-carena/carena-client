@@ -18,16 +18,16 @@ const options = [
 	{
 		value: "2025-11-02",
 		label: "2025년 11월 02일",
-		subLabel: "서울 병원",
+		subLabel: "서울 아산 대구 병원",
 	},
 	{
 		value: "2025-11-03",
-		label: "2025년 11월 03일",
+		label: "2025년 11월 31일",
 		subLabel: "부산 병원",
 	},
 	{
 		value: "2025-11-04",
-		label: "2025년 11월 04일",
+		label: "2025년 12월 22일",
 		subLabel: "대구 병원",
 	},
 ];
@@ -60,7 +60,7 @@ export const SingleOptionDisabled: Story = {
 			{
 				value: "2025-11-02",
 				label: "2025년 11월 02일",
-				subLabel: "서울 병원",
+				subLabel: "서울 아산 병원",
 			},
 		],
 	},

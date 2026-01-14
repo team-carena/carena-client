@@ -28,7 +28,7 @@ export const DropDown = ({ value, onValueChange, options }: DropDownProps) => {
 			<SelectContent>
 				{excludeSelectedOptions.map((option) => (
 					<SelectItem key={option.value} value={option.value}>
-						<span>{option.label}</span>
+						<span className="w-[12.5rem]">{option.label}</span>
 						<span className="ml-[1rem] body05-r-12">{option.subLabel}</span>
 					</SelectItem>
 				))}
