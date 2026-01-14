@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
-import { Modal, type ModalProps } from "@/shared/ui/modals/modal";
+import { Modal, type ModalProps } from "@/shared/ui/overlays/modal/modal";
 
 const meta: Meta<typeof Modal> = {
 	title: "Common/Modal",

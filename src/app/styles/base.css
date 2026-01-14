@@ -15,6 +15,8 @@
     width: 100%;
     margin: 0;
 
+    background-color: var(--color-gray-50);
+
     font-family: var(--font-base);
 
     -webkit-font-smoothing: antialiased; /* macOS/iOS 폰트 렌더링 최적화 */
