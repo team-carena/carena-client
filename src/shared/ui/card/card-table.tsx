@@ -36,7 +36,7 @@ export const CardTable = ({
 			{rows.map((row) => (
 				<div
 					key={row.id}
-					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[1.2rem] bg-white px-[2rem] py-[0.8rem]"
+					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-white px-[2rem] py-[0.8rem]"
 				>
 					<div className="min-w-0 text-left text-gray-900 body05-r-12 whitespace-pre-line break-words">
 						{row.label}
