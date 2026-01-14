@@ -82,7 +82,7 @@ export const TipPage = () => {
 				ref={scrollContainerRef}
 				className="flex-1 bg-gray-50 overflow-y-auto"
 			>
-				<div className="overflow-x-auto px-[2rem] py-[1.2rem]">
+				<div className="overflow-x-auto scrollbar-hide px-[2rem] py-[1.2rem]">
 					<div className="flex w-max gap-[0.8rem]">
 						{chips.map((label) => (
 							<Chip
