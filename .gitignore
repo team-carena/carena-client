@@ -10,6 +10,7 @@ dev-debug.log
 
 # Dependencies
 node_modules
+.pnpm-store
 
 # Build
 dist
