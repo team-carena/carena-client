@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router";
+import { TipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home-page";
-import { TipDetailPage } from "@/pages/tips/tip-detail-page";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
 						element: <></>,
 					},
 					{
-						path: ROUTE_PATH.TIP_DETAIL,
+						path: ROUTE_PATH.HEALTH_TIP_DETAIL,
 						element: <TipDetailPage />,
 					},
 					{
