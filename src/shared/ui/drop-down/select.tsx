@@ -41,7 +41,7 @@ function SelectTrigger({
 			className={cn(
 				`
 				group
-				flex w-[33.5rem] h-[4.7rem]
+				flex w-full h-[4.7rem]
 				px-[2rem] py-[1.2rem]
 				items-center
 				rounded-[12px]
