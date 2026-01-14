@@ -1,6 +1,6 @@
-import CardTip from "@shared/ui/card/card-tip";
-import Chip from "@shared/ui/chips/chip";
 import { useEffect, useMemo, useRef, useState } from "react";
+import CardTip from "@/shared/ui/cards/card-tip";
+import Chip from "@/shared/ui/chips/chip";
 
 const chips = [
 	"전체",
