@@ -1,16 +1,16 @@
 import { cn } from "@/shared/libs/cn";
 
-type CardTableRow = {
+interface CardTableRow {
 	id: string;
 	label: React.ReactNode;
 	value: React.ReactNode;
-};
+}
 
-type CardTableProps = React.HTMLAttributes<HTMLDivElement> & {
+interface CardTableProps extends React.HTMLAttributes<HTMLDivElement> {
 	headerLeft: React.ReactNode;
 	headerRight: React.ReactNode;
 	rows: readonly [CardTableRow, CardTableRow, CardTableRow];
-};
+}
 
 export const CardTable = ({
 	className,
