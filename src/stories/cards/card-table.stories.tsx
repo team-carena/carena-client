@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CardTable } from "@/shared/ui/card/card-table";
+import { CardTable } from "@/shared/ui/cards/card-table";
 
 const meta: Meta<typeof CardTable> = {
 	title: "card/CardTable",
