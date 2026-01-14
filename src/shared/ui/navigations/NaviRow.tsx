@@ -1,4 +1,4 @@
-import { ChevronSRight } from "@shared/assets/svg";
+import { ChevronMRight } from "@shared/assets/svg";
 import { cn } from "@shared/libs/cn";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
@@ -45,12 +45,7 @@ export const NaviRow = React.forwardRef<HTMLDivElement, NaviRowProps>(
 				<span className="flex-[1_0_0] head03-sb-16">{label}</span>
 
 				{/* icon */}
-				<ChevronSRight
-					className="shrink-0 text-gray-900"
-					width={24}
-					height={24}
-					aria-hidden
-				/>
+				<ChevronMRight className="shrink-0" aria-hidden />
 			</div>
 		);
 	},

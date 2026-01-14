@@ -25,12 +25,7 @@ export const SelectList = React.forwardRef<HTMLDivElement, SelectListProps>(
 				<span className="flex-[1_0_0] body04-r-14">{label}</span>
 
 				{/* icon */}
-				<ChevronSRight
-					className="shrink-0 text-gray-900"
-					width={20}
-					height={20}
-					aria-hidden
-				/>
+				<ChevronSRight className="shrink-0" aria-hidden />
 			</div>
 		);
 	},
