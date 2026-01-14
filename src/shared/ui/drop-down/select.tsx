@@ -44,7 +44,7 @@ function SelectTrigger({
 				flex w-[33.5rem] h-[4.7rem]
 				px-[2rem] py-[1.2rem]
 				items-center
-				rounded-[1.2rem]
+				rounded-[12px]
 				head03-sb-16 border border-gray-500
 				bg-white cursor-pointer
 
@@ -89,7 +89,7 @@ function SelectContent({
           w-[var(--radix-select-trigger-width)]
 		  max-h-[18.4rem]
           p-[0.8rem]
-          rounded-[0.8rem]
+          rounded-[8px]
           bg-white
           z-50
 
@@ -117,7 +117,7 @@ function SelectItem({
 				`
 				flex w-full
 				px-[0.8rem] py-[1rem] gap-[1rem]
-				items-center rounded-[0.8rem]
+				items-center rounded-[8px]
 				bg-white body03-r-16
 				cursor-pointer transition-colors
 				hover:bg-gray-100
