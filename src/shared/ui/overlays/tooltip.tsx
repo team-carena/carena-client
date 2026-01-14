@@ -99,22 +99,21 @@ function PopoverAnchor({
 }
 
 // 이 아래로는 별도로 추가한 코드
-// InfoTooltip: info-gray 아이콘을 트리거로 사용하는 툴팁
-type InfoTooltipProps = {
+// Tooltip: info-gray 아이콘을 트리거로 사용하는 툴팁
+type TooltipProps = {
 	children: React.ReactNode;
 	side?: "top" | "bottom" | "left" | "right"; // PopoverTrigger를 기준으로 한 popover의 위치
 	align?: "start" | "center" | "end"; // 삼각형 위치
 	className?: string;
 };
 
-function InfoTooltip({
+function Tooltip({
 	children,
 	side = "top",
 	align = "start",
 	className,
-}: InfoTooltipProps) {
-	// 삼각형 중앙(left 24px + 11px = 35px)이 아이콘 중앙(약 8px)을 가리키도록 offset 조정
-	const alignOffset = -25;
+}: TooltipProps) {
+	const ALIGH_OFFSET = -25;
 
 	return (
 		<Popover>
@@ -126,7 +125,7 @@ function InfoTooltip({
 			<PopoverContent
 				side={side}
 				align={align}
-				alignOffset={alignOffset} // 삼각형이 아이콘 정중앙을 가리키도록 조절 (기본값 있으므로 값 전달 불필요)
+				alignOffset={ALIGH_OFFSET} // 삼각형이 아이콘 정중앙을 가리키도록 조절 (기본값 있으므로 값 전달 불필요)
 				className={className}
 			>
 				{children}
@@ -135,4 +134,4 @@ function InfoTooltip({
 	);
 }
 
-export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor, InfoTooltip };
+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor, Tooltip };

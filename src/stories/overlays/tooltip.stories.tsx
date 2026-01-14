@@ -1,9 +1,9 @@
-import { InfoTooltip } from "@shared/ui/overlays/info-tooltip";
+import { Tooltip } from "@shared/ui/overlays/tooltip";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-const meta: Meta<typeof InfoTooltip> = {
-	title: "overlays/info-tooltip",
-	component: InfoTooltip,
+const meta: Meta<typeof Tooltip> = {
+	title: "overlays/tooltip",
+	component: Tooltip,
 	tags: ["autodocs"],
 	args: {
 		children:
@@ -24,7 +24,7 @@ const meta: Meta<typeof InfoTooltip> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof InfoTooltip>;
+type Story = StoryObj<typeof Tooltip>;
 
 export const Top: Story = {
 	args: { side: "top" },
@@ -75,19 +75,19 @@ export const AllDirections: Story = {
 		<div className="flex flex-col items-center justify-center min-h-[500px] gap-[100px] py-[150px]">
 			<div className="flex items-center gap-2">
 				<span className="text-gray-600 body05-r-12">Top:</span>
-				<InfoTooltip side="top">위쪽에 표시되는 툴팁입니다.</InfoTooltip>
+				<Tooltip side="top">위쪽에 표시되는 툴팁입니다.</Tooltip>
 			</div>
 			<div className="flex items-center gap-2">
 				<span className="text-gray-600 body05-r-12">Bottom:</span>
-				<InfoTooltip side="bottom">아래쪽에 표시되는 툴팁입니다.</InfoTooltip>
+				<Tooltip side="bottom">아래쪽에 표시되는 툴팁입니다.</Tooltip>
 			</div>
 			<div className="flex items-center gap-2 self-end pr-[300px]">
 				<span className="text-gray-600 body05-r-12">Left:</span>
-				<InfoTooltip side="left">왼쪽에 표시되는 툴팁입니다.</InfoTooltip>
+				<Tooltip side="left">왼쪽에 표시되는 툴팁입니다.</Tooltip>
 			</div>
 			<div className="flex items-center gap-2 self-start pl-[300px]">
 				<span className="text-gray-600 body05-r-12">Right:</span>
-				<InfoTooltip side="right">오른쪽에 표시되는 툴팁입니다.</InfoTooltip>
+				<Tooltip side="right">오른쪽에 표시되는 툴팁입니다.</Tooltip>
 			</div>
 		</div>
 	),
