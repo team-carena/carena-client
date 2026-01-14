@@ -21,12 +21,12 @@ const options = [
 		subLabel: "서울 아산 대구 병원",
 	},
 	{
-		value: "2025-11-03",
+		value: "2025-11-31",
 		label: "2025년 11월 31일",
 		subLabel: "부산 병원",
 	},
 	{
-		value: "2025-11-04",
+		value: "2025-12-22",
 		label: "2025년 12월 22일",
 		subLabel: "대구 병원",
 	},
