@@ -38,10 +38,10 @@ export const CardTable = ({
 					key={row.id}
 					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[1.2rem] bg-white px-[2rem] py-[0.8rem]"
 				>
-					<div className="min-w-0 text-left text-black body05-r-12 whitespace-pre-line break-words">
+					<div className="min-w-0 text-left text-gray-900 body05-r-12 whitespace-pre-line break-words">
 						{row.label}
 					</div>
-					<div className="min-w-0 text-left text-black body05-r-12 whitespace-pre-line break-words">
+					<div className="min-w-0 text-left text-gray-900 body05-r-12 whitespace-pre-line break-words">
 						{row.value}
 					</div>
 				</div>
