@@ -1,5 +1,5 @@
-import CardList from "@shared/ui/card/card-list";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import CardList from "@/shared/ui/cards/card-list";
 
 const meta: Meta<typeof CardList> = {
 	title: "card/CardList",
