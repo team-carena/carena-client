@@ -1,0 +1,41 @@
+import type * as React from "react";
+
+import { InfoGray } from "@/shared/assets/svg";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+
+interface TooltipProps {
+	children: React.ReactNode;
+	side?: "top" | "bottom" | "left" | "right"; // PopoverTrigger를 기준으로 한 popover의 위치
+	align?: "start" | "center" | "end"; // 삼각형 위치
+	className?: string;
+}
+
+function Tooltip({
+	children,
+	side = "top",
+	align = "start",
+	className,
+}: TooltipProps) {
+	// 툴팁 UI의 삼각형 중앙이 info 아이콘 중앙을 가리키도록 offset 조정
+	const ALIGN_OFFSET = -25;
+
+	return (
+		<Popover>
+			<PopoverTrigger asChild>
+				<button type="button" className="inline-flex" aria-label="정보 보기">
+					<InfoGray />
+				</button>
+			</PopoverTrigger>
+			<PopoverContent
+				side={side}
+				align={align}
+				alignOffset={ALIGN_OFFSET}
+				className={className}
+			>
+				{children}
+			</PopoverContent>
+		</Popover>
+	);
+}
+
+export { Tooltip };
