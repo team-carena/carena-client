@@ -14,6 +14,7 @@ export { default as ChevronSUp } from "./chevron-s-up.svg?react";
 export { default as Close } from "./close.svg?react";
 export { default as InfoBlack } from "./info-black.svg?react";
 export { default as InfoGray } from "./info-gray.svg?react";
+export { default as KakaoIcon } from "./kakao-icon.svg?react";
 export { default as My } from "./my.svg?react";
 export { default as Plus } from "./plus.svg?react";
 export { default as Q } from "./q.svg?react";
