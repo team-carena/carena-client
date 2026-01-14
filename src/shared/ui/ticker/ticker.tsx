@@ -10,7 +10,9 @@ interface TickerProps {
 	tips: Tips[];
 }
 
-export const Ticker = ({ tips }: TickerProps) => {
+const TRANSITION_DURATION = 400;
+
+export const Ticker = ({ tips = [] }: TickerProps) => {
 	const [visibleIndex, setVisibleIndex] = useState(0);
 	const [isTransitionEnabled, setIsTransitionEnabled] = useState(false);
 
@@ -27,15 +29,20 @@ export const Ticker = ({ tips }: TickerProps) => {
 	}, []);
 
 	useEffect(() => {
+		if (tips.length === 0) return;
 		if (visibleIndex === tips.length) {
 			const resetIndexTimeout = setTimeout(() => {
 				setIsTransitionEnabled(false);
 				setVisibleIndex(0);
-			}, 400);
+			}, TRANSITION_DURATION);
 
 			return () => clearTimeout(resetIndexTimeout);
 		}
 	}, [visibleIndex, tips.length]);
+
+	if (tips.length === 0) {
+		return null;
+	}
 
 	return (
 		<div className="w-full min-w-[31.1rem] h-[3.5rem] overflow-hidden px-[1.2rem] py-[0.8rem] rounded-[8px] bg-white label04-r-16">
@@ -43,7 +50,7 @@ export const Ticker = ({ tips }: TickerProps) => {
 				className={cn(
 					"will-change-transform",
 					isTransitionEnabled &&
-						"transition-transform duration-400 ease-in-out",
+						`transition-transform duration-${TRANSITION_DURATION} ease-in-out`,
 				)}
 				style={{ transform: `translateY(-${visibleIndex * ITEM_HEIGHT}px)` }}
 			>
