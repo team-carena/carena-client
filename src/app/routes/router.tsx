@@ -1,5 +1,5 @@
-import { TipPage } from "@pages/tips/tip-page";
 import { createBrowserRouter, Navigate } from "react-router";
+import { TipPage } from "@/pages/health-tip/health-tip";
 import { HomePage } from "@/pages/home/ui/home-page";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
