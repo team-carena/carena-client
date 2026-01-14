@@ -1,5 +1,7 @@
+import Lottie from "react-lottie-player";
 import LoginBackGround from "@/shared/assets/img/login-bg.png";
 import { CarenaLogoLogin } from "@/shared/assets/svg";
+import LandingGraphic from "../landing-graphic.json";
 import { LoginButton } from "./login-button";
 
 export const Login = () => {
@@ -15,6 +17,13 @@ export const Login = () => {
 				</span>
 				<span className="display01-b-36 text-primary-500">더 쉽게</span>
 			</div>
+
+			<Lottie
+				animationData={LandingGraphic}
+				play
+				className="w-full h-[20rem] max-w-[320px] mx-auto"
+			/>
+
 			<div className="flex flex-col gap-[0.4rem] mb-[4rem] text-gray-900 body03-r-16">
 				<span>검진 결과를 입력하면,</span>
 				<span className="flex items-center gap-[0.4rem] h-[2.2rem]">
