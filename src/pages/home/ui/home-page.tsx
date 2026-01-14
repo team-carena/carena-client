@@ -1,7 +1,9 @@
+import { Login } from "@/pages/login/ui/login";
+
 export const HomePage = () => {
 	return (
 		<div>
-			<h1>CareNA</h1>
+			<Login />
 		</div>
 	);
 };
