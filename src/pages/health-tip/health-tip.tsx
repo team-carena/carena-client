@@ -43,6 +43,7 @@ export const HealthTipPage = () => {
 
 	const handleChipClick = (value: ChipValue) => {
 		setSelectedChip(value);
+		setVisibleCount(PAGE_SIZE);
 	};
 
 	// 무한스크롤
@@ -75,14 +76,13 @@ export const HealthTipPage = () => {
 
 	return (
 		<div className="w-[37.5rem] h-[81.2rem] bg-white flex flex-col overflow-hidden">
-			<div className="h-[5.6rem] w-full border-b border-gray-200" />
+			<header className="h-[5.6rem] w-full border-b border-gray-200" />
 
-			{/* 칩 + 리스트 같이 스크롤 */}
-			<div
+			<main
 				ref={scrollContainerRef}
 				className="flex-1 bg-gray-50 overflow-y-auto"
 			>
-				<div className="overflow-x-auto scrollbar-hide px-[2rem] py-[1.2rem]">
+				<section className="overflow-x-auto px-[2rem] py-[1.2rem]">
 					<div className="flex w-max gap-[0.8rem]">
 						{chips.map((label) => (
 							<Chip
@@ -94,19 +94,24 @@ export const HealthTipPage = () => {
 							</Chip>
 						))}
 					</div>
-				</div>
+				</section>
 
-				<div className="px-[2rem] py-[1.2rem]">
-					<div className="flex flex-col gap-[1.2rem]">
+				<section className="px-[2rem] py-[1.2rem]">
+					<ul className="flex flex-col gap-[1.2rem]">
 						{filteredTips.slice(0, visibleCount).map((tip) => (
-							<CardTip key={tip.id} more>
-								{tip.title}
-							</CardTip>
+							<li key={tip.id}>
+								<CardTip more>{tip.title}</CardTip>
+							</li>
 						))}
-					</div>
-					{hasMore ? <div ref={bottomRef} className="h-px" /> : null}
-				</div>
-			</div>
+
+						{hasMore ? (
+							<li aria-hidden="true">
+								<div ref={bottomRef} className="h-px" />
+							</li>
+						) : null}
+					</ul>
+				</section>
+			</main>
 		</div>
 	);
 };
