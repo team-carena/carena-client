@@ -38,7 +38,7 @@ export const Ticker = ({ tips }: TickerProps) => {
 	}, [visibleIndex, tips.length]);
 
 	return (
-		<div className="w-full h-[3.5rem] overflow-hidden px-[1.2rem] py-[0.8rem] rounded-[8px] bg-white label04-r-16">
+		<div className="w-full min-w-[31.1rem] h-[3.5rem] overflow-hidden px-[1.2rem] py-[0.8rem] rounded-[8px] bg-white label04-r-16">
 			<div
 				className={cn(
 					"will-change-transform",
