@@ -47,9 +47,9 @@ export const Ticker = ({ tips }: TickerProps) => {
 				)}
 				style={{ transform: `translateY(-${visibleIndex * ITEM_HEIGHT}px)` }}
 			>
-				{extendedTips.map((tip) => (
+				{extendedTips.map((tip, index) => (
 					<div
-						key={tip.id}
+						key={`${tip.id}-${index}`}
 						className="h-[3.5rem] overflow-hidden text-ellipsis whitespace-nowrap"
 					>
 						{tip.title}
