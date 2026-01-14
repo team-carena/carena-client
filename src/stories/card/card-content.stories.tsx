@@ -1,4 +1,4 @@
-import ContentCard from "@shared/ui/card/card-content";
+import { ContentCard } from "@shared/ui/card/card-content";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof ContentCard> = {
@@ -6,23 +6,25 @@ const meta: Meta<typeof ContentCard> = {
 	component: ContentCard,
 	tags: ["autodocs"],
 	args: {
-		subtitle: "소제목",
-		content:
-			"내용입니다. 길이는 마구 길어져도 상관 없습니다(min 114px).\n양옆위아래 패딩 값 상관 있습니다.",
-		tags: ["#태그", "#태그", "#태그", "#태그", "#태그"],
+		variant: "default",
+		children: (
+			<>
+				<ContentCard.Title>소제목</ContentCard.Title>
+				<ContentCard.Content>
+					내용입니다. 길이는 마구 길어져도 상관 없습니다(min 114px).
+					{"\n"}양옆위아래 패딩 값 상관 있습니다.
+				</ContentCard.Content>
+				<ContentCard.Tags
+					tags={["#태그", "#태그", "#태그", "#태그", "#태그"]}
+				/>
+			</>
+		),
 	},
 	argTypes: {
-		subtitle: {
-			control: "text",
-			description: "소제목(있을 수도, 없을 수도 있음)",
-		},
-		content: {
-			control: "text",
-			description: "본문 내용",
-		},
-		tags: {
-			control: "object",
-			description: "태그 문자열 배열",
+		variant: {
+			control: "select",
+			options: ["default", "muted"],
+			description: "카드 스타일 변형",
 		},
 	},
 	decorators: [
@@ -37,30 +39,62 @@ const meta: Meta<typeof ContentCard> = {
 export default meta;
 type Story = StoryObj<typeof ContentCard>;
 
-export const WithSubtitle: Story = {
+export const Default: Story = {
 	args: {
-		subtitle: "소제목",
+		variant: "default",
 	},
 };
 
-export const WithoutSubtitle: Story = {
+export const WithoutTitle: Story = {
 	args: {
-		subtitle: undefined,
+		children: (
+			<>
+				<ContentCard.Content>
+					소제목 없는 케이스입니다. 본문이 상단 패딩부터 시작해야 합니다.
+				</ContentCard.Content>
+				<ContentCard.Tags tags={["#태그", "#태그", "#태그"]} />
+			</>
+		),
+	},
+};
+
+export const Muted: Story = {
+	args: {
+		variant: "muted",
+		children: (
+			<>
+				<ContentCard.Content>
+					그림 아래 상자 케이스입니다. 배경색과 패딩이 다릅니다.
+				</ContentCard.Content>
+			</>
+		),
 	},
 };
 
 export const Multiple: Story = {
 	render: () => (
 		<div className="flex flex-col gap-[12px] w-[375px]">
-			<ContentCard
-				subtitle="소제목"
-				content="내용입니다. 길이는 마구 길어져도 상관 없습니다(min 114px)."
-				tags={["#태그", "#태그", "#태그", "#태그", "#태그"]}
-			/>
-			<ContentCard
-				content="subtitle 없는 케이스입니다. 본문이 상단 패딩(24px)부터 시작해야 합니다."
-				tags={["#태그", "#태그", "#태그"]}
-			/>
+			<ContentCard variant="default">
+				<ContentCard.Title>소제목</ContentCard.Title>
+				<ContentCard.Content>
+					소제목 있는 케이스입니다. 길이는 길어져도 상관 없습니다
+				</ContentCard.Content>
+				<ContentCard.Tags
+					tags={["#태그", "#태그", "#태그", "#태그", "#태그"]}
+				/>
+			</ContentCard>
+			<ContentCard variant="default">
+				<ContentCard.Content>
+					소제목 없는 케이스입니다. 길이는 길어져도 상관 없습니다.
+				</ContentCard.Content>
+				<ContentCard.Tags tags={["#태그", "#태그", "#태그"]} />
+			</ContentCard>
+			<ContentCard variant="muted">
+				<ContentCard.Content>
+					이러쿵 저러쿵 내용입니다. 길이는 마구 길어져도 상관 없습니다.
+					양옆위아래 패딩 값 상관 있습니다.
+				</ContentCard.Content>
+			</ContentCard>
 		</div>
 	),
 };
