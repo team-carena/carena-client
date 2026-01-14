@@ -60,7 +60,7 @@ function SelectTrigger({
 
 			<SelectPrimitive.Icon
 				className="
-          transition-transform duration-450 ease-in-out
+          transition-transform duration-500 ease-in-out
           group-data-[state=open]:rotate-180
 		  group-data-[disabled]:hidden
           ml-[1.2rem]
