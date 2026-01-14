@@ -1,5 +1,5 @@
-import { Tooltip } from "@shared/ui/overlays/tooltip";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 
 const meta: Meta<typeof Tooltip> = {
 	title: "overlays/tooltip",
