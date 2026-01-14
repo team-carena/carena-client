@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { TipDetailPage } from "@/pages/health-tip/health-tip-detail";
-import { HomePage } from "@/pages/home/ui/home-page";
+import { HomePage } from "@/pages/home/ui/home";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
