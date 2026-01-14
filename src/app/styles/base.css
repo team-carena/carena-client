@@ -80,3 +80,17 @@
     display: none; /* Chrome, Safari */
   }
 }
+
+
+@layer utilities {
+  @keyframes select-slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

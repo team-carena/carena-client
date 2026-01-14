@@ -1,5 +1,6 @@
 import { TipPage } from "@pages/tips/tip-page";
 import { createBrowserRouter, Navigate } from "react-router";
+import { HomePage } from "@/pages/home/ui/home-page";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
 					},
 					{
 						path: ROUTE_PATH.HOME,
-						element: <></>,
+						element: <HomePage />,
 					},
 					{
 						path: ROUTE_PATH.MY_PAGE,
