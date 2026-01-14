@@ -1,7 +1,7 @@
 export { default as Ai } from "./ai.svg?react";
 export { default as Alert } from "./alert.svg?react";
 export { default as CarenaLogo } from "./carena-logo.svg?react";
-export { default as CarenaLogoLogin } from "./carena-logo-login.svg?react";
+export { default as CarenaLogoText } from "./carena-logo-text.svg?react";
 export { default as Check } from "./check.svg?react";
 export { default as CheckW } from "./check-w.svg?react";
 export { default as ChevronMDown } from "./chevron-m-down.svg?react";
