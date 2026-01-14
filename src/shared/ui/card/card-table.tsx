@@ -26,7 +26,7 @@ export const CardTable = ({
 		>
 			<div
 				className={cn(
-					"grid grid-cols-[11rem_18.5rem] items-center rounded-[1.2rem] bg-gray-200",
+					"grid grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-gray-200",
 					"body01-sb-12 text-gray-900",
 				)}
 			>
