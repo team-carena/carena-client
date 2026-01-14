@@ -1,5 +1,5 @@
-import { MainToaster } from "@/shared/ui/toasts/toast";
 import { OverlayProvider } from "overlay-kit";
+import { MainToaster } from "@/shared/ui/toasts/toast";
 import { QueryProvider } from "./query-provider";
 import { RouterProvider } from "./router-provider";
 
