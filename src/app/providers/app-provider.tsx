@@ -6,7 +6,6 @@ import { RouterProvider } from "./router-provider";
 export const AppProvider = () => {
 	return (
 		<QueryProvider>
-			<RouterProvider />
 			<MainToaster />
 			<OverlayProvider>
 				<RouterProvider />
