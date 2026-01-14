@@ -1,5 +1,5 @@
-import CardTip from "@shared/ui/card/card-tip";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import CardTip from "@/shared/ui/card/card-tip";
 
 const meta: Meta<typeof CardTip> = {
 	title: "card/CardTip",

@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type * as React from "react";
-import { MainToaster, notify, notifyError } from "@/shared/ui/toasts/toast";
+import {
+	MainToaster,
+	notify,
+	notifyError,
+} from "@/shared/ui/overlays/toast/toast";
 
 const meta: Meta = {
 	title: "Common/Toast",
