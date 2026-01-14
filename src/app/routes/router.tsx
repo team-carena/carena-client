@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router";
-import { TipPage } from "@/pages/health-tip/health-tip";
+import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HomePage } from "@/pages/home/ui/home-page";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
@@ -30,8 +30,8 @@ export const router = createBrowserRouter([
 						element: <></>,
 					},
 					{
-						path: ROUTE_PATH.TIP,
-						element: <TipPage />,
+						path: ROUTE_PATH.HEALTH_TIP,
+						element: <HealthTipPage />,
 					},
 					{
 						path: "*",

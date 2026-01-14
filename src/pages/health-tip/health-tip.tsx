@@ -23,7 +23,7 @@ const tipData = Array.from({ length: 30 }, (_, index) => ({
 	category: "만성질환" as ChipValue,
 }));
 
-export const TipPage = () => {
+export const HealthTipPage = () => {
 	const [selectedChip, setSelectedChip] = useState<ChipValue>("전체");
 	const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
@@ -64,7 +64,7 @@ export const TipPage = () => {
 			},
 			{
 				root, // 내부 스크롤 컨테이너 기준으로 감지
-				rootMargin: "20rem",
+				rootMargin: "200px",
 				threshold: 0,
 			},
 		);
