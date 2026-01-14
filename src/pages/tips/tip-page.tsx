@@ -74,7 +74,7 @@ export const TipPage = () => {
 	}, [filteredTips.length, hasMore]);
 
 	return (
-		<div className="w-[37.5rem] h-[81.2rem] bg-white border border-gray-200 flex flex-col overflow-hidden">
+		<div className="w-[37.5rem] h-[81.2rem] bg-white flex flex-col overflow-hidden">
 			<div className="h-[5.6rem] w-full border-b border-gray-200" />
 
 			{/* 칩 + 리스트 같이 스크롤 */}
