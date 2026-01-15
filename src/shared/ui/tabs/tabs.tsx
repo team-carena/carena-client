@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { cn } from "@/shared/libs/cn";
 import { TabsContext, useTabsContext } from "./use-tabs-context";
 
@@ -11,9 +11,33 @@ interface TabsRootProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const TabsRoot = ({ children, defaultTab }: TabsRootProps) => {
 	const [selectedTab, setSelectedTab] = useState(defaultTab);
+	const scrollPositions = useRef<Record<string, number>>({}); // <탭, 스크롤 y좌표>
+
+	const changeTab = useCallback(
+		(newTab: string) => {
+			// 같은 탭 클릭 시 최상단으로 이동
+			if (selectedTab === newTab) {
+				window.scrollTo({ top: 0, behavior: "smooth" });
+				return;
+			}
+
+			// 현재 탭의 스크롤 위치 저장
+			scrollPositions.current[selectedTab] = window.scrollY;
+
+			// 새 탭으로 전환
+			setSelectedTab(newTab);
+
+			// 새 탭의 저장된 위치로 이동 (없으면 0)
+			window.scrollTo({
+				top: scrollPositions.current[newTab] ?? 0,
+				behavior: "instant",
+			});
+		},
+		[selectedTab],
+	);
 
 	return (
-		<TabsContext value={{ selectedTab, setSelectedTab }}>
+		<TabsContext value={{ selectedTab, changeTab }}>
 			<div>{children}</div>
 		</TabsContext>
 	);
@@ -53,7 +77,7 @@ const TabsTrigger = ({
 	className,
 	...props
 }: TabsTriggerProps) => {
-	const { selectedTab, setSelectedTab } = useTabsContext();
+	const { selectedTab, changeTab } = useTabsContext();
 	const isSelected = selectedTab === value;
 
 	return (
@@ -69,7 +93,7 @@ const TabsTrigger = ({
 				className,
 			)}
 			data-selected={isSelected}
-			onClick={() => setSelectedTab(value)}
+			onClick={() => changeTab(value)}
 			{...props}
 		>
 			{children}
