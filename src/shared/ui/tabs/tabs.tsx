@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cn } from "@/shared/libs/cn";
 import { TabsContext, useTabsContext } from "./use-tabs-context";
 
 // ==== TabsRoot ====
@@ -26,7 +27,10 @@ interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const TabsList = ({ children, className, ...props }: TabsListProps) => {
 	return (
-		<div className={className} {...props}>
+		<div
+			className={cn("flex w-full border-b border-gray-300 bg-white", className)}
+			{...props}
+		>
 			{children}
 		</div>
 	);
@@ -53,8 +57,12 @@ const TabsTrigger = ({
 		<button
 			type="button"
 			role="tab"
-			className={className}
-			data-selected={isSelected} // CSS에서 [data-selected="true"]와 같이 선택 상태 노출 가능 -> 외부에서 스타일링 하기에 용이
+			className={cn(
+				"flex-1 py-[1.2rem] text-center",
+				isSelected ? "text-gray-900 head03-sb-16" : "text-gray-500 head04-m-16",
+				className,
+			)}
+			data-selected={isSelected}
 			onClick={() => setSelectedTab(value)}
 			{...props}
 		>
