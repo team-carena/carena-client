@@ -28,22 +28,6 @@ export const Modal = ({
 	onClose,
 }: ModalProps) => {
 	React.useEffect(() => {
-		if (!open) {
-			return undefined;
-		}
-
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				onClose?.();
-			}
-		};
-
-		window.addEventListener("keydown", handleKeyDown);
-
-		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [open, onClose]);
-
-	React.useEffect(() => {
 		if (open) {
 			const originalOverflow = document.body.style.overflow;
 			document.body.style.overflow = "hidden";
