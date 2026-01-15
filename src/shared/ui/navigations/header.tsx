@@ -43,7 +43,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
 				{...props}
 			>
 				{/* Left */}
-				<div className="flex items-center z-10">
+				<div className="flex items-center">
 					{isBackVisible ? (
 						<button
 							type="button"
@@ -66,7 +66,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
 				)}
 
 				{/* Right */}
-				<div className="flex items-center z-10">
+				<div className="flex items-center">
 					{isMyVisible && (
 						<button
 							type="button"
