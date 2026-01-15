@@ -28,7 +28,10 @@ interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {
 const TabsList = ({ children, className, ...props }: TabsListProps) => {
 	return (
 		<div
-			className={cn("flex w-full border-b border-gray-300 bg-white", className)}
+			className={cn(
+				"sticky top-0 z-10 flex w-full border-b border-gray-300 bg-white",
+				className,
+			)}
 			{...props}
 		>
 			{children}
