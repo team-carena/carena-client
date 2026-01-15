@@ -1,32 +1,35 @@
 import { ChevronSRight } from "@shared/assets/svg";
 import { cn } from "@shared/libs/cn";
-import { cva } from "class-variance-authority";
 import * as React from "react";
 
-const selectListVariants = cva(
-	[
-		"flex items-center justify-between",
-		"w-[29.5rem] h-[2.8rem]",
-		"px-0 py-[0.4rem]",
-		"cursor-pointer",
-		"text-gray-900",
-	].join(" "),
-);
-
-export interface SelectListProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SelectListProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	label: string;
 }
 
-export const SelectList = React.forwardRef<HTMLDivElement, SelectListProps>(
+export const SelectList = React.forwardRef<HTMLButtonElement, SelectListProps>(
 	({ label, className, ...props }, ref) => {
 		return (
-			<div ref={ref} className={cn(selectListVariants(), className)} {...props}>
+			<button
+				ref={ref}
+				type="button"
+				className={cn(
+					`
+          flex items-center justify-between
+          w-full h-[2.8rem]
+          px-0 py-[0.4rem]
+          text-gray-900
+        `,
+					className,
+				)}
+				{...props}
+			>
 				{/* text */}
-				<span className="flex-[1_0_0] body04-r-14">{label}</span>
+				<span className="flex-[1_0_0] body04-r-14 text-left">{label}</span>
 
 				{/* icon */}
 				<ChevronSRight className="shrink-0" aria-hidden />
-			</div>
+			</button>
 		);
 	},
 );

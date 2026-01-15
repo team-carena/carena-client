@@ -1,22 +1,11 @@
 import { Header } from "@shared/ui/navigations/Header";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-/* 모바일 웹 레이아웃 wrapper */
-const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
-	<div className="mx-auto w-full min-w-[37.5rem] max-w-[44rem]">{children}</div>
-);
-
 const meta: Meta<typeof Header> = {
 	title: "shared/navigations/Header",
 	component: Header,
 	tags: ["autodocs"],
-	decorators: [
-		(Story) => (
-			<MobileWrapper>
-				<Story />
-			</MobileWrapper>
-		),
-	],
+	decorators: [(Story) => <Story />],
 	argTypes: {
 		title: {
 			control: "text",

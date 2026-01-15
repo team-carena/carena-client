@@ -1,23 +1,33 @@
 import { NaviRowSmall } from "@shared/ui/navigations/NaviRowSmall";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import type * as React from "react";
+
+/* 모바일 웹 레이아웃 wrapper */
+const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
+	<div className="mx-auto w-full min-w-[37.5rem] max-w-[44rem] px-[2rem]">
+		{children}
+	</div>
+);
 
 const meta: Meta<typeof NaviRowSmall> = {
 	title: "shared/navigations/NaviRowSmall",
 	component: NaviRowSmall,
 	tags: ["autodocs"],
+	decorators: [
+		(Story) => (
+			<MobileWrapper>
+				<Story />
+			</MobileWrapper>
+		),
+	],
 	argTypes: {
 		label: {
 			control: "text",
 			description: "좌측에 표시되는 텍스트",
 		},
-		actionLabel: {
-			control: "text",
-			description: "우측 액션 텍스트",
-		},
-		state: {
-			control: "radio",
-			options: ["default", "pressing"],
-			description: "Row의 선택/강조 상태",
+		onClick: {
+			action: "clicked",
+			description: "Row 클릭 시 호출되는 이벤트",
 		},
 	},
 };
@@ -29,26 +39,5 @@ export const Default: Story = {
 	args: {
 		label: "텍스트",
 		actionLabel: "더보기",
-		state: "default",
-	},
-};
-
-export const Pressing: Story = {
-	args: {
-		label: "텍스트",
-		actionLabel: "더보기",
-		state: "pressing",
-	},
-};
-
-// 모바일 웹에서 터치 중(active) 상태를 확인하기 위한 스토리
-export const Active: Story = {
-	args: {
-		label: "텍스트",
-		actionLabel: "더보기",
-		state: "default",
-	},
-	parameters: {
-		pseudo: { active: true },
 	},
 };

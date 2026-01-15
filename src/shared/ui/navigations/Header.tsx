@@ -28,7 +28,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
 				ref={ref}
 				className={cn(
 					[
-						// 📌 fixed header
+						// fixed header
 						"fixed top-0 left-0 right-0 z-50",
 
 						// layout
@@ -50,14 +50,14 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
 							aria-label="뒤로가기"
 							className="flex items-center justify-center"
 						>
-							<ChevronMLeft />
+							<ChevronMLeft className="shrink-0" aria-hidden />
 						</button>
 					) : (
-						<CarenaLogo />
+						<CarenaLogo className="shrink-0" aria-hidden />
 					)}
 				</div>
 
-				{/* Title (항상 중앙 고정) */}
+				{/* Title */}
 				{title && (
 					<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
 						<span className="head04-m-16 text-gray-900">{title}</span>
@@ -73,7 +73,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
 							aria-label="마이페이지"
 							className="flex items-center justify-center"
 						>
-							<My />
+							<My className="shrink-0" aria-hidden />
 						</button>
 					)}
 				</div>
