@@ -1,4 +1,4 @@
-import { NaviRowSmall } from "@shared/ui/navigations/NaviRowSmall";
+import { NaviRowSmall } from "@shared/ui/navigations/navi-row-small";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type * as React from "react";
 

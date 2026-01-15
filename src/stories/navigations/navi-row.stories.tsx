@@ -1,4 +1,4 @@
-import { SelectList } from "@shared/ui/navigations/SelectList";
+import { NaviRow } from "@shared/ui/navigations/navi-row";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type * as React from "react";
 
@@ -9,9 +9,9 @@ const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
 	</div>
 );
 
-const meta: Meta<typeof SelectList> = {
-	title: "shared/navigations/SelectList",
-	component: SelectList,
+const meta: Meta<typeof NaviRow> = {
+	title: "shared/navigations/NaviRow",
+	component: NaviRow,
 	tags: ["autodocs"],
 	decorators: [
 		(Story) => (
@@ -23,20 +23,20 @@ const meta: Meta<typeof SelectList> = {
 	argTypes: {
 		label: {
 			control: "text",
-			description: "리스트에 표시되는 텍스트",
+			description: "좌측에 표시되는 텍스트",
 		},
 		onClick: {
 			action: "clicked",
-			description: "리스트 클릭 시 호출되는 이벤트",
+			description: "Row 클릭 시 호출되는 이벤트",
 		},
 	},
 };
 
 export default meta;
-type Story = StoryObj<typeof SelectList>;
+type Story = StoryObj<typeof NaviRow>;
 
 export const Default: Story = {
 	args: {
-		label: "텍스트",
+		label: "Text",
 	},
 };
