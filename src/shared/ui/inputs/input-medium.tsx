@@ -142,7 +142,10 @@ export const InputMedium = React.forwardRef<HTMLInputElement, InputMediumProps>(
 
 					{/* error message */}
 					{isError && errorMessage && (
-						<div className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12">
+						<div
+							className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12"
+							role="alert"
+						>
 							<SystemDangerIcon
 								width={24}
 								height={24}

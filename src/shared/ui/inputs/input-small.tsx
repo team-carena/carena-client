@@ -114,6 +114,9 @@ export const InputSmall = ({
 							>
 								<input
 									id={leftInputId}
+									type="text"
+									inputMode="numeric"
+									pattern="[0-9]*"
 									value={valueLeft}
 									disabled={isDisabled}
 									readOnly={isReadOnly}
@@ -160,6 +163,9 @@ export const InputSmall = ({
 							>
 								<input
 									id={rightInputId}
+									type="text"
+									inputMode="numeric"
+									pattern="[0-9]*"
 									value={valueRight}
 									disabled={isDisabled}
 									readOnly={isReadOnly}

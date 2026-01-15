@@ -1,6 +1,6 @@
-import { DateInput } from "@shared/ui/inputs/DateInput";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
+import { DateInput } from "@/shared/ui/inputs/date-input";
 
 /* 모바일 웹 레이아웃 wrapper */
 const MobileWrapper = ({ children }: { children: React.ReactNode }) => (

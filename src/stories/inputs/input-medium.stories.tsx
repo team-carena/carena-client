@@ -1,6 +1,6 @@
-import { InputMedium } from "@shared/ui/inputs/InputMedium";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { InputMedium } from "@/shared/ui/inputs/input-medium";
 
 const meta: Meta<typeof InputMedium> = {
 	title: "Shared/Input/InputMedium",

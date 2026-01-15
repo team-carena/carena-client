@@ -1,6 +1,6 @@
-import { InputSmall } from "@shared/ui/inputs/InputSmall";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { InputSmall } from "@/shared/ui/inputs/input-small";
 
 const meta: Meta<typeof InputSmall> = {
 	title: "Shared/Input/InputSmall",

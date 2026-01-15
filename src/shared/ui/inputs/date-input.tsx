@@ -38,6 +38,8 @@ const inputFieldVariants = cva(
 	},
 );
 
+const filterNumeric = (value: string) => value.replace(/[^0-9]/g, "");
+
 interface DateInputProps {
 	year: string;
 	month: string;
@@ -100,9 +102,10 @@ export const DateInput = ({
 						pattern="[0-9]*"
 						value={year}
 						placeholder="YYYY"
+						aria-label="연도"
 						disabled={isDisabled}
 						readOnly={isView}
-						onChange={(e) => onChangeYear(e.target.value)}
+						onChange={(e) => onChangeYear(filterNumeric(e.target.value))}
 						onFocus={() => !isDisabled && !isView && setFocused("year")}
 						onBlur={() => setFocused(null)}
 						className={cn(inputFieldVariants({ state: fieldState }))}
@@ -119,11 +122,15 @@ export const DateInput = ({
 					)}
 				>
 					<input
+						type="text"
+						inputMode="numeric"
+						pattern="[0-9]*"
 						value={month}
 						placeholder="MM"
+						aria-label="월"
 						disabled={isDisabled}
 						readOnly={isView}
-						onChange={(e) => onChangeMonth(e.target.value)}
+						onChange={(e) => onChangeMonth(filterNumeric(e.target.value))}
 						onFocus={() => !isDisabled && !isView && setFocused("month")}
 						onBlur={() => setFocused(null)}
 						className={cn(inputFieldVariants({ state: fieldState }))}
@@ -140,11 +147,15 @@ export const DateInput = ({
 					)}
 				>
 					<input
+						type="text"
+						inputMode="numeric"
+						pattern="[0-9]*"
 						value={day}
 						placeholder="DD"
+						aria-label="일"
 						disabled={isDisabled}
 						readOnly={isView}
-						onChange={(e) => onChangeDay(e.target.value)}
+						onChange={(e) => onChangeDay(filterNumeric(e.target.value))}
 						onFocus={() => !isDisabled && !isView && setFocused("day")}
 						onBlur={() => setFocused(null)}
 						className={cn(inputFieldVariants({ state: fieldState }))}
@@ -154,7 +165,10 @@ export const DateInput = ({
 
 			{/* error message */}
 			{isError && errorMessage && (
-				<div className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12">
+				<div
+					className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12"
+					role="alert"
+				>
 					<SystemDangerIcon className="shrink-0" aria-hidden />
 					<span>{errorMessage}</span>
 				</div>
