@@ -48,14 +48,12 @@ export const Modal = ({
 			)}
 			aria-hidden={!open}
 		>
-			<button
-				type="button"
-				aria-label="Close modal"
+			<div
+				aria-hidden="true"
 				className={cn(
 					"absolute inset-0 bg-black-30 transition-opacity duration-200",
 					open ? "opacity-100" : "opacity-0",
 				)}
-				onClick={onClose}
 			/>
 			<div
 				role="dialog"
