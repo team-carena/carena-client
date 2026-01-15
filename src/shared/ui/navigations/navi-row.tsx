@@ -33,5 +33,3 @@ export const NaviRow = ({ label, className, ...props }: NaviRowProps) => {
     </button>
   );
 };
-
-NaviRow.displayName = 'NaviRow';

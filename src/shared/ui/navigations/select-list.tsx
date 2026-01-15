@@ -33,5 +33,3 @@ export const SelectList = React.forwardRef<HTMLButtonElement, SelectListProps>(
 		);
 	},
 );
-
-SelectList.displayName = "SelectList";

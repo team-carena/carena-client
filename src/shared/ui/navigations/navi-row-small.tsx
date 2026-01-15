@@ -37,5 +37,3 @@ export const NaviRowSmall = React.forwardRef<
 		</button>
 	);
 });
-
-NaviRowSmall.displayName = "NaviRowSmall";
