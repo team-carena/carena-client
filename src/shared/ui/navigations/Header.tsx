@@ -58,7 +58,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
 					)}
 				</div>
 
-				{/* Title (항상 중앙 고정) */}
+				{/* Title */}
 				{title && (
 					<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
 						<span className="head04-m-16 text-gray-900">{title}</span>
