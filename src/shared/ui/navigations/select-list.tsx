@@ -17,7 +17,7 @@ export const SelectList = React.forwardRef<HTMLButtonElement, SelectListProps>(
 					`
           flex items-center justify-between
           w-full h-[2.8rem]
-          px-0 py-[0.4rem]
+          py-[0.4rem]
           text-gray-900
         `,
 					className,
