@@ -7,7 +7,7 @@ import { LoginButton } from "./login-button";
 export const LoginPage = () => {
 	return (
 		<main
-			className="min-h-screen bg-center bg-no-repeat bg-cover px-[2rem]"
+			className="min-h-dvh bg-center bg-no-repeat bg-cover px-[2rem]"
 			style={{ backgroundImage: `url(${LoginBackGround})` }}
 		>
 			<header className="flex flex-col gap-[1.9rem] pt-[4rem] pb-[1.6rem] px-[0.4rem]">
@@ -19,6 +19,7 @@ export const LoginPage = () => {
 
 			<Lottie
 				animationData={LandingGraphic}
+				aria-hidden="true"
 				loop
 				play
 				className="w-[20rem] h-[22rem] mx-auto mt-[8.1rem] mb-[7.2rem]"
