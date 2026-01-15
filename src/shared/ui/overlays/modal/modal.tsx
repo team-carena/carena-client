@@ -25,7 +25,6 @@ export const Modal = ({
 	primaryAction,
 	secondaryAction,
 	size = "lg",
-	onClose,
 }: ModalProps) => {
 	React.useEffect(() => {
 		if (open) {
