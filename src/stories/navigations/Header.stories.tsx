@@ -5,7 +5,6 @@ const meta: Meta<typeof Header> = {
 	title: "shared/navigations/Header",
 	component: Header,
 	tags: ["autodocs"],
-	decorators: [(Story) => <Story />],
 	argTypes: {
 		title: {
 			control: "text",
