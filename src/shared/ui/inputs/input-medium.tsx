@@ -1,6 +1,6 @@
 import { cn } from "@shared/libs/cn";
 import SystemDangerIcon from "@svg/system-danger.svg?react";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import * as React from "react";
 
 const inputMediumVariants = cva(
