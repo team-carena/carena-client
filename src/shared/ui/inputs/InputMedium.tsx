@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 const inputMediumVariants = cva(
-	"flex items-center justify-between rounded-[0.6rem] border transition-colors px-[1.6rem] py-[0.8rem]",
+	"flex items-center justify-between rounded-[6px] border transition-colors px-[1.6rem] py-[0.8rem]",
 	{
 		variants: {
 			state: {

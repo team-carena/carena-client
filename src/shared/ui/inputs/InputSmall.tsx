@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 const inputSmallVariants = cva(
-	"flex items-center gap-[1rem] rounded-[0.6rem] border transition-colors px-[1.2rem] py-[0.6rem]",
+	"flex items-center gap-[1rem] rounded-[6px] border transition-colors px-[1.2rem] py-[0.6rem]",
 	{
 		variants: {
 			state: {
@@ -132,11 +132,7 @@ export const InputSmall = ({
 									className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12 whitespace-nowrap"
 									role="alert"
 								>
-									<SystemDangerIcon
-										width={24}
-										height={24}
-										fill="currentColor"
-									/>
+									<SystemDangerIcon className="shrink-0" aria-hidden />
 									<span>{errorMessage}</span>
 								</div>
 							)}
