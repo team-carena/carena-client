@@ -12,6 +12,7 @@ export { default as ChevronSLeft } from "./chevron-s-left.svg?react";
 export { default as ChevronSRight } from "./chevron-s-right.svg?react";
 export { default as ChevronSUp } from "./chevron-s-up.svg?react";
 export { default as Close } from "./close.svg?react";
+export { default as DefaultProfile } from "./default-profile.svg?react";
 export { default as InfoBlack } from "./info-black.svg?react";
 export { default as InfoGray } from "./info-gray.svg?react";
 export { default as My } from "./my.svg?react";
