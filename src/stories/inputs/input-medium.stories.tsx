@@ -1,22 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import * as React from "react";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
 
+/* 모바일 웹 레이아웃 wrapper */
+const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
+	<div className="w-full min-w-[37.5rem] max-w-[44rem] px-[1.6rem]">
+		{children}
+	</div>
+);
+
 const meta: Meta<typeof InputMedium> = {
-	title: "Shared/Input/InputMedium",
+	title: "input/InputMedium",
 	component: InputMedium,
-	parameters: {
-		layout: "centered",
-	},
-	args: {
-		label: "항목",
-		placeholder: "placeholder",
-		isRequired: false,
-		isError: false,
-		isDisabled: false,
-		isReadOnly: false,
-		unit: undefined,
-	},
+	decorators: [
+		(Story) => (
+			<MobileWrapper>
+				<Story />
+			</MobileWrapper>
+		),
+	],
 	argTypes: {
 		label: {
 			control: "text",
@@ -44,11 +46,11 @@ const meta: Meta<typeof InputMedium> = {
 		},
 		isReadOnly: {
 			control: "boolean",
-			description: "읽기 전용(View) 상태",
+			description: "읽기 전용 상태",
 		},
-		onChange: {
-			action: "change",
-			description: "입력 값 변경 이벤트",
+		isNumeric: {
+			control: "boolean",
+			description: "숫자 입력 전용 여부",
 		},
 	},
 };
@@ -56,108 +58,105 @@ const meta: Meta<typeof InputMedium> = {
 export default meta;
 type Story = StoryObj<typeof InputMedium>;
 
-/* 모바일 웹 레이아웃 wrapper */
-const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
-	<div className="w-full min-w-[37.5rem] max-w-[44rem] px-[1.6rem]">
-		{children}
-	</div>
-);
-
-/* 공통 Template (controlled input) */
-const Template = (args: React.ComponentProps<typeof InputMedium>) => {
-	const [value, setValue] = useState("");
-
-	return (
-		<MobileWrapper>
-			<InputMedium {...args} value={value} onChange={setValue} />
-		</MobileWrapper>
-	);
-};
-
-/* Default */
+// Default
 export const Default: Story = {
-	render: Template,
-};
-
-/* Required */
-export const Required: Story = {
-	render: Template,
-	args: {
-		isRequired: true,
-	},
-};
-
-/* Focused
- * - 스토리 화면에서 직접 input 클릭해서 확인
- */
-export const Focused: Story = {
-	render: Template,
-};
-
-/* Completed (값 존재) */
-export const Completed: Story = {
 	render: (args) => {
-		const [value, setValue] = useState("값이 입력된 상태");
+		const [value, setValue] = React.useState("");
 
 		return (
-			<MobileWrapper>
-				<InputMedium {...args} value={value} onChange={setValue} />
-			</MobileWrapper>
+			<InputMedium
+				{...args}
+				label="항목"
+				placeholder="placeholder"
+				value={value}
+				onChange={setValue}
+			/>
 		);
 	},
 };
 
-/* With Unit */
+// Completed
+export const Completed: Story = {
+	render: (args) => {
+		const [value, setValue] = React.useState("값이 입력된 상태");
+
+		return (
+			<InputMedium {...args} label="항목" value={value} onChange={setValue} />
+		);
+	},
+};
+
+// Required
+export const Required: Story = {
+	render: (args) => {
+		const [value, setValue] = React.useState("");
+
+		return (
+			<InputMedium
+				{...args}
+				label="항목"
+				isRequired
+				value={value}
+				onChange={setValue}
+			/>
+		);
+	},
+};
+
+// With Unit
 export const WithUnit: Story = {
-	render: Template,
-	args: {
-		unit: "단위",
+	render: (args) => {
+		const [value, setValue] = React.useState("");
+
+		return (
+			<InputMedium
+				{...args}
+				label="항목"
+				unit="단위"
+				value={value}
+				onChange={setValue}
+			/>
+		);
 	},
 };
 
-/* Without Unit
- * - unit 유무와 관계없이 레이아웃 동일한지 확인
- */
-export const WithoutUnit: Story = {
-	render: Template,
-	args: {
-		unit: undefined,
-	},
-};
-
-/* Error */
+// Error
 export const ErrorState: Story = {
-	render: Template,
-	args: {
-		isError: true,
-		errorMessage: "에러메시지",
-		unit: "단위",
+	render: (args) => {
+		const [value, setValue] = React.useState("123");
+
+		return (
+			<InputMedium
+				{...args}
+				label="항목"
+				isError
+				errorMessage="에러메시지"
+				unit="단위"
+				value={value}
+				onChange={setValue}
+			/>
+		);
 	},
 };
 
-/* Disabled */
+// Disabled
 export const Disabled: Story = {
-	render: Template,
 	args: {
+		label: "항목",
+		value: "123",
+		unit: "단위",
 		isDisabled: true,
-		unit: "단위",
+		onChange: () => {},
 	},
 };
 
-/* ReadOnly (View) */
+// ReadOnly
 export const ReadOnly: Story = {
-	render: Template,
 	args: {
+		label: "항목",
+		value: "123",
+		unit: "단위",
 		isReadOnly: true,
-		unit: "단위",
-	},
-};
-
-/* Long Label (레이아웃 검증용) */
-export const LongLabel: Story = {
-	render: Template,
-	args: {
-		label: "아주아주 긴 라벨",
-		unit: "단위",
+		onChange: () => {},
 	},
 };

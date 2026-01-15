@@ -10,11 +10,8 @@ const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 const meta: Meta<typeof DateInput> = {
-	title: "Shared/Input/DateInput",
+	title: "input/DateInput",
 	component: DateInput,
-	parameters: {
-		layout: "centered",
-	},
 	decorators: [
 		(Story) => (
 			<MobileWrapper>
@@ -23,19 +20,29 @@ const meta: Meta<typeof DateInput> = {
 		),
 	],
 	argTypes: {
-		isError: { control: "boolean" },
-		errorMessage: { control: "text" },
-		isDisabled: { control: "boolean" },
-		isView: { control: "boolean" },
+		isError: {
+			control: "boolean",
+			description: "에러 상태 여부",
+		},
+		errorMessage: {
+			control: "text",
+			description: "에러 메시지",
+		},
+		isDisabled: {
+			control: "boolean",
+			description: "비활성화 상태",
+		},
+		isReadOnly: {
+			control: "boolean",
+			description: "읽기 전용 상태",
+		},
 	},
 };
 
 export default meta;
 type Story = StoryObj<typeof DateInput>;
 
-/* =========================
-   기본
-========================= */
+// Default
 export const Default: Story = {
 	render: (args) => {
 		const [year, setYear] = React.useState("");
@@ -56,9 +63,7 @@ export const Default: Story = {
 	},
 };
 
-/* =========================
-   값 입력 완료
-========================= */
+// Filled
 export const Filled: Story = {
 	render: () => {
 		const [year, setYear] = React.useState("1999");
@@ -78,9 +83,7 @@ export const Filled: Story = {
 	},
 };
 
-/* =========================
-   에러 상태
-========================= */
+// Error
 export const ErrorState: Story = {
 	render: () => {
 		const [year, setYear] = React.useState("2025");
@@ -102,9 +105,7 @@ export const ErrorState: Story = {
 	},
 };
 
-/* =========================
-   Disabled
-========================= */
+// Disabled
 export const Disabled: Story = {
 	args: {
 		year: "1999",
@@ -117,15 +118,13 @@ export const Disabled: Story = {
 	},
 };
 
-/* =========================
-   View (읽기 전용)
-========================= */
-export const View: Story = {
+// ReadOnly
+export const ReadOnly: Story = {
 	args: {
 		year: "1999",
 		month: "12",
 		day: "31",
-		isView: true,
+		isReadOnly: true,
 		onChangeYear: () => {},
 		onChangeMonth: () => {},
 		onChangeDay: () => {},

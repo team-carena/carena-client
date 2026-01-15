@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import * as React from "react";
 import { InputSmall } from "@/shared/ui/inputs/input-small";
 
+/* 모바일 웹 레이아웃 wrapper */
+const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
+	<div className="w-full min-w-[32rem] max-w-[36rem]">{children}</div>
+);
+
 const meta: Meta<typeof InputSmall> = {
-	title: "Shared/Input/InputSmall",
+	title: "input/InputSmall",
 	component: InputSmall,
-	parameters: {
-		layout: "centered",
-	},
-	args: {
-		labelLeft: "키",
-		labelRight: "몸무게",
-		unitLeft: "cm",
-		unitRight: "kg",
-		isError: false,
-		isDisabled: false,
-		isReadOnly: false,
-	},
+	decorators: [
+		(Story) => (
+			<MobileWrapper>
+				<Story />
+			</MobileWrapper>
+		),
+	],
 	argTypes: {
 		labelLeft: {
 			control: "text",
@@ -48,7 +48,7 @@ const meta: Meta<typeof InputSmall> = {
 		},
 		isReadOnly: {
 			control: "boolean",
-			description: "읽기 전용(View) 상태",
+			description: "읽기 전용 상태",
 		},
 	},
 };
@@ -56,68 +56,100 @@ const meta: Meta<typeof InputSmall> = {
 export default meta;
 type Story = StoryObj<typeof InputSmall>;
 
-const Template = (args: React.ComponentProps<typeof InputSmall>) => {
-	const [left, setLeft] = useState("");
-	const [right, setRight] = useState("");
+// Default
+export const Default: Story = {
+	render: (args) => {
+		const [left, setLeft] = React.useState("");
+		const [right, setRight] = React.useState("");
 
-	return (
-		<div className="w-full min-w-[32rem] max-w-[36rem]">
+		return (
 			<InputSmall
 				{...args}
+				labelLeft="키"
+				labelRight="몸무게"
+				unitLeft="cm"
+				unitRight="kg"
 				valueLeft={left}
 				valueRight={right}
 				onChangeLeft={setLeft}
 				onChangeRight={setRight}
 			/>
-		</div>
-	);
-};
-
-export const Default: Story = {
-	render: Template,
-};
-
-export const Focused: Story = {
-	render: Template,
-};
-
-export const Completed: Story = {
-	render: (args) => {
-		const [left, setLeft] = useState("170");
-		const [right, setRight] = useState("60");
-
-		return (
-			<div className="w-full min-w-[32rem] max-w-[36rem]">
-				<InputSmall
-					{...args}
-					valueLeft={left}
-					valueRight={right}
-					onChangeLeft={setLeft}
-					onChangeRight={setRight}
-				/>
-			</div>
 		);
 	},
 };
 
+// Completed
+export const Completed: Story = {
+	render: (args) => {
+		const [left, setLeft] = React.useState("170");
+		const [right, setRight] = React.useState("60");
+
+		return (
+			<InputSmall
+				{...args}
+				labelLeft="키"
+				labelRight="몸무게"
+				unitLeft="cm"
+				unitRight="kg"
+				valueLeft={left}
+				valueRight={right}
+				onChangeLeft={setLeft}
+				onChangeRight={setRight}
+			/>
+		);
+	},
+};
+
+// Error
 export const ErrorState: Story = {
-	render: Template,
-	args: {
-		isError: true,
-		errorMessage: "수치를 다시 한 번 확인해 주세요.",
+	render: (args) => {
+		const [left, setLeft] = React.useState("170");
+		const [right, setRight] = React.useState("999");
+
+		return (
+			<InputSmall
+				{...args}
+				labelLeft="키"
+				labelRight="몸무게"
+				unitLeft="cm"
+				unitRight="kg"
+				isError
+				errorMessage="수치를 다시 한 번 확인해 주세요."
+				valueLeft={left}
+				valueRight={right}
+				onChangeLeft={setLeft}
+				onChangeRight={setRight}
+			/>
+		);
 	},
 };
 
+// Disabled
 export const Disabled: Story = {
-	render: Template,
 	args: {
+		labelLeft: "키",
+		labelRight: "몸무게",
+		unitLeft: "cm",
+		unitRight: "kg",
+		valueLeft: "170",
+		valueRight: "60",
 		isDisabled: true,
+		onChangeLeft: () => {},
+		onChangeRight: () => {},
 	},
 };
 
+// ReadOnly
 export const ReadOnly: Story = {
-	render: Template,
 	args: {
+		labelLeft: "키",
+		labelRight: "몸무게",
+		unitLeft: "cm",
+		unitRight: "kg",
+		valueLeft: "170",
+		valueRight: "60",
 		isReadOnly: true,
+		onChangeLeft: () => {},
+		onChangeRight: () => {},
 	},
 };

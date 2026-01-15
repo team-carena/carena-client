@@ -13,6 +13,7 @@ const inputSmallVariants = cva(
 				completed: "border-gray-900",
 				error: "border-red-500",
 				disabled: "border-gray-500 bg-gray-100",
+				readonly: "border-gray-500 bg-gray-100",
 			},
 		},
 		defaultVariants: {
@@ -77,7 +78,8 @@ export const InputSmall = ({
 	const rightInputId = React.useId();
 
 	const getState = (value: string, isFocused: boolean) => {
-		if (isDisabled || isReadOnly) return "disabled";
+		if (isDisabled) return "disabled";
+		if (isReadOnly) return "readonly";
 		if (isError) return "error";
 		if (isFocused) return "focused";
 		if (value) return "completed";

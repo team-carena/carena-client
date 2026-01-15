@@ -13,7 +13,7 @@ const dateInputVariants = cva(
 				completed: "border-gray-900",
 				error: "border-red-500",
 				disabled: "border-gray-500 bg-gray-100",
-				view: "border-gray-500 bg-gray-100",
+				readonly: "border-gray-500 bg-gray-100",
 			},
 		},
 		defaultVariants: {
@@ -29,7 +29,7 @@ const inputFieldVariants = cva(
 			state: {
 				default: "text-gray-900",
 				disabled: "text-gray-500 cursor-not-allowed",
-				view: "cursor-default",
+				readonly: "text-gray-900 cursor-default",
 			},
 		},
 		defaultVariants: {
@@ -49,7 +49,7 @@ interface DateInputProps {
 	errorMessage?: string;
 
 	isDisabled?: boolean;
-	isView?: boolean;
+	isReadOnly?: boolean;
 
 	onChangeYear: (value: string) => void;
 	onChangeMonth: (value: string) => void;
@@ -63,7 +63,7 @@ export const DateInput = ({
 	isError = false,
 	errorMessage,
 	isDisabled = false,
-	isView = false,
+	isReadOnly = false,
 	onChangeYear,
 	onChangeMonth,
 	onChangeDay,
@@ -74,14 +74,18 @@ export const DateInput = ({
 
 	const getState = (value: string, isFocused: boolean) => {
 		if (isDisabled) return "disabled";
-		if (isView) return "view";
+		if (isReadOnly) return "readonly";
 		if (isError) return "error";
 		if (isFocused) return "focused";
 		if (value) return "completed";
 		return "default";
 	};
 
-	const fieldState = isDisabled ? "disabled" : isView ? "view" : "default";
+	const fieldState = isDisabled
+		? "disabled"
+		: isReadOnly
+			? "readonly"
+			: "default";
 
 	return (
 		<div className="w-full">
@@ -104,9 +108,9 @@ export const DateInput = ({
 						placeholder="YYYY"
 						aria-label="연도"
 						disabled={isDisabled}
-						readOnly={isView}
+						readOnly={isReadOnly}
 						onChange={(e) => onChangeYear(filterNumeric(e.target.value))}
-						onFocus={() => !isDisabled && !isView && setFocused("year")}
+						onFocus={() => !isDisabled && !isReadOnly && setFocused("year")}
 						onBlur={() => setFocused(null)}
 						className={cn(inputFieldVariants({ state: fieldState }))}
 					/>
@@ -129,9 +133,9 @@ export const DateInput = ({
 						placeholder="MM"
 						aria-label="월"
 						disabled={isDisabled}
-						readOnly={isView}
+						readOnly={isReadOnly}
 						onChange={(e) => onChangeMonth(filterNumeric(e.target.value))}
-						onFocus={() => !isDisabled && !isView && setFocused("month")}
+						onFocus={() => !isDisabled && !isReadOnly && setFocused("month")}
 						onBlur={() => setFocused(null)}
 						className={cn(inputFieldVariants({ state: fieldState }))}
 					/>
@@ -154,9 +158,9 @@ export const DateInput = ({
 						placeholder="DD"
 						aria-label="일"
 						disabled={isDisabled}
-						readOnly={isView}
+						readOnly={isReadOnly}
 						onChange={(e) => onChangeDay(filterNumeric(e.target.value))}
-						onFocus={() => !isDisabled && !isView && setFocused("day")}
+						onFocus={() => !isDisabled && !isReadOnly && setFocused("day")}
 						onBlur={() => setFocused(null)}
 						className={cn(inputFieldVariants({ state: fieldState }))}
 					/>
