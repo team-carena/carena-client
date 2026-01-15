@@ -4,7 +4,9 @@ import { InputSmall } from "@/shared/ui/inputs/input-small";
 
 /* 모바일 웹 레이아웃 wrapper */
 const MobileWrapper = ({ children }: { children: React.ReactNode }) => (
-	<div className="w-full min-w-[32rem] max-w-[36rem]">{children}</div>
+	<div className="w-full min-w-[37.5rem] max-w-[44rem] px-[1.6rem]">
+		{children}
+	</div>
 );
 
 const meta: Meta<typeof InputSmall> = {

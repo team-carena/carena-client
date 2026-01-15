@@ -38,7 +38,7 @@ const inputFieldVariants = cva(
 	},
 );
 
-interface InputSmallProps extends VariantProps<typeof inputSmallVariants> {
+interface InputSmallProps {
 	labelLeft: string;
 	labelRight: string;
 

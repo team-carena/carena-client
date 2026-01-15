@@ -39,8 +39,7 @@ const inputFieldVariants = cva(
 );
 
 interface InputMediumProps
-	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">,
-		VariantProps<typeof inputMediumVariants> {
+	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
 	label: string;
 	isRequired?: boolean;
 
@@ -70,7 +69,6 @@ export const InputMedium = ({
 	isReadOnly = false,
 	onChange,
 	isNumeric = false,
-	className,
 	...props
 }: InputMediumProps) => {
 	const [isFocused, setIsFocused] = React.useState(false);
@@ -100,7 +98,11 @@ export const InputMedium = ({
 			{/* label */}
 			<label htmlFor={inputId} className="shrink-0 body03-r-16 text-black">
 				{label}
-				{isRequired && <span className="ml-[0.2rem]">*</span>}
+				{isRequired && (
+					<span className="ml-[0.2rem]" aria-hidden="true">
+						*
+					</span>
+				)}
 			</label>
 
 			{/* input wrapper */}
@@ -111,6 +113,8 @@ export const InputMedium = ({
 						type="text"
 						inputMode={isNumeric ? "numeric" : undefined}
 						pattern={isNumeric ? "[0-9]*" : undefined}
+						aria-required={isRequired}
+						aria-invalid={isError}
 						value={value}
 						placeholder={placeholder}
 						disabled={isDisabled}
