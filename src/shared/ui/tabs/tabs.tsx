@@ -58,8 +58,11 @@ const TabsTrigger = ({
 			type="button"
 			role="tab"
 			className={cn(
-				"flex-1 py-[1.2rem] text-center",
+				"relative flex-1 py-[1.2rem] text-center",
 				isSelected ? "text-gray-900 head03-sb-16" : "text-gray-500 head04-m-16",
+				// 선택된 탭 아래 인디케이터 (border 중앙에 위치, 60% 너비)
+				isSelected &&
+					"after:absolute after:bottom-[-1.5px] after:left-1/2 after:h-[2px] after:w-[60%] after:-translate-x-1/2 after:bg-gray-900",
 				className,
 			)}
 			data-selected={isSelected}
