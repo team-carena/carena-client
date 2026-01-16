@@ -98,7 +98,7 @@ export const HealthTipPage = () => {
 
 			<main
 				ref={scrollContainerRef}
-				className="flex-1 bg-gray-50 overflow-y-auto pt-[5.6rem]"
+				className="flex-1 bg-gray-50 overflow-y-auto"
 			>
 				<section className="overflow-x-auto scrollbar-hide px-[2rem] py-[1.2rem]">
 					<div className="flex w-max gap-[0.8rem]">
