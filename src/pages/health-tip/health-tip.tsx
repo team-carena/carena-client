@@ -93,11 +93,11 @@ export const HealthTipPage = () => {
 	}, []);
 
 	return (
-		<div className="w-[37.5rem] h-[81.2rem] bg-white flex flex-col overflow-hidden mx-auto">
+		<div className="h-dvh bg-white flex flex-col overflow-hidden">
 			<Header
 				title="건강 팁"
 				isBackVisible
-				className="left-1/2 -translate-x-1/2 right-auto w-[37.5rem]"
+				className="left-1/2 -translate-x-1/2 right-auto"
 			/>
 
 			<main
