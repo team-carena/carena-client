@@ -3,8 +3,8 @@ import CardTip from "@/shared/ui/cards/card-tip";
 
 export const HealthTipDetailPage = () => {
 	return (
-		<div className="w-[37.5rem] h-[81.2rem] bg-white border-gray-200 border flex flex-col">
-			<header className="h-[5.6rem] w-[37.5rem] border-b border-gray-200" />
+		<div className="h-dvh bg-white border-gray-200 border flex flex-col">
+			<header className="h-[5.6rem] w-full border-b border-gray-200" />
 			<main className="flex-1 px-[2rem] py-[2.4rem] bg-gray-50">
 				<section>
 					<CardTip>팁 상세 내용이 들어갑니다.</CardTip>
