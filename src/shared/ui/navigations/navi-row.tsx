@@ -1,16 +1,17 @@
 import { ChevronMRight } from '@shared/assets/svg';
 import { cn } from '@shared/libs/cn';
-import type * as React from 'react';
+import { Link } from 'react-router';
 
-export interface NaviRowProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface NaviRowProps {
   label: string;
+  to: string;
+  className?: string;
 }
 
-export const NaviRow = ({ label, className, ...props }: NaviRowProps) => {
+export const NaviRow = ({ label, to, className }: NaviRowProps) => {
   return (
-    <button
-      type="button"
+    <Link
+      to={to}
       className={cn(
         `
           flex items-center justify-between
@@ -23,13 +24,9 @@ export const NaviRow = ({ label, className, ...props }: NaviRowProps) => {
         `,
         className
       )}
-      {...props}
     >
-      {/* text */}
       <span className="flex-[1_0_0] head03-sb-16 text-left">{label}</span>
-
-      {/* icon */}
       <ChevronMRight className="shrink-0" aria-hidden />
-    </button>
+    </Link>
   );
 };

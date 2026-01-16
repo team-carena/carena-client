@@ -1,20 +1,22 @@
 import { cn } from "@shared/libs/cn";
-import * as React from "react";
+import { Link } from "react-router";
 
-export interface NaviRowSmallProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface NaviRowSmallProps {
 	label: string;
 	actionLabel?: string;
+	to: string;
+	className?: string;
 }
 
-export const NaviRowSmall = React.forwardRef<
-	HTMLButtonElement,
-	NaviRowSmallProps
->(({ label, actionLabel = "더보기", className, ...props }, ref) => {
+export const NaviRowSmall = ({
+	label,
+	actionLabel = "더보기",
+	to,
+	className,
+}: NaviRowSmallProps) => {
 	return (
-		<button
-			ref={ref}
-			type="button"
+		<Link
+			to={to}
 			className={cn(
 				`
           flex items-center justify-between
@@ -27,13 +29,9 @@ export const NaviRowSmall = React.forwardRef<
         `,
 				className,
 			)}
-			{...props}
 		>
-			{/* left text */}
 			<span className="flex-[1_0_0] body04-r-14 text-left">{label}</span>
-
-			{/* right text */}
 			<span className="shrink-0 label06-r-12">{actionLabel}</span>
-		</button>
+		</Link>
 	);
-});
+};
