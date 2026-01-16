@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import CardTip from "@/shared/ui/cards/card-tip";
 import Chip from "@/shared/ui/chips/chip";
+import { Header } from "@/shared/ui/navigations/header";
 
 const chips = [
 	"전체",
@@ -75,12 +76,16 @@ export const HealthTipPage = () => {
 	}, [filteredTips.length, hasMore]);
 
 	return (
-		<div className="w-[37.5rem] h-[81.2rem] bg-white flex flex-col overflow-hidden">
-			<header className="h-[5.6rem] w-full border-b border-gray-200" />
+		<div className="w-[37.5rem] h-[81.2rem] bg-white flex flex-col overflow-hidden mx-auto">
+			<Header
+				title="건강 팁"
+				isBackVisible
+				className="left-1/2 -translate-x-1/2 right-auto w-[37.5rem]"
+			/>
 
 			<main
 				ref={scrollContainerRef}
-				className="flex-1 bg-gray-50 overflow-y-auto"
+				className="flex-1 bg-gray-50 overflow-y-auto pt-[5.6rem]"
 			>
 				<section className="overflow-x-auto scrollbar-hide px-[2rem] py-[1.2rem]">
 					<div className="flex w-max gap-[0.8rem]">
