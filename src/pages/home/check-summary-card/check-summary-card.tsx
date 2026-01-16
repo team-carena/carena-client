@@ -1,6 +1,7 @@
 import type * as React from "react";
 import { cn } from "@/shared/libs/cn";
 import { SmallBadge } from "@/shared/ui/badges/small-badge";
+import { NaviRow } from "@/shared/ui/navigations/navi-row";
 
 type SectionVariant = "header" | "content";
 
@@ -15,8 +16,10 @@ interface SectionProps {
 	variant?: SectionVariant;
 }
 
-interface TitleProps extends React.HTMLAttributes<HTMLDivElement> {
-	children: React.ReactNode;
+interface TitleProps {
+	label: string;
+	to: string;
+	className?: string;
 }
 
 interface DescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
@@ -71,16 +74,15 @@ const Section = ({
 	</div>
 );
 
-const Title = ({ className, children, ...props }: TitleProps) => (
-	<div
+const Title = ({ className, label, to }: TitleProps) => (
+	<NaviRow
+		label={label}
+		to={to}
 		className={cn(
-			"w-full h-[4.8rem] bg-white border-b border-gray-200",
+			"w-full h-[4.8rem] bg-white rounded-none px-[2rem] py-0",
 			className,
 		)}
-		{...props}
-	>
-		{children}
-	</div>
+	/>
 );
 
 const Description = ({ className, children, ...props }: DescriptionProps) => (
