@@ -5,7 +5,7 @@ import type * as React from "react";
 import { useNavigate } from "react-router";
 
 /**
- * 헤더 변형 타입
+ * 헤더 종류
  * - "main": 메인 페이지용 (로고 + 마이페이지 아이콘)
  * - "back": 서브 페이지용 (뒤로가기 + 타이틀)
  * - "none": 헤더 숨김
