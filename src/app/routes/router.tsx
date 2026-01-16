@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router";
-import { TipDetailPage } from "@/pages/health-tip/health-tip-detail";
+import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
 					},
 					{
 						path: ROUTE_PATH.HEALTH_TIP_DETAIL,
-						element: <TipDetailPage />,
+						element: <HealthTipDetailPage />,
 					},
 					{
 						path: "*",
