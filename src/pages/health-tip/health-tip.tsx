@@ -42,6 +42,16 @@ export const HealthTipPage = () => {
 
 	const hasMore = visibleCount < filteredTips.length;
 
+	const hasMoreRef = useRef(hasMore);
+	const filteredLengthRef = useRef(filteredTips.length);
+
+	useEffect(() => {
+		hasMoreRef.current = hasMore;
+		filteredLengthRef.current = filteredTips.length;
+	}, [hasMore, filteredTips.length]);
+
+	const observerRef = useRef<IntersectionObserver | null>(null);
+
 	const handleChipClick = (value: ChipValue) => {
 		setSelectedChip(value);
 		setVisibleCount(PAGE_SIZE);
@@ -49,31 +59,38 @@ export const HealthTipPage = () => {
 
 	// 무한스크롤
 	useEffect(() => {
-		const bottom = bottomRef.current;
 		const root = scrollContainerRef.current;
+		const bottom = bottomRef.current;
 
-		if (!bottom || !root) return;
+		if (!root || !bottom) return;
 
-		const observer = new IntersectionObserver(
-			(entries) => {
-				const first = entries[0];
-				if (!first?.isIntersecting) return;
-				if (!hasMore) return;
+		if (!observerRef.current) {
+			observerRef.current = new IntersectionObserver(
+				(entries) => {
+					const first = entries[0];
+					if (!first?.isIntersecting) return;
+					if (!hasMoreRef.current) return;
 
-				setVisibleCount((prev) =>
-					Math.min(prev + PAGE_SIZE, filteredTips.length),
-				);
-			},
-			{
-				root, // 내부 스크롤 컨테이너 기준으로 감지
-				rootMargin: "200px",
-				threshold: 0,
-			},
-		);
+					setVisibleCount((prev) =>
+						Math.min(prev + PAGE_SIZE, filteredLengthRef.current),
+					);
+				},
+				{
+					root, // 내부 스크롤 컨테이너 기준으로 감지
+					rootMargin: "200px",
+					threshold: 0,
+				},
+			);
+		}
 
+		const observer = observerRef.current;
 		observer.observe(bottom);
-		return () => observer.disconnect();
-	}, [filteredTips.length, hasMore]);
+		return () => observer.unobserve(bottom);
+	}, []);
+
+	useEffect(() => {
+		return () => observerRef.current?.disconnect();
+	}, []);
 
 	return (
 		<div className="w-[37.5rem] h-[81.2rem] bg-white flex flex-col overflow-hidden mx-auto">
@@ -109,11 +126,9 @@ export const HealthTipPage = () => {
 							</li>
 						))}
 
-						{hasMore ? (
-							<li aria-hidden="true">
-								<div ref={bottomRef} className="h-px" />
-							</li>
-						) : null}
+						<li aria-hidden="true">
+							<div ref={bottomRef} className={hasMore ? "h-px" : "h-0"} />
+						</li>
 					</ul>
 				</section>
 			</main>
