@@ -9,7 +9,12 @@ interface TabsRootProps extends React.HTMLAttributes<HTMLDivElement> {
 	defaultTab: string; // 탭 기본값
 }
 
-const TabsRoot = ({ children, defaultTab }: TabsRootProps) => {
+const TabsRoot = ({
+	children,
+	defaultTab,
+	className,
+	...props
+}: TabsRootProps) => {
 	const [selectedTab, setSelectedTab] = useState(defaultTab);
 	const scrollPositions = useRef<Record<string, number>>({}); // <탭, 스크롤 y좌표>
 
@@ -38,7 +43,9 @@ const TabsRoot = ({ children, defaultTab }: TabsRootProps) => {
 
 	return (
 		<TabsContext value={{ selectedTab, changeTab }}>
-			<div>{children}</div>
+			<div className={className} {...props}>
+				{children}
+			</div>
 		</TabsContext>
 	);
 };
