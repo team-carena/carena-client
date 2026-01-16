@@ -54,6 +54,10 @@ export const router = createBrowserRouter([
 					{
 						path: ROUTE_PATH.HEALTH_TIP,
 						element: <HealthTipPage />,
+						handle: {
+							header: "back",
+							title: "생활 속 건강 팁",
+						} satisfies RouteHandle,
 					},
 					{
 						path: "*",

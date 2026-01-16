@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Outlet } from "react-router";
 import CardTip from "@/shared/ui/cards/card-tip";
 import Chip from "@/shared/ui/chips/chip";
-import { Header } from "@/shared/ui/navigations/header";
 
 const chips = [
 	"전체",
@@ -94,11 +94,7 @@ export const HealthTipPage = () => {
 
 	return (
 		<div className="h-dvh bg-white flex flex-col overflow-hidden">
-			<Header
-				title="생활 속 건강 팁"
-				isBackVisible
-				className="left-1/2 -translate-x-1/2 right-auto"
-			/>
+			<Outlet />
 
 			<main
 				ref={scrollContainerRef}
