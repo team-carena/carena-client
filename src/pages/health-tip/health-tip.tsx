@@ -95,7 +95,7 @@ export const HealthTipPage = () => {
 	return (
 		<div className="h-dvh bg-white flex flex-col overflow-hidden">
 			<Header
-				title="건강 팁"
+				title="생활 속 건강 팁"
 				isBackVisible
 				className="left-1/2 -translate-x-1/2 right-auto"
 			/>
