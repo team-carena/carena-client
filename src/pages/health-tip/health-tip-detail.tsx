@@ -1,11 +1,16 @@
 import { ContentCard } from "@/shared/ui/cards/card-content";
 import CardTip from "@/shared/ui/cards/card-tip";
+import { Header } from "@/shared/ui/navigations/header";
 
 export const HealthTipDetailPage = () => {
 	return (
 		<div className="h-dvh bg-white border-gray-200 border flex flex-col">
-			<header className="h-[5.6rem] w-full border-b border-gray-200" />
-			<main className="flex-1 px-[2rem] py-[2.4rem] bg-gray-50">
+			<Header
+				title="생활 속 건강 팁"
+				isBackVisible
+				className="left-1/2 -translate-x-1/2 right-auto"
+			/>
+			<main className="flex-1 px-[2rem] py-[2.4rem] bg-gray-50 pt-[8rem]">
 				<section>
 					<CardTip>팁 상세 내용이 들어갑니다.</CardTip>
 				</section>
