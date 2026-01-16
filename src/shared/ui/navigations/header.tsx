@@ -4,18 +4,24 @@ import { cn } from "@shared/libs/cn";
 import type * as React from "react";
 import { useNavigate } from "react-router";
 
+/**
+ * 헤더 종류
+ * - "main": 메인 페이지용 (로고 + 마이페이지 아이콘)
+ * - "back": 서브 페이지용 (뒤로가기 + 타이틀)
+ * - "none": 헤더 숨김
+ */
+type HeaderVariant = "main" | "back" | "none";
+
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
-	title?: string;
-	isBackVisible?: boolean;
-	isMyVisible?: boolean;
-	onBackClick?: () => void;
-	onMyClick?: () => void;
+	variant?: HeaderVariant;
+	title?: string; // 헤더 중앙에 표시될 타이틀
+	onBackClick?: () => void; // 뒤로가기 버튼 클릭 핸들러 (기본: navigate(-1))
+	onMyClick?: () => void; // 마이페이지 버튼 클릭 핸들러 (기본: 마이페이지 이동)
 }
 
 export const Header = ({
+	variant = "main",
 	title,
-	isBackVisible = false,
-	isMyVisible = false,
 	onBackClick,
 	onMyClick,
 	className,
@@ -23,13 +29,21 @@ export const Header = ({
 }: HeaderProps) => {
 	const navigate = useNavigate();
 
+	// variant가 "none"이면 헤더를 렌더링하지 않음
+	if (variant === "none") return null;
+
+	// variant에 따라 어떤 요소를 보여줄지 결정
+	const showBackButton = variant === "back";
+	const showLogo = variant === "main";
+	const showMyButton = variant === "main";
+
 	return (
 		<header
 			className={cn(
 				`
-          fixed top-0 left-0 right-0 z-50
+          fixed top-0 left-1/2 -translate-x-1/2 z-50
           flex items-center justify-between
-          w-full
+          w-full min-w-[var(--app-min-width)] max-w-[var(--app-max-width)]
           px-[2rem] py-[1.6rem]
           bg-white
         `,
@@ -37,9 +51,9 @@ export const Header = ({
 			)}
 			{...props}
 		>
-			{/* Left */}
+			{/* Left: 뒤로가기 버튼 또는 로고 */}
 			<div className="flex items-center">
-				{isBackVisible ? (
+				{showBackButton && (
 					<button
 						type="button"
 						onClick={onBackClick ?? (() => navigate(-1))}
@@ -48,21 +62,20 @@ export const Header = ({
 					>
 						<ChevronMLeft className="shrink-0" aria-hidden />
 					</button>
-				) : (
-					<CarenaLogo className="shrink-0" aria-hidden />
 				)}
+				{showLogo && <CarenaLogo className="shrink-0" aria-hidden />}
 			</div>
 
-			{/* Title */}
+			{/* Center: 타이틀 */}
 			{title && (
 				<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
 					<span className="head04-m-16 text-gray-900">{title}</span>
 				</div>
 			)}
 
-			{/* Right */}
+			{/* Right: 마이페이지 버튼 */}
 			<div className="flex items-center">
-				{isMyVisible && (
+				{showMyButton && (
 					<button
 						type="button"
 						onClick={onMyClick ?? (() => navigate(ROUTE_PATH.MY_PAGE))}

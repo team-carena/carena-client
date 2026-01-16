@@ -5,6 +5,23 @@ import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
 
+/**
+ * 헤더 변형 타입
+ * - "main": 메인 페이지용 (로고 + 마이페이지 아이콘)
+ * - "back": 서브 페이지용 (뒤로가기 + 타이틀)
+ * - "none": 헤더 없음
+ */
+export type HeaderVariant = "main" | "back" | "none";
+
+/**
+ * 라우트 핸들 인터페이스
+ * - useMatches()로 현재 라우트의 handle을 가져와서 Layout에서 헤더를 동적으로 렌더링
+ */
+export interface RouteHandle {
+	header?: HeaderVariant;
+	title?: string;
+}
+
 export const router = createBrowserRouter([
 	{
 		path: ROUTE_PATH.LOGIN,
@@ -24,10 +41,15 @@ export const router = createBrowserRouter([
 					{
 						path: ROUTE_PATH.HOME,
 						element: <HomePage />,
+						handle: { header: "main" } satisfies RouteHandle,
 					},
 					{
 						path: ROUTE_PATH.MY_PAGE,
 						element: <></>,
+						handle: {
+							header: "back",
+							title: "마이페이지",
+						} satisfies RouteHandle,
 					},
 					{
 						path: ROUTE_PATH.HEALTH_TIP,
