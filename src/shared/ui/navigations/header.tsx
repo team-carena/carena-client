@@ -41,9 +41,9 @@ export const Header = ({
 		<header
 			className={cn(
 				`
-          fixed top-0 left-0 right-0 z-50
+          fixed top-0 left-1/2 -translate-x-1/2 z-50
           flex items-center justify-between
-          w-full
+          w-full min-w-[var(--app-min-width)] max-w-[var(--app-max-width)]
           px-[2rem] py-[1.6rem]
           bg-white
         `,
