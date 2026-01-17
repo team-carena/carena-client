@@ -274,7 +274,8 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 					{/* 데이터 영역 */}
 					<path
 						d={createDataPath()}
-						fill="rgba(209, 175, 255, 0.2)"
+						fill="var(--color-secondary-300)"
+						fillOpacity={0.2}
 						stroke="var(--color-secondary-500)"
 						strokeWidth="1"
 					/>
