@@ -1,6 +1,5 @@
 import MenuBg from "@shared/assets/img/menu-bg.png";
 import CardList from "@shared/ui/cards/card-list";
-import { Outlet } from "react-router";
 import CardAiDietRecommendation from "@/pages/menu/ui/card-ai-diet-recommendation";
 
 // 임시 AI 추천 메뉴 데이터
@@ -37,8 +36,6 @@ export const HealthMenuPage = () => {
 
 	return (
 		<div className="h-dvh flex flex-col overflow-hidden">
-			<Outlet />
-
 			<main
 				className="flex-1 overflow-y-auto bg-gray-50"
 				aria-label="건강 식단 메뉴"
@@ -61,8 +58,8 @@ export const HealthMenuPage = () => {
 					aria-label="건강 식단 메뉴 목록"
 				>
 					<ul className="flex flex-col gap-[1.2rem]">
-						{MOCK_MENU_LIST.map((menu) => (
-							<li key={menu.id}>
+						{MOCK_MENU_LIST.map((menu, index) => (
+							<li key={`${menu.id}-${index}`}>
 								<CardList
 									more
 									onClick={() => handleMenuClick(menu)}
