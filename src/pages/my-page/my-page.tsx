@@ -1,4 +1,5 @@
 import { DefaultProfile } from "@/shared/assets/svg";
+import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { ActionSection } from "./action-section";
 
@@ -29,27 +30,25 @@ export const MyPage = () => {
 	// TODO: 하드코딩된 이름, 생일 -> 로그인 후 저장되어 있는 내 정보 사용
 
 	return (
-		<>
-			<div className="border h-[5.6rem]">헤더 자리</div>
-			<main className="h-screen px-[2rem] bg-white">
-				<section className="flex gap-[2rem] items-center mt-[2.4rem] mb-[4rem]">
-					<DefaultProfile className="rounded-[12px]" />
-					<div className="flex flex-col gap-[2rem]">
-						<span className="head03-sb-16">김경아</span>
-						<p className="head05-r-14">2003년 08월 21일</p>
-					</div>
-				</section>
+		<main className="h-screen px-[2rem] bg-white">
+			<Header title="마이페이지" variant="back" />
+			<section className="flex gap-[2rem] items-center pt-[2.4rem] pb-[4rem]">
+				<DefaultProfile className="rounded-[12px]" />
 				<div className="flex flex-col gap-[2rem]">
-					{ACTION_LIST.map(({ id, title, navLabel, onClick }) => (
-						<ActionSection
-							key={id}
-							title={title}
-							navLabel={navLabel}
-							onClick={onClick}
-						/>
-					))}
+					<span className="head03-sb-16">김경아</span>
+					<p className="head05-r-14">2003년 08월 21일</p>
 				</div>
-			</main>
-		</>
+			</section>
+			<div className="flex flex-col gap-[2rem]">
+				{ACTION_LIST.map(({ id, title, navLabel, onClick }) => (
+					<ActionSection
+						key={id}
+						title={title}
+						navLabel={navLabel}
+						onClick={onClick}
+					/>
+				))}
+			</div>
+		</main>
 	);
 };
