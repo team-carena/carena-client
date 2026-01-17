@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { BlurNoise } from "@/shared/assets/svg";
 import { AddButton } from "@/shared/ui/buttons/add-button";
 import { RadialChart } from "@/shared/ui/graphs/radial-chart/radial-chart";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 
 const UserInfo = () => {
+	// TODO: API 연동 시 검진기록에 따라 그래프 분기처리
 	const [showAlarmMessage, _setShowAlarmMessagee] = useState(true);
 
 	return (
@@ -22,29 +24,34 @@ const UserInfo = () => {
 
 			{/* 우측 */}
 			<div className="relative flex flex-1 items-center justify-center">
-				{/* 우측 그래프 */}
-				<div className="relative">
-					<figure>
-						{/* TODO: 점수 없으면 기본값 70점 반영 */}
-						<RadialChart score={70} className="w-[15rem] h-[15rem]" />
-					</figure>
-					<div className="absolute bottom-[-7px] right-[-5px]">
-						<Tooltip side="bottom" align="end">
-							건강점수는 체형, 혈압, 혈당, 간·신장 관련 최근 검진 항목을 점수로
-							변환해 종합한 지표로, 현재 건강 상태를 이해하기 쉽게 보여줍니다.
-							자세한 산출 기준은 보기를 통해 확인할 수 있습니다.
-						</Tooltip>
-					</div>
-				</div>
-
-				{/* blur 영역 */}
-				{showAlarmMessage && (
-					<div className="absolute inset-0 flex justify-center items-center backdrop-blur-[2px]">
-						<div className="text-white text-center whitespace-pre-line text-[1.5rem] font-bold leading-[1.8rem]">
-							<p>좌측 버튼을 눌러</p>
-							<p className="mt-[1rem]">검진결과를 추가해주세요</p>
+				{showAlarmMessage ? (
+					<>
+						{/* 우측 그래프 */}
+						<div className="relative">
+							<figure>
+								{/* TODO: 점수 없으면 기본값 70점 반영 */}
+								<RadialChart score={70} className="w-[15rem] h-[15rem]" />
+							</figure>
+							<div className="absolute bottom-[-7px] right-[-5px]">
+								<Tooltip side="bottom" align="end">
+									건강점수는 체형, 혈압, 혈당, 간·신장 관련 최근 검진 항목을
+									점수로 변환해 종합한 지표로, 현재 건강 상태를 이해하기 쉽게
+									보여줍니다. 자세한 산출 기준은 보기를 통해 확인할 수 있습니다.
+								</Tooltip>
+							</div>
 						</div>
-					</div>
+					</>
+				) : (
+					<>
+						{/* blur 영역 */}
+						<BlurNoise className="absolute" />
+						<div className="absolute flex justify-center items-center">
+							<div className="text-white text-center whitespace-pre-line text-[1.5rem] font-bold leading-[1.8rem]">
+								<p>좌측 버튼을 눌러</p>
+								<p className="mt-[1rem]">검진결과를 추가해주세요</p>
+							</div>
+						</div>
+					</>
 				)}
 			</div>
 		</section>
