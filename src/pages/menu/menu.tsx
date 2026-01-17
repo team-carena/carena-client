@@ -36,10 +36,10 @@ export const MenuPage = () => {
 	};
 
 	return (
-		<main className="h-dvh flex flex-col overflow-hidden">
+		<div className="h-dvh flex flex-col overflow-hidden">
 			<Outlet />
 
-			<section
+			<main
 				className="flex-1 overflow-y-auto bg-gray-50"
 				aria-label="건강 식단 메뉴"
 			>
@@ -74,7 +74,7 @@ export const MenuPage = () => {
 						))}
 					</ul>
 				</section>
-			</section>
-		</main>
+			</main>
+		</div>
 	);
 };
