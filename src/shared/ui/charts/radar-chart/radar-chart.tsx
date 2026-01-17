@@ -48,12 +48,12 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 	// 상수
 	const LABEL_RECT_HALF_WIDTH = 14; // 라벨 흰배경 rect 너비의 절반 (28 / 2)
 	const LABEL_RECT_HALF_HEIGHT = 8; // 라벨 흰배경 rect 높이의 절반 (16 / 2)
-	const COS_30_DEG = Math.cos(Math.PI / 6); // cos(30°) ≈ 0.866, 육각형 30도 회전 보정값
+	const COS_30_DEG = Math.cos(Math.PI / 6); // cos(30°) ≈ 0.866, flat-top 육각형의 위쪽 변 y좌표 보정값
 	const CATEGORY_LABEL_OFFSET = 14; // 카테고리 라벨과 육각형 경계 사이 간격
 
 	// 육각형 꼭짓점 계산
 	const getPoint = (index: number, radius: number) => {
-		const angle = (Math.PI * 2 * index) / 6 - Math.PI / 2 + Math.PI / 6; // 30도 회전 (변이 위쪽에 오도록)
+		const angle = (Math.PI * 2 * index) / 6 - Math.PI / 3; // flat-top 육각형: 변이 위쪽에 오도록 시작 각도 -60°로 설정
 		return {
 			x: cx + radius * Math.cos(angle),
 			y: cy + radius * Math.sin(angle),
@@ -64,7 +64,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 	const createHexagonPath = (radius: number, borderRadius = 6) => {
 		const sides = 6;
 		const angleStep = (Math.PI * 2) / sides;
-		const startAngle = -Math.PI / 2 + Math.PI / 6; // 30도 회전
+		const startAngle = -Math.PI / 3; // 시작 각도 -60° (flat-top 육각형)
 
 		const points = Array.from({ length: sides }, (_, i) => {
 			const angle = startAngle + i * angleStep;
