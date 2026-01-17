@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Outlet } from "react-router";
 import CardTip from "@/shared/ui/cards/card-tip";
 import Chip from "@/shared/ui/chips/chip";
 
@@ -93,41 +92,34 @@ export const HealthTipPage = () => {
 	}, []);
 
 	return (
-		<div className="h-dvh bg-white flex flex-col overflow-hidden">
-			<Outlet />
+		<main ref={scrollContainerRef} className="overflow-y-auto">
+			<section className="overflow-x-auto scrollbar-hide px-[2rem] py-[1.2rem]">
+				<div className="flex w-max gap-[0.8rem]">
+					{chips.map((label) => (
+						<Chip
+							key={label}
+							status={selectedChip === label ? "on" : "off"}
+							onClick={() => handleChipClick(label)}
+						>
+							{label}
+						</Chip>
+					))}
+				</div>
+			</section>
 
-			<main
-				ref={scrollContainerRef}
-				className="flex-1 bg-gray-50 overflow-y-auto"
-			>
-				<section className="overflow-x-auto scrollbar-hide px-[2rem] py-[1.2rem]">
-					<div className="flex w-max gap-[0.8rem]">
-						{chips.map((label) => (
-							<Chip
-								key={label}
-								status={selectedChip === label ? "on" : "off"}
-								onClick={() => handleChipClick(label)}
-							>
-								{label}
-							</Chip>
-						))}
-					</div>
-				</section>
-
-				<section className="px-[2rem] py-[1.2rem]">
-					<ul className="flex flex-col gap-[1.2rem]">
-						{filteredTips.slice(0, visibleCount).map((tip) => (
-							<li key={tip.id}>
-								<CardTip more>{tip.title}</CardTip>
-							</li>
-						))}
-
-						<li aria-hidden="true">
-							<div ref={bottomRef} className={hasMore ? "h-px" : "h-0"} />
+			<section className="px-[2rem] py-[1.2rem]">
+				<ul className="flex flex-col gap-[1.2rem]">
+					{filteredTips.slice(0, visibleCount).map((tip) => (
+						<li key={tip.id}>
+							<CardTip more>{tip.title}</CardTip>
 						</li>
-					</ul>
-				</section>
-			</main>
-		</div>
+					))}
+
+					<li aria-hidden="true">
+						<div ref={bottomRef} className={hasMore ? "h-px" : "h-0"} />
+					</li>
+				</ul>
+			</section>
+		</main>
 	);
 };
