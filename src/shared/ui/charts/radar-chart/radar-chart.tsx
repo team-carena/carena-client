@@ -21,25 +21,27 @@ export interface RadarChartProps {
 export const RadarChart = ({ data }: RadarChartProps) => {
 	const [animationProgress, setAnimationProgress] = useState(0);
 
-	// RadarChart 애니메이션
+	// RadarChart 진입 애니메이션
 	useEffect(() => {
-		const duration = 800; // 애니메이션 지속 시간 (ms)
+		const duration = 800;
 		const startTime = performance.now();
+		let animationFrameId: number;
 
 		const animate = (currentTime: number) => {
 			const elapsed = currentTime - startTime;
 			const progress = Math.min(elapsed / duration, 1);
 
-			// easeOutCubic easing 애니메이션 적용 함수
-			const eased = 1 - (1 - progress) ** 3;
+			const eased = 1 - (1 - progress) ** 3; // easeOutCubic: 처음 빠르고 끝에서 감속
 			setAnimationProgress(eased);
 
 			if (progress < 1) {
-				requestAnimationFrame(animate);
+				animationFrameId = requestAnimationFrame(animate);
 			}
 		};
 
-		requestAnimationFrame(animate);
+		animationFrameId = requestAnimationFrame(animate);
+
+		return () => cancelAnimationFrame(animationFrameId); // cleanup
 	}, []);
 
 	// SVG viewBox가 0 0 300 300 -> (150, 150)이 정확히 육각형 SVG의 중심
