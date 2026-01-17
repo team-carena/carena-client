@@ -1,4 +1,5 @@
 import { AddButton } from "@/shared/ui/buttons/add-button";
+import { RadialChart } from "@/shared/ui/graphs/radial-chart/radial-chart";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 
 const UserInfo = () => {
@@ -19,8 +20,7 @@ const UserInfo = () => {
 			{/* 우측 표 */}
 			<div className="flex flex-1 items-center justify-center">
 				<figure>
-					{/* 차트 컴포넌트 */}
-					{/* <figcaption>건강점수 90점</figcaption> */}
+					<RadialChart score={90} className="w-[15rem] h-[15rem]" />
 				</figure>
 				<Tooltip side="bottom" align="start">
 					건강점수는 체형, 혈압, 혈당, 간·신장 관련 최근 검진 항목을 점수로
