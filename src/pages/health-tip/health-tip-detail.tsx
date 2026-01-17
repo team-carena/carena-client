@@ -3,7 +3,7 @@ import CardTip from "@/shared/ui/cards/card-tip";
 
 export const HealthTipDetailPage = () => {
 	return (
-		<main className="flex-1 px-[2rem] py-[2.4rem] bg-gray-50">
+		<main className="px-[2rem] py-[2.4rem]">
 			<section>
 				<CardTip>팁 상세 내용이 들어갑니다.</CardTip>
 			</section>
