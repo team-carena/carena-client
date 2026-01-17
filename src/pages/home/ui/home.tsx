@@ -1,36 +1,28 @@
-import { Tabs } from "@/shared/ui/tabs/tabs";
+import { RadarChart } from "@/shared/ui/charts";
+
+const radarData = [
+	{ label: "당뇨", value: 2 },
+	{ label: "혈압", value: 2.5 },
+	{ label: "빈혈", value: 1.5 },
+	{ label: "신장질환", value: 1.8 },
+	{ label: "간장질환", value: 2.2 },
+	{ label: "비만", value: 1.5 },
+];
 
 export const HomePage = () => {
 	return (
-		<Tabs defaultTab="health-info">
-			<Tabs.List>
-				<Tabs.Trigger value="health-info">건강정보</Tabs.Trigger>
-				<Tabs.Trigger value="health-tips">검진결과분석</Tabs.Trigger>
-			</Tabs.List>
-			<Tabs.Content value="health-info">
-				<div className="flex flex-col gap-[1.6rem] p-[1.6rem]">
-					{Array.from({ length: 30 }, (_, i) => (
-						<div
-							key={`health-${i + 1}`}
-							className="rounded-[0.8rem] bg-white p-[1.6rem]"
-						>
-							건강 정보 카드 {i + 1}
-						</div>
-					))}
-				</div>
-			</Tabs.Content>
-			<Tabs.Content value="health-tips">
-				<div className="flex flex-col gap-[1.6rem] p-[1.6rem]">
-					{Array.from({ length: 30 }, (_, i) => (
-						<div
-							key={`tips-${i + 1}`}
-							className="rounded-[0.8rem] bg-white p-[1.6rem]"
-						>
-							검진결과분석 카드 {i + 1}
-						</div>
-					))}
-				</div>
-			</Tabs.Content>
-		</Tabs>
+		<div className="p-[2rem]">
+			<div className="bg-white rounded-[1.2rem] p-[2rem]">
+				<h2 className="head02-b-16 mb-[1.6rem]">건강 상태 분석</h2>
+				<RadarChart
+					data={radarData}
+					className="mx-auto aspect-square max-h-[300px]"
+					color="var(--color-secondary-300)"
+					fillOpacity={0.2}
+					dotRadius={2}
+					dotColor="var(--color-secondary-700)"
+				/>
+			</div>
+		</div>
 	);
 };
