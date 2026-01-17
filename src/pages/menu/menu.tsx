@@ -1,78 +1,80 @@
 import MenuBg from "@shared/assets/img/menu-bg.png";
-import { Ai } from "@shared/assets/svg";
+import CardDietDetail from "@shared/ui/cards/card-diet-detail";
 import CardList from "@shared/ui/cards/card-list";
-import { Header } from "@shared/ui/navigations/header";
+import { Outlet } from "react-router";
 
-const menuList = [
-	"저퓨린식",
-	"당뇨식",
-	"고혈압식",
-	"소화불량식",
-	"골다공증식",
-	"고지혈증식",
-	"저퓨린식",
-	"당뇨식",
-	"고혈압식",
-	"소화불량식",
-	"골다공증식",
-	"고지혈증식",
-	"저퓨린식",
-	"당뇨식",
-	"고혈압식",
-	"소화불량식",
-	"골다공증식",
-	"고지혈증식",
+// 임시 AI 추천 메뉴 데이터
+const MOCK_AI_RECOMMENDATION = {
+	// AI 추천 요리명
+	dietName: "두부전",
+	// 추천 요리 설명 텍스트
+	description:
+		"단백질이 풍부하고 소화가 잘 되는 두부를 활용한 요리로, 기름 사용을 최소화해 부담 없이 즐길 수 있어요. 만성질환 관리에도 도움이 되는 메뉴예요.",
+};
+
+// 임시 메뉴 리스트 데이터
+const MOCK_MENU_LIST = [
+	{ id: "low-purine", label: "저퓨린식" },
+	{ id: "diabetes", label: "당뇨식" },
+	{ id: "hypertension", label: "고혈압식" },
+	{ id: "digestion", label: "소화불량식" },
+	{ id: "osteoporosis", label: "골다공증식" },
+	{ id: "hyperlipidemia", label: "고지혈증식" },
+	{ id: "low-purine", label: "저퓨린식" },
+	{ id: "diabetes", label: "당뇨식" },
+	{ id: "hypertension", label: "고혈압식" },
+	{ id: "digestion", label: "소화불량식" },
+	{ id: "osteoporosis", label: "골다공증식" },
+	{ id: "hyperlipidemia", label: "고지혈증식" },
 ] as const;
 
-type MenuValue = (typeof menuList)[number];
+type MenuItem = (typeof MOCK_MENU_LIST)[number];
 
 export const MenuPage = () => {
-	const handleMenuClick = (menu: MenuValue) => {
+	const handleMenuClick = (menu: MenuItem) => {
 		// TODO: 라우팅 연결
 	};
 
 	return (
-		<div className="w-[37.5rem] h-[81.2rem] bg-white flex flex-col overflow-hidden">
-			{/* fixed header */}
-			<Header title="건강 식단" isBackVisible />
+		<main className="h-dvh flex flex-col overflow-hidden">
+			<Outlet />
 
-			{/* scroll 영역 */}
-			<div className="flex-1 overflow-y-auto bg-gray-50 pt-[5.6rem]">
-				<div className="h-[1.6rem]" />
-
-				<section className="px-[2rem]">
-					<div
-						className="relative min-h-[12.7rem] rounded-[1.6rem] px-[1.6rem] py-[1.4rem] overflow-hidden"
-						style={{
-							backgroundImage: `url(${MenuBg})`,
-							backgroundSize: "cover",
-							backgroundPosition: "center",
-						}}
-					>
-						<p className="head04-m-16 text-gray-900">
-							“두부전” 요리는 어떠세요?
-						</p>
-
-						<div className="mt-[1.2rem] flex items-start gap-[1rem]">
-							<Ai className="shrink-0" aria-hidden />
-							<p className="body03-r-14 text-gray-700">
-								이러쿵 저러쿵 내용입니다. 길이는 마구 길어져도 상관 없습니다.
-								(min127px)
-							</p>
-						</div>
-					</div>
+			<section
+				className="flex-1 overflow-y-auto bg-gray-50"
+				aria-label="건강 식단 메뉴"
+			>
+				{/* AI 추천 카드 */}
+				<section
+					className="w-full bg-cover bg-center px-[2rem] pt-[2.4rem] pb-[1.5rem] flex justify-center"
+					style={{ backgroundImage: `url(${MenuBg})` }}
+					aria-label="AI 추천 식단"
+				>
+					<CardDietDetail
+						dietName={MOCK_AI_RECOMMENDATION.dietName}
+						description={MOCK_AI_RECOMMENDATION.description}
+					/>
 				</section>
 
-				<section className="px-[2rem] mt-[1.6rem] pb-[2rem]">
-					<div className="flex flex-col gap-[1.2rem]">
-						{menuList.map((menu) => (
-							<CardList key={menu} more onClick={() => handleMenuClick(menu)}>
-								{menu}
-							</CardList>
+				{/* 메뉴 리스트 */}
+				<section
+					className="px-[2rem] pb-[2rem]"
+					aria-label="건강 식단 메뉴 목록"
+				>
+					<ul className="flex flex-col gap-[1.2rem]">
+						{MOCK_MENU_LIST.map((menu) => (
+							<li key={menu.id}>
+								<CardList
+									more
+									onClick={() => handleMenuClick(menu)}
+									aria-label={`${menu.label} 메뉴로 이동`}
+								>
+									{menu.label}
+								</CardList>
+							</li>
 						))}
-					</div>
+					</ul>
 				</section>
-			</div>
-		</div>
+			</section>
+		</main>
 	);
 };
