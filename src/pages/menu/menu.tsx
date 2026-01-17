@@ -1,7 +1,7 @@
 import MenuBg from "@shared/assets/img/menu-bg.png";
-import CardDietDetail from "@shared/ui/cards/card-diet-detail";
 import CardList from "@shared/ui/cards/card-list";
 import { Outlet } from "react-router";
+import CardAiDietRecommendation from "@/pages/menu/ui/card-ai-diet-recommendation";
 
 // 임시 AI 추천 메뉴 데이터
 const MOCK_AI_RECOMMENDATION = {
@@ -45,11 +45,11 @@ export const HealthMenuPage = () => {
 			>
 				{/* AI 추천 카드 */}
 				<section
-					className="w-full bg-cover bg-center px-[2rem] pt-[2.4rem] pb-[1.5rem] flex justify-center"
+					className="w-full bg-cover bg-center px-[2rem] pt-[1.6rem] pb-[1.5rem] flex justify-center"
 					style={{ backgroundImage: `url(${MenuBg})` }}
 					aria-label="AI 추천 식단"
 				>
-					<CardDietDetail
+					<CardAiDietRecommendation
 						dietName={MOCK_AI_RECOMMENDATION.dietName}
 						description={MOCK_AI_RECOMMENDATION.description}
 					/>

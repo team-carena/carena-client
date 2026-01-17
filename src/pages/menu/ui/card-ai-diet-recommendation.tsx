@@ -1,13 +1,16 @@
 import { Ai } from "@shared/assets/svg";
 
-export interface CardDietDetailProps {
+export interface CardAiDietRecommendationProps {
 	// AI 추천 요리명 (ex. "두부전")
 	dietName: string;
 	// 추천 요리 설명 텍스트 (길이 무제한)
 	description: string;
 }
 
-const CardDietDetail = ({ dietName, description }: CardDietDetailProps) => {
+const CardAiDietRecommendation = ({
+	dietName,
+	description,
+}: CardAiDietRecommendationProps) => {
 	return (
 		<article
 			className="
@@ -43,4 +46,4 @@ const CardDietDetail = ({ dietName, description }: CardDietDetailProps) => {
 	);
 };
 
-export default CardDietDetail;
+export default CardAiDietRecommendation;
