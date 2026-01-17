@@ -292,6 +292,8 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 								cy={pos.y}
 								r="2"
 								fill="var(--color-secondary-700)"
+								stroke="var(--color-secondary-50)"
+								strokeWidth="1"
 								opacity={animationProgress}
 							/>
 						);
