@@ -3,6 +3,7 @@ export const ROUTE_PATH = {
 	LOGIN: "/login",
 	HOME: "/home",
 	MY_PAGE: "/my-page",
+	HEALTH_TIP: "/health-tip",
 	// 페이지 작업 시 추가
 } as const;
 
