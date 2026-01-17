@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { AddButton } from "@/shared/ui/buttons/add-button";
 import { RadialChart } from "@/shared/ui/graphs/radial-chart/radial-chart";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 
 const UserInfo = () => {
+	const [showAlarmMessage, _setShowAlarmMessagee] = useState(true);
+
 	return (
 		<section className="flex w-full bg-primary-300">
 			{/* 좌측 사용자 정보 */}
@@ -17,11 +20,13 @@ const UserInfo = () => {
 				<AddButton />
 			</div>
 
-			{/* 우측 표 */}
-			<div className="flex flex-1 items-center justify-center">
+			{/* 우측 */}
+			<div className="relative flex flex-1 items-center justify-center">
+				{/* 우측 그래프 */}
 				<div className="relative">
 					<figure>
-						<RadialChart score={90} className="w-[15rem] h-[15rem]" />
+						{/* TODO: 점수 없으면 기본값 70점 반영 */}
+						<RadialChart score={70} className="w-[15rem] h-[15rem]" />
 					</figure>
 					<div className="absolute bottom-[-7px] right-[-5px]">
 						<Tooltip side="bottom" align="end">
@@ -31,6 +36,16 @@ const UserInfo = () => {
 						</Tooltip>
 					</div>
 				</div>
+
+				{/* blur 영역 */}
+				{showAlarmMessage && (
+					<div className="absolute inset-0 flex justify-center items-center backdrop-blur-[2px]">
+						<div className="text-white text-center whitespace-pre-line text-[1.5rem] font-bold leading-[1.8rem]">
+							<p>좌측 버튼을 눌러</p>
+							<p className="mt-[1rem]">검진결과를 추가해주세요</p>
+						</div>
+					</div>
+				)}
 			</div>
 		</section>
 	);
