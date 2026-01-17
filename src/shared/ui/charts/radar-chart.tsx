@@ -57,7 +57,7 @@ export function RadarChart({
 					<ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 				)}
 				<PolarAngleAxis dataKey="label" />
-				<PolarGrid />
+				<PolarGrid radialLines={false} />
 				<Radar
 					dataKey="value"
 					fill={color}
