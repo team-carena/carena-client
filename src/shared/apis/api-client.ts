@@ -1,6 +1,5 @@
-import axios, { type AxiosError, type AxiosResponse } from "axios";
+import axios, { type AxiosError } from "axios";
 import { useAuthStore } from "../store/auth-store";
-import type { BaseResponse } from "./api-types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
