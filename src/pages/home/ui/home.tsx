@@ -1,28 +1,31 @@
-import { RadarChart } from "@/shared/ui/charts";
+import {
+	RADAR_CHART_MAP,
+	RadarChart,
+} from "@/shared/ui/charts/radar-chart/radar-chart";
 
+// import { useSuspenseQuery } from "@tanstack/react-query";
+
+// 예시 데이터 (API 연결 전 테스트용)
 const radarData = [
-	{ label: "당뇨", value: 2 },
-	{ label: "혈압", value: 2.5 },
-	{ label: "빈혈", value: 1.5 },
-	{ label: "신장질환", value: 1.8 },
-	{ label: "간장질환", value: 2.2 },
-	{ label: "비만", value: 1.5 },
+	{ label: "혈압", value: RADAR_CHART_MAP["정상"] },
+	{ label: "빈혈", value: RADAR_CHART_MAP["경계"] },
+	{ label: "신장질환", value: RADAR_CHART_MAP["위험"] },
+	{ label: "간장질환", value: RADAR_CHART_MAP["정상"] },
+	{ label: "비만", value: RADAR_CHART_MAP["경계"] },
+	{ label: "당뇨", value: RADAR_CHART_MAP["위험"] },
 ];
 
 export const HomePage = () => {
+	// TODO: API 연결 후
+	// const { data } = useSuspenseQuery();
+	// const radarData = data.map((item) => ({
+	// 	label: item.name,
+	// 	value: RADAR_CHART_MAP[item.value] ?? 0,
+	// }))
+
 	return (
 		<div className="p-[2rem]">
-			<div className="bg-white rounded-[1.2rem] p-[2rem]">
-				<h2 className="head02-b-16 mb-[1.6rem]">건강 상태 분석</h2>
-				<RadarChart
-					data={radarData}
-					className="mx-auto aspect-square max-h-[300px]"
-					color="var(--color-secondary-300)"
-					fillOpacity={0.2}
-					dotRadius={2}
-					dotColor="var(--color-secondary-700)"
-				/>
-			</div>
+			<RadarChart data={radarData} />
 		</div>
 	);
 };
