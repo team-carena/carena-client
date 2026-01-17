@@ -22,7 +22,7 @@ export const HealthTipDetailPage = () => {
 						/>
 					</ContentCard>
 
-					<p className="mt-[1.3rem] pr-[0.8rem] text-right body05-r-12 text-gray-700">
+					<p className="mt-[1.2rem] pr-[0.8rem] text-right body05-r-12 text-gray-700">
 						출처: <cite className="not-italic">어쩌구</cite>
 					</p>
 				</section>
