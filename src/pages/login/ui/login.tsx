@@ -1,8 +1,10 @@
 import Lottie from "react-lottie-player";
 import LoginBackGround from "@/shared/assets/img/login-bg.png";
 import { CarenaLogoText } from "@/shared/assets/svg";
+import { requestKakaoAuthorize } from "@/shared/libs/request-kakao-authorize";
 import LandingGraphic from "../landing-graphic.json";
 import { LoginButton } from "./login-button";
+
 export const LoginPage = () => {
 	return (
 		<>
@@ -33,7 +35,7 @@ export const LoginPage = () => {
 					</p>
 				</section>
 
-				<LoginButton onClick={() => {}} />
+				<LoginButton onClick={() => requestKakaoAuthorize()} />
 			</main>
 		</>
 	);
