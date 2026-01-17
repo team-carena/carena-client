@@ -1,5 +1,4 @@
 import { DefaultProfile } from "@/shared/assets/svg";
-import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { ActionSection } from "./action-section";
 
@@ -9,7 +8,11 @@ const ACTION_LIST = [
 		title: "약관",
 		label: "약관 바로보기",
 		onClick: () => {
-			window.open("https://www.notion.so/약관페이지주소", "_blank"); // TODO: 실제 노션 약관 페이지 링크로 대체
+			window.open(
+				"https://www.notion.so/약관페이지주소",
+				"_blank",
+				"noopener, noreferrer",
+			); // TODO: 실제 노션 약관 페이지 링크로 대체
 		},
 	},
 	{
@@ -31,7 +34,6 @@ export const MyPage = () => {
 
 	return (
 		<main className="h-screen px-[2rem] bg-white">
-			<Header title="마이페이지" variant="back" />
 			<section className="flex gap-[2rem] items-center pt-[2.4rem] pb-[4rem]">
 				<DefaultProfile className="rounded-[12px]" />
 				<div className="flex flex-col gap-[2rem]">
