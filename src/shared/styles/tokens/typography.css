@@ -1,16 +1,23 @@
 @layer utilities {
   /* display */
-  .display01-b-24 {
+  .display01-b-36 {
+    font-size: 3.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  .display02-b-24 {
     font-size: 2.4rem;
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0;
   }
 
-  .display02-sb-28 {
-    font-size: 2.8rem;
+  .display03-sb-20 {
+    font-size: 2rem;
     font-weight: 600;
-    line-height: 1;
+    line-height: 1.2;
     letter-spacing: 0;
   }
 
