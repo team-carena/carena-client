@@ -1,5 +1,6 @@
 export { default as Ai } from "./ai.svg?react";
 export { default as Alert } from "./alert.svg?react";
+export { default as BlurNoise } from "./blur-noise.svg?react";
 export { default as CarenaLogo } from "./carena-logo.svg?react";
 export { default as Check } from "./check.svg?react";
 export { default as CheckW } from "./check-w.svg?react";
