@@ -1,4 +1,4 @@
-import { MenuPage } from "@pages/menu/menu";
+import { HealthMenuPage } from "@pages/menu/menu";
 import { createBrowserRouter, Navigate } from "react-router";
 import { HomePage } from "@/pages/home/ui/home";
 import { Layout } from "./layout";
@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
 					},
 					{
 						path: ROUTE_PATH.MENU,
-						element: <MenuPage />,
+						element: <HealthMenuPage />,
 						handle: {
 							header: "back",
 							title: "건강 식단",
