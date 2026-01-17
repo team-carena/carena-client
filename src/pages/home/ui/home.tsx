@@ -1,31 +1,23 @@
-import {
-	RADAR_CHART_MAP,
-	RadarChart,
-} from "@/shared/ui/charts/radar-chart/radar-chart";
-
-// import { useSuspenseQuery } from "@tanstack/react-query";
-
-// 예시 데이터 (API 연결 전 테스트용)
-const radarData = [
-	{ label: "혈압", value: RADAR_CHART_MAP["정상"] },
-	{ label: "빈혈", value: RADAR_CHART_MAP["경계"] },
-	{ label: "신장질환", value: RADAR_CHART_MAP["위험"] },
-	{ label: "간장질환", value: RADAR_CHART_MAP["정상"] },
-	{ label: "비만", value: RADAR_CHART_MAP["경계"] },
-	{ label: "당뇨", value: RADAR_CHART_MAP["위험"] },
-];
+import { Tabs } from "@/shared/ui/tabs/tabs";
+import HealthInfoPage from "../health-info/health-info";
+import UserInfo from "../health-info/user-info";
 
 export const HomePage = () => {
-	// TODO: API 연결 후
-	// const { data } = useSuspenseQuery();
-	// const radarData = data.map((item) => ({
-	// 	label: item.name,
-	// 	value: RADAR_CHART_MAP[item.value] ?? 0,
-	// }))
-
 	return (
-		<div className="p-[2rem]">
-			<RadarChart data={radarData} />
+		<div className="flex flex-col w-full">
+			<UserInfo />
+			<Tabs defaultTab="health-info">
+				<Tabs.List>
+					<Tabs.Trigger value="health-info">건강정보</Tabs.Trigger>
+					<Tabs.Trigger value="health-tips">검진결과분석</Tabs.Trigger>
+				</Tabs.List>
+				<Tabs.Content value="health-info">
+					<HealthInfoPage />
+				</Tabs.Content>
+				<Tabs.Content value="health-tips">
+					<div>검진결과분석 내용입니다.</div>
+				</Tabs.Content>
+			</Tabs>
 		</div>
 	);
 };

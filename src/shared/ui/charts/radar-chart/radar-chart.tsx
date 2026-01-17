@@ -9,7 +9,7 @@ export const RADAR_CHART_MAP: Record<string, number> = {
 // 레이더 차트 타입
 export interface RadarChartDataPoint {
 	label: string;
-	value: number; // 0~3 (정상=1, 경계=2, 의심=3)
+	riskLevel: number; // 1.2(정상), 1.8(경계), 2.4(위험)
 }
 
 export interface RadarChartProps {
@@ -28,7 +28,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 			const elapsed = currentTime - startTime;
 			const progress = Math.min(elapsed / duration, 1);
 
-			// easeOutCubic 이징 함수
+			// easeOutCubic easing 애니메이션 적용 함수
 			const eased = 1 - (1 - progress) ** 3;
 			setAnimationProgress(eased);
 
@@ -40,10 +40,10 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 		requestAnimationFrame(animate);
 	}, []);
 
-	// SVG viewBox가 0 0 300 300 -> (150, 150)이 정확히 SVG의 중심
+	// SVG viewBox가 0 0 300 300 -> (150, 150)이 정확히 육각형 SVG의 중심
 	const cx = 150; // 중심 X
 	const cy = 150; // 중심 Y
-	const maxRadius = 100; // 최대 반지름
+	const outerHexagonRadius = 100; // 가장 큰 육각형의 반지름 (viewBox 내부 좌표계의 단위, 실제 100px(X))
 
 	// 상수
 	const LABEL_RECT_HALF_WIDTH = 14; // 라벨 흰배경 rect 너비의 절반 (28 / 2)
@@ -122,11 +122,12 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 		return `${path} Z`;
 	};
 
-	// 데이터 영역 path 생성 (애니메이션 적용)
+	// 사용자 데이터 영역 생성 (보라색 영역) (렌더링 시 애니메이션 적용)
 	const createDataPath = () => {
 		return `${data
 			.map((point, index) => {
-				const radius = (point.value / 3) * maxRadius * animationProgress;
+				const radius =
+					(point.riskLevel / 3) * outerHexagonRadius * animationProgress;
 				const pos = getPoint(index, radius);
 				return `${index === 0 ? "M" : "L"} ${pos.x} ${pos.y}`;
 			})
@@ -135,7 +136,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 
 	// 라벨 위치 계산 (혈압, 빈혈 등 라벨)
 	const getLabelPosition = (index: number) => {
-		const point = getPoint(index, maxRadius + CATEGORY_LABEL_OFFSET);
+		const point = getPoint(index, outerHexagonRadius + CATEGORY_LABEL_OFFSET);
 		return point;
 	};
 
@@ -164,68 +165,80 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 						</filter>
 					</defs>
 
-					{/* 배경 육각형들 (5개) */}
+					{/* 육각형들 (5개) */}
 					{/* 5번째(가장 바깥): 라벨 X */}
 					<path
-						d={createHexagonPath(maxRadius)}
+						d={createHexagonPath(outerHexagonRadius)}
 						fill="white"
 						filter="url(#hexagon-shadow)"
 					/>
 					{/* 4번째(의심) */}
 					<path
-						d={createHexagonPath(maxRadius * 0.8)}
+						d={createHexagonPath(outerHexagonRadius * 0.8)}
 						fill="none"
 						stroke="var(--color-gray-300)"
 						strokeWidth="1"
 					/>
 					{/* 3번째(경계) */}
 					<path
-						d={createHexagonPath(maxRadius * 0.6)}
+						d={createHexagonPath(outerHexagonRadius * 0.6)}
 						fill="none"
 						stroke="var(--color-gray-300)"
 						strokeWidth="1"
 					/>
 					{/* 2번째(정상) */}
 					<path
-						d={createHexagonPath(maxRadius * 0.4)}
+						d={createHexagonPath(outerHexagonRadius * 0.4)}
 						fill="none"
 						stroke="var(--color-gray-300)"
 						strokeWidth="1"
 					/>
 					{/* 가장 안쪽: 라벨 X */}
 					<path
-						d={createHexagonPath(maxRadius * 0.2)}
+						d={createHexagonPath(outerHexagonRadius * 0.2)}
 						fill="var(--color-gray-50)"
 					/>
 
-					{/* 레벨 라벨 배경 (흰색 rect) */}
+					{/* riskLevel 라벨 배경 (흰색 rect) */}
 					{/* 디자인 반영을 위해 라벨 텍스트에 흰배경 추가(흰배경과 라벨 텍스트는 별도로 움직이므로 위치도 텍스트와 별도로 지정 필요) */}
 					<rect
 						x={cx - LABEL_RECT_HALF_WIDTH}
-						y={cy - maxRadius * 0.4 * COS_30_DEG - LABEL_RECT_HALF_HEIGHT}
+						y={
+							cy -
+							outerHexagonRadius * 0.4 * COS_30_DEG -
+							LABEL_RECT_HALF_HEIGHT
+						}
 						width={LABEL_RECT_HALF_WIDTH * 2}
 						height={LABEL_RECT_HALF_HEIGHT * 2}
 						fill="var(--color-white)"
 					/>
 					<rect
 						x={cx - LABEL_RECT_HALF_WIDTH}
-						y={cy - maxRadius * 0.6 * COS_30_DEG - LABEL_RECT_HALF_HEIGHT}
+						y={
+							cy -
+							outerHexagonRadius * 0.6 * COS_30_DEG -
+							LABEL_RECT_HALF_HEIGHT
+						}
 						width={LABEL_RECT_HALF_WIDTH * 2}
 						height={LABEL_RECT_HALF_HEIGHT * 2}
 						fill="var(--color-white)"
 					/>
 					<rect
 						x={cx - LABEL_RECT_HALF_WIDTH}
-						y={cy - maxRadius * 0.8 * COS_30_DEG - LABEL_RECT_HALF_HEIGHT}
+						y={
+							cy -
+							outerHexagonRadius * 0.8 * COS_30_DEG -
+							LABEL_RECT_HALF_HEIGHT
+						}
 						width={LABEL_RECT_HALF_WIDTH * 2}
 						height={LABEL_RECT_HALF_HEIGHT * 2}
 						fill="var(--color-white)"
 					/>
 
-					{/* 레벨 라벨 텍스트 */}
+					{/* riskLevel 라벨 텍스트 */}
 					<text
 						x={cx}
-						y={cy - maxRadius * 0.4 * COS_30_DEG}
+						y={cy - outerHexagonRadius * 0.4 * COS_30_DEG}
 						textAnchor="middle"
 						dominantBaseline="middle"
 						className="label03-m-12"
@@ -235,7 +248,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 					</text>
 					<text
 						x={cx}
-						y={cy - maxRadius * 0.6 * COS_30_DEG}
+						y={cy - outerHexagonRadius * 0.6 * COS_30_DEG}
 						textAnchor="middle"
 						dominantBaseline="middle"
 						className="label03-m-12"
@@ -245,7 +258,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 					</text>
 					<text
 						x={cx}
-						y={cy - maxRadius * 0.8 * COS_30_DEG}
+						y={cy - outerHexagonRadius * 0.8 * COS_30_DEG}
 						textAnchor="middle"
 						dominantBaseline="middle"
 						className="label03-m-12"
@@ -264,7 +277,8 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 
 					{/* 데이터 포인트 */}
 					{data.map((point, index) => {
-						const radius = (point.value / 3) * maxRadius * animationProgress;
+						const radius =
+							(point.riskLevel / 3) * outerHexagonRadius * animationProgress;
 						const pos = getPoint(index, radius);
 						return (
 							<circle
