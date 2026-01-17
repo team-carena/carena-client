@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 
-export const RADAR_CHART_MAP: Record<string, number> = {
+export const RADAR_CHART_MAP = {
 	정상: 1.2,
 	경계: 1.8,
 	위험: 2.4,
 } as const;
+
+export type RiskLevelKey = keyof typeof RADAR_CHART_MAP; // "정상" | "경계" | "위험"
 
 // 레이더 차트 타입
 export interface RadarChartDataPoint {
