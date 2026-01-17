@@ -97,7 +97,7 @@ export function RadialChart({ score, className }: RadialChartProps) {
 						dataKey="score"
 						stackId="a"
 						fill="var(--color-score)"
-						stroke="white"
+						stroke="var(--color-white)"
 						strokeWidth={1}
 						style={{ filter: "url(#chartShadow)" }}
 					/>
@@ -105,9 +105,9 @@ export function RadialChart({ score, className }: RadialChartProps) {
 						dataKey="remaining"
 						stackId="a"
 						fill="var(--color-remaining)"
-						stroke="white"
+						stroke="var(--color-remaining)"
 						strokeWidth={1}
-						// style={{ filter: "url(#chartShadow)" }}
+						isAnimationActive={false}
 					/>
 				</RadialBarChart>
 			</ChartContainer>
