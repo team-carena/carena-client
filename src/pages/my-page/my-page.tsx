@@ -7,15 +7,15 @@ const ACTION_LIST = [
 	{
 		id: "terms",
 		title: "약관",
-		navLabel: "약관 바로보기",
+		label: "약관 바로보기",
 		onClick: () => {
-			window.open("https://www.notion.so/약관페이지주소", "_blank");
+			window.open("https://www.notion.so/약관페이지주소", "_blank"); // TODO: 실제 노션 약관 페이지 링크로 대체
 		},
 	},
 	{
 		id: "logout",
 		title: "설정",
-		navLabel: "로그아웃",
+		label: "로그아웃",
 		onClick: () =>
 			openModal({
 				size: "sm",
@@ -40,11 +40,11 @@ export const MyPage = () => {
 				</div>
 			</section>
 			<div className="flex flex-col gap-[2rem]">
-				{ACTION_LIST.map(({ id, title, navLabel, onClick }) => (
+				{ACTION_LIST.map(({ id, title, label, onClick }) => (
 					<ActionSection
 						key={id}
 						title={title}
-						navLabel={navLabel}
+						label={label}
 						onClick={onClick}
 					/>
 				))}
