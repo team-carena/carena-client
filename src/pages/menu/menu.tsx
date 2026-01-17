@@ -31,7 +31,7 @@ const MOCK_MENU_LIST = [
 type MenuItem = (typeof MOCK_MENU_LIST)[number];
 
 export const MenuPage = () => {
-	const handleMenuClick = (menu: MenuItem) => {
+	const handleMenuClick = (_menu: MenuItem) => {
 		// TODO: 라우팅 연결
 	};
 
