@@ -42,7 +42,7 @@ export const HealthMenuPage = () => {
 			>
 				{/* AI 추천 카드 */}
 				<section
-					className="w-full bg-cover bg-center px-[2rem] pt-[1.6rem] pb-[1.5rem] flex justify-center"
+					className="w-full bg-cover bg-center px-[2rem] pt-[1.6rem] pb-[2rem] flex justify-center"
 					style={{ backgroundImage: `url(${MenuBg})` }}
 					aria-label="AI 추천 식단"
 				>
