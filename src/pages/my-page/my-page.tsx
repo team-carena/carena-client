@@ -35,7 +35,7 @@ export const MyPage = () => {
 			<section className="flex gap-[2rem] items-center pt-[2.4rem] pb-[4rem]">
 				<DefaultProfile className="rounded-[12px]" />
 				<div className="flex flex-col gap-[2rem]">
-					<span className="head03-sb-16">김경아</span>
+					<h3 className="head03-sb-16">김경아</h3>
 					<p className="head05-r-14">2003년 08월 21일</p>
 				</div>
 			</section>
