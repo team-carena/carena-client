@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { HomePage } from "@/pages/home/ui/home";
+import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/my-page";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
@@ -25,7 +26,7 @@ export interface RouteHandle {
 export const router = createBrowserRouter([
 	{
 		path: ROUTE_PATH.LOGIN,
-		element: <></>,
+		element: <LoginPage />,
 	},
 	{
 		element: <ProtectedRoute />,
