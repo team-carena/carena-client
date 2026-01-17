@@ -1,6 +1,5 @@
 import { ContentCard } from "@shared/ui/cards/card-content";
 import { CardTable } from "@shared/ui/cards/card-table";
-import { Outlet } from "react-router";
 
 // 임시 데이터
 const MOCK_RECOMMENDED_ROWS = [
@@ -11,13 +10,11 @@ const MOCK_RECOMMENDED_ROWS = [
 
 const MOCK_CAUTION_FOODS = ["두쫀쿠", "불닭", "등등"] as const;
 
-const BASE_SECTION = "flex flex-col items-start self-stretch";
+const SECTION_LAYOUT = "flex flex-col items-start";
 
 export const MenuDetailPage = () => {
 	return (
 		<div className="h-dvh flex flex-col overflow-hidden bg-gray-50">
-			<Outlet />
-
 			<main
 				className="
           flex-1
@@ -31,7 +28,7 @@ export const MenuDetailPage = () => {
 				{/* 메뉴 타이틀 및 설명 */}
 				<section
 					aria-labelledby="menu-detail-title"
-					className={`${BASE_SECTION} py-[1.2rem] gap-[2rem]`}
+					className={`${SECTION_LAYOUT} py-[1.2rem] gap-[2rem]`}
 				>
 					<h1 id="menu-detail-title" className="head01-b-18 text-gray-900">
 						저퓨린식
@@ -46,7 +43,7 @@ export const MenuDetailPage = () => {
 				{/* 권장식품과 요리 */}
 				<section
 					aria-labelledby="recommended-title"
-					className={`${BASE_SECTION} gap-[1.2rem]`}
+					className={`${SECTION_LAYOUT} gap-[1.2rem]`}
 				>
 					<span
 						id="recommended-title"
@@ -75,7 +72,7 @@ export const MenuDetailPage = () => {
 				{/* 주의 식품 */}
 				<section
 					aria-labelledby="caution-title"
-					className={`${BASE_SECTION} gap-[1.2rem]`}
+					className={`${SECTION_LAYOUT} gap-[1.2rem]`}
 				>
 					<span
 						id="caution-title"
@@ -94,7 +91,7 @@ export const MenuDetailPage = () => {
 
 					<ContentCard variant="muted">
 						<ContentCard.Content>
-							<ul className="space-y-[0.6rem]">
+							<ul>
 								{MOCK_CAUTION_FOODS.map((food) => (
 									<li key={food} className="body04-r-14 text-gray-900">
 										{food}
