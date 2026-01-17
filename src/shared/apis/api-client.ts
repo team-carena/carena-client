@@ -1,4 +1,5 @@
 import axios, { type AxiosError, type AxiosResponse } from "axios";
+import { useAuthStore } from "../store/auth-store";
 import type { BaseResponse } from "./api-types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -18,7 +19,39 @@ export const apiClient = axios.create({
 	timeout: 10000,
 });
 
-apiClient.interceptors.response.use(
-	(response: AxiosResponse<BaseResponse<unknown>>) => response,
+apiClient.interceptors.request.use(
+	(config) => {
+		const { accessToken } = useAuthStore.getState();
+
+		if (accessToken) {
+			config.headers = config.headers ?? {};
+			config.headers.Authorization = `Bearer ${accessToken}`;
+		}
+
+		return config;
+	},
 	(error: AxiosError) => Promise.reject(error),
+);
+
+apiClient.interceptors.response.use(
+	(response) => response,
+	async (error: AxiosError) => {
+		if (error.response?.status !== 401) {
+			return Promise.reject(error);
+		}
+
+		// 1. refresh 시도
+		// const success = await refresh();
+
+		// if (success) {
+		//   2. accessToken 갱신
+		//  3. 원래 요청 재시도
+		// }
+
+		// 4. refresh 실패
+		// logout()
+		// isAuthenticated = false
+
+		return Promise.reject(error);
+	},
 );
