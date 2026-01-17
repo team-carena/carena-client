@@ -19,9 +19,9 @@ interface RadialChartProps {
 
 export function RadialChart({ score, className }: RadialChartProps) {
 	const data = [{ score, remaining: 100 - score }];
-	const outerRadius = 74;
-	const innerRadius = 44;
-	const chartSize = outerRadius * 1.45; // 배경이 되는 흰색 원의 가로길이 (약 108px)
+	const outerRadius = 80;
+	const innerRadius = 44; // 두께: 36px
+	const chartSize = outerRadius * 1.35; // 배경이 되는 흰색 원의 가로길이 (약 108px)
 
 	return (
 		<div
