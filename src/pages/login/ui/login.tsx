@@ -14,7 +14,7 @@ export const LoginPage = () => {
 			/>
 			<main className="relative px-[2rem]">
 				<h1 className="sr-only">CareNA 로그인 페이지</h1>
-				<header className="flex flex-col gap-[1.9rem] pt-[4rem] pb-[1.6rem] px-[0.4rem]">
+				<header className="flex flex-col gap-[1.9rem] pt-[6.4rem] pb-[1.6rem] px-[0.4rem]">
 					<p className="display03-sb-20 text-gray-900">
 						검진 결과 이후의 모든 순간을
 					</p>
@@ -25,9 +25,10 @@ export const LoginPage = () => {
 					animationData={LandingGraphic}
 					aria-hidden="true"
 					tabIndex={-1}
+					speed={0.57}
 					loop
 					play
-					className="w-[20rem] h-[22rem] mx-auto mt-[8.1rem] mb-[7.2rem]"
+					className="w-[20rem] h-[22rem] mx-auto mt-[8.1rem] mb-[10.2rem]"
 				/>
 
 				<section
@@ -40,7 +41,10 @@ export const LoginPage = () => {
 						<span>가 해설부터 관리까지 도와드려요.</span>
 					</p>
 				</section>
-				<LoginButton onClick={() => {}} />
+
+				<div className="pb-[4rem]">
+					<LoginButton onClick={() => {}} />
+				</div>
 			</main>
 		</>
 	);
