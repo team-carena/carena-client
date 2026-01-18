@@ -1,3 +1,4 @@
+import { HealthMenuPage } from "@pages/menu/menu";
 import { createBrowserRouter, Navigate } from "react-router";
 import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
@@ -51,6 +52,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "마이페이지",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.MENU,
+						element: <HealthMenuPage />,
+						handle: {
+							header: "back",
+							title: "건강 식단",
 						} satisfies RouteHandle,
 					},
 					{
