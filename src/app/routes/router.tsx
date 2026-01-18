@@ -60,6 +60,9 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "건강 식단",
+						} satisfies RouteHandle,
+					},
+					{
 						path: ROUTE_PATH.HEALTH_TIP,
 						element: <HealthTipPage />,
 						handle: {
