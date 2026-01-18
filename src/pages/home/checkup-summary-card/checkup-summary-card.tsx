@@ -200,7 +200,7 @@ const RowWithBadgeAndGraph = ({
 	const rangeBarData = getRangeBarData(metricKey, metricSex);
 
 	return (
-		<div className={cn("space-y-[1.6rem] mb-[1.2rem] ", className)} {...props}>
+		<div className={cn("space-y-[1.6rem] mb-[1.2rem]", className)} {...props}>
 			<RowWithBadge
 				label={label}
 				value={value}
