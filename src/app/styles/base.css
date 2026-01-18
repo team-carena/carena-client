@@ -101,4 +101,23 @@
       transform: translateY(0);
     }
   }
+
+  /* Popover fade 애니메이션 (opacity만 사용하여 layout shift 방지) */
+  @keyframes popover-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes popover-fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  .popover-fade[data-state="open"] {
+    animation: popover-fade-in 150ms ease-out;
+  }
+
+  .popover-fade[data-state="closed"] {
+    animation: popover-fade-out 100ms ease-in;
+  }
 }

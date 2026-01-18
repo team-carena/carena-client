@@ -33,12 +33,8 @@ function PopoverContent({
 				className={cn(
 					// Popover 내용을 나타내는 영역의 css
 					"group z-50 w-[25.6rem] rounded-[12px] border border-gray-300 bg-white p-[2.4rem] body05-r-12 text-gray-900 whitespace-pre-wrap",
-					// Popover가 열리고 닫힐 때의 애니메이션 (tw-animate-css 패키지가 제공, popover 기본제공 코드)
-					"data-[state=open]:animate-in data-[state=closed]:animate-out",
-					"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-					"data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-					"data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
-					"data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+					// 커스텀 opacity 애니메이션 (tw-animate-css는 layout-shift 발생시키므로 제거)
+					"popover-fade",
 					className,
 				)}
 				{...props}
