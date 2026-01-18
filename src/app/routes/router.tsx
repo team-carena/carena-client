@@ -1,5 +1,8 @@
 import { createBrowserRouter, Navigate } from "react-router";
+import { HealthTipPage } from "@/pages/health-tip/health-tip";
+import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
+import { LoginPage } from "@/pages/login/ui/login";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
@@ -24,7 +27,7 @@ export interface RouteHandle {
 export const router = createBrowserRouter([
 	{
 		path: ROUTE_PATH.LOGIN,
-		element: <></>,
+		element: <LoginPage />,
 	},
 	{
 		element: <ProtectedRoute />,
@@ -48,6 +51,22 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "마이페이지",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_TIP,
+						element: <HealthTipPage />,
+						handle: {
+							header: "back",
+							title: "생활 속 건강 팁",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_TIP_DETAIL,
+						element: <HealthTipDetailPage />,
+						handle: {
+							header: "back",
+							title: "건강 팁 상세",
 						} satisfies RouteHandle,
 					},
 					{
