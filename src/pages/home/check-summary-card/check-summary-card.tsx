@@ -89,7 +89,7 @@ const ValueWithUnit = ({ value, unit }: { value: number; unit: string }) => {
 const Root = ({ className, children }: CheckSummaryCardRootProps) => (
 	<div
 		className={cn(
-			"w-[33.5rem] rounded-[12px] bg-gray-50 overflow-hidden",
+			"w-full rounded-[12px] bg-gray-50 overflow-hidden",
 			className,
 		)}
 	>
