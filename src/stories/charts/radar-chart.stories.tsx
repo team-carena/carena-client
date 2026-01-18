@@ -72,7 +72,7 @@ export const AllDanger: Story = {
 				{ label: "신장질환", riskLevel: RADAR_CHART_MAP.의심 },
 				{ label: "간장질환", riskLevel: RADAR_CHART_MAP.의심 },
 				{ label: "비만", riskLevel: RADAR_CHART_MAP.의심 },
-				{ label: "당뇨", riskLevel: RADAR_CHART_MAP["의심"] },
+				{ label: "당뇨", riskLevel: RADAR_CHART_MAP.의심 },
 			]}
 		/>
 	),

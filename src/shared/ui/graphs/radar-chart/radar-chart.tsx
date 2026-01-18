@@ -138,15 +138,6 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 			.join(" ")} Z`;
 	};
 
-	// 라벨 위치 계산 (혈압, 빈혈 등 라벨)
-	const getLabelPosition = (index: number) => {
-		const point = getHexagonPoint(
-			index,
-			outerHexagonRadius + CATEGORY_LABEL_OFFSET,
-		);
-		return point;
-	};
-
 	return (
 		<>
 			{/* 레이더 차트 */}
@@ -305,14 +296,17 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 
 				{/* 카테고리 라벨 */}
 				{data.map((point, index) => {
-					const pos = getLabelPosition(index);
+					const labelPos = getHexagonPoint(
+						index,
+						outerHexagonRadius + CATEGORY_LABEL_OFFSET,
+					);
 					return (
 						<span
 							key={point.label}
 							className="absolute label03-m-12 text-gray-900"
 							style={{
-								left: `calc(50% + ${pos.x - cx}px)`,
-								top: `calc(50% + ${pos.y - cy}px)`,
+								left: `calc(50% + ${labelPos.x - cx}px)`,
+								top: `calc(50% + ${labelPos.y - cy}px)`,
 								transform: "translate(-50%, -50%)",
 							}}
 						>
