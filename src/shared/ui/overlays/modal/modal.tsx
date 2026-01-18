@@ -25,24 +25,7 @@ export const Modal = ({
 	primaryAction,
 	secondaryAction,
 	size = "lg",
-	onClose,
 }: ModalProps) => {
-	React.useEffect(() => {
-		if (!open) {
-			return undefined;
-		}
-
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				onClose?.();
-			}
-		};
-
-		window.addEventListener("keydown", handleKeyDown);
-
-		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [open, onClose]);
-
 	React.useEffect(() => {
 		if (open) {
 			const originalOverflow = document.body.style.overflow;
@@ -64,14 +47,12 @@ export const Modal = ({
 			)}
 			aria-hidden={!open}
 		>
-			<button
-				type="button"
-				aria-label="Close modal"
+			<div
+				aria-hidden="true"
 				className={cn(
 					"absolute inset-0 bg-black-30 transition-opacity duration-200",
 					open ? "opacity-100" : "opacity-0",
 				)}
-				onClick={onClose}
 			/>
 			<div
 				role="dialog"
