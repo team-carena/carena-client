@@ -52,7 +52,7 @@ interface RowWithBadgeAndGraphProps extends RowWithBadgeProps {
 	metricSex?: Sex;
 }
 
-interface GraphPlaceholderProps {
+interface MetricRangeBarProps {
 	value: number;
 	rangeBarData: RangeBarData;
 }
@@ -64,7 +64,7 @@ const sectionVariantClassName: Record<SectionVariant, string> = {
 	content: "px-[2rem] py-[1.2rem]",
 };
 
-const GraphPlaceholder = ({ value, rangeBarData }: GraphPlaceholderProps) => {
+const MetricRangeBar = ({ value, rangeBarData }: MetricRangeBarProps) => {
 	const { domainMin, domainMax, segments } = rangeBarData;
 
 	return (
@@ -213,7 +213,7 @@ const RowWithBadgeAndGraph = ({
 				metricSex={metricSex}
 				rangeBarData={rangeBarData}
 			/>
-			<GraphPlaceholder value={value} rangeBarData={rangeBarData} />
+			<MetricRangeBar value={value} rangeBarData={rangeBarData} />
 		</div>
 	);
 };
@@ -226,7 +226,7 @@ const CheckSummaryCard = Object.assign(Root, {
 	Row,
 	RowWithBadge,
 	RowWithBadgeAndGraph,
-	GraphPlaceholder,
+	MetricRangeBar,
 });
 
 export default CheckSummaryCard;
