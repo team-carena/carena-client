@@ -1,6 +1,12 @@
 import type * as React from "react";
 import { cn } from "@/shared/libs/cn";
 import { SmallBadge } from "@/shared/ui/badges/small-badge";
+import type {
+	HealthMetricType,
+	Sex,
+} from "@/shared/ui/graphs/range-bar/health-metric-config";
+import { getRangeBarData } from "@/shared/ui/graphs/range-bar/health-metric-config";
+import { RangeBar } from "@/shared/ui/graphs/range-bar/range-bar";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
 
 type SectionVariant = "header" | "content";
@@ -36,6 +42,20 @@ interface RowWithBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 	value: React.ReactNode;
 	badgeVariant?: "normal" | "borderline" | "suspicious";
 	badgeText: React.ReactNode;
+	metricKey: HealthMetricType;
+	metricSex?: Sex;
+}
+
+interface RowWithBadgeAndGraphProps extends RowWithBadgeProps {
+	metricKey: HealthMetricType;
+	metricValue: number;
+	metricSex?: Sex;
+}
+
+interface GraphPlaceholderProps {
+	metricKey: HealthMetricType;
+	value: number;
+	sex?: Sex;
 }
 
 const sectionVariantClassName: Record<SectionVariant, string> = {
@@ -43,9 +63,38 @@ const sectionVariantClassName: Record<SectionVariant, string> = {
 	content: "px-[2rem] py-[1.2rem]",
 };
 
-const GraphPlaceholder = () => (
-	<div className="h-[1.6rem] rounded-full bg-gray-100" />
-);
+const GraphPlaceholder = ({ metricKey, value, sex }: GraphPlaceholderProps) => {
+	const { domainMin, domainMax, segments } = getRangeBarData(metricKey, sex);
+
+	return (
+		<RangeBar
+			value={value}
+			domainMin={domainMin}
+			domainMax={domainMax}
+			segments={segments}
+		/>
+	);
+};
+
+const ValueWithUnit = ({
+	value,
+	unit,
+}: {
+	value: React.ReactNode;
+	unit?: string;
+}) => {
+	const canAppendUnit =
+		unit && (typeof value === "number" || typeof value === "string");
+
+	if (!canAppendUnit) return <>{value}</>;
+
+	return (
+		<span className="inline-flex items-baseline">
+			<span>{value}</span>
+			<span className="ml-[0.4rem] label02-m-14 text-gray-900">{unit}</span>
+		</span>
+	);
+};
 
 const Root = ({ className, children }: CheckSummaryCardRootProps) => (
 	<div
@@ -122,24 +171,32 @@ const RowWithBadge = ({
 	value,
 	badgeVariant = "normal",
 	badgeText,
+	metricKey,
+	metricSex,
 	...props
-}: RowWithBadgeProps) => (
-	<div
-		className={cn("flex items-center justify-between", className)}
-		{...props}
-	>
-		<div className="body04-r-14 text-gray-900">{label}</div>
-		<div className="flex items-center gap-[0.8rem]">
-			<span className="label02-m-14 text-gray-900">{value}</span>
-			<SmallBadge
-				variant={badgeVariant}
-				className="w-[4.1rem] h-[2.8rem] flex items-center justify-center"
-			>
-				{badgeText}
-			</SmallBadge>
+}: RowWithBadgeProps) => {
+	const resolvedUnit = getRangeBarData(metricKey, metricSex).unit;
+
+	return (
+		<div
+			className={cn("flex items-center justify-between", className)}
+			{...props}
+		>
+			<div className="body04-r-14 text-gray-900">{label}</div>
+			<div className="flex items-center gap-[0.8rem]">
+				<span className="label02-m-14 text-gray-900">
+					<ValueWithUnit value={value} unit={resolvedUnit} />
+				</span>
+				<SmallBadge
+					variant={badgeVariant}
+					className="w-[4.1rem] h-[2.8rem] flex items-center justify-center"
+				>
+					{badgeText}
+				</SmallBadge>
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 const RowWithBadgeAndGraph = ({
 	className,
@@ -147,16 +204,25 @@ const RowWithBadgeAndGraph = ({
 	value,
 	badgeVariant = "normal",
 	badgeText,
+	metricKey,
+	metricValue,
+	metricSex,
 	...props
-}: RowWithBadgeProps) => (
-	<div className={cn("space-y-[0.4rem]", className)} {...props}>
+}: RowWithBadgeAndGraphProps) => (
+	<div className={cn("space-y-[1.6rem] mb-[1.2rem] ", className)} {...props}>
 		<RowWithBadge
 			label={label}
 			value={value}
 			badgeVariant={badgeVariant}
 			badgeText={badgeText}
+			metricKey={metricKey}
+			metricSex={metricSex}
 		/>
-		<GraphPlaceholder />
+		<GraphPlaceholder
+			metricKey={metricKey}
+			value={metricValue}
+			sex={metricSex}
+		/>
 	</div>
 );
 
