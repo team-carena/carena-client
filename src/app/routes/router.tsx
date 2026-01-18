@@ -1,5 +1,5 @@
-import { HealthMenuPage } from "@pages/menu/menu";
-import { MenuDetailPage } from "@pages/menu/menu-detail";
+import { HealthMenuPage } from "@pages/health-menu/health-menu";
+import { MenuDetailPage } from "@pages/health-menu/health-menu-detail";
 import { createBrowserRouter, Navigate } from "react-router";
 import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
