@@ -1,4 +1,5 @@
 import axios, { type AxiosError } from "axios";
+import { refreshAccessToken } from "@/app/api/refresh-access-token";
 import { useAuthStore } from "../store/auth-store";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -32,25 +33,49 @@ apiClient.interceptors.request.use(
 	(error: AxiosError) => Promise.reject(error),
 );
 
+let refreshPromise: Promise<string> | null = null;
+
 apiClient.interceptors.response.use(
 	(response) => response,
 	async (error: AxiosError) => {
-		if (error.response?.status !== 401) {
+		const originalRequest = error.config;
+
+		// 401 아니면 그냥 에러 반환
+		if (
+			error.response?.status !== 401 ||
+			!originalRequest ||
+			(originalRequest.headers as any)?.["x-skip-auth-refresh"]
+		) {
 			return Promise.reject(error);
 		}
 
-		// 1. refresh 시도
-		// const success = await refresh();
+		try {
+			// 이미 refresh 중이면 그 Promise 재사용
+			if (!refreshPromise) {
+				refreshPromise = refreshAccessToken();
+			}
 
-		// if (success) {
-		//   2. accessToken 갱신
-		//  3. 원래 요청 재시도
-		// }
+			const newAccessToken = await refreshPromise;
+			refreshPromise = null;
 
-		// 4. refresh 실패
-		// logout()
-		// isAuthenticated = false
+			const store = useAuthStore.getState();
+			store.setAccessToken(newAccessToken);
+			store.setAuthenticated(true);
 
-		return Promise.reject(error);
+			// 원래 요청에 새 토큰 붙여서 재시도
+			originalRequest.headers = originalRequest.headers ?? {};
+			originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+			return apiClient(originalRequest);
+		} catch (refreshError) {
+			refreshPromise = null;
+
+			// refresh 실패 -> 로그아웃 처리
+			const store = useAuthStore.getState();
+			store.setAccessToken("");
+			store.setAuthenticated(false);
+
+			return Promise.reject(refreshError);
+		}
 	},
 );
