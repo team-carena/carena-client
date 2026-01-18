@@ -57,15 +57,15 @@ export const router = createBrowserRouter([
 						} satisfies RouteHandle,
 					},
 					{
-						path: ROUTE_PATH.MENU_DETAIL,
+						path: ROUTE_PATH.HEALTH_MENU_DETAIL,
 						element: <MenuDetailPage />,
 						handle: {
 							header: "back",
-							title: "메뉴 상세",
+							title: "건강 식단",
 						} satisfies RouteHandle,
 					},
 					{
-						path: ROUTE_PATH.MENU,
+						path: ROUTE_PATH.HEALTH_MENU,
 						element: <HealthMenuPage />,
 						handle: {
 							header: "back",
