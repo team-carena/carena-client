@@ -311,7 +311,7 @@ export const healthMetricConfigs: Record<string, HealthMetricConfig> = {
 	},
 };
 
-const resolveMetricKey = (base: HealthMetricType, gender?: Gender) => {
+const getConfigKeyByGender = (base: HealthMetricType, gender?: Gender) => {
 	if (!gender) return base;
 
 	switch (base) {
@@ -331,7 +331,7 @@ export const getHealthMetricConfig = (
 	key: HealthMetricType,
 	gender?: Gender,
 ) => {
-	const resolvedKey = resolveMetricKey(key, gender);
+	const resolvedKey = getConfigKeyByGender(key, gender);
 	return healthMetricConfigs[resolvedKey];
 };
 
