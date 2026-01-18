@@ -2,6 +2,7 @@
   :root {
     --app-min-width: 375px;
     --app-max-width: 440px;
+    --header-height: 5.6rem;
   }
 
   html {
