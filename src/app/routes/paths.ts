@@ -6,6 +6,7 @@ export const ROUTE_PATH = {
 	MENU: "/menu",
 	HEALTH_TIP: "/health-tip",
 	HEALTH_TIP_DETAIL: "/health-tip-detail",
+	TEMP: "/temp",
 	// 페이지 작업 시 추가
 } as const;
 
