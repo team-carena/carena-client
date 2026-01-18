@@ -56,7 +56,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 	const CATEGORY_LABEL_OFFSET = 14; // 카테고리 라벨과 육각형 경계 사이 간격
 
 	// 육각형 꼭짓점 계산
-	const getPoint = (index: number, radius: number) => {
+	const getHexagonPoint = (index: number, radius: number) => {
 		const angle = (Math.PI * 2 * index) / 6 - Math.PI / 3; // flat-top 육각형: 변이 위쪽에 오도록 시작 각도 -60°로 설정
 		return {
 			x: cx + radius * Math.cos(angle),
@@ -132,7 +132,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 			.map((point, index) => {
 				const radius =
 					(point.riskLevel / 3) * outerHexagonRadius * animationProgress;
-				const pos = getPoint(index, radius);
+				const pos = getHexagonPoint(index, radius);
 				return `${index === 0 ? "M" : "L"} ${pos.x} ${pos.y}`;
 			})
 			.join(" ")} Z`;
@@ -140,7 +140,10 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 
 	// 라벨 위치 계산 (혈압, 빈혈 등 라벨)
 	const getLabelPosition = (index: number) => {
-		const point = getPoint(index, outerHexagonRadius + CATEGORY_LABEL_OFFSET);
+		const point = getHexagonPoint(
+			index,
+			outerHexagonRadius + CATEGORY_LABEL_OFFSET,
+		);
 		return point;
 	};
 
@@ -284,7 +287,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 					{data.map((point, index) => {
 						const radius =
 							(point.riskLevel / 3) * outerHexagonRadius * animationProgress;
-						const pos = getPoint(index, radius);
+						const pos = getHexagonPoint(index, radius);
 						return (
 							<circle
 								key={point.label}
