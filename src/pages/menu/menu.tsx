@@ -35,43 +35,35 @@ export const HealthMenuPage = () => {
 	};
 
 	return (
-		<div className="h-dvh flex flex-col overflow-hidden">
-			<main
-				className="flex-1 overflow-y-auto bg-gray-50"
-				aria-label="건강 식단 메뉴"
+		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
+			{/* AI 추천 카드 */}
+			<section
+				className="w-full bg-cover bg-center px-[2rem] pt-[1.6rem] pb-[2rem] flex justify-center"
+				style={{ backgroundImage: `url(${MenuBg})` }}
+				aria-label="AI 추천 식단"
 			>
-				{/* AI 추천 카드 */}
-				<section
-					className="w-full bg-cover bg-center px-[2rem] pt-[1.6rem] pb-[2rem] flex justify-center"
-					style={{ backgroundImage: `url(${MenuBg})` }}
-					aria-label="AI 추천 식단"
-				>
-					<CardAiDietRecommendation
-						dietName={MOCK_AI_RECOMMENDATION.dietName}
-						description={MOCK_AI_RECOMMENDATION.description}
-					/>
-				</section>
+				<CardAiDietRecommendation
+					dietName={MOCK_AI_RECOMMENDATION.dietName}
+					description={MOCK_AI_RECOMMENDATION.description}
+				/>
+			</section>
 
-				{/* 메뉴 리스트 */}
-				<section
-					className="px-[2rem] pb-[2rem]"
-					aria-label="건강 식단 메뉴 목록"
-				>
-					<ul className="flex flex-col gap-[1.2rem]">
-						{MOCK_MENU_LIST.map((menu, index) => (
-							<li key={`${menu.id}-${index}`}>
-								<CardList
-									more
-									onClick={() => handleMenuClick(menu)}
-									aria-label={`${menu.label} 메뉴로 이동`}
-								>
-									{menu.label}
-								</CardList>
-							</li>
-						))}
-					</ul>
-				</section>
-			</main>
-		</div>
+			{/* 메뉴 리스트 */}
+			<section className="px-[2rem] pb-[2rem]" aria-label="건강 식단 메뉴 목록">
+				<ul className="flex flex-col gap-[1.2rem]">
+					{MOCK_MENU_LIST.map((menu, index) => (
+						<li key={`${menu.id}-${index}`}>
+							<CardList
+								more
+								onClick={() => handleMenuClick(menu)}
+								aria-label={`${menu.label} 메뉴로 이동`}
+							>
+								{menu.label}
+							</CardList>
+						</li>
+					))}
+				</ul>
+			</section>
+		</main>
 	);
 };
