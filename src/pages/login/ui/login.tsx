@@ -12,7 +12,7 @@ export const LoginPage = () => {
 				className="fixed inset-0 -z-10 bg-center bg-no-repeat bg-cover"
 				style={{ backgroundImage: `url(${LoginBackGround})` }}
 			/>
-			<main className="relative px-[2rem]">
+			<div className="px-[2rem]">
 				<h1 className="sr-only">CareNA 로그인 페이지</h1>
 				<header className="flex flex-col gap-[1.9rem] pt-[6.4rem] pb-[1.6rem] px-[0.4rem]">
 					<p className="display03-sb-20 text-gray-900">
@@ -45,7 +45,7 @@ export const LoginPage = () => {
 				<div className="pb-[4rem]">
 					<LoginButton onClick={() => {}} />
 				</div>
-			</main>
+			</div>
 		</>
 	);
 };
