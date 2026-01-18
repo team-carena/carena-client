@@ -105,7 +105,7 @@ export const RangeBar = ({
 				100;
 
 	return (
-		<div className="w-[28.7rem]">
+		<div className="w-full">
 			<div className="relative">
 				{/* BAR */}
 				<div
