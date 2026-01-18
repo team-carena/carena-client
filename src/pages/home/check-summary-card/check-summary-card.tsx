@@ -39,7 +39,7 @@ interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface RowWithBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 	label: React.ReactNode;
-	value: React.ReactNode;
+	value: number;
 	badgeVariant?: "normal" | "borderline" | "suspicious";
 	badgeText: React.ReactNode;
 	metricKey: HealthMetricType;
@@ -76,18 +76,7 @@ const GraphPlaceholder = ({ metricKey, value, sex }: GraphPlaceholderProps) => {
 	);
 };
 
-const ValueWithUnit = ({
-	value,
-	unit,
-}: {
-	value: React.ReactNode;
-	unit?: string;
-}) => {
-	const canAppendUnit =
-		unit && (typeof value === "number" || typeof value === "string");
-
-	if (!canAppendUnit) return <>{value}</>;
-
+const ValueWithUnit = ({ value, unit }: { value: number; unit: string }) => {
 	return (
 		<span className="inline-flex items-baseline">
 			<span>{value}</span>
