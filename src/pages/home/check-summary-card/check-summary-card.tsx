@@ -163,7 +163,7 @@ const RowWithBadge = ({
 	rangeBarData,
 	...props
 }: RowWithBadgeProps) => {
-	const resolvedUnit =
+	const displayUnit =
 		rangeBarData?.unit ?? getRangeBarData(metricKey, metricSex).unit;
 
 	return (
@@ -174,7 +174,7 @@ const RowWithBadge = ({
 			<div className="body04-r-14 text-gray-900">{label}</div>
 			<div className="flex items-center gap-[0.8rem]">
 				<span className="label02-m-14 text-gray-900">
-					<ValueWithUnit value={value} unit={resolvedUnit} />
+					<ValueWithUnit value={value} unit={displayUnit} />
 				</span>
 				<SmallBadge
 					variant={badgeVariant}
