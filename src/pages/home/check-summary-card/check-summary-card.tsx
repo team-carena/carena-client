@@ -48,7 +48,6 @@ interface RowWithBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface RowWithBadgeAndGraphProps extends RowWithBadgeProps {
 	metricKey: HealthMetricType;
-	metricValue: number;
 	metricSex?: Sex;
 }
 
@@ -194,7 +193,6 @@ const RowWithBadgeAndGraph = ({
 	badgeVariant = "normal",
 	badgeText,
 	metricKey,
-	metricValue,
 	metricSex,
 	...props
 }: RowWithBadgeAndGraphProps) => (
@@ -207,11 +205,7 @@ const RowWithBadgeAndGraph = ({
 			metricKey={metricKey}
 			metricSex={metricSex}
 		/>
-		<GraphPlaceholder
-			metricKey={metricKey}
-			value={metricValue}
-			sex={metricSex}
-		/>
+		<GraphPlaceholder metricKey={metricKey} value={value} sex={metricSex} />
 	</div>
 );
 
