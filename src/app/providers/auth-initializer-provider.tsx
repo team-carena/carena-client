@@ -1,24 +1,25 @@
 import { type ReactNode, useEffect } from "react";
+import { postRefreshToken } from "@/shared/apis/auth/post-refresh-token";
 import { useAuthStore } from "@/shared/store/auth-store";
 
 type AuthInitializerProps = {
 	children: ReactNode;
 };
 
-export const AuthInitializer = ({ children }: AuthInitializerProps) => {
+export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 	const { setAccessToken, setAuthenticated, setAuthCheckLoading } =
 		useAuthStore();
 
 	useEffect(() => {
 		const initializeAuth = async () => {
 			try {
-				//const res = await apiClient.post("/auth/refresh");
-				setAccessToken("");
-				setAuthenticated(true); // 성공
+				const response = await postRefreshToken();
+				setAccessToken(response.headers["authorization"]);
+				setAuthenticated(true);
 			} catch {
-				setAuthenticated(false); // 실패
+				setAuthenticated(false);
 			} finally {
-				setAuthCheckLoading(false); // 확정
+				setAuthCheckLoading(false);
 			}
 		};
 
