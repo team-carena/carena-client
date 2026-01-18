@@ -11,7 +11,7 @@ import { NaviRow } from "@/shared/ui/navigations/navi-row";
 
 type SectionVariant = "header" | "content";
 
-interface CheckSummaryCardRootProps {
+interface CheckupSummaryCardRootProps {
 	className?: string;
 	children: React.ReactNode;
 }
@@ -83,7 +83,7 @@ const ValueWithUnit = ({ value, unit }: { value: number; unit: string }) => {
 	);
 };
 
-const Root = ({ className, children }: CheckSummaryCardRootProps) => (
+const Root = ({ className, children }: CheckupSummaryCardRootProps) => (
 	<div
 		className={cn(
 			"w-full rounded-[12px] bg-gray-50 overflow-hidden",
@@ -215,7 +215,7 @@ const RowWithBadgeAndGraph = ({
 	);
 };
 
-const CheckSummaryCard = Object.assign(Root, {
+const CheckupSummaryCard = Object.assign(Root, {
 	Section,
 	Title,
 	Description,
@@ -226,4 +226,4 @@ const CheckSummaryCard = Object.assign(Root, {
 	MetricRangeBar,
 });
 
-export default CheckSummaryCard;
+export default CheckupSummaryCard;
