@@ -47,10 +47,7 @@ interface RowWithBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 	rangeBarData?: RangeBarData;
 }
 
-interface RowWithBadgeAndGraphProps extends RowWithBadgeProps {
-	metricKey: HealthMetricType;
-	metricSex?: Sex;
-}
+type RowWithBadgeAndGraphProps = RowWithBadgeProps;
 
 interface MetricRangeBarProps {
 	value: number;
