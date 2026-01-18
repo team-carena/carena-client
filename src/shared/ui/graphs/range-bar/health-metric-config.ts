@@ -333,9 +333,9 @@ export const getHealthMetricConfig = (key: HealthMetricType, sex?: Sex) => {
 };
 
 /**
- *  RangeBarChart에 바로 넣기 좋은 형태로 변환
+ *  RangeBar에 바로 넣기 좋은 형태로 변환
  */
-export const getRangeBarChartData = (key: HealthMetricType, sex?: Sex) => {
+export const getRangeBarData = (key: HealthMetricType, sex?: Sex) => {
 	const cfg = getHealthMetricConfig(key, sex);
 
 	return {

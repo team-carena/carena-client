@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const BAR_HEIGHT_REM = 1.6;
+const RANGE_BAR_HEIGHT_REM = 1.6;
 const BLEND_WIDTH_PCT = 4;
 
 interface Segment {
@@ -9,7 +9,7 @@ interface Segment {
 	color: string;
 }
 
-export interface BarChartProps {
+export interface RangeBarProps {
 	value: number;
 	domainMin: number;
 	domainMax: number;
@@ -81,14 +81,14 @@ const getTicksFromSegments = (
 };
 
 /* --------------------------------------------------
- * BarChart 컴포넌트
+ * RangeBar 컴포넌트
  * -------------------------------------------------- */
-export const BarChart = ({
+export const RangeBar = ({
 	value,
 	domainMin,
 	domainMax,
 	segments,
-}: BarChartProps) => {
+}: RangeBarProps) => {
 	//segments 바뀔 때만 그라데이션 재생성
 	const gradient = React.useMemo(
 		() => buildGradientFromSegments(domainMin, domainMax, segments),
@@ -110,7 +110,7 @@ export const BarChart = ({
 				{/* BAR */}
 				<div
 					className="relative w-full rounded-full"
-					style={{ height: `${BAR_HEIGHT_REM}rem` }}
+					style={{ height: `${RANGE_BAR_HEIGHT_REM}rem` }}
 				>
 					{/* main layer */}
 					<div
@@ -125,7 +125,7 @@ export const BarChart = ({
 							className="absolute flex flex-col items-center"
 							style={{
 								left: `${pct}%`,
-								top: `calc(${BAR_HEIGHT_REM}rem - 1rem )`,
+								top: `calc(${RANGE_BAR_HEIGHT_REM}rem - 1rem )`,
 								transform: "translateX(-50%)",
 							}}
 						>
