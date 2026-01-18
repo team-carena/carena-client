@@ -1,4 +1,5 @@
 import { Outlet, useMatches } from "react-router";
+import { cn } from "@/shared/libs/cn";
 import { Header } from "@/shared/ui/navigations/header";
 import type { RouteHandle } from "./router";
 
@@ -17,7 +18,7 @@ export const Layout = () => {
 	return (
 		<>
 			<Header variant={headerConfig?.header} title={headerConfig?.title} />
-			<main className={showHeader ? "pt-[5.6rem]" : ""}>
+			<main className={cn("min-h-dvh", showHeader && "pt-[5.6rem]")}>
 				<Outlet />
 			</main>
 		</>

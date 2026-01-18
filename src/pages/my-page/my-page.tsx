@@ -31,9 +31,8 @@ const ACTION_LIST = [
 
 export const MyPage = () => {
 	// TODO: 하드코딩된 이름, 생일 -> 로그인 후 저장되어 있는 내 정보 사용
-
 	return (
-		<div className="px-[2rem] bg-white">
+		<div className="min-h-dvh px-[2rem] bg-white">
 			<section className="flex gap-[2rem] items-center pt-[2.4rem] pb-[4rem]">
 				<DefaultProfile className="rounded-[12px]" />
 				<div className="flex flex-col gap-[2rem]">
