@@ -32,10 +32,12 @@ const TabsRoot = ({
 			// 새 탭으로 전환
 			setSelectedTab(newTab);
 
-			// 새 탭의 저장된 위치로 이동 (없으면 0)
-			window.scrollTo({
-				top: scrollPositions.current[newTab] ?? 0,
-				behavior: "instant",
+			// 새 탭의 저장된 위치로 이동 (렌더링 후 실행)
+			requestAnimationFrame(() => {
+				window.scrollTo({
+					top: scrollPositions.current[newTab] ?? 0,
+					behavior: "instant",
+				});
 			});
 		},
 		[selectedTab],
@@ -60,7 +62,7 @@ const TabsList = ({ children, className, ...props }: TabsListProps) => {
 	return (
 		<div
 			className={cn(
-				"sticky top-0 z-10 flex w-full border-b border-gray-300 bg-white",
+				"sticky top-[var(--header-height)] z-10 flex w-full border-b border-gray-300 bg-white",
 				className,
 			)}
 			{...props}
