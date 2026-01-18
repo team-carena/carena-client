@@ -40,8 +40,8 @@ export function RadialChart({ score, className }: RadialChartProps) {
 			>
 				<RadialBarChart
 					data={data}
-					startAngle={90}
-					endAngle={-270}
+					startAngle={-270}
+					endAngle={90}
 					innerRadius={innerRadius}
 					outerRadius={outerRadius}
 				>
@@ -93,14 +93,7 @@ export function RadialChart({ score, className }: RadialChartProps) {
 							}}
 						/>
 					</PolarRadiusAxis>
-					<RadialBar
-						dataKey="score"
-						stackId="a"
-						fill="var(--color-score)"
-						stroke="var(--color-white)"
-						strokeWidth={1}
-						style={{ filter: "url(#chartShadow)" }}
-					/>
+					{/* SVG는 나중에 그려진 요소가 위에 표시 -> RadialBar 순서 중요 */}
 					<RadialBar
 						dataKey="remaining"
 						stackId="a"
@@ -108,6 +101,15 @@ export function RadialChart({ score, className }: RadialChartProps) {
 						stroke="var(--color-remaining)"
 						strokeWidth={1}
 						isAnimationActive={false}
+					/>
+					<RadialBar
+						dataKey="score"
+						stackId="a"
+						fill="var(--color-score)"
+						stroke="var(--color-white)"
+						strokeWidth={1}
+						cornerRadius={1.5}
+						style={{ filter: "url(#chartShadow)" }}
 					/>
 				</RadialBarChart>
 			</ChartContainer>
