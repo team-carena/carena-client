@@ -8,9 +8,10 @@ import { useNavigate } from "react-router";
  * 헤더 종류
  * - "main": 메인 페이지용 (로고 + 마이페이지 아이콘)
  * - "back": 서브 페이지용 (뒤로가기 + 타이틀)
+ * - "signup": 회원가입 페이지용 (로고만)
  * - "none": 헤더 숨김
  */
-type HeaderVariant = "main" | "back" | "none";
+export type HeaderVariant = "main" | "back" | "signup" | "none";
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
 	variant?: HeaderVariant;
@@ -34,7 +35,7 @@ export const Header = ({
 
 	// variant에 따라 어떤 요소를 보여줄지 결정
 	const showBackButton = variant === "back";
-	const showLogo = variant === "main";
+	const showLogo = variant === "main" || "signup";
 	const showMyButton = variant === "main";
 
 	return (
