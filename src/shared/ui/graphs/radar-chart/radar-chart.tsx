@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 export const RADAR_CHART_MAP = {
 	정상: 1.2,
 	경계: 1.8,
-	위험: 2.4,
+	의심: 2.4,
 } as const;
 
-export type RiskLevelKey = keyof typeof RADAR_CHART_MAP; // "정상" | "경계" | "위험"
+export type RiskLevelKey = keyof typeof RADAR_CHART_MAP; // "정상" | "경계" | "의심"
 
 // 레이더 차트 타입
 export interface RadarChartDataPoint {
 	label: string;
-	riskLevel: number; // 1.2(정상), 1.8(경계), 2.4(위험)
+	riskLevel: number; // 1.2(정상), 1.8(경계), 2.4(의심)
 }
 
 export interface RadarChartProps {
