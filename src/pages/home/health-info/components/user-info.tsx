@@ -6,7 +6,7 @@ import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 
 const UserInfo = () => {
 	// TODO: API 연동 시 검진기록에 따라 그래프 분기처리
-	const [showAlarmMessage, _setShowAlarmMessagee] = useState(true);
+	const [showAlarmMessage, _setShowAlarmMessage] = useState(true);
 
 	return (
 		<section className="flex w-full bg-primary-300">
