@@ -1,7 +1,11 @@
 import { MenuDetailPage } from "@pages/menu/menu-detail";
+import { HealthMenuPage } from "@pages/menu/menu";
 import { createBrowserRouter, Navigate } from "react-router";
+import { HealthTipPage } from "@/pages/health-tip/health-tip";
+import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
 import { LoginPage } from "@/pages/login/ui/login";
+import { MyPage } from "@/pages/my-page/my-page";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
@@ -46,7 +50,7 @@ export const router = createBrowserRouter([
 					},
 					{
 						path: ROUTE_PATH.MY_PAGE,
-						element: <></>,
+						element: <MyPage />,
 						handle: {
 							header: "back",
 							title: "마이페이지",
@@ -55,9 +59,27 @@ export const router = createBrowserRouter([
 					{
 						path: ROUTE_PATH.MENU_DETAIL,
 						element: <MenuDetailPage />,
+						path: ROUTE_PATH.MENU,
+						element: <HealthMenuPage />,
 						handle: {
 							header: "back",
 							title: "건강 식단",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_TIP,
+						element: <HealthTipPage />,
+						handle: {
+							header: "back",
+							title: "생활 속 건강 팁",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_TIP_DETAIL,
+						element: <HealthTipDetailPage />,
+						handle: {
+							header: "back",
+							title: "건강 팁 상세",
 						} satisfies RouteHandle,
 					},
 					{
