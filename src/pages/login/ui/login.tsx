@@ -1,8 +1,8 @@
 import Lottie from "react-lottie-player";
 import LoginBackGround from "@/shared/assets/img/login-bg.png";
 import { CarenaLogoText } from "@/shared/assets/svg";
+import { LoginButton } from "../components/login-button";
 import LandingGraphic from "../landing-graphic.json";
-import { LoginButton } from "./login-button";
 
 export const LoginPage = () => {
 	return (
