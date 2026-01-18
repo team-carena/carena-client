@@ -1,6 +1,6 @@
 type SegmentsMode = 2 | 3 | 4;
 
-export type Sex = "male" | "female";
+export type Gender = "male" | "female";
 
 export type HealthMetricType =
 	| "waist"
@@ -311,32 +311,35 @@ export const healthMetricConfigs: Record<string, HealthMetricConfig> = {
 	},
 };
 
-const resolveMetricKey = (base: HealthMetricType, sex?: Sex) => {
-	if (!sex) return base;
+const resolveMetricKey = (base: HealthMetricType, gender?: Gender) => {
+	if (!gender) return base;
 
 	switch (base) {
 		case "waist":
-			return sex === "male" ? "waistMale" : "waistFemale";
+			return gender === "male" ? "waistMale" : "waistFemale";
 		case "ggtp":
-			return sex === "male" ? "ggtpMale" : "ggtpFemale";
+			return gender === "male" ? "ggtpMale" : "ggtpFemale";
 		case "hb":
-			return sex === "male" ? "hbMale" : "hbFemale";
+			return gender === "male" ? "hbMale" : "hbFemale";
 		default:
 			return base;
 	}
 };
 
 // 헬퍼: config 가져오기
-export const getHealthMetricConfig = (key: HealthMetricType, sex?: Sex) => {
-	const resolvedKey = resolveMetricKey(key, sex);
+export const getHealthMetricConfig = (
+	key: HealthMetricType,
+	gender?: Gender,
+) => {
+	const resolvedKey = resolveMetricKey(key, gender);
 	return healthMetricConfigs[resolvedKey];
 };
 
 /**
  *  RangeBar에 바로 넣기 좋은 형태로 변환
  */
-export const getRangeBarData = (key: HealthMetricType, sex?: Sex) => {
-	const cfg = getHealthMetricConfig(key, sex);
+export const getRangeBarData = (key: HealthMetricType, gender?: Gender) => {
+	const cfg = getHealthMetricConfig(key, gender);
 
 	return {
 		mode: cfg.mode,
