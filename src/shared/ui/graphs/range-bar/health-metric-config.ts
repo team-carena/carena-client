@@ -312,6 +312,11 @@ export const healthMetricConfigs: Record<string, HealthMetricConfig> = {
 };
 
 const getConfigKeyBySex = (base: HealthMetricType, sex?: Sex) => {
+	// TODO : 성별/공통 오버로드 적용
+	const sexRequired = ["waist", "ggtp", "hb"];
+	if (sexRequired.includes(base) && !sex) {
+		throw new Error(`Sex is required for health metric type: ${base}`);
+	}
 	if (!sex) return base;
 
 	switch (base) {
