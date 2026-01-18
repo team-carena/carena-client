@@ -44,6 +44,7 @@ interface RowWithBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 	badgeText: React.ReactNode;
 	metricKey: HealthMetricType;
 	metricSex?: Sex;
+	rangeBarData?: RangeBarData;
 }
 
 interface RowWithBadgeAndGraphProps extends RowWithBadgeProps {
@@ -52,18 +53,19 @@ interface RowWithBadgeAndGraphProps extends RowWithBadgeProps {
 }
 
 interface GraphPlaceholderProps {
-	metricKey: HealthMetricType;
 	value: number;
-	sex?: Sex;
+	rangeBarData: RangeBarData;
 }
+
+type RangeBarData = ReturnType<typeof getRangeBarData>;
 
 const sectionVariantClassName: Record<SectionVariant, string> = {
 	header: "px-[2rem] pt-[2rem] pb-[1.2rem]",
 	content: "px-[2rem] py-[1.2rem]",
 };
 
-const GraphPlaceholder = ({ metricKey, value, sex }: GraphPlaceholderProps) => {
-	const { domainMin, domainMax, segments } = getRangeBarData(metricKey, sex);
+const GraphPlaceholder = ({ value, rangeBarData }: GraphPlaceholderProps) => {
+	const { domainMin, domainMax, segments } = rangeBarData;
 
 	return (
 		<RangeBar
@@ -161,9 +163,11 @@ const RowWithBadge = ({
 	badgeText,
 	metricKey,
 	metricSex,
+	rangeBarData,
 	...props
 }: RowWithBadgeProps) => {
-	const resolvedUnit = getRangeBarData(metricKey, metricSex).unit;
+	const resolvedUnit =
+		rangeBarData?.unit ?? getRangeBarData(metricKey, metricSex).unit;
 
 	return (
 		<div
@@ -195,19 +199,24 @@ const RowWithBadgeAndGraph = ({
 	metricKey,
 	metricSex,
 	...props
-}: RowWithBadgeAndGraphProps) => (
-	<div className={cn("space-y-[1.6rem] mb-[1.2rem] ", className)} {...props}>
-		<RowWithBadge
-			label={label}
-			value={value}
-			badgeVariant={badgeVariant}
-			badgeText={badgeText}
-			metricKey={metricKey}
-			metricSex={metricSex}
-		/>
-		<GraphPlaceholder metricKey={metricKey} value={value} sex={metricSex} />
-	</div>
-);
+}: RowWithBadgeAndGraphProps) => {
+	const rangeBarData = getRangeBarData(metricKey, metricSex);
+
+	return (
+		<div className={cn("space-y-[1.6rem] mb-[1.2rem] ", className)} {...props}>
+			<RowWithBadge
+				label={label}
+				value={value}
+				badgeVariant={badgeVariant}
+				badgeText={badgeText}
+				metricKey={metricKey}
+				metricSex={metricSex}
+				rangeBarData={rangeBarData}
+			/>
+			<GraphPlaceholder value={value} rangeBarData={rangeBarData} />
+		</div>
+	);
+};
 
 const CheckSummaryCard = Object.assign(Root, {
 	Section,
