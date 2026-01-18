@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BlurNoise } from "@/shared/assets/svg";
+import { BlurNoise, InfoBackground } from "@/shared/assets/svg";
 import { AddButton } from "@/shared/ui/buttons/add-button";
 import { RadialChart } from "@/shared/ui/graphs/radial-chart/radial-chart";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
@@ -9,21 +9,20 @@ const UserInfo = () => {
 	const [showAlarmMessage, _setShowAlarmMessage] = useState(true);
 
 	return (
-		<section className="flex w-full bg-primary-300">
+		<section className="relative flex w-full">
+			<InfoBackground className="absolute inset-0 w-full h-full z-0" />
 			{/* 좌측 사용자 정보 */}
-			<div className="flex flex-1 flex-col gap-[2.4rem] mt-[3.6rem] ml-[3.4rem] mb-[2.8rem]">
-				<hgroup className="text-white">
-					<h2 className="display01-b-24 mb-[1.2rem]">임지성님</h2>
-					<p className="text-[1.2rem] font-normal leading-[2.2rem]">
-						만 25세 (남)
-					</p>
+			<div className="relative z-10 flex flex-1 flex-col gap-[3.2rem] my-[4rem] ml-[3.6rem]">
+				<hgroup className="text-white space-y-[1.2rem]">
+					<h2 className="display02-b-24">임지성님</h2>
+					<p className="body05-r-12">만 25세 (남)</p>
 				</hgroup>
 
 				<AddButton />
 			</div>
 
 			{/* 우측 */}
-			<div className="relative flex flex-1 items-center justify-center">
+			<div className="relative z-10 flex flex-1 items-center justify-center">
 				{showAlarmMessage ? (
 					<>
 						{/* 우측 그래프 */}
