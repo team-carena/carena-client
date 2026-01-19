@@ -40,13 +40,7 @@ export const Header = ({
 	return (
 		<header
 			className={cn(
-				`
-          fixed top-0 left-1/2 -translate-x-1/2 z-50
-          flex items-center justify-between
-          w-full min-w-[var(--app-min-width)] max-w-[var(--app-max-width)]
-          px-[2rem] py-[1.6rem]
-          bg-white
-        `,
+				`fixed top-0 left-1/2 z-50 flex w-full min-w-[var(--app-min-width)] max-w-[var(--app-max-width)] -translate-x-1/2 items-center justify-between bg-white px-[2rem] py-[1.6rem]`,
 				className,
 			)}
 			{...props}
@@ -68,7 +62,7 @@ export const Header = ({
 
 			{/* Center: 타이틀 */}
 			{title && (
-				<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+				<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
 					<span className="head04-m-16 text-gray-900">{title}</span>
 				</div>
 			)}

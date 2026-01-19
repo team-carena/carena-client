@@ -9,8 +9,8 @@ const buttonVariants = cva(
 	{
 		variants: {
 			size: {
-				sm: "h-[3.2rem] min-w-[6rem] px-[1rem] rounded-[4px] label05-r-14",
-				lg: "h-[5.2rem] min-w-[8.4rem] px-[2rem] rounded-[8px] label04-r-16",
+				sm: "label05-r-14 h-[3.2rem] min-w-[6rem] rounded-[4px] px-[1rem]",
+				lg: "label04-r-16 h-[5.2rem] min-w-[8.4rem] rounded-[8px] px-[2rem]",
 			},
 		},
 		defaultVariants: {

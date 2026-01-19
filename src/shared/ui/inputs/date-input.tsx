@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import * as React from "react";
 
 const dateInputVariants = cva(
-	"flex items-center rounded-[6px] border transition-colors px-[1.6rem] py-[0.8rem]",
+	"flex items-center rounded-[6px] border px-[1.6rem] py-[0.8rem] transition-colors",
 	{
 		variants: {
 			state: {
@@ -23,13 +23,13 @@ const dateInputVariants = cva(
 );
 
 const inputFieldVariants = cva(
-	"w-full bg-transparent outline-none placeholder-gray-500 label04-r-16",
+	"label04-r-16 w-full bg-transparent placeholder-gray-500 outline-none",
 	{
 		variants: {
 			state: {
 				default: "text-gray-900",
-				disabled: "text-gray-500 cursor-not-allowed",
-				readonly: "text-gray-900 cursor-default",
+				disabled: "cursor-not-allowed text-gray-500",
+				readonly: "cursor-default text-gray-900",
 			},
 		},
 		defaultVariants: {
@@ -170,7 +170,7 @@ export const DateInput = ({
 			{/* error message */}
 			{isError && errorMessage && (
 				<div
-					className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12"
+					className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500"
 					role="alert"
 				>
 					<SystemDangerIcon className="shrink-0" aria-hidden />

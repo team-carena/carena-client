@@ -12,7 +12,7 @@ interface CheckBoxProps
 
 export const CheckBox = ({ checked, onChange }: CheckBoxProps) => {
 	return (
-		<label className="relative inline-flex items-center cursor-pointer">
+		<label className="relative inline-flex cursor-pointer items-center">
 			<input
 				type="checkbox"
 				checked={checked}
@@ -20,17 +20,7 @@ export const CheckBox = ({ checked, onChange }: CheckBoxProps) => {
 				className="peer sr-only"
 			/>
 
-			<span
-				className="
-          w-[2rem] h-[2rem]
-          border border-gray-900 rounded-[4px]
-          flex items-center justify-center
-          peer-checked:bg-primary-500
-          [&>svg]:opacity-0
-          peer-checked:[&>svg]:opacity-100
-		  transition-default
-        "
-			>
+			<span className="flex h-[2rem] w-[2rem] items-center justify-center rounded-[4px] border border-gray-900 transition-default peer-checked:bg-primary-500 [&>svg]:opacity-0 peer-checked:[&>svg]:opacity-100">
 				<CheckW />
 			</span>
 		</label>

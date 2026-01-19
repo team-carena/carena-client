@@ -93,7 +93,7 @@ export const HealthTipPage = () => {
 
 	return (
 		<main ref={scrollContainerRef} className="overflow-y-auto">
-			<section className="overflow-x-auto scrollbar-hide px-[2rem] py-[1.2rem]">
+			<section className="scrollbar-hide overflow-x-auto px-[2rem] py-[1.2rem]">
 				<div className="flex w-max gap-[0.8rem]">
 					{chips.map((label) => (
 						<Chip

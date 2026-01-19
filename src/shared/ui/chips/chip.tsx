@@ -2,12 +2,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/shared/libs/cn";
 
 const chipVariants = cva(
-	"inline-flex items-center justify-center px-[1.6rem] py-[0.8rem] w-fit rounded-full border label05-r-14",
+	"label05-r-14 inline-flex w-fit items-center justify-center rounded-full border px-[1.6rem] py-[0.8rem]",
 	{
 		variants: {
 			status: {
-				on: "bg-primary-50 border-primary-500 text-primary-500",
-				off: "bg-white border-gray-300 text-gray-900",
+				on: "border-primary-500 bg-primary-50 text-primary-500",
+				off: "border-gray-300 bg-white text-gray-900",
 			},
 		},
 		defaultVariants: {

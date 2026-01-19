@@ -30,7 +30,7 @@ export const Top: Story = {
 	args: { side: "top" },
 	decorators: [
 		(Story) => (
-			<div className="flex items-center justify-center min-h-[300px] pt-[200px]">
+			<div className="flex min-h-[300px] items-center justify-center pt-[200px]">
 				<Story />
 			</div>
 		),
@@ -41,7 +41,7 @@ export const Bottom: Story = {
 	args: { side: "bottom" },
 	decorators: [
 		(Story) => (
-			<div className="flex items-center justify-center min-h-[300px] pb-[200px]">
+			<div className="flex min-h-[300px] items-center justify-center pb-[200px]">
 				<Story />
 			</div>
 		),
@@ -52,7 +52,7 @@ export const Left: Story = {
 	args: { side: "left" },
 	decorators: [
 		(Story) => (
-			<div className="flex items-center justify-end min-h-[200px] pr-[50px]">
+			<div className="flex min-h-[200px] items-center justify-end pr-[50px]">
 				<Story />
 			</div>
 		),
@@ -63,7 +63,7 @@ export const Right: Story = {
 	args: { side: "right" },
 	decorators: [
 		(Story) => (
-			<div className="flex items-center justify-start min-h-[200px] pl-[50px]">
+			<div className="flex min-h-[200px] items-center justify-start pl-[50px]">
 				<Story />
 			</div>
 		),
@@ -72,21 +72,21 @@ export const Right: Story = {
 
 export const AllDirections: Story = {
 	render: () => (
-		<div className="flex flex-col items-center justify-center min-h-[500px] gap-[100px] py-[150px]">
+		<div className="flex min-h-[500px] flex-col items-center justify-center gap-[100px] py-[150px]">
 			<div className="flex items-center gap-2">
-				<span className="text-gray-600 body05-r-12">Top:</span>
+				<span className="body05-r-12 text-gray-600">Top:</span>
 				<Tooltip side="top">위쪽에 표시되는 툴팁입니다.</Tooltip>
 			</div>
 			<div className="flex items-center gap-2">
-				<span className="text-gray-600 body05-r-12">Bottom:</span>
+				<span className="body05-r-12 text-gray-600">Bottom:</span>
 				<Tooltip side="bottom">아래쪽에 표시되는 툴팁입니다.</Tooltip>
 			</div>
 			<div className="flex items-center gap-2 self-end pr-[300px]">
-				<span className="text-gray-600 body05-r-12">Left:</span>
+				<span className="body05-r-12 text-gray-600">Left:</span>
 				<Tooltip side="left">왼쪽에 표시되는 툴팁입니다.</Tooltip>
 			</div>
 			<div className="flex items-center gap-2 self-start pl-[300px]">
-				<span className="text-gray-600 body05-r-12">Right:</span>
+				<span className="body05-r-12 text-gray-600">Right:</span>
 				<Tooltip side="right">오른쪽에 표시되는 툴팁입니다.</Tooltip>
 			</div>
 		</div>
@@ -105,7 +105,7 @@ export const LongContent: Story = {
 	},
 	decorators: [
 		(Story) => (
-			<div className="flex items-center justify-center min-h-[400px] pt-[300px]">
+			<div className="flex min-h-[400px] items-center justify-center pt-[300px]">
 				<Story />
 			</div>
 		),
