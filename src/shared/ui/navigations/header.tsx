@@ -35,7 +35,7 @@ export const Header = ({
 
 	// variant에 따라 어떤 요소를 보여줄지 결정
 	const showBackButton = variant === "back";
-	const showLogo = variant === "main" || "signup";
+	const showLogo = variant === "main" || variant === "signup";
 	const showMyButton = variant === "main";
 
 	return (
