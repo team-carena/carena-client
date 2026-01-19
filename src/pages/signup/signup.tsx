@@ -1,3 +1,5 @@
+import { InputMedium } from "@/shared/ui/inputs/input-medium";
+
 interface SignupCategoryProps {
 	label: string;
 }
@@ -16,6 +18,7 @@ const Signup = () => {
 			{/* 입력 컴포넌트 */}
 			<div className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[2.4rem]">
 				<SignupCategory label={"기본정보"} />
+				<InputMedium />
 			</div>
 		</div>
 	);
