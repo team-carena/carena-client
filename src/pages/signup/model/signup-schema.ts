@@ -18,12 +18,12 @@ const isValidDate = (year: number, month: number, day: number): boolean => {
 	return true;
 };
 
-// 이름 유효성 검사: 완성형 한글/영어만 허용
+// 이름 유효성 검사: 완성형 한글만 허용
 // 가-힣 범위는 완성형 한글만 포함 (ㄱ-ㅎ 자음, ㅏ-ㅣ 모음은 포함 X)
 // 빈 문자열은 true 반환 → min(1)에서 처리
 const isValidName = (name: string): boolean => {
 	if (name === "") return true;
-	const validPattern = /^[가-힣a-zA-Z\s]+$/;
+	const validPattern = /^[가-힣\s]+$/;
 	return validPattern.test(name);
 };
 
@@ -32,7 +32,7 @@ const ERROR_MESSAGES = {
 	name: {
 		required: "이름을 입력해 주세요.",
 		maxLength: "이름은 30자 이하로 입력해 주세요.",
-		invalidChar: "한글 또는 영어만 입력 가능해요.",
+		invalidChar: "한글만 입력 가능해요.",
 	},
 	birthDate: {
 		invalidYear: "1960년~2007년 사이의 연도를 입력해 주세요.",
