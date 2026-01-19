@@ -3,7 +3,8 @@ export const ROUTE_PATH = {
 	LOGIN: "/login",
 	HOME: "/home",
 	MY_PAGE: "/my-page",
-	MENU: "/menu",
+	HEALTH_MENU_DETAIL: "/health-menu-detail",
+	HEALTH_MENU: "/health-menu",
 	HEALTH_TIP: "/health-tip",
 	HEALTH_TIP_DETAIL: "/health-tip-detail",
 	// 페이지 작업 시 추가
