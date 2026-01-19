@@ -84,7 +84,7 @@ apiClient.interceptors.response.use(
 			refreshPromise = null;
 
 			const store = useAuthStore.getState();
-			store.setAccessToken("");
+			store.setAccessToken(null);
 			store.setAuthenticated(false);
 
 			return Promise.reject(refreshError);
