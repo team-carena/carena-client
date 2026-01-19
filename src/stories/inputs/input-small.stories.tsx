@@ -19,40 +19,6 @@ const meta: Meta<typeof InputSmall> = {
 			</MobileWrapper>
 		),
 	],
-	argTypes: {
-		labelLeft: {
-			control: "text",
-			description: "좌측 라벨 텍스트",
-		},
-		labelRight: {
-			control: "text",
-			description: "우측 라벨 텍스트",
-		},
-		unitLeft: {
-			control: "text",
-			description: "좌측 단위",
-		},
-		unitRight: {
-			control: "text",
-			description: "우측 단위",
-		},
-		isError: {
-			control: "boolean",
-			description: "에러 상태 여부",
-		},
-		errorMessage: {
-			control: "text",
-			description: "에러 메시지",
-		},
-		isDisabled: {
-			control: "boolean",
-			description: "비활성화 상태",
-		},
-		isReadOnly: {
-			control: "boolean",
-			description: "읽기 전용 상태",
-		},
-	},
 };
 
 export default meta;
@@ -60,21 +26,24 @@ type Story = StoryObj<typeof InputSmall>;
 
 // Default
 export const Default: Story = {
-	render: (args) => {
+	render: () => {
 		const [left, setLeft] = React.useState("");
 		const [right, setRight] = React.useState("");
 
 		return (
 			<InputSmall
-				{...args}
-				labelLeft="키"
-				labelRight="몸무게"
-				unitLeft="cm"
-				unitRight="kg"
-				valueLeft={left}
-				valueRight={right}
-				onChangeLeft={setLeft}
-				onChangeRight={setRight}
+				left={{
+					label: "키",
+					unit: "cm",
+					value: left,
+					onChange: (e) => setLeft(e.target.value),
+				}}
+				right={{
+					label: "몸무게",
+					unit: "kg",
+					value: right,
+					onChange: (e) => setRight(e.target.value),
+				}}
 			/>
 		);
 	},
@@ -82,21 +51,24 @@ export const Default: Story = {
 
 // Completed
 export const Completed: Story = {
-	render: (args) => {
+	render: () => {
 		const [left, setLeft] = React.useState("170");
 		const [right, setRight] = React.useState("60");
 
 		return (
 			<InputSmall
-				{...args}
-				labelLeft="키"
-				labelRight="몸무게"
-				unitLeft="cm"
-				unitRight="kg"
-				valueLeft={left}
-				valueRight={right}
-				onChangeLeft={setLeft}
-				onChangeRight={setRight}
+				left={{
+					label: "키",
+					unit: "cm",
+					value: left,
+					onChange: (e) => setLeft(e.target.value),
+				}}
+				right={{
+					label: "몸무게",
+					unit: "kg",
+					value: right,
+					onChange: (e) => setRight(e.target.value),
+				}}
 			/>
 		);
 	},
@@ -104,23 +76,25 @@ export const Completed: Story = {
 
 // Error
 export const ErrorState: Story = {
-	render: (args) => {
+	render: () => {
 		const [left, setLeft] = React.useState("170");
 		const [right, setRight] = React.useState("999");
 
 		return (
 			<InputSmall
-				{...args}
-				labelLeft="키"
-				labelRight="몸무게"
-				unitLeft="cm"
-				unitRight="kg"
-				isError
+				left={{
+					label: "키",
+					unit: "cm",
+					value: left,
+					onChange: (e) => setLeft(e.target.value),
+				}}
+				right={{
+					label: "몸무게",
+					unit: "kg",
+					value: right,
+					onChange: (e) => setRight(e.target.value),
+				}}
 				errorMessage="수치를 다시 한 번 확인해 주세요."
-				valueLeft={left}
-				valueRight={right}
-				onChangeLeft={setLeft}
-				onChangeRight={setRight}
 			/>
 		);
 	},
@@ -128,30 +102,44 @@ export const ErrorState: Story = {
 
 // Disabled
 export const Disabled: Story = {
-	args: {
-		labelLeft: "키",
-		labelRight: "몸무게",
-		unitLeft: "cm",
-		unitRight: "kg",
-		valueLeft: "170",
-		valueRight: "60",
-		isDisabled: true,
-		onChangeLeft: () => {},
-		onChangeRight: () => {},
-	},
+	render: () => (
+		<InputSmall
+			left={{
+				label: "키",
+				unit: "cm",
+				value: "170",
+				disabled: true,
+				onChange: () => {},
+			}}
+			right={{
+				label: "몸무게",
+				unit: "kg",
+				value: "60",
+				disabled: true,
+				onChange: () => {},
+			}}
+		/>
+	),
 };
 
 // ReadOnly
 export const ReadOnly: Story = {
-	args: {
-		labelLeft: "키",
-		labelRight: "몸무게",
-		unitLeft: "cm",
-		unitRight: "kg",
-		valueLeft: "170",
-		valueRight: "60",
-		isReadOnly: true,
-		onChangeLeft: () => {},
-		onChangeRight: () => {},
-	},
+	render: () => (
+		<InputSmall
+			left={{
+				label: "키",
+				unit: "cm",
+				value: "170",
+				readOnly: true,
+				onChange: () => {},
+			}}
+			right={{
+				label: "몸무게",
+				unit: "kg",
+				value: "60",
+				readOnly: true,
+				onChange: () => {},
+			}}
+		/>
+	),
 };

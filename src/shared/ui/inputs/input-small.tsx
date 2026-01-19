@@ -3,7 +3,8 @@ import SystemDangerIcon from "@svg/system-danger.svg?react";
 import { cva } from "class-variance-authority";
 import * as React from "react";
 
-const inputSmallVariants = cva(
+// label-input wrapper
+const inputWrapperVariants = cva(
 	"flex items-center gap-[1rem] rounded-[6px] border px-[1.2rem] py-[0.6rem] transition-colors",
 	{
 		variants: {
@@ -22,6 +23,7 @@ const inputSmallVariants = cva(
 	},
 );
 
+// input필드
 const inputFieldVariants = cva(
 	"label04-r-16 h-full min-w-0 flex-1 bg-transparent outline-none",
 	{
@@ -57,7 +59,7 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 
 	const hasError = !!errorMessage;
 
-	const getState = (
+	const getWrapperState = (
 		value: string | number | readonly string[] | undefined,
 		isFocused: boolean,
 		disabled?: boolean,
@@ -71,9 +73,10 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 		return "default";
 	};
 
-	const getFieldState = (disabled?: boolean, readOnly?: boolean) =>
+	const getTextState = (disabled?: boolean, readOnly?: boolean) =>
 		disabled ? "disabled" : readOnly ? "readonly" : "default";
 
+	// left/right 필드의 반복되는 렌더링 로직을 함수로 추출, 컴포넌트 반환
 	const renderInput = (
 		field: InputFieldProps,
 		side: "left" | "right",
@@ -88,7 +91,7 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 			value,
 			onFocus,
 			onBlur,
-			...inputProps
+			...inputProps // 나머지 input태그 props는 inputProps에 담음
 		} = field;
 
 		return (
@@ -101,8 +104,13 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 					<div className="flex w-[10.4rem] shrink-0 flex-col">
 						<div
 							className={cn(
-								inputSmallVariants({
-									state: getState(value, focused === side, disabled, readOnly),
+								inputWrapperVariants({
+									state: getWrapperState(
+										value,
+										focused === side,
+										disabled,
+										readOnly,
+									),
 								}),
 							)}
 						>
@@ -115,7 +123,9 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 								disabled={disabled}
 								readOnly={readOnly}
 								onFocus={(e) => {
+									// input focus 상태에 따라 wrapper 스타일 결정
 									if (!disabled && !readOnly) setFocused(side);
+									// register가 내려준 react-hook-form의 onFocus -> react-hook-form의 onFocus 추적
 									onFocus?.(e);
 								}}
 								onBlur={(e) => {
@@ -124,7 +134,7 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 								}}
 								className={cn(
 									inputFieldVariants({
-										state: getFieldState(disabled, readOnly),
+										state: getTextState(disabled, readOnly),
 									}),
 								)}
 								{...inputProps}
@@ -132,6 +142,10 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 							<span className="label03-m-12 shrink-0">{unit}</span>
 						</div>
 
+						{/* 
+							hasError가 true이면 에러 렌더링
+							right input은 showError가 false이므로 오른쪽에는 에러 표시 X
+						*/}
 						{showError && hasError && (
 							<div
 								className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] whitespace-nowrap text-red-500"
