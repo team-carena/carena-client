@@ -10,7 +10,7 @@ export const OcrButton = ({ className, ...props }: OcrButtonProps) => {
 			type="button"
 			{...props}
 			className={cn(
-				"flex w-[23.6rem] items-center justify-center gap-[1.2rem] rounded-[8px] border border-primary-600 bg-primary-50 px-[1.6rem] py-[1.2rem] transition-default active:bg-primary-100",
+				"mx-auto flex w-[23.6rem] items-center justify-center gap-[1.2rem] whitespace-nowrap rounded-[8px] border border-primary-600 bg-primary-50 px-[1.6rem] py-[1.2rem] transition-default active:bg-primary-100",
 				className,
 			)}
 		>
