@@ -146,22 +146,22 @@ export const RadioGroup: Story = {
 // Horizontal Radio Group (가로 라디오 그룹)
 export const HorizontalRadioGroup: Story = {
 	render: () => {
-		const [selected, setSelected] = React.useState("male");
+		const [selected, setSelected] = React.useState("MALE");
 
 		return (
 			<div className="flex gap-[2rem]">
 				<RadioButton
 					name="gender"
-					value="male"
+					value="MALE"
 					text="남성"
-					checked={selected === "male"}
+					checked={selected === "MALE"}
 					onChange={setSelected}
 				/>
 				<RadioButton
 					name="gender"
-					value="female"
+					value="FEMALE"
 					text="여성"
-					checked={selected === "female"}
+					checked={selected === "FEMALE"}
 					onChange={setSelected}
 				/>
 			</div>

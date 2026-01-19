@@ -37,7 +37,7 @@ const Signup = () => {
 		defaultValues: {
 			name: "",
 			birthDate: { year: "", month: "", day: "" },
-			gender: "male",
+			gender: "MALE",
 			checkupDate: { year: "", month: "", day: "" },
 			hospital: "",
 			height: "",
@@ -134,17 +134,17 @@ const Signup = () => {
 							<div className="flex gap-[1.2rem]">
 								<RadioButton
 									name="gender"
-									value="male"
+									value="MALE"
 									text="남자"
-									checked={gender === "male"}
-									onChange={() => setValue("gender", "male")}
+									checked={gender === "MALE"}
+									onChange={() => setValue("gender", "MALE")}
 								/>
 								<RadioButton
 									name="gender"
-									value="female"
+									value="FEMALE"
 									text="여자"
-									checked={gender === "female"}
-									onChange={() => setValue("gender", "female")}
+									checked={gender === "FEMALE"}
+									onChange={() => setValue("gender", "FEMALE")}
 								/>
 							</div>
 						</div>

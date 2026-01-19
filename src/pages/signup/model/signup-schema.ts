@@ -157,7 +157,7 @@ export const signupSchema = z
 			}),
 
 		birthDate: birthDateSchema,
-		gender: z.enum(["male", "female"]),
+		gender: z.enum(["MALE", "FEMALE"]),
 		checkupDate: checkupDateSchema,
 
 		hospital: z
