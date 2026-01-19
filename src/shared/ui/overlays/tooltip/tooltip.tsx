@@ -1,12 +1,13 @@
 import type * as React from "react";
 
-import { InfoGray } from "@/shared/assets/svg";
+import { InfoBlack, InfoGray } from "@/shared/assets/svg";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 interface TooltipProps {
 	children: React.ReactNode;
 	side?: "top" | "bottom" | "left" | "right"; // PopoverTrigger를 기준으로 한 popover의 위치
 	align?: "start" | "center" | "end"; // 삼각형 위치
+	iconTone?: "gray" | "black";
 	className?: string;
 }
 
@@ -14,6 +15,7 @@ function Tooltip({
 	children,
 	side = "top",
 	align = "start",
+	iconTone = "gray",
 	className,
 }: TooltipProps) {
 	// 툴팁 UI의 삼각형 중앙이 info 아이콘 중앙을 가리키도록 offset 조정
@@ -23,7 +25,7 @@ function Tooltip({
 		<Popover>
 			<PopoverTrigger asChild>
 				<button type="button" className="inline-flex" aria-label="정보 보기">
-					<InfoGray />
+					{iconTone === "black" ? <InfoBlack /> : <InfoGray />}
 				</button>
 			</PopoverTrigger>
 			<PopoverContent

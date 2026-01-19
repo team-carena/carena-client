@@ -1,6 +1,6 @@
 type SegmentsMode = 2 | 3 | 4;
 
-export type Sex = "male" | "female";
+export type Sex = "MALE" | "FEMALE";
 
 export type HealthMetricType =
 	| "waist"
@@ -321,11 +321,11 @@ const getConfigKeyBySex = (base: HealthMetricType, sex?: Sex) => {
 
 	switch (base) {
 		case "waist":
-			return sex === "male" ? "waistMale" : "waistFemale";
+			return sex === "MALE" ? "waistMale" : "waistFemale";
 		case "ggtp":
-			return sex === "male" ? "ggtpMale" : "ggtpFemale";
+			return sex === "MALE" ? "ggtpMale" : "ggtpFemale";
 		case "hb":
-			return sex === "male" ? "hbMale" : "hbFemale";
+			return sex === "MALE" ? "hbMale" : "hbFemale";
 		default:
 			return base;
 	}
