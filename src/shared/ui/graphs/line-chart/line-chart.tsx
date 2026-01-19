@@ -112,6 +112,7 @@ export const LineChart = ({ data }: LineChartProps) => {
 			<svg
 				width={CHART_SIZE.WIDTH}
 				height={CHART_SIZE.HEIGHT}
+				role="img"
 				aria-label="검진 수치 추이 라인 차트"
 			>
 				<defs>
