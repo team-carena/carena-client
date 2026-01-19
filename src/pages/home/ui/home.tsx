@@ -14,9 +14,7 @@ export const HomePage = () => {
 			try {
 				const response = await postAccessToken();
 
-				const authHeader =
-					response.headers["authorization"] ??
-					response.headers["Authorization"];
+				const authHeader = response.headers["authorization"];
 
 				if (!authHeader) {
 					throw new Error("Authorization header not found");
