@@ -93,6 +93,7 @@ export const DateInput = ({
 			value,
 			onFocus,
 			onBlur,
+			onChange,
 			...inputProps
 		} = field;
 
@@ -129,6 +130,12 @@ export const DateInput = ({
 					onBlur={(e) => {
 						setFocused(null);
 						onBlur?.(e);
+					}}
+					onChange={(e) => {
+						// 숫자만 허용
+						// DateInput은 날짜 전용 컴포넌트 -> 숫자만 허용하는 로직 넣어도 컴포넌트의 책임 범위 안
+						e.target.value = e.target.value.replace(/[^0-9]/g, "");
+						onChange?.(e);
 					}}
 					className={cn(
 						dateInputTextVariants({ state: getTextState(disabled, readOnly) }),
