@@ -44,7 +44,7 @@ export const LoginPage = () => {
 				</section>
 
 				<div className="pb-[4rem]">
-					<LoginButton onClick={() => requestKakaoAuthorize()} />
+					<LoginButton onClick={requestKakaoAuthorize} />
 				</div>
 			</div>
 		</>
