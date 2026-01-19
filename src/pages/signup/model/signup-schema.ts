@@ -51,6 +51,7 @@ const ERROR_MESSAGES = {
 		waist: "20~250 사이의 값을 입력해 주세요.",
 		systolic: "0~300 사이의 값을 입력해 주세요.",
 		diastolic: "0~300 사이의 값을 입력해 주세요.",
+		bloodPressure: "수축기 혈압이 이완기 혈압보다 커야 해요.",
 	},
 	bloodTest: {
 		hemoglobin: "0~30 사이의 값을 입력해 주세요.",
@@ -142,53 +143,66 @@ const checkupDateSchema = z
 		{ message: ERROR_MESSAGES.checkupDate.invalidDate },
 	);
 
-export const signupSchema = z.object({
-	// 기본 정보
-	name: z
-		.string()
-		.min(1, ERROR_MESSAGES.name.required)
-		.max(30, ERROR_MESSAGES.name.maxLength)
-		.refine((val) => isValidName(val), {
-			message: ERROR_MESSAGES.name.invalidChar,
-		}),
+export const signupSchema = z
+	.object({
+		// 기본 정보
+		name: z
+			.string()
+			.min(1, ERROR_MESSAGES.name.required)
+			.max(30, ERROR_MESSAGES.name.maxLength)
+			.refine((val) => isValidName(val), {
+				message: ERROR_MESSAGES.name.invalidChar,
+			}),
 
-	birthDate: birthDateSchema,
-	gender: z.enum(["male", "female"]),
-	checkupDate: checkupDateSchema,
+		birthDate: birthDateSchema,
+		gender: z.enum(["male", "female"]),
+		checkupDate: checkupDateSchema,
 
-	hospital: z
-		.string()
-		.max(100, ERROR_MESSAGES.hospital.maxLength)
-		.refine((val) => val === "" || /^[가-힣a-zA-Z0-9\s]+$/.test(val), {
-			message: ERROR_MESSAGES.hospital.invalidChar,
-		})
-		.optional(),
+		hospital: z
+			.string()
+			.max(100, ERROR_MESSAGES.hospital.maxLength)
+			.refine((val) => val === "" || /^[가-힣a-zA-Z0-9\s]+$/.test(val), {
+				message: ERROR_MESSAGES.hospital.invalidChar,
+			})
+			.optional(),
 
-	// 신체 계측
-	height: decimalOnePlace(100, 250, ERROR_MESSAGES.measurement.height),
-	weight: decimalOnePlace(0, 600, ERROR_MESSAGES.measurement.weight),
-	bmi: decimalOnePlace(0, 100, ERROR_MESSAGES.measurement.bmi),
-	waist: decimalOnePlace(20, 250, ERROR_MESSAGES.measurement.waist),
-	systolic: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.systolic),
-	diastolic: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.diastolic),
+		// 신체 계측
+		height: decimalOnePlace(100, 250, ERROR_MESSAGES.measurement.height),
+		weight: decimalOnePlace(0, 600, ERROR_MESSAGES.measurement.weight),
+		bmi: decimalOnePlace(0, 100, ERROR_MESSAGES.measurement.bmi),
+		waist: decimalOnePlace(20, 250, ERROR_MESSAGES.measurement.waist),
+		systolic: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.systolic),
+		diastolic: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.diastolic),
 
-	// 혈액 검사
-	hemoglobin: decimalOnePlace(0, 30, ERROR_MESSAGES.bloodTest.hemoglobin),
-	fastingGlucose: decimalOnePlace(
-		30,
-		700,
-		ERROR_MESSAGES.bloodTest.fastingGlucose,
-	),
-	serumCreatinine: decimalTwoPlaces(
-		0,
-		20,
-		ERROR_MESSAGES.bloodTest.serumCreatinine,
-	),
-	gfr: decimalOnePlace(0, 200, ERROR_MESSAGES.bloodTest.gfr),
-	ast: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.ast),
-	alt: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.alt),
-	ggt: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.ggt),
-});
+		// 혈액 검사
+		hemoglobin: decimalOnePlace(0, 30, ERROR_MESSAGES.bloodTest.hemoglobin),
+		fastingGlucose: decimalOnePlace(
+			30,
+			700,
+			ERROR_MESSAGES.bloodTest.fastingGlucose,
+		),
+		serumCreatinine: decimalTwoPlaces(
+			0,
+			20,
+			ERROR_MESSAGES.bloodTest.serumCreatinine,
+		),
+		gfr: decimalOnePlace(0, 200, ERROR_MESSAGES.bloodTest.gfr),
+		ast: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.ast),
+		alt: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.alt),
+		ggt: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.ggt),
+	})
+	.refine(
+		(data) => {
+			// 둘 다 입력된 경우에만 검증
+			if (data.systolic === undefined || data.diastolic === undefined)
+				return true;
+			return data.systolic > data.diastolic;
+		},
+		{
+			message: ERROR_MESSAGES.measurement.bloodPressure,
+			path: ["diastolic"], // 이완기 필드에 에러 표시
+		},
+	);
 
 // 폼 입력 타입 (transform 전 - string)
 export type SignupFormInput = z.input<typeof signupSchema>;
