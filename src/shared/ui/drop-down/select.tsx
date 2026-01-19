@@ -39,18 +39,7 @@ function SelectTrigger({
 		<SelectPrimitive.Trigger
 			data-slot="select-trigger"
 			className={cn(
-				`
-				group
-				flex w-full min-w-[33.5rem] h-[4.7rem]
-				px-[2rem] py-[1.2rem]
-				items-center
-				rounded-[12px]
-				head03-sb-16 border border-gray-500
-				bg-white cursor-pointer
-
-				data-[state=open]:border-primary-500
-				data-[disabled]:head03-sb-16
-        	`,
+				`group head03-sb-16 data-[disabled]:head03-sb-16 flex h-[4.7rem] w-full min-w-[33.5rem] cursor-pointer items-center rounded-[12px] border border-gray-500 bg-white px-[2rem] py-[1.2rem] data-[state=open]:border-primary-500`,
 				focusReset,
 				className,
 			)}
@@ -58,14 +47,7 @@ function SelectTrigger({
 		>
 			{children}
 
-			<SelectPrimitive.Icon
-				className="
-          transition-transform duration-500 ease-in-out
-          group-data-[state=open]:rotate-180
-		  group-data-[disabled]:hidden
-          ml-[1.2rem]
-        "
-			>
+			<SelectPrimitive.Icon className="ml-[1.2rem] transition-transform duration-500 ease-in-out group-data-[disabled]:hidden group-data-[state=open]:rotate-180">
 				<ChevronSDown />
 			</SelectPrimitive.Icon>
 		</SelectPrimitive.Trigger>
@@ -84,17 +66,7 @@ function SelectContent({
 				side="bottom"
 				sideOffset={4}
 				className={cn(
-					`
-          flex flex-col
-          w-[var(--radix-select-trigger-width)]
-		  max-h-[18.4rem]
-          p-[0.8rem]
-          rounded-[8px]
-          bg-white
-          z-50
-
-          data-[state=open]:animate-[select-slide-down_200ms_ease-out]
-          `,
+					`z-50 flex max-h-[18.4rem] w-[var(--radix-select-trigger-width)] flex-col rounded-[8px] bg-white p-[0.8rem] data-[state=open]:animate-[select-slide-down_200ms_ease-out]`,
 					className,
 				)}
 				{...props}
@@ -114,15 +86,7 @@ function SelectItem({
 		<SelectPrimitive.Item
 			data-slot="select-item"
 			className={cn(
-				`
-				flex w-full
-				px-[0.8rem] py-[1rem] gap-[1rem]
-				items-center rounded-[8px]
-				bg-white body03-r-16
-				cursor-pointer transition-colors
-				hover:bg-gray-100
-				active:bg-gray-100
-        		`,
+				`body03-r-16 flex w-full cursor-pointer items-center gap-[1rem] rounded-[8px] bg-white px-[0.8rem] py-[1rem] transition-colors hover:bg-gray-100 active:bg-gray-100`,
 				focusReset,
 				className,
 			)}

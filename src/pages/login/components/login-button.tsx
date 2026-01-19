@@ -7,7 +7,7 @@ export const LoginButton = ({ ...props }: LoginButtonProps) => {
 	return (
 		<button
 			type="button"
-			className="flex w-full min-w-[33.5rem] gap-[1.2rem] items-center justify-center px-[1.6rem] py-[1.2rem] rounded-[12px] bg-[#FEE500]"
+			className="flex w-full min-w-[33.5rem] items-center justify-center gap-[1.2rem] rounded-[12px] bg-[#FEE500] px-[1.6rem] py-[1.2rem]"
 			{...props}
 		>
 			<KakaoIcon />

@@ -18,9 +18,9 @@ const CardTip = ({
 		<button
 			type="button"
 			className={cn(
-				"flex justify-between items-center bg-white w-full px-[2rem] py-[2.4rem] rounded-[12px] border border-transparent transition-default",
+				"flex w-full items-center justify-between rounded-[12px] border border-transparent bg-white px-[2rem] py-[2.4rem] transition-default",
 				more
-					? "cursor-pointer active:bg-gray-100 active:border-gray-300"
+					? "cursor-pointer active:border-gray-300 active:bg-gray-100"
 					: "cursor-default",
 				className,
 			)}
@@ -29,7 +29,7 @@ const CardTip = ({
 		>
 			<div className="flex items-center">
 				<Q className="mr-[0.8rem] shrink-0" />
-				<span className="head01-b-18 text-gray-900 text-left line-clamp-2">
+				<span className="head01-b-18 line-clamp-2 text-left text-gray-900">
 					{children}
 				</span>
 			</div>

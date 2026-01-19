@@ -14,18 +14,13 @@ export const SelectList = React.forwardRef<HTMLButtonElement, SelectListProps>(
 				ref={ref}
 				type="button"
 				className={cn(
-					`
-          flex items-center justify-between
-          w-full h-[2.8rem]
-          py-[0.4rem]
-          text-gray-900
-        `,
+					`flex h-[2.8rem] w-full items-center justify-between py-[0.4rem] text-gray-900`,
 					className,
 				)}
 				{...props}
 			>
 				{/* text */}
-				<span className="flex-[1_0_0] body04-r-14 text-left">{label}</span>
+				<span className="body04-r-14 flex-[1_0_0] text-left">{label}</span>
 
 				{/* icon */}
 				<ChevronSRight className="shrink-0" aria-hidden />
