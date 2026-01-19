@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	ANIMATION,
 	CHART_SIZE,
 	COLORS,
+	LABEL_TOTAL_HEIGHT,
 	LAYOUT,
 	POINT,
-} from "./line-chart.config";
+	TOP_SAFE_SPACE,
+} from "./line-chart-config";
 
 type LineChartData = {
-	label: string;
+	/** yyyy-mm */
+	date: string;
 	value: number;
 };
 
@@ -16,8 +19,14 @@ interface LineChartProps {
 	data: LineChartData[];
 }
 
+/** yyyy-mm → YY/MM */
+const formatDateLabel = (date: string) => {
+	const [year, month] = date.split("-");
+	return `${year.slice(2)}/${month}`;
+};
+
 export const LineChart = ({ data }: LineChartProps) => {
-	/** ===== 애니메이션 제어 =====
+	/**
 	 * - mount 시 1회만 실행
 	 * - re-render 시 불필요한 재실행 방지
 	 */
@@ -27,106 +36,97 @@ export const LineChart = ({ data }: LineChartProps) => {
 		setAnimated(true);
 	}, []);
 
-	// 데이터가 없는 경우 차트 렌더링하지 않음
-	if (!data.length) return null;
+	/** 오래된 데이터 → 최신 데이터 순 정렬 (hook은 항상 최상단) */
+	const sortedData = useMemo(
+		() =>
+			[...data].sort(
+				(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+			),
+		[data],
+	);
 
-	const isSingle = data.length === 1;
+	if (!sortedData.length) return null;
 
-	// 사용자 접근성 설정 (움직임 최소화 옵션)
+	/** 접근성: OS에서 motion 감소 설정 시 애니메이션 비활성화 */
 	const prefersReducedMotion =
 		typeof window !== "undefined" &&
 		window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-	/** ===== X 좌표 계산 =====
+	const isSingle = sortedData.length === 1;
+
+	/**
+	 * X 좌표 계산
 	 * - 포인트 간 간격은 고정
 	 * - 데이터 개수에 따라 전체 그래프를 중앙 정렬
 	 */
 	const chartWidth =
 		CHART_SIZE.WIDTH - LAYOUT.PADDING.left - LAYOUT.PADDING.right;
 
-	const usedWidth = isSingle ? 0 : (data.length - 1) * LAYOUT.POINT_GAP;
-
+	const usedWidth = isSingle ? 0 : (sortedData.length - 1) * LAYOUT.POINT_GAP;
 	const startX = LAYOUT.PADDING.left + (chartWidth - usedWidth) / 2;
 
 	const getX = (index: number) =>
 		isSingle ? CHART_SIZE.WIDTH / 2 : startX + index * LAYOUT.POINT_GAP;
 
-	/** ===== Y 좌표 계산 =====
-	 * - 값의 비율을 기반으로 그래프 영역 내에 매핑
-	 * - 최대값/최소값이 같은 경우 중앙에 배치
+	/**
+	 * Y 스케일 계산
+	 * - 최소값: 데이터 최솟값의 90% (0 미만으로 내려가지 않도록 clamp)
+	 * - 최대값: 데이터 최댓값의 110%
 	 */
-	const values = data.map((d) => d.value);
-	const max = Math.max(...values);
-	const min = Math.min(...values);
+	const values = sortedData.map((d) => d.value);
+	const yMin = Math.max(0, Math.min(...values) * 0.9);
+	const yMax = Math.max(...values) * 1.1;
 
-	const plotBottom = CHART_SIZE.HEIGHT - LAYOUT.PADDING.bottom - 12;
+	const plotBottom = CHART_SIZE.HEIGHT - LAYOUT.PADDING.bottom;
 
-	const yTop = LAYOUT.PLOT_TOP + LAYOUT.Y_MARGIN;
-	const yBottom = plotBottom - LAYOUT.Y_MARGIN;
+	const yTop = 0;
+	const yBottom = plotBottom;
 	const yRange = yBottom - yTop;
 
+	/** value → SVG y 좌표 변환 */
 	const getY = (value: number) => {
-		if (max === min) return yTop + yRange / 2;
+		if (yMax === yMin) return yTop + yRange / 2;
 
-		const ratio = (value - min) / (max - min);
+		const ratio = (value - yMin) / (yMax - yMin);
 		return yTop + (1 - ratio) * yRange;
 	};
 
-	/** ===== 좌표 계산된 포인트 ===== */
-	const points = data.map((d, i) => ({
+	const points = sortedData.map((d, i) => ({
 		x: getX(i),
 		y: getY(d.value),
 		value: d.value,
-		label: d.label,
+		label: formatDateLabel(d.date),
 	}));
 
-	/** ===== SVG Path ===== */
 	const linePath = isSingle
 		? ""
 		: `M ${points.map((p) => `${p.x} ${p.y}`).join(" L ")}`;
 
-	const areaPath = isSingle
-		? ""
-		: `
-      M ${points[0].x} ${yBottom}
-      L ${points.map((p) => `${p.x} ${p.y}`).join(" L ")}
-      L ${points[points.length - 1].x} ${yBottom}
-      Z
-    `;
-
-	// 라벨(텍스트 + 삼각형)이 차트 영역을 벗어나지 않도록 판단하기 위한 기준 높이
-	const LABEL_TOTAL_HEIGHT =
-		POINT.TEXT_HEIGHT + POINT.TRIANGLE_HEIGHT + POINT.LABEL_GAP * 2;
+	const axisLabelY = plotBottom + 6;
 
 	return (
 		<div
 			className="rounded-[12px] border border-gray-200 bg-white"
-			style={{
-				width: CHART_SIZE.WIDTH,
-				height: CHART_SIZE.HEIGHT,
-			}}
+			style={{ width: CHART_SIZE.WIDTH, height: CHART_SIZE.HEIGHT }}
 		>
 			<svg
 				width={CHART_SIZE.WIDTH}
 				height={CHART_SIZE.HEIGHT}
-				role="img"
-				aria-label="라인 차트"
+				aria-label="검진 수치 추이 라인 차트"
 			>
 				<defs>
-					{/* 영역 그래프용 그라데이션 */}
 					<linearGradient
 						id="areaGrad"
 						x1="0"
-						y1={LAYOUT.PLOT_TOP}
+						y1={yTop}
 						x2="0"
-						y2={plotBottom}
+						y2={yBottom}
 						gradientUnits="userSpaceOnUse"
 					>
 						<stop offset="0%" stopColor={COLORS.LINE} stopOpacity={0.55} />
 						<stop offset="100%" stopColor={COLORS.LINE} stopOpacity={0} />
 					</linearGradient>
 
-					{/* 단일 데이터 라인용 그라데이션 */}
 					<linearGradient
 						id="singleLineGrad"
 						x1="0"
@@ -139,13 +139,11 @@ export const LineChart = ({ data }: LineChartProps) => {
 						<stop offset="100%" stopColor={COLORS.LINE} stopOpacity={0} />
 					</linearGradient>
 
-					{/* 차트 애니메이션 정의 */}
 					<style>
 						{`
               @keyframes line-draw {
                 to { stroke-dashoffset: 0; }
               }
-
               @keyframes area-fade {
                 from { opacity: 0; }
                 to { opacity: 1; }
@@ -154,9 +152,27 @@ export const LineChart = ({ data }: LineChartProps) => {
 					</style>
 				</defs>
 
-				{/* ===== 그래프 영역 ===== */}
+				{!isSingle && (
+					<path
+						d={`
+              M ${points[0].x} ${yBottom}
+              L ${points.map((p) => `${p.x} ${p.y}`).join(" L ")}
+              L ${points[points.length - 1].x} ${yBottom}
+              Z
+            `}
+						fill="url(#areaGrad)"
+						style={
+							animated && !prefersReducedMotion
+								? {
+										opacity: 0,
+										animation: `area-fade ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
+									}
+								: undefined
+						}
+					/>
+				)}
+
 				{isSingle ? (
-					// 단일 데이터: 세로 라인으로 표현
 					<line
 						x1={points[0].x}
 						y1={points[0].y}
@@ -175,44 +191,31 @@ export const LineChart = ({ data }: LineChartProps) => {
 						}
 					/>
 				) : (
-					<>
-						{/* 영역 그래프 */}
-						<path
-							d={areaPath}
-							fill="url(#areaGrad)"
-							style={
-								animated && !prefersReducedMotion
-									? {
-											animation: `area-fade ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
-										}
-									: undefined
-							}
-						/>
-
-						{/* 라인 그래프 */}
-						<path
-							d={linePath}
-							fill="none"
-							stroke={COLORS.LINE}
-							strokeWidth={1}
-							strokeLinecap="round"
-							style={
-								animated && !prefersReducedMotion
-									? {
-											strokeDasharray: ANIMATION.LINE_DASH,
-											strokeDashoffset: ANIMATION.LINE_DASH,
-											animation: `line-draw ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
-										}
-									: undefined
-							}
-						/>
-					</>
+					<path
+						d={linePath}
+						fill="none"
+						stroke={COLORS.LINE}
+						strokeWidth={1}
+						strokeLinecap="round"
+						style={
+							animated && !prefersReducedMotion
+								? {
+										strokeDasharray: ANIMATION.LINE_DASH,
+										strokeDashoffset: ANIMATION.LINE_DASH,
+										animation: `line-draw ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
+									}
+								: undefined
+						}
+					/>
 				)}
 
-				{/* ===== 포인트 & 수치 라벨 ===== */}
 				{points.map((p) => {
-					// 라벨이 위에 들어갈 수 있는 공간이 있으면 위, 아니면 아래 배치
-					const placeAbove = p.y - LABEL_TOTAL_HEIGHT >= LAYOUT.PLOT_TOP;
+					/**
+					 * 라벨 배치 규칙
+					 * - 기본은 포인트 위
+					 * - 라벨 전체 높이를 고려했을 때 상단 여백이 부족하면 아래로 배치
+					 */
+					const placeAbove = p.y - LABEL_TOTAL_HEIGHT >= TOP_SAFE_SPACE;
 
 					const triangleTipY = placeAbove
 						? p.y - POINT.RADIUS - POINT.LABEL_GAP
@@ -232,10 +235,10 @@ export const LineChart = ({ data }: LineChartProps) => {
 								x={p.x}
 								y={textY}
 								textAnchor="middle"
-								fill={COLORS.TEXT}
 								className="body06-r-10"
+								fill={COLORS.TEXT}
 							>
-								{p.value.toFixed(2)}
+								{p.value.toFixed(1)}
 							</text>
 
 							<polygon
@@ -257,15 +260,14 @@ export const LineChart = ({ data }: LineChartProps) => {
 					);
 				})}
 
-				{/* ===== X축 날짜 라벨 ===== */}
 				{points.map((p) => (
 					<text
 						key={p.label}
 						x={p.x}
-						y={CHART_SIZE.HEIGHT - 4}
+						y={axisLabelY}
 						textAnchor="middle"
-						fill={COLORS.AXIS_LABEL}
 						className="body06-r-10"
+						fill={COLORS.AXIS_LABEL}
 					>
 						{p.label}
 					</text>
