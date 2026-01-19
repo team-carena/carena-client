@@ -150,6 +150,7 @@ export const signupSchema = z
 		// 기본 정보
 		name: z
 			.string()
+			.trim()
 			.min(1, ERROR_MESSAGES.name.required)
 			.max(30, ERROR_MESSAGES.name.maxLength)
 			.refine((val) => isValidName(val), {
