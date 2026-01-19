@@ -129,6 +129,13 @@ export const DateInput = ({
 					}}
 					onBlur={(e) => {
 						setFocused(null);
+						// 월/일 한 자리 수일 때 앞에 0 붙이기
+						if (
+							(fieldName === "month" || fieldName === "day") &&
+							e.target.value.length === 1
+						) {
+							e.target.value = e.target.value.padStart(2, "0");
+						}
 						onBlur?.(e);
 					}}
 					onChange={(e) => {
