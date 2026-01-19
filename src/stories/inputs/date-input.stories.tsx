@@ -19,24 +19,6 @@ const meta: Meta<typeof DateInput> = {
 			</MobileWrapper>
 		),
 	],
-	argTypes: {
-		isError: {
-			control: "boolean",
-			description: "에러 상태 여부",
-		},
-		errorMessage: {
-			control: "text",
-			description: "에러 메시지",
-		},
-		isDisabled: {
-			control: "boolean",
-			description: "비활성화 상태",
-		},
-		isReadOnly: {
-			control: "boolean",
-			description: "읽기 전용 상태",
-		},
-	},
 };
 
 export default meta;
@@ -44,20 +26,28 @@ type Story = StoryObj<typeof DateInput>;
 
 // Default
 export const Default: Story = {
-	render: (args) => {
+	render: () => {
 		const [year, setYear] = React.useState("");
 		const [month, setMonth] = React.useState("");
 		const [day, setDay] = React.useState("");
 
 		return (
 			<DateInput
-				{...args}
-				year={year}
-				month={month}
-				day={day}
-				onChangeYear={setYear}
-				onChangeMonth={setMonth}
-				onChangeDay={setDay}
+				year={{
+					placeholder: "YYYY",
+					value: year,
+					onChange: (e) => setYear(e.target.value),
+				}}
+				month={{
+					placeholder: "MM",
+					value: month,
+					onChange: (e) => setMonth(e.target.value),
+				}}
+				day={{
+					placeholder: "DD",
+					value: day,
+					onChange: (e) => setDay(e.target.value),
+				}}
 			/>
 		);
 	},
@@ -72,12 +62,21 @@ export const Filled: Story = {
 
 		return (
 			<DateInput
-				year={year}
-				month={month}
-				day={day}
-				onChangeYear={setYear}
-				onChangeMonth={setMonth}
-				onChangeDay={setDay}
+				year={{
+					placeholder: "YYYY",
+					value: year,
+					onChange: (e) => setYear(e.target.value),
+				}}
+				month={{
+					placeholder: "MM",
+					value: month,
+					onChange: (e) => setMonth(e.target.value),
+				}}
+				day={{
+					placeholder: "DD",
+					value: day,
+					onChange: (e) => setDay(e.target.value),
+				}}
 			/>
 		);
 	},
@@ -92,14 +91,22 @@ export const ErrorState: Story = {
 
 		return (
 			<DateInput
-				year={year}
-				month={month}
-				day={day}
-				isError
+				year={{
+					placeholder: "YYYY",
+					value: year,
+					onChange: (e) => setYear(e.target.value),
+				}}
+				month={{
+					placeholder: "MM",
+					value: month,
+					onChange: (e) => setMonth(e.target.value),
+				}}
+				day={{
+					placeholder: "DD",
+					value: day,
+					onChange: (e) => setDay(e.target.value),
+				}}
 				errorMessage="수치를 다시 한 번 확인해 주세요."
-				onChangeYear={setYear}
-				onChangeMonth={setMonth}
-				onChangeDay={setDay}
 			/>
 		);
 	},
@@ -107,26 +114,52 @@ export const ErrorState: Story = {
 
 // Disabled
 export const Disabled: Story = {
-	args: {
-		year: "1999",
-		month: "12",
-		day: "31",
-		isDisabled: true,
-		onChangeYear: () => {},
-		onChangeMonth: () => {},
-		onChangeDay: () => {},
-	},
+	render: () => (
+		<DateInput
+			year={{
+				placeholder: "YYYY",
+				value: "1999",
+				disabled: true,
+				onChange: () => {},
+			}}
+			month={{
+				placeholder: "MM",
+				value: "12",
+				disabled: true,
+				onChange: () => {},
+			}}
+			day={{
+				placeholder: "DD",
+				value: "31",
+				disabled: true,
+				onChange: () => {},
+			}}
+		/>
+	),
 };
 
 // ReadOnly
 export const ReadOnly: Story = {
-	args: {
-		year: "1999",
-		month: "12",
-		day: "31",
-		isReadOnly: true,
-		onChangeYear: () => {},
-		onChangeMonth: () => {},
-		onChangeDay: () => {},
-	},
+	render: () => (
+		<DateInput
+			year={{
+				placeholder: "YYYY",
+				value: "1999",
+				readOnly: true,
+				onChange: () => {},
+			}}
+			month={{
+				placeholder: "MM",
+				value: "12",
+				readOnly: true,
+				onChange: () => {},
+			}}
+			day={{
+				placeholder: "DD",
+				value: "31",
+				readOnly: true,
+				onChange: () => {},
+			}}
+		/>
+	),
 };
