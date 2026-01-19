@@ -21,7 +21,7 @@ const CategoryLabel = ({ label }: CategoryLabelProps) => {
 	return <h3 className="head02-b-16 text-left text-primary-700">{label}</h3>;
 };
 
-const Signup = () => {
+export const Signup = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
 
 	const {
@@ -331,5 +331,3 @@ const Signup = () => {
 		</>
 	);
 };
-
-export default Signup;
