@@ -19,7 +19,7 @@ export const HomePage = () => {
 					throw new Error("Authorization header not found");
 				}
 
-				const accessToken = authHeader.replace("Bearer ", "");
+				const accessToken = authHeader.replace(/^Bearer\s+/i, "");
 
 				setAccessToken(accessToken);
 				setAuthenticated(true);
