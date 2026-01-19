@@ -32,7 +32,7 @@ const HealthAnalysisPage = () => {
 	];
 
 	return (
-		<div className="flex flex-col w-full pt-[2.4rem] px-[2rem] mb-[3rem]">
+		<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
 			<div className="mb-[2rem]">
 				<DropDown
 					value={selectedDate}
@@ -50,7 +50,7 @@ const HealthAnalysisPage = () => {
 			<div className="mt-[-4.8rem]">
 				<RadarChart data={radarData} />
 			</div>
-			<div className="mt-[0.5rem] gap-[2rem] flex flex-col">
+			<div className="mt-[0.5rem] flex flex-col gap-[2rem]">
 				<CheckupSummaryCard>
 					<CheckupSummaryCard.Title label="기본 검사" to="/" />
 					<CheckupSummaryCard.Section variant="header">
