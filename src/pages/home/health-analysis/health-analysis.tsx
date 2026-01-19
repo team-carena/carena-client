@@ -63,7 +63,7 @@ const HealthAnalysisPage = () => {
 			<div className="mt-[0.5rem] flex flex-col gap-[2rem]">
 				<CheckupSummaryCard>
 					<CheckupSummaryCard.Title label="기본 검사" to="/" />
-					<CheckupSummaryCard.Section variant="header">
+					<CheckupSummaryCard.Section>
 						<CheckupSummaryCard.Description>
 							기본검사에 대한 설명입니다.
 						</CheckupSummaryCard.Description>

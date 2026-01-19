@@ -13,8 +13,6 @@ import { getRangeBarData } from "@/shared/ui/graphs/range-bar/health-metric-conf
 import { RangeBar } from "@/shared/ui/graphs/range-bar/range-bar";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
 
-type SectionVariant = "header" | "content";
-
 interface CheckupSummaryCardRootProps {
 	className?: string;
 	children: React.ReactNode;
@@ -23,7 +21,6 @@ interface CheckupSummaryCardRootProps {
 interface SectionProps {
 	className?: string;
 	children: React.ReactNode;
-	variant?: SectionVariant;
 }
 
 interface TitleProps {
@@ -59,11 +56,6 @@ interface MetricRangeBarProps {
 
 type RangeBarData = ReturnType<typeof getRangeBarData>;
 
-const sectionVariantClassName: Record<SectionVariant, string> = {
-	header: "px-[2rem] pt-[2rem] pb-[1.2rem]",
-	content: "px-[2rem] py-[1.2rem]",
-};
-
 const MetricRangeBar = ({ value, rangeBarData }: MetricRangeBarProps) => {
 	const { domainMin, domainMax, segments } = rangeBarData;
 
@@ -97,18 +89,8 @@ const Root = ({ className, children }: CheckupSummaryCardRootProps) => (
 	</div>
 );
 
-const Section = ({
-	className,
-	children,
-	variant = "content",
-}: SectionProps) => (
-	<div
-		className={cn(
-			"w-full bg-white",
-			sectionVariantClassName[variant],
-			className,
-		)}
-	>
+const Section = ({ className, children }: SectionProps) => (
+	<div className={cn("w-full bg-white px-[2rem] py-[2.2rem]", className)}>
 		{children}
 	</div>
 );
