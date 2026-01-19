@@ -6,7 +6,7 @@ export const OcrSection = () => {
 	const isSignUp = location.pathname === "/signup";
 
 	return (
-		<div className="mx-auto pt-[2.4rem]">
+		<section className="mx-auto pt-[2.4rem]">
 			<div className="mb-[2.4rem] flex flex-col items-center gap-[0.9rem]">
 				{isSignUp && (
 					<p className="head01-b-18">검진 결과 입력하고 케어나 시작하기</p>
@@ -16,6 +16,6 @@ export const OcrSection = () => {
 				</p>
 			</div>
 			<OcrButton />
-		</div>
+		</section>
 	);
 };
