@@ -90,7 +90,7 @@ const Root = ({ className, children }: CheckupSummaryCardRootProps) => (
 );
 
 const Section = ({ className, children }: SectionProps) => (
-	<div className={cn("w-full bg-white px-[2rem] py-[2.2rem]", className)}>
+	<div className={cn("w-full bg-white px-[2rem] py-[1.2rem]", className)}>
 		{children}
 	</div>
 );
@@ -100,7 +100,7 @@ const Title = ({ className, label, to }: TitleProps) => (
 		label={label}
 		to={to}
 		className={cn(
-			"h-[4.8rem] w-full rounded-none bg-white px-[2rem] py-0",
+			"h-[4.8rem] w-full rounded-none bg-white px-[2rem] pt-[1.2rem] pb-[0.4rem]",
 			className,
 		)}
 	/>
