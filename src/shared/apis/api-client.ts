@@ -70,7 +70,6 @@ apiClient.interceptors.response.use(
 			}
 
 			const newAccessToken = await refreshPromise;
-			refreshPromise = null;
 
 			const store = useAuthStore.getState();
 			store.setAccessToken(newAccessToken);
@@ -81,13 +80,13 @@ apiClient.interceptors.response.use(
 
 			return apiClient(originalRequest);
 		} catch (refreshError) {
-			refreshPromise = null;
-
 			const store = useAuthStore.getState();
 			store.setAccessToken(null);
 			store.setAuthenticated(false);
 
 			return Promise.reject(refreshError);
+		} finally {
+			refreshPromise = null;
 		}
 	},
 );

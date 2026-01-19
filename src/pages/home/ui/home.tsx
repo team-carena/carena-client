@@ -13,7 +13,6 @@ export const HomePage = () => {
 		const initAuth = async () => {
 			try {
 				const response = await postAccessToken();
-
 				const authHeader = response.headers["authorization"];
 
 				if (!authHeader) {
