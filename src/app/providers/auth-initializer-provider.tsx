@@ -14,7 +14,12 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 		const initializeAuth = async () => {
 			try {
 				const response = await postRefreshToken();
-				setAccessToken(response.headers["authorization"]);
+				const authorization = response.headers["authorization"];
+				if (authorization) {
+					setAccessToken(authorization.replace(/^Bearer\s+/i, ""));
+				} else {
+					throw new Error("Authorization header missing.");
+				}
 				setAuthenticated(true);
 			} catch {
 				setAuthenticated(false);
