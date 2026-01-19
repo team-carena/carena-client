@@ -1,7 +1,7 @@
 import { Tabs } from "@/shared/ui/tabs/tabs";
+import HealthAnalysisPage from "../health-analysis/health-analysis";
 import UserInfo from "../health-info/components/user-info";
 import HealthInfoPage from "../health-info/health-info";
-
 export const HomePage = () => {
 	return (
 		<div className="flex w-full flex-col">
@@ -15,7 +15,7 @@ export const HomePage = () => {
 					<HealthInfoPage />
 				</Tabs.Content>
 				<Tabs.Content value="health-tips">
-					<div>검진결과분석 내용입니다.</div>
+					<HealthAnalysisPage />
 				</Tabs.Content>
 			</Tabs>
 		</div>

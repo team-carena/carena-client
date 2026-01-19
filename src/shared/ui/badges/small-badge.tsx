@@ -17,6 +17,10 @@ const smallBadgeVariants = cva(
 	},
 );
 
+export type SmallBadgeVariant = VariantProps<
+	typeof smallBadgeVariants
+>["variant"];
+
 export interface SmallBadgeProps
 	extends React.HTMLAttributes<HTMLSpanElement>,
 		VariantProps<typeof smallBadgeVariants> {
