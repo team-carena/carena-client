@@ -1,5 +1,6 @@
 import { HealthMenuPage } from "@pages/menu/menu";
 import { createBrowserRouter, Navigate } from "react-router";
+import { HealthReportDetailPage } from "@/pages/health-report/health-report-detail";
 import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
@@ -77,6 +78,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "건강 팁 상세",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_REPORT_DETAIL,
+						element: <HealthReportDetailPage />,
+						handle: {
+							header: "back",
+							// title은 layout에서 type 보고 동적으로 처리
 						} satisfies RouteHandle,
 					},
 					{
