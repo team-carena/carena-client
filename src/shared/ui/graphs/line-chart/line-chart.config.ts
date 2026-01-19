@@ -33,7 +33,7 @@ export const COLORS = {
 
 // 애니메이션 설정
 export const ANIMATION = {
-	DURATION: "0.6s",
+	DURATION: "1s",
 	EASING: "ease-out",
 	LINE_DASH: 400,
 };
