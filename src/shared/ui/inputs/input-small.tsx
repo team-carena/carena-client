@@ -96,7 +96,7 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 
 		return (
 			<div className="flex-1">
-				<div className="flex items-start justify-between">
+				<div className="flex items-center justify-between">
 					<label htmlFor={inputId} className="body03-r-16 shrink-0 text-black">
 						{label}
 					</label>
