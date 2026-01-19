@@ -1,1 +1,5 @@
-// api 엔드포인트
+export const API_ENDPOINTS = {
+	HEALTH_TIP: {
+		LIST: "/api/v1/health-tip",
+	},
+} as const;
