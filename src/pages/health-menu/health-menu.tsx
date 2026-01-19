@@ -1,6 +1,6 @@
 import MenuBg from "@shared/assets/img/menu-bg.png";
 import CardList from "@shared/ui/cards/card-list";
-import CardAiDietRecommendation from "@/pages/menu/ui/card-ai-diet-recommendation";
+import CardAiDietRecommendation from "@/pages/health-menu/ui/card-ai-diet-recommendation";
 
 // 임시 AI 추천 메뉴 데이터
 const MOCK_AI_RECOMMENDATION = {
