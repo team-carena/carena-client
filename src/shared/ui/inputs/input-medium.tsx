@@ -96,8 +96,7 @@ export const InputMedium = ({
 					<input
 						id={inputId}
 						type="text"
-						inputMode={numeric ? "numeric" : undefined}
-						pattern={numeric ? "[0-9]*" : undefined}
+						inputMode={numeric ? "decimal" : undefined}
 						aria-required={required}
 						aria-invalid={hasError}
 						value={value}

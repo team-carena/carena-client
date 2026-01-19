@@ -115,8 +115,7 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 					<input
 						id={inputId}
 						type="text"
-						inputMode="numeric"
-						pattern="[0-9]*"
+						inputMode="decimal"
 						value={value}
 						disabled={disabled}
 						readOnly={readOnly}
