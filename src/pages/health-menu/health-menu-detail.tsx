@@ -14,21 +14,12 @@ const SECTION_LAYOUT = "flex flex-col items-start";
 
 export const MenuDetailPage = () => {
 	return (
-		<div className="h-dvh flex flex-col overflow-hidden bg-gray-50">
-			<main
-				className="
-          flex-1
-          overflow-y-auto
-          px-[2rem]
-          pt-[2.4rem]
-          pb-[2rem]
-          space-y-[2rem]
-        "
-			>
+		<div className="flex h-dvh flex-col overflow-hidden bg-gray-50">
+			<main className="flex-1 space-y-[2rem] overflow-y-auto px-[2rem] pt-[2.4rem] pb-[2rem]">
 				{/* 메뉴 타이틀 및 설명 */}
 				<section
 					aria-labelledby="menu-detail-title"
-					className={`${SECTION_LAYOUT} py-[1.2rem] gap-[2rem]`}
+					className={`${SECTION_LAYOUT} gap-[2rem] py-[1.2rem]`}
 				>
 					<h1 id="menu-detail-title" className="head01-b-18 text-gray-900">
 						저퓨린식
@@ -47,20 +38,12 @@ export const MenuDetailPage = () => {
 				>
 					<span
 						id="recommended-title"
-						className="
-              inline-block
-              rounded-[4px]
-              bg-primary-50
-              px-[0.8rem]
-              py-[0.4rem]
-              head05-r-14
-              text-black
-            "
+						className="head05-r-14 inline-block rounded-[4px] bg-primary-50 px-[0.8rem] py-[0.4rem] text-black"
 					>
 						권장식품과 요리
 					</span>
 
-					<div className=" w-full rounded-[12px] border border-gray-300 px-[2rem] py-[2.4rem]">
+					<div className="w-full rounded-[12px] border border-gray-300 px-[2rem] py-[2.4rem]">
 						<CardTable
 							headerLeft="권장 식품"
 							headerRight="요리"
@@ -76,15 +59,7 @@ export const MenuDetailPage = () => {
 				>
 					<span
 						id="caution-title"
-						className="
-              inline-block
-              rounded-[4px]
-              bg-primary-50
-              px-[0.8rem]
-              py-[0.4rem]
-              head05-r-14
-              text-black
-            "
+						className="head05-r-14 inline-block rounded-[4px] bg-primary-50 px-[0.8rem] py-[0.4rem] text-black"
 					>
 						주의 식품
 					</span>
@@ -101,9 +76,7 @@ export const MenuDetailPage = () => {
 						</ContentCard.Content>
 					</ContentCard>
 
-					<footer className="self-end body05-r-12 text-gray-700">
-						출처: 여기저기
-					</footer>
+					<p className="body05-r-12 self-end text-gray-700">출처: 여기저기</p>
 				</section>
 			</main>
 		</div>
