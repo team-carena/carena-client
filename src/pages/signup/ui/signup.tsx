@@ -318,7 +318,7 @@ const Signup = () => {
 			</form>
 
 			{/* 저장 버튼 - 하단 고정 */}
-			<div className="fixed right-0 bottom-[2rem] left-0 px-[2rem]">
+			<div className="fixed right-0 bottom-[2rem] left-0 mx-auto max-w-[var(--app-max-width)] px-[2rem]">
 				<Button
 					type="submit"
 					form="signup-form"
