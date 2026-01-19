@@ -13,6 +13,17 @@
     /* 모바일 브라우저 폰트 크기 자동 조정 방지 */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+
+    /* 스크롤 체이닝, 바운스 방지 */
+    overscroll-behavior: none;
+
+    /* 스크롤바 숨김 */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   body {
