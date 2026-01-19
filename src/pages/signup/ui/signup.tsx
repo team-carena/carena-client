@@ -103,18 +103,21 @@ const Signup = () => {
 							<DateInput
 								year={{
 									placeholder: "YYYY",
+									maxLength: 4,
 									...register("birthDate.year", {
 										onBlur: () => trigger("birthDate"),
 									}),
 								}}
 								month={{
 									placeholder: "MM",
+									maxLength: 2,
 									...register("birthDate.month", {
 										onBlur: () => trigger("birthDate"),
 									}),
 								}}
 								day={{
 									placeholder: "DD",
+									maxLength: 2,
 									...register("birthDate.day", {
 										onBlur: () => trigger("birthDate"),
 									}),
@@ -154,18 +157,21 @@ const Signup = () => {
 							<DateInput
 								year={{
 									placeholder: "YYYY",
+									maxLength: 4,
 									...register("checkupDate.year", {
 										onBlur: () => trigger("checkupDate"),
 									}),
 								}}
 								month={{
 									placeholder: "MM",
+									maxLength: 2,
 									...register("checkupDate.month", {
 										onBlur: () => trigger("checkupDate"),
 									}),
 								}}
 								day={{
 									placeholder: "DD",
+									maxLength: 2,
 									...register("checkupDate.day", {
 										onBlur: () => trigger("checkupDate"),
 									}),

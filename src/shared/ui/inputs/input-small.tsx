@@ -151,14 +151,22 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 				{renderInput(right, "right", rightInputId)}
 			</div>
 
-			{/* error message */}
+			{/* error message - 첫번째 input 시작 위치에 맞춤 */}
+			{/* TODO: 배치 css 수정 */}
 			{hasError && (
-				<div
-					className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] whitespace-nowrap text-red-500"
-					role="alert"
-				>
-					<SystemDangerIcon className="shrink-0" aria-hidden />
-					<span>{errorMessage}</span>
+				<div className="flex items-center gap-[1.6rem]">
+					{/* 첫번째 영역과 동일한 레이아웃 */}
+					<div className="flex flex-1 justify-end">
+						<div
+							className="label06-r-12 mt-[0.2rem] flex w-[10.4rem] items-center gap-[0.4rem] whitespace-nowrap text-red-500"
+							role="alert"
+						>
+							<SystemDangerIcon className="shrink-0" aria-hidden />
+							<span>{errorMessage}</span>
+						</div>
+					</div>
+					{/* 두번째 영역 - 빈 공간 */}
+					<div className="flex-1" />
 				</div>
 			)}
 		</div>
