@@ -28,7 +28,15 @@
 				"noConsole": "warn"
 			},
 			"nursery": {
-				"noFloatingPromises": "error"
+				"noFloatingPromises": "error",
+				"useSortedClasses": {
+					"level": "error",
+					"fix": "safe",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cva", "cn"]
+					}
+				}
 			}
 		}
 	},

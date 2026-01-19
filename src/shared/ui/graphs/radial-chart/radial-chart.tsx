@@ -36,7 +36,7 @@ export function RadialChart({ score, className }: RadialChartProps) {
 			{/* 차트 */}
 			<ChartContainer
 				config={chartConfig}
-				className="absolute inset-0 !aspect-auto"
+				className="!aspect-auto absolute inset-0"
 			>
 				<RadialBarChart
 					data={data}

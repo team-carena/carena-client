@@ -45,7 +45,7 @@ export const Ticker = ({ tips = [] }: TickerProps) => {
 	}
 
 	return (
-		<div className="w-full min-w-[31.1rem] h-[3.5rem] overflow-hidden px-[1.2rem] py-[0.8rem] rounded-[8px] label04-r-16">
+		<div className="label04-r-16 h-[3.5rem] w-full min-w-[31.1rem] overflow-hidden rounded-[8px] px-[1.2rem] py-[0.8rem]">
 			<div
 				className={cn(
 					"will-change-transform",

@@ -78,7 +78,7 @@ const ValueWithUnit = ({ value, unit }: { value: number; unit: string }) => {
 	return (
 		<span className="inline-flex items-baseline">
 			<span>{value}</span>
-			<span className="ml-[0.4rem] label02-m-14 text-gray-900">{unit}</span>
+			<span className="label02-m-14 ml-[0.4rem] text-gray-900">{unit}</span>
 		</span>
 	);
 };
@@ -86,7 +86,7 @@ const ValueWithUnit = ({ value, unit }: { value: number; unit: string }) => {
 const Root = ({ className, children }: CheckupSummaryCardRootProps) => (
 	<div
 		className={cn(
-			"w-full rounded-[12px] bg-gray-50 overflow-hidden",
+			"w-full overflow-hidden rounded-[12px] bg-gray-50",
 			className,
 		)}
 	>
@@ -115,7 +115,7 @@ const Title = ({ className, label, to }: TitleProps) => (
 		label={label}
 		to={to}
 		className={cn(
-			"w-full h-[4.8rem] bg-white rounded-none px-[2rem] py-0",
+			"h-[4.8rem] w-full rounded-none bg-white px-[2rem] py-0",
 			className,
 		)}
 	/>
@@ -123,7 +123,7 @@ const Title = ({ className, label, to }: TitleProps) => (
 
 const Description = ({ className, children, ...props }: DescriptionProps) => (
 	<p
-		className={cn("body05-r-12 text-gray-700 mb-[1.2rem]", className)}
+		className={cn("body05-r-12 mb-[1.2rem] text-gray-700", className)}
 		{...props}
 	>
 		{children}
@@ -146,7 +146,7 @@ const Row = ({ className, left, right, ...props }: RowProps) => (
 		{...props}
 	>
 		<div className="body04-r-14 text-gray-900">{left}</div>
-		<div className="flex items-center gap-[0.8rem] label02-m-14 text-gray-900">
+		<div className="label02-m-14 flex items-center gap-[0.8rem] text-gray-900">
 			{right}
 		</div>
 	</div>
@@ -178,7 +178,7 @@ const RowWithBadge = ({
 				</span>
 				<SmallBadge
 					variant={badgeVariant}
-					className="w-[4.1rem] h-[2.8rem] flex items-center justify-center"
+					className="flex h-[2.8rem] w-[4.1rem] items-center justify-center"
 				>
 					{badgeText}
 				</SmallBadge>
@@ -200,7 +200,7 @@ const RowWithBadgeAndGraph = ({
 	const rangeBarData = getRangeBarData(metricKey, metricSex);
 
 	return (
-		<div className={cn("space-y-[1.6rem] mb-[1.2rem]", className)} {...props}>
+		<div className={cn("mb-[1.2rem] space-y-[1.6rem]", className)} {...props}>
 			<RowWithBadge
 				label={label}
 				value={value}

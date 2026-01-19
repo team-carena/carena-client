@@ -6,15 +6,15 @@ import { Ticker } from "@/shared/ui/ticker/ticker";
 
 const HealthInfoPage = () => {
 	return (
-		<div className="flex flex-col w-full pt-[2.4rem] px-[2rem] gap-[2rem]">
+		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
 			{/* 생활 속 건강 팁 */}
-			<article className="bg-white rounded-[12px] overflow-hidden">
+			<article className="overflow-hidden rounded-[12px] bg-white">
 				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
 					{/* TODO: 건강팁 라우팅 적용 */}
 					<NaviRow label="생활 속 건강 팁" to="" />
 				</div>
 				<div className="relative p-[1.2rem_0.8rem_4.2rem_0.8rem]">
-					<HealthTipBackground className="absolute inset-0 w-full h-full z-0" />
+					<HealthTipBackground className="absolute inset-0 z-0 h-full w-full" />
 					<div className="relative z-10">
 						<Ticker
 							tips={[
@@ -28,7 +28,7 @@ const HealthInfoPage = () => {
 			</article>
 
 			{/* 건강 식단 */}
-			<article className="bg-white rounded-[12px]">
+			<article className="rounded-[12px] bg-white">
 				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
 					{/* TODO: 건강 식단 라우팅 적용 */}
 					<NaviRow label="건강 식단" to="" />
@@ -38,7 +38,7 @@ const HealthInfoPage = () => {
 					<img
 						src={cardDietBg}
 						alt="식단 이미지"
-						className="absolute inset-0 w-full h-full z-0"
+						className="absolute inset-0 z-0 h-full w-full"
 					/>
 					<div className="relative z-10 p-[2rem]">
 						<p className="body01-sb-12 text-gray-700">김경아님 맞춤 식단</p>

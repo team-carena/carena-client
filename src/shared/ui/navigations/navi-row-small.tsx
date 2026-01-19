@@ -18,20 +18,12 @@ export const NaviRowSmall = ({
 		<Link
 			to={to}
 			className={cn(
-				`
-          flex items-center justify-between
-          w-full
-          px-[0.8rem] py-[0.4rem]
-          rounded-[0.4rem]
-          text-gray-600
-          transition-default
-          active:bg-gray-100 active:text-gray-900
-        `,
+				`flex w-full items-center justify-between rounded-[0.4rem] px-[0.8rem] py-[0.4rem] text-gray-600 transition-default active:bg-gray-100 active:text-gray-900`,
 				className,
 			)}
 		>
-			<span className="flex-[1_0_0] body04-r-14 text-left">{label}</span>
-			<span className="shrink-0 label06-r-12">{actionLabel}</span>
+			<span className="body04-r-14 flex-[1_0_0] text-left">{label}</span>
+			<span className="label06-r-12 shrink-0">{actionLabel}</span>
 		</Link>
 	);
 };

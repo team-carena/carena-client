@@ -21,7 +21,7 @@ export const CardTable = ({
 }: CardTableProps) => {
 	return (
 		<div
-			className={cn("w-full flex flex-col gap-[0.4rem]", className)}
+			className={cn("flex w-full flex-col gap-[0.4rem]", className)}
 			{...props}
 		>
 			<div
@@ -38,10 +38,10 @@ export const CardTable = ({
 					key={row.id}
 					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-white px-[2rem] py-[0.8rem]"
 				>
-					<div className="min-w-0 text-left text-gray-900 body05-r-12 whitespace-pre-line break-words">
+					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words text-left text-gray-900">
 						{row.label}
 					</div>
-					<div className="min-w-0 text-left text-gray-900 body05-r-12 whitespace-pre-line break-words">
+					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words text-left text-gray-900">
 						{row.value}
 					</div>
 				</div>

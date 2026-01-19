@@ -4,7 +4,7 @@ import UserInfo from "../health-info/components/user-info";
 import HealthInfoPage from "../health-info/health-info";
 export const HomePage = () => {
 	return (
-		<div className="flex flex-col w-full">
+		<div className="flex w-full flex-col">
 			<UserInfo />
 			<Tabs defaultTab="health-info">
 				<Tabs.List>
