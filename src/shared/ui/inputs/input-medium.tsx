@@ -76,9 +76,12 @@ export const InputMedium = ({
 	const fieldState = disabled ? "disabled" : readOnly ? "readonly" : "default";
 
 	return (
-		<div className="flex items-center justify-between">
+		<div className="flex items-start justify-between">
 			{/* label */}
-			<label htmlFor={inputId} className="body03-r-16 shrink-0 text-black">
+			<label
+				htmlFor={inputId}
+				className="body03-r-16 shrink-0 pt-[0.8rem] text-black"
+			>
 				{label}
 				{required && (
 					<span className="ml-[0.2rem]" aria-hidden="true">
@@ -87,8 +90,8 @@ export const InputMedium = ({
 				)}
 			</label>
 
-			{/* input wrapper */}
-			<div className="w-[22.2rem] shrink-0">
+			{/* input + error wrapper */}
+			<div className="flex w-[22.2rem] shrink-0 flex-col">
 				<div className={cn(inputMediumVariants({ state: wrapperState }))}>
 					<input
 						id={inputId}

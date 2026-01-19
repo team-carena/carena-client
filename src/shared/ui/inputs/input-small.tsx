@@ -81,7 +81,6 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 		field: InputFieldProps,
 		side: "left" | "right",
 		inputId: string,
-		showError: boolean,
 	) => {
 		const {
 			label,
@@ -95,78 +94,73 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 		} = field;
 
 		return (
-			<div className="flex-1">
-				<div className="flex items-center justify-between">
-					<label htmlFor={inputId} className="body03-r-16 shrink-0 text-black">
-						{label}
-					</label>
+			<div className="flex flex-1 items-center justify-between">
+				<label htmlFor={inputId} className="body03-r-16 shrink-0 text-black">
+					{label}
+				</label>
 
-					<div className="flex w-[10.4rem] shrink-0 flex-col">
-						<div
-							className={cn(
-								inputWrapperVariants({
-									state: getWrapperState(
-										value,
-										focused === side,
-										disabled,
-										readOnly,
-									),
-								}),
-							)}
-						>
-							<input
-								id={inputId}
-								type="text"
-								inputMode="numeric"
-								pattern="[0-9]*"
-								value={value}
-								disabled={disabled}
-								readOnly={readOnly}
-								onFocus={(e) => {
-									// input focus 상태에 따라 wrapper 스타일 결정
-									if (!disabled && !readOnly) setFocused(side);
-									// register가 내려준 react-hook-form의 onFocus -> react-hook-form의 onFocus 추적
-									onFocus?.(e);
-								}}
-								onBlur={(e) => {
-									setFocused(null);
-									onBlur?.(e);
-								}}
-								className={cn(
-									inputFieldVariants({
-										state: getTextState(disabled, readOnly),
-									}),
-								)}
-								{...inputProps}
-							/>
-							<span className="label03-m-12 shrink-0">{unit}</span>
-						</div>
-
-						{/* 
-							hasError가 true이면 에러 렌더링
-							right input은 showError가 false이므로 오른쪽에는 에러 표시 X
-						*/}
-						{showError && hasError && (
-							<div
-								className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] whitespace-nowrap text-red-500"
-								role="alert"
-							>
-								<SystemDangerIcon className="shrink-0" aria-hidden />
-								<span>{errorMessage}</span>
-							</div>
+				<div
+					className={cn(
+						"w-[10.4rem] shrink-0",
+						inputWrapperVariants({
+							state: getWrapperState(
+								value,
+								focused === side,
+								disabled,
+								readOnly,
+							),
+						}),
+					)}
+				>
+					<input
+						id={inputId}
+						type="text"
+						inputMode="numeric"
+						pattern="[0-9]*"
+						value={value}
+						disabled={disabled}
+						readOnly={readOnly}
+						onFocus={(e) => {
+							// input focus 상태에 따라 wrapper 스타일 결정
+							if (!disabled && !readOnly) setFocused(side);
+							// register가 내려준 react-hook-form의 onFocus -> react-hook-form의 onFocus 추적
+							onFocus?.(e);
+						}}
+						onBlur={(e) => {
+							setFocused(null);
+							onBlur?.(e);
+						}}
+						className={cn(
+							inputFieldVariants({
+								state: getTextState(disabled, readOnly),
+							}),
 						)}
-					</div>
+						{...inputProps}
+					/>
+					<span className="label03-m-12 shrink-0">{unit}</span>
 				</div>
 			</div>
 		);
 	};
 
 	return (
-		<div className="w-full">
-			<div className="flex items-start gap-[1.6rem]">
-				{renderInput(left, "left", leftInputId, true)}
-				{renderInput(right, "right", rightInputId, false)}
+		<div className="flex w-full flex-col">
+			{/* label + input row */}
+			<div className="flex items-center gap-[1.6rem]">
+				{renderInput(left, "left", leftInputId)}
+				{renderInput(right, "right", rightInputId)}
 			</div>
+
+			{/* error message */}
+			{hasError && (
+				<div
+					className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] whitespace-nowrap text-red-500"
+					role="alert"
+				>
+					<SystemDangerIcon className="shrink-0" aria-hidden />
+					<span>{errorMessage}</span>
+				</div>
+			)}
 		</div>
 	);
 };
