@@ -33,11 +33,11 @@ const ERROR_MESSAGES = {
 		invalidChar: "한글 또는 영어만 입력 가능해요.",
 	},
 	birthDate: {
-		invalidYear: "1960년부터 2007년 사이의 연도를 입력해 주세요.",
+		invalidYear: "1960년~2007년 사이의 연도를 입력해 주세요.",
 		invalidDate: "올바른 날짜를 입력해 주세요.",
 	},
 	checkupDate: {
-		invalidYear: "2000년부터 2026년 사이의 연도를 입력해 주세요.",
+		invalidYear: "2000년~2026년 사이의 연도를 입력해 주세요.",
 		invalidDate: "올바른 날짜를 입력해 주세요.",
 	},
 	hospital: {
@@ -45,21 +45,21 @@ const ERROR_MESSAGES = {
 		invalidChar: "한글, 영어, 숫자만 입력 가능해요.",
 	},
 	measurement: {
-		height: "키는 100~250 사이의 값을 입력해 주세요.",
-		weight: "몸무게는 0~600 사이의 값을 입력해 주세요.",
-		bmi: "BMI는 0~100 사이의 값을 입력해 주세요.",
-		waist: "허리둘레는 20~250 사이의 값을 입력해 주세요.",
-		systolic: "수축기 혈압은 0~300 사이의 값을 입력해 주세요.",
-		diastolic: "이완기 혈압은 0~300 사이의 값을 입력해 주세요.",
+		height: "100~250 사이의 값을 입력해 주세요.",
+		weight: "0~600 사이의 값을 입력해 주세요.",
+		bmi: "0~100 사이의 값을 입력해 주세요.",
+		waist: "20~250 사이의 값을 입력해 주세요.",
+		systolic: "0~300 사이의 값을 입력해 주세요.",
+		diastolic: "0~300 사이의 값을 입력해 주세요.",
 	},
 	bloodTest: {
-		hemoglobin: "혈색소는 0~30 사이의 값을 입력해 주세요.",
-		fastingGlucose: "공복혈당은 30~700 사이의 값을 입력해 주세요.",
-		serumCreatinine: "혈청 크레아티닌은 0~20 사이의 값을 입력해 주세요.",
-		gfr: "신사구체여과율은 0~200 사이의 값을 입력해 주세요.",
-		ast: "AST는 0~10,000 사이의 값을 입력해 주세요.",
-		alt: "ALT는 0~10,000 사이의 값을 입력해 주세요.",
-		ggt: "감마지티피는 0~3,000 사이의 값을 입력해 주세요.",
+		hemoglobin: "0~30 사이의 값을 입력해 주세요.",
+		fastingGlucose: "30~700 사이의 값을 입력해 주세요.",
+		serumCreatinine: "0~20 사이의 값을 입력해 주세요.",
+		gfr: "0~200 사이의 값을 입력해 주세요.",
+		ast: "0~10,000 사이의 값을 입력해 주세요.",
+		alt: "0~10,000 사이의 값을 입력해 주세요.",
+		ggt: "0~3,000 사이의 값을 입력해 주세요.",
 	},
 	decimal: {
 		onePlace: "소수점 첫째자리까지만 입력 가능해요.",
@@ -153,6 +153,7 @@ export const signupSchema = z.object({
 		}),
 
 	birthDate: birthDateSchema,
+	gender: z.enum(["male", "female"]),
 	checkupDate: checkupDateSchema,
 
 	hospital: z
@@ -189,4 +190,7 @@ export const signupSchema = z.object({
 	ggt: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.ggt),
 });
 
+// 폼 입력 타입 (transform 전 - string)
+export type SignupFormInput = z.input<typeof signupSchema>;
+// 폼 출력 타입 (transform 후 - number | undefined)
 export type SignupFormData = z.infer<typeof signupSchema>;
