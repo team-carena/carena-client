@@ -10,10 +10,10 @@ const UserInfo = () => {
 
 	return (
 		<section className="relative flex w-full">
-			<InfoBackground className="absolute inset-0 w-full h-full z-0" />
+			<InfoBackground className="absolute inset-0 z-0 h-full w-full" />
 			{/* 좌측 사용자 정보 */}
-			<div className="relative z-10 flex flex-1 flex-col gap-[3.2rem] my-[4rem] ml-[3.6rem]">
-				<hgroup className="text-white space-y-[1.2rem]">
+			<div className="relative z-10 my-[4rem] ml-[3.6rem] flex flex-1 flex-col gap-[3.2rem]">
+				<hgroup className="space-y-[1.2rem] text-white">
 					<h2 className="display02-b-24">임지성님</h2>
 					<p className="body05-r-12">만 25세 (남)</p>
 				</hgroup>
@@ -29,9 +29,9 @@ const UserInfo = () => {
 						<div className="relative">
 							<figure>
 								{/* TODO: 점수 없으면 기본값 70점 반영 */}
-								<RadialChart score={70} className="w-[15rem] h-[15rem]" />
+								<RadialChart score={70} className="h-[15rem] w-[15rem]" />
 							</figure>
-							<div className="absolute bottom-[-7px] right-[-5px]">
+							<div className="absolute right-[-5px] bottom-[-7px]">
 								<Tooltip side="bottom" align="end">
 									건강점수는 체형, 혈압, 혈당, 간·신장 관련 최근 검진 항목을
 									점수로 변환해 종합한 지표로, 현재 건강 상태를 이해하기 쉽게
@@ -44,8 +44,8 @@ const UserInfo = () => {
 					<>
 						{/* blur 영역 */}
 						<BlurNoise className="absolute" />
-						<div className="absolute flex justify-center items-center">
-							<div className="text-white text-center whitespace-pre-line text-[1.5rem] font-bold leading-[1.8rem]">
+						<div className="absolute flex items-center justify-center">
+							<div className="whitespace-pre-line text-center font-bold text-[1.5rem] text-white leading-[1.8rem]">
 								<p>좌측 버튼을 눌러</p>
 								<p className="mt-[1rem]">검진결과를 추가해주세요</p>
 							</div>

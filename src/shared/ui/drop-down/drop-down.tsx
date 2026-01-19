@@ -20,7 +20,7 @@ export const DropDown = ({ value, onValueChange, options }: DropDownProps) => {
 		<Select value={value} onValueChange={onValueChange}>
 			<SelectTrigger disabled={options.length <= 1}>
 				<span>{selectedOption?.label}</span>
-				<span className="flex-1 text-left ml-[2rem] body04-r-14">
+				<span className="body04-r-14 ml-[2rem] flex-1 text-left">
 					{selectedOption?.subLabel}
 				</span>
 			</SelectTrigger>
@@ -29,7 +29,7 @@ export const DropDown = ({ value, onValueChange, options }: DropDownProps) => {
 				{excludeSelectedOptions.map((option) => (
 					<SelectItem key={option.value} value={option.value}>
 						<span className="w-[12.5rem]">{option.label}</span>
-						<span className="ml-[1rem] body05-r-12">{option.subLabel}</span>
+						<span className="body05-r-12 ml-[1rem]">{option.subLabel}</span>
 					</SelectItem>
 				))}
 			</SelectContent>
