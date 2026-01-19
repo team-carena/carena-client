@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
+import { getBadgeVariantByLabel } from "@/shared/domain/checkup-status";
 import { LargeBadge } from "@/shared/ui/badges/large-badge";
 import { DropDown } from "@/shared/ui/drop-down/drop-down";
 import {
@@ -10,6 +11,9 @@ import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 
 const HealthAnalysisPage = () => {
 	const [selectedDate, setSelectedDate] = useState("2025-02-18");
+	// API 연결 전 임시 값: 라벨 -> variant 매핑 확인용
+	const summaryBadgeText = "정상";
+	const summaryBadgeVariant = getBadgeVariantByLabel(summaryBadgeText);
 	const options = [
 		{
 			value: "2025-02-18",
@@ -42,7 +46,9 @@ const HealthAnalysisPage = () => {
 			</div>
 			{/* RadarChart 위에 배지/툴팁 레이어 고정 */}
 			<div className="relative z-10 flex items-center gap-[0.3rem]">
-				<LargeBadge variant="borderline">정상B</LargeBadge>
+				<LargeBadge variant={summaryBadgeVariant}>
+					{summaryBadgeText}
+				</LargeBadge>
 				<Tooltip side="bottom" align="start" iconTone="black">
 					검진 결과의 종합 등급을 요약해서 보여줍니다.
 				</Tooltip>
@@ -100,7 +106,6 @@ const HealthAnalysisPage = () => {
 								label="이완기 혈압"
 								value={96}
 								badgeText="의심"
-								badgeVariant="suspicious"
 								metricKey="diastolic"
 							/>
 						</CheckupSummaryCard.Rows>
@@ -116,7 +121,6 @@ const HealthAnalysisPage = () => {
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="공복 혈당"
 								value={110}
-								badgeVariant="borderline"
 								badgeText="경계"
 								metricKey="fastingGlucose"
 							/>
@@ -188,7 +192,6 @@ const HealthAnalysisPage = () => {
 								badgeText="경계"
 								metricKey="hb"
 								metricSex="female"
-								badgeVariant="borderline"
 							/>
 						</CheckupSummaryCard.Rows>
 					</CheckupSummaryCard.Section>
