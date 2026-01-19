@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import * as React from "react";
 
 const inputMediumVariants = cva(
-	"flex items-center justify-between rounded-[6px] border transition-colors px-[1.6rem] py-[0.8rem]",
+	"flex items-center justify-between rounded-[6px] border px-[1.6rem] py-[0.8rem] transition-colors",
 	{
 		variants: {
 			state: {
@@ -23,13 +23,13 @@ const inputMediumVariants = cva(
 );
 
 const inputFieldVariants = cva(
-	"flex-1 min-w-0 bg-transparent outline-none placeholder-gray-500 label04-r-16",
+	"label04-r-16 min-w-0 flex-1 bg-transparent placeholder-gray-500 outline-none",
 	{
 		variants: {
 			state: {
 				default: "text-gray-900",
-				disabled: "text-gray-500 cursor-not-allowed",
-				readonly: "text-gray-900 cursor-default",
+				disabled: "cursor-not-allowed text-gray-500",
+				readonly: "cursor-default text-gray-900",
 			},
 		},
 		defaultVariants: {
@@ -96,7 +96,7 @@ export const InputMedium = ({
 	return (
 		<div className="flex items-start justify-between">
 			{/* label */}
-			<label htmlFor={inputId} className="shrink-0 body03-r-16 text-black">
+			<label htmlFor={inputId} className="body03-r-16 shrink-0 text-black">
 				{label}
 				{isRequired && (
 					<span className="ml-[0.2rem]" aria-hidden="true">
@@ -131,7 +131,7 @@ export const InputMedium = ({
 					{/* unit */}
 					<span
 						className={cn(
-							"shrink-0 text-right label02-m-14",
+							"label02-m-14 shrink-0 text-right",
 							unit ? "visible" : "invisible",
 							isDisabled ? "text-gray-500" : "text-gray-900",
 						)}
@@ -143,7 +143,7 @@ export const InputMedium = ({
 				{/* error message */}
 				{isError && errorMessage && (
 					<div
-						className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12"
+						className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500"
 						role="alert"
 					>
 						<SystemDangerIcon

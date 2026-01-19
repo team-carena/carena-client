@@ -179,7 +179,7 @@ export const Interactive: Story = {
 			<>
 				<button
 					type="button"
-					className="bg-blue-500 text-white px-4 py-2 rounded"
+					className="rounded bg-blue-500 px-4 py-2 text-white"
 					onClick={() => setOpen(true)}
 				>
 					모달 열기

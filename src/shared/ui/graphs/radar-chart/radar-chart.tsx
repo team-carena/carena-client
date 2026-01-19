@@ -303,7 +303,7 @@ export const RadarChart = ({ data }: RadarChartProps) => {
 					return (
 						<span
 							key={point.label}
-							className="absolute label03-m-12 text-gray-900"
+							className="label03-m-12 absolute text-gray-900"
 							style={{
 								left: `calc(50% + ${labelPos.x - cx}px)`,
 								top: `calc(50% + ${labelPos.y - cy}px)`,

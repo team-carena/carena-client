@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import * as React from "react";
 
 const inputSmallVariants = cva(
-	"flex items-center gap-[1rem] rounded-[6px] border transition-colors px-[1.2rem] py-[0.6rem]",
+	"flex items-center gap-[1rem] rounded-[6px] border px-[1.2rem] py-[0.6rem] transition-colors",
 	{
 		variants: {
 			state: {
@@ -23,13 +23,13 @@ const inputSmallVariants = cva(
 );
 
 const inputFieldVariants = cva(
-	"flex-1 min-w-0 h-full bg-transparent outline-none label04-r-16",
+	"label04-r-16 h-full min-w-0 flex-1 bg-transparent outline-none",
 	{
 		variants: {
 			state: {
 				default: "text-gray-900",
-				disabled: "text-gray-500 cursor-not-allowed",
-				readonly: "text-gray-900 cursor-default",
+				disabled: "cursor-not-allowed text-gray-500",
+				readonly: "cursor-default text-gray-900",
 			},
 		},
 		defaultVariants: {
@@ -100,13 +100,13 @@ export const InputSmall = ({
 					<div className="flex items-start justify-between">
 						<label
 							htmlFor={leftInputId}
-							className="body03-r-16 text-black shrink-0"
+							className="body03-r-16 shrink-0 text-black"
 						>
 							{labelLeft}
 						</label>
 
 						{/* input + error */}
-						<div className="flex flex-col w-[10.4rem] shrink-0">
+						<div className="flex w-[10.4rem] shrink-0 flex-col">
 							<div
 								className={cn(
 									inputSmallVariants({
@@ -129,12 +129,12 @@ export const InputSmall = ({
 									onBlur={() => setFocused(null)}
 									className={cn(inputFieldVariants({ state: fieldState }))}
 								/>
-								<span className="shrink-0 label03-m-12">{unitLeft}</span>
+								<span className="label03-m-12 shrink-0">{unitLeft}</span>
 							</div>
 
 							{isError && errorMessage && (
 								<div
-									className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12 whitespace-nowrap"
+									className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] whitespace-nowrap text-red-500"
 									role="alert"
 								>
 									<SystemDangerIcon className="shrink-0" aria-hidden />
@@ -150,7 +150,7 @@ export const InputSmall = ({
 					<div className="flex items-start justify-between">
 						<label
 							htmlFor={rightInputId}
-							className="body03-r-16 text-black shrink-0"
+							className="body03-r-16 shrink-0 text-black"
 						>
 							{labelRight}
 						</label>
@@ -178,7 +178,7 @@ export const InputSmall = ({
 									onBlur={() => setFocused(null)}
 									className={cn(inputFieldVariants({ state: fieldState }))}
 								/>
-								<span className="shrink-0 label03-m-12">{unitRight}</span>
+								<span className="label03-m-12 shrink-0">{unitRight}</span>
 							</div>
 						</div>
 					</div>
