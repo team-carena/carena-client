@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
 import {
 	CHECKUP_BADGE_LABEL,
@@ -10,7 +10,32 @@ import {
 	RADAR_CHART_MAP,
 	RadarChart,
 } from "@/shared/ui/graphs/radar-chart/radar-chart";
+import type {
+	HealthMetricType,
+	Sex,
+} from "@/shared/ui/graphs/range-bar/health-metric-config";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
+
+type SummaryRow =
+	| {
+			type: "simple";
+			left: string;
+			right: ReactNode;
+	  }
+	| {
+			type: "badge";
+			label: string;
+			value: number;
+			badgeCode: CheckupBadgeCode;
+			metricKey: HealthMetricType;
+			metricSex?: Sex;
+	  };
+
+interface SummarySection {
+	title: string;
+	description: string;
+	rows: SummaryRow[];
+}
 
 const HealthAnalysisPage = () => {
 	const [selectedDate, setSelectedDate] = useState("2025-02-18");
@@ -18,6 +43,136 @@ const HealthAnalysisPage = () => {
 	const summaryBadgeCode: CheckupBadgeCode = "normal";
 	const summaryBadgeText = CHECKUP_BADGE_LABEL[summaryBadgeCode];
 	const summaryBadgeVariant = summaryBadgeCode;
+	const summarySections: SummarySection[] = [
+		{
+			title: "기본 검사",
+			description: "기본검사에 대한 설명입니다.",
+			rows: [
+				{
+					type: "simple",
+					left: "신장",
+					right: <span>170.0 cm</span>,
+				},
+				{
+					type: "simple",
+					left: "체중",
+					right: <span>60.0 kg</span>,
+				},
+				{
+					type: "badge",
+					label: "허리둘레",
+					value: 84,
+					badgeCode: "normal",
+					metricKey: "waist",
+					metricSex: "female",
+				},
+				{
+					type: "badge",
+					label: "BMI 수치",
+					value: 24,
+					badgeCode: "normal",
+					metricKey: "bmi",
+				},
+			],
+		},
+		{
+			title: "혈압 검사",
+			description: "혈압 검사에 대한 설명입니다.",
+			rows: [
+				{
+					type: "badge",
+					label: "수축기 혈압",
+					value: 122,
+					badgeCode: "normal",
+					metricKey: "systolic",
+					metricSex: "female",
+				},
+				{
+					type: "badge",
+					label: "이완기 혈압",
+					value: 96,
+					badgeCode: "suspicious",
+					metricKey: "diastolic",
+				},
+			],
+		},
+		{
+			title: "당뇨 검사",
+			description: "당뇨 검사에 대한 설명입니다.",
+			rows: [
+				{
+					type: "badge",
+					label: "공복 혈당",
+					value: 110,
+					badgeCode: "borderline",
+					metricKey: "fastingGlucose",
+				},
+			],
+		},
+		{
+			title: "간장질환 검사",
+			description: "간장질환 검사에 대한 설명입니다.",
+			rows: [
+				{
+					type: "badge",
+					label: "에이에스티(AST)",
+					value: 35,
+					badgeCode: "normal",
+					metricKey: "ast",
+					metricSex: "female",
+				},
+				{
+					type: "badge",
+					label: "에이엘티(ALT)",
+					value: 20,
+					badgeCode: "normal",
+					metricKey: "alt",
+				},
+				{
+					type: "badge",
+					label: "감마지티피(γ-GTP)",
+					value: 24,
+					badgeCode: "normal",
+					metricKey: "ggtp",
+					metricSex: "female",
+				},
+			],
+		},
+		{
+			title: "신장질환 검사",
+			description: "신장질환 검사에 대한 설명입니다.",
+			rows: [
+				{
+					type: "badge",
+					label: "혈청 크레아티닌",
+					value: 1.8,
+					badgeCode: "normal",
+					metricKey: "creatinine",
+				},
+				{
+					type: "badge",
+					label: "신사구체여과율",
+					value: 57,
+					badgeCode: "suspicious",
+					metricKey: "egfr",
+				},
+			],
+		},
+		{
+			title: "빈혈 검사",
+			description: "빈혈 검사에 대한 설명입니다.",
+			rows: [
+				{
+					type: "badge",
+					label: "혈색소",
+					value: 11,
+					badgeCode: "borderline",
+					metricKey: "hb",
+					metricSex: "female",
+				},
+			],
+		},
+	];
 	const options = [
 		{
 			value: "2025-02-18",
@@ -61,145 +216,40 @@ const HealthAnalysisPage = () => {
 				<RadarChart data={radarData} />
 			</div>
 			<div className="mt-[0.5rem] flex flex-col gap-[2rem]">
-				<CheckupSummaryCard>
-					<CheckupSummaryCard.Title label="기본 검사" to="/" />
-					<CheckupSummaryCard.Section>
-						<CheckupSummaryCard.Description>
-							기본검사에 대한 설명입니다.
-						</CheckupSummaryCard.Description>
-						<CheckupSummaryCard.Rows>
-							<CheckupSummaryCard.Row
-								left="신장"
-								right={<span>170.0 cm</span>}
-							/>
-							<CheckupSummaryCard.Row
-								left="체중"
-								right={<span>60.0 kg</span>}
-							/>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="허리둘레"
-								value={84}
-								badgeCode="normal"
-								metricKey="waist"
-								metricSex="female"
-							/>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="BMI 수치"
-								value={24}
-								badgeCode="normal"
-								metricKey="bmi"
-							/>
-						</CheckupSummaryCard.Rows>
-					</CheckupSummaryCard.Section>
-				</CheckupSummaryCard>
-				<CheckupSummaryCard>
-					<CheckupSummaryCard.Title label="혈압 검사" to="/" />
-					<CheckupSummaryCard.Section>
-						<CheckupSummaryCard.Description>
-							혈압 검사에 대한 설명입니다.
-						</CheckupSummaryCard.Description>
-						<CheckupSummaryCard.Rows>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="수축기 혈압"
-								value={122}
-								badgeCode="normal"
-								metricKey="systolic"
-								metricSex="female"
-							/>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="이완기 혈압"
-								value={96}
-								badgeCode="suspicious"
-								metricKey="diastolic"
-							/>
-						</CheckupSummaryCard.Rows>
-					</CheckupSummaryCard.Section>
-				</CheckupSummaryCard>
-				<CheckupSummaryCard>
-					<CheckupSummaryCard.Title label="당뇨 검사" to="/" />
-					<CheckupSummaryCard.Section>
-						<CheckupSummaryCard.Description>
-							당뇨 검사에 대한 설명입니다.
-						</CheckupSummaryCard.Description>
-						<CheckupSummaryCard.Rows>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="공복 혈당"
-								value={110}
-								badgeCode="borderline"
-								metricKey="fastingGlucose"
-							/>
-						</CheckupSummaryCard.Rows>
-					</CheckupSummaryCard.Section>
-				</CheckupSummaryCard>
-				<CheckupSummaryCard>
-					<CheckupSummaryCard.Title label="간장질환 검사" to="/" />
-					<CheckupSummaryCard.Section>
-						<CheckupSummaryCard.Description>
-							간장질환 검사에 대한 설명입니다.
-						</CheckupSummaryCard.Description>
-						<CheckupSummaryCard.Rows>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="에이에스티(AST)"
-								value={35}
-								badgeCode="normal"
-								metricKey="ast"
-								metricSex="female"
-							/>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="에이엘티(ALT)"
-								value={20}
-								badgeCode="normal"
-								metricKey="alt"
-							/>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="감마지티피(γ-GTP)"
-								value={24}
-								badgeCode="normal"
-								metricKey="ggtp"
-								metricSex="female"
-							/>
-						</CheckupSummaryCard.Rows>
-					</CheckupSummaryCard.Section>
-				</CheckupSummaryCard>
-				<CheckupSummaryCard>
-					<CheckupSummaryCard.Title label="신장질환 검사" to="/" />
-					<CheckupSummaryCard.Section>
-						<CheckupSummaryCard.Description>
-							신장질환 검사에 대한 설명입니다.
-						</CheckupSummaryCard.Description>
-						<CheckupSummaryCard.Rows>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="혈청 크레아티닌"
-								value={1.8}
-								badgeCode="normal"
-								metricKey="creatinine"
-							/>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="신사구체여과율"
-								value={57}
-								badgeCode="suspicious"
-								metricKey="egfr"
-							/>
-						</CheckupSummaryCard.Rows>
-					</CheckupSummaryCard.Section>
-				</CheckupSummaryCard>
-				<CheckupSummaryCard>
-					<CheckupSummaryCard.Title label="빈혈 검사" to="/" />
-					<CheckupSummaryCard.Section>
-						<CheckupSummaryCard.Description>
-							빈혈 검사에 대한 설명입니다.
-						</CheckupSummaryCard.Description>
-						<CheckupSummaryCard.Rows>
-							<CheckupSummaryCard.RowWithBadgeAndGraph
-								label="혈색소"
-								value={11}
-								badgeCode="borderline"
-								metricKey="hb"
-								metricSex="female"
-							/>
-						</CheckupSummaryCard.Rows>
-					</CheckupSummaryCard.Section>
-				</CheckupSummaryCard>
+				{summarySections.map((section) => (
+					<CheckupSummaryCard key={section.title}>
+						<CheckupSummaryCard.Title label={section.title} to="/" />
+						<CheckupSummaryCard.Section>
+							<CheckupSummaryCard.Description>
+								{section.description}
+							</CheckupSummaryCard.Description>
+							<CheckupSummaryCard.Rows>
+								{section.rows.map((row) => {
+									if (row.type === "simple") {
+										return (
+											<CheckupSummaryCard.Row
+												key={row.left}
+												left={row.left}
+												right={row.right}
+											/>
+										);
+									}
+
+									return (
+										<CheckupSummaryCard.RowWithBadgeAndGraph
+											key={row.label}
+											label={row.label}
+											value={row.value}
+											badgeCode={row.badgeCode}
+											metricKey={row.metricKey}
+											metricSex={row.metricSex}
+										/>
+									);
+								})}
+							</CheckupSummaryCard.Rows>
+						</CheckupSummaryCard.Section>
+					</CheckupSummaryCard>
+				))}
 			</div>
 		</div>
 	);
