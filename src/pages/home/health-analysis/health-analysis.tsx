@@ -176,9 +176,9 @@ const HealthAnalysisPage = () => {
 							/>
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="신사구체여과율"
-								value={24}
-								badgeCode="normal"
-								metricKey="bmi"
+								value={57}
+								badgeCode="suspicious"
+								metricKey="egfr"
 							/>
 						</CheckupSummaryCard.Rows>
 					</CheckupSummaryCard.Section>
