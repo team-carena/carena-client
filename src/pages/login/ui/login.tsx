@@ -19,7 +19,7 @@ export const LoginPage = () => {
 					<p className="display03-sb-20 text-gray-900">
 						검진 결과 이후의 모든 순간을
 					</p>
-					<p className="display01-b-36 text-primary-500">더 쉽게</p>
+					<p className="display01-b-36 text-primary-500">더 쉽고 편리하게</p>
 				</header>
 
 				<Lottie
