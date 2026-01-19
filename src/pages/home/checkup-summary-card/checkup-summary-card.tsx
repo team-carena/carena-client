@@ -1,8 +1,8 @@
 import type * as React from "react";
 import {
-	type BadgeVariant,
-	getBadgeVariantByLabel,
-} from "@/shared/domain/checkup-status";
+	CHECKUP_BADGE_LABEL,
+	type CheckupBadgeCode,
+} from "@/shared/constants/checkup-badge";
 import { cn } from "@/shared/libs/cn";
 import { SmallBadge } from "@/shared/ui/badges/small-badge";
 import type {
@@ -44,7 +44,7 @@ interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
 interface RowWithBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 	label: React.ReactNode;
 	value: number;
-	badgeText: string;
+	badgeCode: CheckupBadgeCode;
 	metricKey: HealthMetricType;
 	metricSex?: Sex;
 	rangeBarData?: RangeBarData;
@@ -159,7 +159,7 @@ const RowWithBadge = ({
 	className,
 	label,
 	value,
-	badgeText,
+	badgeCode,
 	metricKey,
 	metricSex,
 	rangeBarData,
@@ -167,7 +167,7 @@ const RowWithBadge = ({
 }: RowWithBadgeProps) => {
 	const displayUnit =
 		rangeBarData?.unit ?? getRangeBarData(metricKey, metricSex).unit;
-	const computedBadgeVariant = getBadgeVariantByLabel(badgeText);
+	const badgeText = CHECKUP_BADGE_LABEL[badgeCode];
 
 	return (
 		<div
@@ -180,7 +180,7 @@ const RowWithBadge = ({
 					<ValueWithUnit value={value} unit={displayUnit} />
 				</span>
 				<SmallBadge
-					variant={computedBadgeVariant}
+					variant={badgeCode}
 					className="flex h-[2.8rem] w-[4.1rem] items-center justify-center"
 				>
 					{badgeText}
@@ -194,7 +194,7 @@ const RowWithBadgeAndGraph = ({
 	className,
 	label,
 	value,
-	badgeText,
+	badgeCode,
 	metricKey,
 	metricSex,
 	...props
@@ -206,7 +206,7 @@ const RowWithBadgeAndGraph = ({
 			<RowWithBadge
 				label={label}
 				value={value}
-				badgeText={badgeText}
+				badgeCode={badgeCode}
 				metricKey={metricKey}
 				metricSex={metricSex}
 				rangeBarData={rangeBarData}

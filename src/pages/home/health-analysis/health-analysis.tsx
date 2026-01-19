@@ -1,6 +1,9 @@
 import { useState } from "react";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
-import { getBadgeVariantByLabel } from "@/shared/domain/checkup-status";
+import {
+	CHECKUP_BADGE_LABEL,
+	type CheckupBadgeCode,
+} from "@/shared/constants/checkup-badge";
 import { LargeBadge } from "@/shared/ui/badges/large-badge";
 import { DropDown } from "@/shared/ui/drop-down/drop-down";
 import {
@@ -11,9 +14,10 @@ import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 
 const HealthAnalysisPage = () => {
 	const [selectedDate, setSelectedDate] = useState("2025-02-18");
-	// API 연결 전 임시 값: 라벨 -> variant 매핑 확인용
-	const summaryBadgeText = "정상";
-	const summaryBadgeVariant = getBadgeVariantByLabel(summaryBadgeText);
+	// API 연결 전 임시 값: 서버에서 variant가 내려온다고 가정
+	const summaryBadgeCode: CheckupBadgeCode = "normal";
+	const summaryBadgeText = CHECKUP_BADGE_LABEL[summaryBadgeCode];
+	const summaryBadgeVariant = summaryBadgeCode;
 	const options = [
 		{
 			value: "2025-02-18",
@@ -75,14 +79,14 @@ const HealthAnalysisPage = () => {
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="허리둘레"
 								value={84}
-								badgeText="정상"
+								badgeCode="normal"
 								metricKey="waist"
 								metricSex="female"
 							/>
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="BMI 수치"
 								value={24}
-								badgeText="정상"
+								badgeCode="normal"
 								metricKey="bmi"
 							/>
 						</CheckupSummaryCard.Rows>
@@ -98,14 +102,14 @@ const HealthAnalysisPage = () => {
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="수축기 혈압"
 								value={122}
-								badgeText="정상"
+								badgeCode="normal"
 								metricKey="systolic"
 								metricSex="female"
 							/>
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="이완기 혈압"
 								value={96}
-								badgeText="의심"
+								badgeCode="suspicious"
 								metricKey="diastolic"
 							/>
 						</CheckupSummaryCard.Rows>
@@ -121,7 +125,7 @@ const HealthAnalysisPage = () => {
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="공복 혈당"
 								value={110}
-								badgeText="경계"
+								badgeCode="borderline"
 								metricKey="fastingGlucose"
 							/>
 						</CheckupSummaryCard.Rows>
@@ -137,20 +141,20 @@ const HealthAnalysisPage = () => {
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="에이에스티(AST)"
 								value={35}
-								badgeText="정상"
+								badgeCode="normal"
 								metricKey="ast"
 								metricSex="female"
 							/>
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="에이엘티(ALT)"
 								value={20}
-								badgeText="정상"
+								badgeCode="normal"
 								metricKey="alt"
 							/>
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="감마지티피(γ-GTP)"
 								value={24}
-								badgeText="정상"
+								badgeCode="normal"
 								metricKey="ggtp"
 								metricSex="female"
 							/>
@@ -167,13 +171,13 @@ const HealthAnalysisPage = () => {
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="혈청 크레아티닌"
 								value={1.8}
-								badgeText="정상"
+								badgeCode="normal"
 								metricKey="creatinine"
 							/>
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="신사구체여과율"
 								value={24}
-								badgeText="정상"
+								badgeCode="normal"
 								metricKey="bmi"
 							/>
 						</CheckupSummaryCard.Rows>
@@ -189,7 +193,7 @@ const HealthAnalysisPage = () => {
 							<CheckupSummaryCard.RowWithBadgeAndGraph
 								label="혈색소"
 								value={11}
-								badgeText="경계"
+								badgeCode="borderline"
 								metricKey="hb"
 								metricSex="female"
 							/>
