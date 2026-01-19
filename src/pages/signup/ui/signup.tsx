@@ -17,12 +17,12 @@ interface CategoryLabelProps {
 	label: string;
 }
 
+const CategoryLabel = ({ label }: CategoryLabelProps) => {
+	return <h3 className="head02-b-16 text-left text-primary-700">{label}</h3>;
+};
+
 const Signup = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
-
-	const CategoryLabel = ({ label }: CategoryLabelProps) => {
-		return <h3 className="head02-b-16 text-left text-primary-700">{label}</h3>;
-	};
 
 	const {
 		register,
