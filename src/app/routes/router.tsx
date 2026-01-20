@@ -2,13 +2,13 @@ import { HealthMenuPage } from "@pages/health-menu/health-menu";
 import { MenuDetailPage } from "@pages/health-menu/health-menu-detail";
 import type { HeaderVariant } from "@shared/ui/navigations/header";
 import { createBrowserRouter, Navigate } from "react-router";
+import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
 import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
 import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/my-page";
 import { Signup } from "@/pages/signup/ui/signup";
-import { TempPage } from "@/pages/temp/temp-page";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
@@ -34,6 +34,10 @@ export const router = createBrowserRouter([
 			header: "signup",
 			title: "회원가입",
 		} satisfies RouteHandle,
+	},
+	{
+		path: ROUTE_PATH.OAUTH_CALLBACK,
+		element: <OauthCallBack />,
 	},
 	{
 		element: <ProtectedRoute />,
@@ -90,10 +94,6 @@ export const router = createBrowserRouter([
 							header: "back",
 							title: "건강 팁 상세",
 						} satisfies RouteHandle,
-					},
-					{
-						path: ROUTE_PATH.TEMP,
-						element: <TempPage />,
 					},
 					{
 						path: "*",
