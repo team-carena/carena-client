@@ -10,6 +10,8 @@ import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
+import { openPrivacyModal } from "@/shared/ui/overlays/modal/open-privacy-modal";
+import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { RadioButton } from "@/shared/ui/radio/radio";
 
 interface CategoryLabelProps {
@@ -22,6 +24,7 @@ const CategoryLabel = ({ label }: CategoryLabelProps) => {
 
 export const Signup = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
+	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 
 	const {
 		register,
@@ -53,6 +56,43 @@ export const Signup = () => {
 		birthDate.day !== "";
 
 	const onSubmit = (_data: SignupFormData) => {};
+
+	// 버튼 클릭 시 체크박스가 체크되지 않았으면 토스트 표시
+	const handleButtonClick = () => {
+		if (!isAgreed) {
+			notifyError("개인정보 수집·이용에 동의해주세요");
+		}
+	};
+
+	// 개인정보 수집·이용 모달 열기
+	const handleOpenPrivacyModal = () => {
+		openPrivacyModal({
+			title: "개인정보 수집·이용 동의",
+			description: `케어나(이하 '서비스')는 이용자의 건강 정보를 안전하게 보호하기 위해 아래와 같이 개인정보를 수집·이용합니다.
+
+1. 수집하는 개인정보 항목
+- 필수 항목: 이름, 생년월일, 성별, 건강검진 결과(검진일자, 검진기관, 검사 수치 등)
+
+2. 개인정보의 수집·이용 목적
+- 건강검진 결과 분석 및 맞춤형 건강 정보 제공
+- 서비스 이용에 따른 본인 확인
+- 서비스 개선 및 신규 서비스 개발
+
+3. 개인정보의 보유 및 이용 기간
+- 회원 탈퇴 시까지 또는 동의 철회 시까지
+- 단, 관계 법령에 따라 보존이 필요한 경우 해당 기간 동안 보관
+
+4. 동의 거부권 및 불이익
+- 이용자는 개인정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.
+- 다만, 필수 항목에 대한 동의를 거부하실 경우 서비스 이용이 제한됩니다.`,
+			primaryAction: {
+				label: "확인",
+				onClick: () => {
+					setIsCheckboxEnabled(true);
+				},
+			},
+		});
+	};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
 	const birthDateError =
@@ -154,15 +194,17 @@ export const Signup = () => {
 							개인정보 수집·이용 동의
 						</h3>
 						<div className="flex items-start gap-[0.8rem]">
-							<CheckBox checked={isAgreed} onChange={setIsAgreed} />
+							<CheckBox
+								checked={isAgreed}
+								onChange={setIsAgreed}
+								disabled={!isCheckboxEnabled}
+							/>
 							<span className="body01-sb-12 whitespace-nowrap pt-[0.2rem] text-black">
 								[필수]{" "}
 								<button
 									type="button"
 									className="underline underline-offset-2"
-									onClick={() => {
-										// TODO: 모달 열기
-									}}
+									onClick={handleOpenPrivacyModal}
 								>
 									개인정보 수집·이용
 								</button>{" "}
@@ -176,7 +218,8 @@ export const Signup = () => {
 					type="submit"
 					form="signup-form"
 					size="lg"
-					disabled={!isAgreed || !isRequiredFilled || !isValid}
+					disabled={!isRequiredFilled || !isValid}
+					onClick={handleButtonClick}
 				>
 					회원가입
 				</Button>
