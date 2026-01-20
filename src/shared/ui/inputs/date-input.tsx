@@ -3,8 +3,9 @@ import SystemDangerIcon from "@svg/system-danger.svg?react";
 import { cva } from "class-variance-authority";
 import * as React from "react";
 
-const dateInputVariants = cva(
-	"flex items-center rounded-[6px] border transition-colors px-[1.6rem] py-[0.8rem]",
+// input wrapper 스타일
+const dateInputWrapperVariants = cva(
+	"flex items-center rounded-[6px] border px-[1.6rem] py-[0.8rem] transition-colors",
 	{
 		variants: {
 			state: {
@@ -22,14 +23,15 @@ const dateInputVariants = cva(
 	},
 );
 
-const inputFieldVariants = cva(
-	"w-full bg-transparent outline-none placeholder-gray-500 label04-r-16",
+// input 텍스트 스타일
+const dateInputTextVariants = cva(
+	"label04-r-16 w-full bg-transparent placeholder-gray-500 outline-none",
 	{
 		variants: {
 			state: {
 				default: "text-gray-900",
-				disabled: "text-gray-500 cursor-not-allowed",
-				readonly: "text-gray-900 cursor-default",
+				disabled: "cursor-not-allowed text-gray-500",
+				readonly: "cursor-default text-gray-900",
 			},
 		},
 		defaultVariants: {
@@ -38,139 +40,132 @@ const inputFieldVariants = cva(
 	},
 );
 
-const filterNumeric = (value: string) => value.replace(/[^0-9]/g, "");
+interface DateFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+	placeholder: string;
+}
 
 interface DateInputProps {
-	year: string;
-	month: string;
-	day: string;
-
-	isError?: boolean;
+	year: DateFieldProps;
+	month: DateFieldProps;
+	day: DateFieldProps;
 	errorMessage?: string;
-
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-
-	onChangeYear: (value: string) => void;
-	onChangeMonth: (value: string) => void;
-	onChangeDay: (value: string) => void;
 }
 
 export const DateInput = ({
 	year,
 	month,
 	day,
-	isError = false,
 	errorMessage,
-	isDisabled = false,
-	isReadOnly = false,
-	onChangeYear,
-	onChangeMonth,
-	onChangeDay,
 }: DateInputProps) => {
 	const [focused, setFocused] = React.useState<"year" | "month" | "day" | null>(
 		null,
 	);
 
-	const getState = (value: string, isFocused: boolean) => {
-		if (isDisabled) return "disabled";
-		if (isReadOnly) return "readonly";
-		if (isError) return "error";
+	const hasError = !!errorMessage;
+
+	const getWrapperState = (
+		value: string | number | readonly string[] | undefined,
+		isFocused: boolean,
+		disabled?: boolean,
+		readOnly?: boolean,
+	) => {
+		if (disabled) return "disabled";
+		if (readOnly) return "readonly";
+		if (hasError) return "error";
 		if (isFocused) return "focused";
 		if (value) return "completed";
 		return "default";
 	};
 
-	const fieldState = isDisabled
-		? "disabled"
-		: isReadOnly
-			? "readonly"
-			: "default";
+	const getTextState = (disabled?: boolean, readOnly?: boolean) =>
+		disabled ? "disabled" : readOnly ? "readonly" : "default";
+
+	// year/month/day 필드의 반복되는 렌더링 로직을 함수로 추출
+	const renderInput = (
+		field: DateFieldProps,
+		fieldName: "year" | "month" | "day",
+		minWidth: string,
+	) => {
+		const {
+			placeholder,
+			disabled,
+			readOnly,
+			value,
+			onFocus,
+			onBlur,
+			onChange,
+			...inputProps
+		} = field;
+
+		return (
+			<div
+				className={cn(
+					"w-full",
+					minWidth,
+					dateInputWrapperVariants({
+						state: getWrapperState(
+							value,
+							focused === fieldName,
+							disabled,
+							readOnly,
+						),
+					}),
+				)}
+			>
+				<input
+					type="text"
+					inputMode="numeric"
+					pattern="[0-9]*"
+					placeholder={placeholder}
+					aria-label={
+						fieldName === "year" ? "연도" : fieldName === "month" ? "월" : "일"
+					}
+					value={value}
+					disabled={disabled}
+					readOnly={readOnly}
+					onFocus={(e) => {
+						if (!disabled && !readOnly) setFocused(fieldName);
+						onFocus?.(e);
+					}}
+					onBlur={(e) => {
+						setFocused(null);
+						// 월/일 한 자리 수일 때 앞에 0 붙이기
+						if (
+							(fieldName === "month" || fieldName === "day") &&
+							e.target.value.length === 1
+						) {
+							e.target.value = e.target.value.padStart(2, "0");
+						}
+						onBlur?.(e);
+					}}
+					onChange={(e) => {
+						// 숫자만 허용
+						// DateInput은 날짜 전용 컴포넌트 -> 숫자만 허용하는 로직 넣어도 컴포넌트의 책임 범위 안
+						e.target.value = e.target.value.replace(/[^0-9]/g, "");
+						onChange?.(e);
+					}}
+					className={cn(
+						dateInputTextVariants({ state: getTextState(disabled, readOnly) }),
+					)}
+					{...inputProps}
+				/>
+			</div>
+		);
+	};
 
 	return (
 		<div className="w-full">
 			{/* input row */}
 			<div className="flex items-center gap-[0.4rem]">
-				{/* year */}
-				<div
-					className={cn(
-						"w-full min-w-[12.5rem]",
-						dateInputVariants({
-							state: getState(year, focused === "year"),
-						}),
-					)}
-				>
-					<input
-						type="text"
-						inputMode="numeric"
-						pattern="[0-9]*"
-						value={year}
-						placeholder="YYYY"
-						aria-label="연도"
-						disabled={isDisabled}
-						readOnly={isReadOnly}
-						onChange={(e) => onChangeYear(filterNumeric(e.target.value))}
-						onFocus={() => !isDisabled && !isReadOnly && setFocused("year")}
-						onBlur={() => setFocused(null)}
-						className={cn(inputFieldVariants({ state: fieldState }))}
-					/>
-				</div>
-
-				{/* month */}
-				<div
-					className={cn(
-						"w-full min-w-[10.1rem]",
-						dateInputVariants({
-							state: getState(month, focused === "month"),
-						}),
-					)}
-				>
-					<input
-						type="text"
-						inputMode="numeric"
-						pattern="[0-9]*"
-						value={month}
-						placeholder="MM"
-						aria-label="월"
-						disabled={isDisabled}
-						readOnly={isReadOnly}
-						onChange={(e) => onChangeMonth(filterNumeric(e.target.value))}
-						onFocus={() => !isDisabled && !isReadOnly && setFocused("month")}
-						onBlur={() => setFocused(null)}
-						className={cn(inputFieldVariants({ state: fieldState }))}
-					/>
-				</div>
-
-				{/* day */}
-				<div
-					className={cn(
-						"w-full min-w-[10.1rem]",
-						dateInputVariants({
-							state: getState(day, focused === "day"),
-						}),
-					)}
-				>
-					<input
-						type="text"
-						inputMode="numeric"
-						pattern="[0-9]*"
-						value={day}
-						placeholder="DD"
-						aria-label="일"
-						disabled={isDisabled}
-						readOnly={isReadOnly}
-						onChange={(e) => onChangeDay(filterNumeric(e.target.value))}
-						onFocus={() => !isDisabled && !isReadOnly && setFocused("day")}
-						onBlur={() => setFocused(null)}
-						className={cn(inputFieldVariants({ state: fieldState }))}
-					/>
-				</div>
+				{renderInput(year, "year", "min-w-[12.5rem]")}
+				{renderInput(month, "month", "min-w-[10.1rem]")}
+				{renderInput(day, "day", "min-w-[10.1rem]")}
 			</div>
 
 			{/* error message */}
-			{isError && errorMessage && (
+			{hasError && (
 				<div
-					className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12"
+					className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500"
 					role="alert"
 				>
 					<SystemDangerIcon className="shrink-0" aria-hidden />

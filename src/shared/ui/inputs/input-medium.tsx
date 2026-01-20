@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import * as React from "react";
 
 const inputMediumVariants = cva(
-	"flex items-center justify-between rounded-[6px] border transition-colors px-[1.6rem] py-[0.8rem]",
+	"flex items-center justify-between rounded-[6px] border px-[1.6rem] py-[0.8rem] transition-colors",
 	{
 		variants: {
 			state: {
@@ -23,13 +23,13 @@ const inputMediumVariants = cva(
 );
 
 const inputFieldVariants = cva(
-	"flex-1 min-w-0 bg-transparent outline-none placeholder-gray-500 label04-r-16",
+	"label04-r-16 min-w-0 flex-1 bg-transparent placeholder-gray-500 outline-none",
 	{
 		variants: {
 			state: {
 				default: "text-gray-900",
-				disabled: "text-gray-500 cursor-not-allowed",
-				readonly: "text-gray-900 cursor-default",
+				disabled: "cursor-not-allowed text-gray-500",
+				readonly: "cursor-default text-gray-900",
 			},
 		},
 		defaultVariants: {
@@ -38,92 +38,78 @@ const inputFieldVariants = cva(
 	},
 );
 
-interface InputMediumProps
-	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+interface InputMediumProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string;
-	isRequired?: boolean;
-
-	value: string;
+	required?: boolean;
 	unit?: string;
-
-	isError?: boolean;
 	errorMessage?: string;
-
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-
-	isNumeric?: boolean;
-
-	onChange: (value: string) => void;
+	numeric?: boolean;
 }
 
 export const InputMedium = ({
 	label,
-	isRequired = false,
-	value,
-	placeholder,
+	required = false,
 	unit,
-	isError = false,
 	errorMessage,
-	isDisabled = false,
-	isReadOnly = false,
-	onChange,
-	isNumeric = false,
+	numeric = false,
+	disabled,
+	readOnly,
+	value,
+	onFocus,
+	onBlur,
 	...props
 }: InputMediumProps) => {
 	const [isFocused, setIsFocused] = React.useState(false);
 	const inputId = React.useId();
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(event.target.value);
-	};
+	const hasError = !!errorMessage;
 
 	const wrapperState = (() => {
-		if (isDisabled) return "disabled";
-		if (isReadOnly) return "readonly";
-		if (isError) return "error";
+		if (disabled) return "disabled";
+		if (readOnly) return "readonly";
+		if (hasError) return "error";
 		if (isFocused) return "focused";
 		if (value) return "completed";
 		return "default";
 	})();
 
-	const fieldState = isDisabled
-		? "disabled"
-		: isReadOnly
-			? "readonly"
-			: "default";
+	const fieldState = disabled ? "disabled" : readOnly ? "readonly" : "default";
 
 	return (
 		<div className="flex items-start justify-between">
 			{/* label */}
-			<label htmlFor={inputId} className="shrink-0 body03-r-16 text-black">
+			<label
+				htmlFor={inputId}
+				className="body03-r-16 shrink-0 pt-[0.8rem] text-black"
+			>
 				{label}
-				{isRequired && (
+				{required && (
 					<span className="ml-[0.2rem]" aria-hidden="true">
 						*
 					</span>
 				)}
 			</label>
 
-			{/* input wrapper */}
-			<div className="w-[22.2rem] shrink-0">
+			{/* input + error wrapper */}
+			<div className="flex w-[22.2rem] shrink-0 flex-col">
 				<div className={cn(inputMediumVariants({ state: wrapperState }))}>
 					<input
 						id={inputId}
 						type="text"
-						inputMode={isNumeric ? "numeric" : undefined}
-						pattern={isNumeric ? "[0-9]*" : undefined}
-						aria-required={isRequired}
-						aria-invalid={isError}
+						inputMode={numeric ? "decimal" : undefined}
+						aria-required={required}
+						aria-invalid={hasError}
 						value={value}
-						placeholder={placeholder}
-						disabled={isDisabled}
-						readOnly={isReadOnly}
-						onChange={handleChange}
-						onFocus={() => {
-							if (!isDisabled && !isReadOnly) setIsFocused(true);
+						disabled={disabled}
+						readOnly={readOnly}
+						onFocus={(e) => {
+							if (!disabled && !readOnly) setIsFocused(true);
+							onFocus?.(e);
 						}}
-						onBlur={() => setIsFocused(false)}
+						onBlur={(e) => {
+							setIsFocused(false);
+							onBlur?.(e);
+						}}
 						className={cn(inputFieldVariants({ state: fieldState }))}
 						{...props}
 					/>
@@ -131,9 +117,9 @@ export const InputMedium = ({
 					{/* unit */}
 					<span
 						className={cn(
-							"shrink-0 text-right label02-m-14",
+							"label02-m-14 shrink-0 text-right",
 							unit ? "visible" : "invisible",
-							isDisabled ? "text-gray-500" : "text-gray-900",
+							disabled ? "text-gray-500" : "text-gray-900",
 						)}
 					>
 						{unit ?? ""}
@@ -141,9 +127,9 @@ export const InputMedium = ({
 				</div>
 
 				{/* error message */}
-				{isError && errorMessage && (
+				{hasError && (
 					<div
-						className="mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500 label06-r-12"
+						className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500"
 						role="alert"
 					>
 						<SystemDangerIcon

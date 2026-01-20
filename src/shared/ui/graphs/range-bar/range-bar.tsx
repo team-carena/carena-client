@@ -129,7 +129,7 @@ export const RangeBar = ({
 								transform: "translateX(-50%)",
 							}}
 						>
-							<div className="w-px h-[1rem] bg-gray-600" />
+							<div className="h-[1rem] w-px bg-gray-600" />
 							<span className="body06-r-10 text-gray-600">{value}</span>
 						</div>
 					))}
@@ -138,16 +138,24 @@ export const RangeBar = ({
 				{/* MARKER */}
 				{markerPct !== null && (
 					<div
-						className="absolute flex flex-col items-center"
+						className="absolute"
 						style={{
 							left: `${markerPct}%`,
 							top: `-0.375rem`,
 							transform: "translateX(-50%)",
 						}}
 					>
-						{/* triangle */}
-						<div className="w-0 h-0 border-primary-500 border-l-[0.3125rem] border-r-[0.3125rem] border-t-[0.375rem] border-l-transparent border-r-transparent" />
-						<div className="w-px h-[1.8rem] bg-primary-800" />
+						<div className="relative flex flex-col items-center">
+							<span
+								className="body06-r-10 absolute text-gray-900"
+								style={{ bottom: "calc(100%)" }}
+							>
+								{value}
+							</span>
+							{/* triangle */}
+							<div className="h-0 w-0 border-primary-500 border-t-[0.375rem] border-r-[0.3125rem] border-r-transparent border-l-[0.3125rem] border-l-transparent" />
+							<div className="h-[1.8rem] w-px bg-primary-800" />
+						</div>
 					</div>
 				)}
 			</div>

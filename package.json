@@ -18,6 +18,7 @@
     "api:generate": "swagger-typescript-api generate -p {Swagger 문서 Path 추후 추가} -o src/shared/apis/generated --modular -d --extract-request-body --extract-response-body --extract-response-error"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.4",
@@ -31,10 +32,13 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-error-boundary": "^6.0.3",
+    "react-hook-form": "^7.71.1",
     "react-lottie-player": "^2.1.0",
     "react-router": "^7.11.0",
+    "recharts": "2.15.4",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.10",

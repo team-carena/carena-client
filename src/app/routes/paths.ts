@@ -1,9 +1,11 @@
 export const ROUTE_PATH = {
 	LAYOUT: "/",
 	LOGIN: "/login",
+	SIGNUP: "/signup",
 	HOME: "/home",
 	MY_PAGE: "/my-page",
-	MENU: "/menu",
+	HEALTH_MENU_DETAIL: "/health-menu-detail",
+	HEALTH_MENU: "/health-menu",
 	HEALTH_TIP: "/health-tip",
 	HEALTH_TIP_DETAIL: "/health-tip-detail",
 	HEALTH_REPORT_DETAIL: "/health-report/:type",

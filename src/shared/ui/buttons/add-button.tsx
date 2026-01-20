@@ -11,7 +11,7 @@ export const AddButton = ({ className, ...props }: AddButtonProps) => {
 			type="button"
 			{...props}
 			className={cn(
-				"w-fit flex px-[0.8rem] py-[0.4rem] items-center justify-center gap-[0.4rem] rounded-[4px] bg-white active:bg-gray-200 transition-default",
+				"flex w-fit items-center justify-center gap-[0.4rem] rounded-[4px] bg-white px-[0.8rem] py-[0.4rem] transition-default active:bg-gray-200",
 				className,
 			)}
 		>

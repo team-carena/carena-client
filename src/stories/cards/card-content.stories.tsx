@@ -73,7 +73,7 @@ export const Muted: Story = {
 
 export const Multiple: Story = {
 	render: () => (
-		<div className="flex flex-col gap-[12px] w-[375px]">
+		<div className="flex w-[375px] flex-col gap-[12px]">
 			<ContentCard variant="default">
 				<ContentCard.Title>소제목</ContentCard.Title>
 				<ContentCard.Content>

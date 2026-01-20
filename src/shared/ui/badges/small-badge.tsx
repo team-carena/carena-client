@@ -2,7 +2,7 @@ import { cn } from "@shared/libs/cn";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const smallBadgeVariants = cva(
-	"inline-flex items-center justify-center w-fit px-[0.8rem] py-[0.4rem] label01-sb-14 rounded-full text-white",
+	"label01-sb-14 inline-flex w-fit items-center justify-center rounded-full px-[0.8rem] py-[0.4rem] text-white",
 	{
 		variants: {
 			variant: {
@@ -16,6 +16,10 @@ const smallBadgeVariants = cva(
 		},
 	},
 );
+
+export type SmallBadgeVariant = VariantProps<
+	typeof smallBadgeVariants
+>["variant"];
 
 export interface SmallBadgeProps
 	extends React.HTMLAttributes<HTMLSpanElement>,

@@ -36,8 +36,10 @@ export const Layout = () => {
 
 	return (
 		<>
-			<Header variant={headerConfig?.header} title={title} />
-			<main className={cn("min-h-dvh", showHeader && "pt-[5.6rem]")}>
+			<Header variant={headerConfig?.header} title={headerConfig?.title} />
+			<main
+				className={cn("min-h-dvh", showHeader && "pt-[var(--header-height)]")}
+			>
 				<Outlet />
 			</main>
 		</>

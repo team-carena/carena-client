@@ -1,6 +1,6 @@
 import MenuBg from "@shared/assets/img/menu-bg.png";
 import CardList from "@shared/ui/cards/card-list";
-import CardAiDietRecommendation from "@/pages/menu/ui/card-ai-diet-recommendation";
+import CardAiDietRecommendation from "@/pages/health-menu/ui/card-ai-diet-recommendation";
 
 // 임시 AI 추천 메뉴 데이터
 const MOCK_AI_RECOMMENDATION = {
@@ -38,7 +38,7 @@ export const HealthMenuPage = () => {
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
 			{/* AI 추천 카드 */}
 			<section
-				className="w-full bg-cover bg-center px-[2rem] pt-[1.6rem] pb-[2rem] flex justify-center"
+				className="flex w-full justify-center bg-center bg-cover px-[2rem] pt-[1.6rem] pb-[2rem]"
 				style={{ backgroundImage: `url(${MenuBg})` }}
 				aria-label="AI 추천 식단"
 			>
