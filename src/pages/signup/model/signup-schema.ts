@@ -50,19 +50,19 @@ const ERROR_MESSAGES = {
 		height: "100~250 사이의 값을 입력해 주세요.",
 		weight: "0~600 사이의 값을 입력해 주세요.",
 		bmi: "0~100 사이의 값을 입력해 주세요.",
-		waist: "20~250 사이의 값을 입력해 주세요.",
-		systolic: "0~300 사이의 값을 입력해 주세요.",
-		diastolic: "0~300 사이의 값을 입력해 주세요.",
+		waistCircumference: "20~250 사이의 값을 입력해 주세요.",
+		systolicBp: "0~300 사이의 값을 입력해 주세요.",
+		diastolicBp: "0~300 사이의 값을 입력해 주세요.",
 		bloodPressure: "수축기 혈압이 이완기 혈압보다 커야 해요.",
 	},
 	bloodTest: {
 		hemoglobin: "0~30 사이의 값을 입력해 주세요.",
 		fastingGlucose: "30~700 사이의 값을 입력해 주세요.",
 		serumCreatinine: "0~20 사이의 값을 입력해 주세요.",
-		gfr: "0~200 사이의 값을 입력해 주세요.",
+		egfr: "0~200 사이의 값을 입력해 주세요.",
 		ast: "0~10,000 사이의 값을 입력해 주세요.",
 		alt: "0~10,000 사이의 값을 입력해 주세요.",
-		ggt: "0~3,000 사이의 값을 입력해 주세요.",
+		gammaGtp: "0~3,000 사이의 값을 입력해 주세요.",
 	},
 	decimal: {
 		onePlace: "소수점 첫째자리까지만 입력 가능해요.",
@@ -173,9 +173,17 @@ export const signupSchema = z
 		height: decimalOnePlace(100, 250, ERROR_MESSAGES.measurement.height),
 		weight: decimalOnePlace(0, 600, ERROR_MESSAGES.measurement.weight),
 		bmi: decimalOnePlace(0, 100, ERROR_MESSAGES.measurement.bmi),
-		waist: decimalOnePlace(20, 250, ERROR_MESSAGES.measurement.waist),
-		systolic: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.systolic),
-		diastolic: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.diastolic),
+		waistCircumference: decimalOnePlace(
+			20,
+			250,
+			ERROR_MESSAGES.measurement.waistCircumference,
+		),
+		systolicBp: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.systolicBp),
+		diastolicBp: decimalOnePlace(
+			0,
+			300,
+			ERROR_MESSAGES.measurement.diastolicBp,
+		),
 
 		// 혈액 검사
 		hemoglobin: decimalOnePlace(0, 30, ERROR_MESSAGES.bloodTest.hemoglobin),
@@ -189,17 +197,17 @@ export const signupSchema = z
 			20,
 			ERROR_MESSAGES.bloodTest.serumCreatinine,
 		),
-		gfr: decimalOnePlace(0, 200, ERROR_MESSAGES.bloodTest.gfr),
+		egfr: decimalOnePlace(0, 200, ERROR_MESSAGES.bloodTest.egfr),
 		ast: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.ast),
 		alt: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.alt),
-		ggt: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.ggt),
+		gammaGtp: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.gammaGtp),
 	})
 	.refine(
 		(data) => {
 			// 둘 다 입력된 경우에만 검증
-			if (data.systolic === undefined || data.diastolic === undefined)
+			if (data.systolicBp === undefined || data.diastolicBp === undefined)
 				return true;
-			return data.systolic > data.diastolic;
+			return data.systolicBp > data.diastolicBp;
 		},
 		{
 			message: ERROR_MESSAGES.measurement.bloodPressure,
