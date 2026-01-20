@@ -28,6 +28,14 @@ export const router = createBrowserRouter([
 		element: <LoginPage />,
 	},
 	{
+		path: ROUTE_PATH.SIGNUP,
+		element: <Signup />,
+		handle: {
+			header: "signup",
+			title: "회원가입",
+		} satisfies RouteHandle,
+	},
+	{
 		element: <ProtectedRoute />,
 		children: [
 			{
@@ -37,14 +45,6 @@ export const router = createBrowserRouter([
 					{
 						index: true,
 						element: <Navigate to={ROUTE_PATH.HOME} replace />,
-					},
-					{
-						path: ROUTE_PATH.SIGNUP,
-						element: <Signup />,
-						handle: {
-							header: "signup",
-							title: "회원가입",
-						} satisfies RouteHandle,
 					},
 					{
 						path: ROUTE_PATH.HOME,
