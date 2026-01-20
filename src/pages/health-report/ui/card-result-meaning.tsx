@@ -30,10 +30,7 @@ export const CardResultMeaning = ({
 			{/* label */}
 			<span
 				className={cn(
-					"absolute top-0 left-[1.5rem] -translate-y-1/2",
-					"px-[0.2rem] py-[0.2rem]",
-					"body05-r-12 text-primary-300",
-					"bg-gray-50",
+					"body05-r-12 absolute top-0 left-[1.5rem] -translate-y-1/2 bg-gray-50 px-[0.2rem] py-[0.2rem] text-primary-300",
 				)}
 			>
 				{LABEL_TEXT[type]}
