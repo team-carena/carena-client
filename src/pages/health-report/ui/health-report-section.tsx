@@ -104,7 +104,7 @@ export const HealthReportSection = ({
 					</Label>
 
 					<ContentCard variant="muted">
-						<ContentCard.Content className="flex flex-col gap-[1.2rem]">
+						<ContentCard.Content className="flex flex-col gap-[0.8rem]">
 							{/* 일반 리스트 */}
 							{habitGuide.type === "list" && (
 								<ul className="list-disc space-y-[0.4rem] pl-[1.6rem]">
