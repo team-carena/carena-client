@@ -1,7 +1,7 @@
 import type {
-	Gender,
 	HabitGuide,
 	HealthReportRange,
+	Sex,
 } from "@/pages/health-report/model/health-report-types";
 import { CardResultMeaning } from "@/pages/health-report/ui/card-result-meaning";
 import { ContentCard } from "@/shared/ui/cards/card-content";
@@ -17,7 +17,7 @@ interface HealthReportSectionProps {
 	range?: HealthReportRange;
 
 	/** 사용자 성별 */
-	gender: Gender;
+	sex: Sex;
 
 	/** 그래프 데이터 */
 	chartData: LineChartData[];
@@ -40,7 +40,7 @@ export const HealthReportSection = ({
 	title,
 	description,
 	range,
-	gender,
+	sex,
 	increaseText,
 	decreaseText,
 	habitGuide,
@@ -54,7 +54,7 @@ export const HealthReportSection = ({
 	const rangeText = (() => {
 		if (!range) return null;
 
-		const value = range.type === "common" ? range.value : range[gender];
+		const value = range.type === "common" ? range.value : range[sex];
 
 		return (
 			<>

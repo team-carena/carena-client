@@ -58,7 +58,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 				title: "허리둘레",
 				description: "배꼽 높이에서 수평으로 측정한 복부의 둘레",
 				range: {
-					type: "gender",
+					type: "sex",
 					male: {
 						normal: "90 미만",
 						warning: "90 이상",
@@ -353,7 +353,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 				title: "감마지티피(γ-GTP)",
 				description: "간과 담즙이 지나가는 쓸개관 세포에 존재하는 효소",
 				range: {
-					type: "gender",
+					type: "sex",
 					male: {
 						normal: "11~63",
 						warning: "64~77",
@@ -466,7 +466,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 				title: "혈색소",
 				description: "혈액 속에서 산소를 운반하는 단백질",
 				range: {
-					type: "gender",
+					type: "sex",
 					male: {
 						normal: "13.0~16.5",
 						warning: "12.0~12.9",

@@ -10,7 +10,7 @@ export type HealthReportType =
 	| "anemia";
 
 // 사용자 성별
-export type Gender = "male" | "female";
+export type Sex = "male" | "female";
 
 /**
  * 정상 / 경계 / 의심 수치 범위
@@ -38,7 +38,7 @@ export type HealthReportRange =
 			value: HealthReportRangeValue;
 	  }
 	| {
-			type: "gender";
+			type: "sex";
 			male: HealthReportRangeValue;
 			female: HealthReportRangeValue;
 	  };

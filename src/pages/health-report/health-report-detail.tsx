@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { HEALTH_REPORT_CONFIG } from "./model/health-report-config";
-import type { Gender, HealthReportType } from "./model/health-report-types";
+import type { HealthReportType, Sex } from "./model/health-report-types";
 import { HealthReportSection } from "./ui/health-report-section";
 
 const DOUBLE_NOTICE_TYPES: HealthReportType[] = ["basic", "liver", "anemia"];
@@ -10,7 +10,7 @@ export const HealthReportDetailPage = () => {
 	if (!type) return null;
 
 	// TODO: 실제 사용자 성별로 교체
-	const gender: Gender = "male";
+	const sex: Sex = "male";
 
 	const reportConfig = HEALTH_REPORT_CONFIG[type];
 	if (!reportConfig) return null;
@@ -30,7 +30,7 @@ export const HealthReportDetailPage = () => {
 
 			{/* 섹션 */}
 			{reportConfig.sections.map(({ key, ...section }) => (
-				<HealthReportSection key={key} gender={gender} {...section} />
+				<HealthReportSection key={key} sex={sex} {...section} />
 			))}
 		</>
 	);
