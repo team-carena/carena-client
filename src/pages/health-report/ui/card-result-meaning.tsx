@@ -22,7 +22,7 @@ export const CardResultMeaning = ({
 	return (
 		<div
 			className={cn(
-				"relative w-full min-h-[58px] rounded-[12px] border border-gray-300 px-[1.2rem] py-[1.2rem]",
+				"relative min-h-[58px] w-full rounded-[12px] border border-gray-300 px-[1.2rem] py-[1.2rem]",
 				className,
 			)}
 			{...props}
@@ -30,7 +30,7 @@ export const CardResultMeaning = ({
 			{/* label */}
 			<span
 				className={cn(
-					"absolute left-[1.5rem] top-0 -translate-y-1/2",
+					"absolute top-0 left-[1.5rem] -translate-y-1/2",
 					"px-[0.2rem] py-[0.2rem]",
 					"body05-r-12 text-primary-300",
 					"bg-gray-50",
@@ -40,7 +40,7 @@ export const CardResultMeaning = ({
 			</span>
 
 			{/* description */}
-			<p className="body05-r-12 text-gray-900 whitespace-pre-line">
+			<p className="body05-r-12 whitespace-pre-line text-gray-900">
 				{description}
 			</p>
 		</div>

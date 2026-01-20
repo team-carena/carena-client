@@ -8,7 +8,7 @@ const Label = ({ className, children, ...props }: LabelProps) => {
 	return (
 		<span
 			className={cn(
-				"inline-flex items-center justify-center px-[0.8rem] py-[0.4rem] w-fit rounded-[4px] head05-r-14 text-gray-900 bg-primary-50",
+				"head05-r-14 inline-flex w-fit items-center justify-center rounded-[4px] bg-primary-50 px-[0.8rem] py-[0.4rem] text-gray-900",
 				className,
 			)}
 			{...props}
