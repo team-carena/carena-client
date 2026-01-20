@@ -59,11 +59,22 @@ export const Signup = () => {
 		errors.birthDate?.root?.message || errors.birthDate?.message;
 
 	return (
-		<>
+		// 하단 영역을 아래로 밀기 위해 헤더 제외한 높이 지정
+		<div className="flex h-[calc(100dvh-var(--header-height))] flex-col bg-white p-[2.4rem_2rem_5rem_2rem]">
+			{/* 상단 컨텐츠 영역 */}
+			<div className="mb-[4rem] space-y-[1.2rem]">
+				<h1 className="head01-b-18 text-center">
+					검진 결과 입력하고 케어나 시작하기
+				</h1>
+				<h2 className="body04-r-14 text-center">
+					아래 정보는 필수 입력 정보예요
+				</h2>
+			</div>
+
 			<form
 				id="signup-form"
 				onSubmit={handleSubmit(onSubmit)}
-				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[11.2rem]"
+				className="flex flex-1 flex-col gap-[4rem]"
 			>
 				{/* 기본정보 */}
 				<section className="flex flex-col gap-[2rem]">
@@ -132,34 +143,44 @@ export const Signup = () => {
 						</div>
 					</div>
 				</section>
-
-				{/* 개인정보 동의 체크박스 */}
-				<div className="-mt-[1.6rem] flex items-center gap-[0.8rem]">
-					<CheckBox checked={isAgreed} onChange={setIsAgreed} />
-					<span className="body04-r-14 text-gray-900">
-						서비스 이용을 위한{" "}
-						<button
-							type="button"
-							className="text-primary-500 underline underline-offset-2"
-						>
-							개인정보 수집·이용
-						</button>
-						에 동의합니다.
-					</span>
-				</div>
 			</form>
 
-			{/* 저장 버튼 - 하단 고정 */}
-			<div className="fixed right-0 bottom-[2rem] left-0 mx-auto max-w-[var(--app-max-width)] px-[2rem]">
+			{/* 하단 영역 (개인정보 동의 + 버튼) */}
+			<div className="flex flex-col">
+				{/* 개인정보 동의 - 기본정보 입력 완료 시 표시 */}
+				{isRequiredFilled && isValid && (
+					<section className="fade-in-animation mb-[3.6rem] flex flex-col gap-[2rem]">
+						<h3 className="head02-b-16 text-gray-600">
+							개인정보 수집·이용 동의
+						</h3>
+						<div className="flex items-start gap-[0.8rem]">
+							<CheckBox checked={isAgreed} onChange={setIsAgreed} />
+							<span className="body01-sb-12 whitespace-nowrap pt-[0.2rem] text-black">
+								[필수]{" "}
+								<button
+									type="button"
+									className="underline underline-offset-2"
+									onClick={() => {
+										// TODO: 모달 열기
+									}}
+								>
+									개인정보 수집·이용
+								</button>{" "}
+								내용을 확인하였으며 이에 동의합니다.
+							</span>
+						</div>
+					</section>
+				)}
+
 				<Button
 					type="submit"
 					form="signup-form"
 					size="lg"
 					disabled={!isAgreed || !isRequiredFilled || !isValid}
 				>
-					저장
+					회원가입
 				</Button>
 			</div>
-		</>
+		</div>
 	);
 };
