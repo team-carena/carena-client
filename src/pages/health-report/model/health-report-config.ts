@@ -291,7 +291,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 			},
 			{
 				key: "gamma-gtp",
-				title: "감마지티피(y-GTP)",
+				title: "감마지티피(γ-GTP)",
 				description: "간과 담즙이 지나가는 쓸개관 세포에 존재하는 효소",
 				range: {
 					type: "gender",

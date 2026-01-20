@@ -66,7 +66,7 @@ export const HealthReportSection = ({
 	})();
 
 	return (
-		<section className="px-[2rem] pb-[1.8rem]">
+		<section className="px-[2rem] pb-[4rem]">
 			{/* 항목 타이틀 */}
 			<h2 className="head01-b-18 text-black">{title}</h2>
 
