@@ -88,7 +88,9 @@ export const HealthReportSection = ({
 			{/* 결과값 의미 */}
 			{increaseText && decreaseText && (
 				<div className="mt-[2rem] flex flex-col gap-[1.9rem]">
-					<Label>결과값 의미</Label>
+					<Label role="heading" aria-level={3}>
+						결과값 의미
+					</Label>
 					<CardResultMeaning type="increase" description={increaseText} />
 					<CardResultMeaning type="decrease" description={decreaseText} />
 				</div>
@@ -97,7 +99,9 @@ export const HealthReportSection = ({
 			{/* 이런 습관이 도움돼요 */}
 			{habitGuide && (
 				<div className="mt-[2rem] flex flex-col gap-[1.2rem]">
-					<Label>이런 습관이 도움돼요!</Label>
+					<Label role="heading" aria-level={3}>
+						이런 습관이 도움돼요!
+					</Label>
 
 					<ContentCard variant="muted">
 						<ContentCard.Content className="flex flex-col gap-[1.2rem]">
