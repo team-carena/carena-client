@@ -16,6 +16,8 @@ export type ModalProps = {
 	secondaryAction?: ModalAction;
 	size?: ModalSize;
 	onClose?: () => void;
+	/** 스크롤이 끝에 도달했을 때 호출되는 콜백 (size="lg"일 때만 동작) */
+	onScrollEnd?: () => void;
 };
 
 export const Modal = ({
@@ -25,7 +27,10 @@ export const Modal = ({
 	primaryAction,
 	secondaryAction,
 	size = "lg",
+	onScrollEnd,
 }: ModalProps) => {
+	const contentRef = React.useRef<HTMLDivElement>(null);
+
 	React.useEffect(() => {
 		if (open) {
 			const originalOverflow = document.body.style.overflow;
@@ -36,6 +41,16 @@ export const Modal = ({
 			};
 		}
 	}, [open]);
+
+	const handleScroll = React.useCallback(() => {
+		if (!onScrollEnd || !contentRef.current) return;
+
+		const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
+		// 스크롤이 끝에 도달했는지 확인 (5px 여유)
+		if (scrollTop + clientHeight >= scrollHeight - 5) {
+			onScrollEnd();
+		}
+	}, [onScrollEnd]);
 
 	const hasTitle = Boolean(title);
 
@@ -75,6 +90,8 @@ export const Modal = ({
 						</div>
 					)}
 					<div
+						ref={size === "lg" ? contentRef : undefined}
+						onScroll={size === "lg" ? handleScroll : undefined}
 						className={cn(
 							"body04-r-14 text-gray-900",
 							size === "sm"
