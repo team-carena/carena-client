@@ -38,7 +38,7 @@ export const HealthMenuPage = () => {
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
 			{/* AI 추천 카드 */}
 			<section
-				className="flex w-full justify-center bg-center bg-cover px-[2rem] pt-[1.6rem] pb-[2rem]"
+				className="flex w-full justify-center bg-center bg-cover px-[2rem] pt-[2.4rem] pb-[2rem]"
 				style={{ backgroundImage: `url(${MenuBg})` }}
 				aria-label="AI 추천 식단"
 			>

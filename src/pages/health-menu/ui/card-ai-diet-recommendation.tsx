@@ -12,10 +12,7 @@ const CardAiDietRecommendation = ({
 	description,
 }: CardAiDietRecommendationProps) => {
 	return (
-		<article
-			className="w-full px-[2rem] pt-[2.4rem] pb-[2rem]"
-			aria-labelledby="diet-recommendation-title"
-		>
+		<article className="w-full" aria-labelledby="diet-recommendation-title">
 			{/* 제목 */}
 			<h2
 				id="diet-recommendation-title"
