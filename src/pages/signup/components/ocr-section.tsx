@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useLocation } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import { postOcr } from "@/shared/apis/post-ocr/post-ocr";
 import { OcrButton } from "@/shared/ui/buttons/ocr-button";
 
@@ -9,7 +10,7 @@ type OcrSectionProps = {
 
 export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 	const location = useLocation();
-	const isSignUp = location.pathname === "/signup";
+	const isSignUp = location.pathname === ROUTE_PATH.SIGNUP;
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const handleOcrButtonClick = () => {
