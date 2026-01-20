@@ -29,7 +29,7 @@ export const Modal = ({
 	size = "lg",
 	onScrollEnd,
 }: ModalProps) => {
-	const contentRef = React.useRef<HTMLDivElement>(null);
+	const endMarkerRef = React.useRef<HTMLDivElement>(null);
 
 	React.useEffect(() => {
 		if (open) {
@@ -42,15 +42,23 @@ export const Modal = ({
 		}
 	}, [open]);
 
-	const handleScroll = React.useCallback(() => {
-		if (!onScrollEnd || !contentRef.current) return;
+	// 컨텐츠 끝이 화면에 보이는지 감지
+	React.useEffect(() => {
+		if (!open || !onScrollEnd || !endMarkerRef.current) return;
 
-		const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-		// 스크롤이 끝에 도달했는지 확인 (5px 여유)
-		if (scrollTop + clientHeight >= scrollHeight - 5) {
-			onScrollEnd();
-		}
-	}, [onScrollEnd]);
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					onScrollEnd();
+				}
+			},
+			{ threshold: 1.0 },
+		);
+
+		observer.observe(endMarkerRef.current);
+
+		return () => observer.disconnect();
+	}, [open, onScrollEnd]);
 
 	const hasTitle = Boolean(title);
 
@@ -74,7 +82,7 @@ export const Modal = ({
 				aria-modal="true"
 				className={cn(
 					"relative flex w-full flex-col rounded-[12px] border border-gray-200 bg-white text-gray-900 transition-opacity duration-200",
-					size === "sm" ? "w-[28rem]" : "max-h-[61rem] w-[31.1rem]",
+					size === "sm" ? "w-[28rem]" : "max-h-[62rem] w-[31.1rem]",
 					open ? "opacity-100" : "opacity-0",
 				)}
 			>
@@ -90,8 +98,6 @@ export const Modal = ({
 						</div>
 					)}
 					<div
-						ref={size === "lg" ? contentRef : undefined}
-						onScroll={size === "lg" ? handleScroll : undefined}
 						className={cn(
 							"body04-r-14 text-gray-900",
 							size === "sm"
@@ -100,6 +106,7 @@ export const Modal = ({
 						)}
 					>
 						{description}
+						{size === "lg" && onScrollEnd && <div ref={endMarkerRef} />}
 					</div>
 				</div>
 				<div

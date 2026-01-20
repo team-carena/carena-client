@@ -10,7 +10,7 @@ import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
-import { openPrivacyModal } from "@/shared/ui/overlays/modal/open-privacy-modal";
+import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { RadioButton } from "@/shared/ui/radio/radio";
 
@@ -66,7 +66,7 @@ export const Signup = () => {
 
 	// 개인정보 수집·이용 모달 열기
 	const handleOpenPrivacyModal = () => {
-		openPrivacyModal({
+		openModal({
 			title: "개인정보 수집·이용 동의",
 			description: `케어나(이하 '서비스')는 이용자의 건강 정보를 안전하게 보호하기 위해 아래와 같이 개인정보를 수집·이용합니다.
 
@@ -85,11 +85,10 @@ export const Signup = () => {
 4. 동의 거부권 및 불이익
 - 이용자는 개인정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.
 - 다만, 필수 항목에 대한 동의를 거부하실 경우 서비스 이용이 제한됩니다.`,
+			onScrollEnd: () => setIsCheckboxEnabled(true),
 			primaryAction: {
 				label: "확인",
-				onClick: () => {
-					setIsCheckboxEnabled(true);
-				},
+				onClick: () => {},
 			},
 		});
 	};
