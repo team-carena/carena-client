@@ -1,7 +1,7 @@
 import type * as React from "react";
 import { cn } from "@/shared/libs/cn";
 
-type ResultChangeType = "increase" | "decrease";
+export type ResultChangeType = "increase" | "decrease";
 
 interface CardResultMeaningProps extends React.HTMLAttributes<HTMLDivElement> {
 	type: ResultChangeType;
