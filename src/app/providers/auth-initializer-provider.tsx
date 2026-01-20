@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect } from "react";
-import { postRefreshToken } from "@/shared/apis/auth/post-refresh-token";
+import { postRefreshAccessToken } from "@/shared/apis/auth/post-refresh-token";
 import { useAuthStore } from "@/shared/store/auth-store";
 
 type AuthInitializerProps = {
@@ -12,14 +12,8 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 
 	useEffect(() => {
 		const initializeAuth = async () => {
-			console.info("[AuthInit] 인증 초기화 시작");
-
 			try {
-				console.info("[AuthInit] refresh token 요청");
-
-				const response = await postRefreshToken();
-
-				console.info("[AuthInit] refresh token 응답 수신");
+				const response = await postRefreshAccessToken();
 
 				const authorization = response.headers["authorization"];
 
@@ -30,18 +24,12 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 
 				const accessToken = authorization.replace(/^Bearer\s+/i, "");
 
-				console.info("[AuthInit] access token 설정");
-
 				setAccessToken(accessToken);
 				setAuthenticated(true);
-
-				console.info("[AuthInit] 인증 상태: 로그인됨");
 			} catch (error) {
-				console.warn("[AuthInit] 인증 실패", error);
 				setAuthenticated(false);
 			} finally {
 				setAuthCheckLoading(false);
-				console.info("[AuthInit] 인증 체크 종료");
 			}
 		};
 
