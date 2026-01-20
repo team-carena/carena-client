@@ -38,6 +38,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 				key: "weight",
 				title: "체중",
 				description: "인체가 중력에 의해 측정되는 몸의 무게",
+				showDivider: true,
 			},
 			{
 				key: "waist",
@@ -67,6 +68,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					],
 				},
 				source: "대한비만학회, Journal of Clinical Medicine",
+				showDivider: true,
 			},
 			{
 				key: "bmi",
@@ -138,6 +140,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					],
 				},
 				source: "질병관리청 국가건강정보포털",
+				showDivider: true,
 			},
 			{
 				key: "diastolic",
@@ -256,6 +259,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					],
 				},
 				source: "질병관리청 국가건강정보포털",
+				showDivider: true,
 			},
 			{
 				key: "alt",
@@ -283,6 +287,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					],
 				},
 				source: "질병관리청 국가건강정보포털",
+				showDivider: true,
 			},
 			{
 				key: "gamma-gtp",
@@ -345,6 +350,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					],
 				},
 				source: "질병관리청 건강정보포털",
+				showDivider: true,
 			},
 			{
 				key: "egfr",

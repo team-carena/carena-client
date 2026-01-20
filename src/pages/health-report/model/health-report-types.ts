@@ -77,6 +77,9 @@ export interface HealthReportSection {
 
 	/** 출처 */
 	source?: string;
+
+	/** 섹션 하단 구분선 표시 여부 */
+	showDivider?: boolean;
 }
 
 /**

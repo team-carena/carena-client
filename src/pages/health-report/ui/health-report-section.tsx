@@ -26,6 +26,9 @@ interface HealthReportSectionProps {
 
 	/** 출처 */
 	source?: string;
+
+	/** 섹션 하단 구분선 표시 여부 */
+	showDivider?: boolean;
 }
 
 export const HealthReportSection = ({
@@ -37,6 +40,7 @@ export const HealthReportSection = ({
 	decreaseText,
 	habitGuide,
 	source,
+	showDivider = false,
 }: HealthReportSectionProps) => {
 	/**
 	 * 범위 텍스트 생성
@@ -62,7 +66,7 @@ export const HealthReportSection = ({
 	})();
 
 	return (
-		<section className="px-[2rem] pb-[4rem]">
+		<section className="px-[2rem] pb-[1.8rem]">
 			{/* 항목 타이틀 */}
 			<h2 className="head01-b-18 text-black">{title}</h2>
 
@@ -125,6 +129,13 @@ export const HealthReportSection = ({
 							출처: {source}
 						</p>
 					)}
+				</div>
+			)}
+
+			{/* 섹션 구분선 */}
+			{showDivider && (
+				<div className="mt-[2rem] flex justify-center">
+					<div className="h-[1px] w-[calc(100%-2.3rem)] bg-gray-200" />
 				</div>
 			)}
 		</section>
