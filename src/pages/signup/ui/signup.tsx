@@ -55,13 +55,12 @@ export const Signup = () => {
 		birthDate.month !== "" &&
 		birthDate.day !== "";
 
-	const onSubmit = (_data: SignupFormData) => {};
-
-	// 버튼 클릭 시 체크박스가 체크되지 않았으면 토스트 표시
-	const handleButtonClick = () => {
+	const onSubmit = (_data: SignupFormData) => {
 		if (!isAgreed) {
 			notifyError("개인정보 수집·이용에 동의해주세요");
+			return;
 		}
+		// TODO: 회원가입 API 호출 등 로직 추가
 	};
 
 	// 개인정보 수집·이용 모달 열기
@@ -218,7 +217,6 @@ export const Signup = () => {
 					form="signup-form"
 					size="lg"
 					disabled={!isRequiredFilled || !isValid}
-					onClick={handleButtonClick}
 				>
 					회원가입
 				</Button>

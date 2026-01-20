@@ -23,9 +23,13 @@ export const checkupSchema = z
 		height: decimalOnePlace(100, 250, ERROR_MESSAGES.measurement.height),
 		weight: decimalOnePlace(0, 600, ERROR_MESSAGES.measurement.weight),
 		bmi: decimalOnePlace(0, 100, ERROR_MESSAGES.measurement.bmi),
-		waist: decimalOnePlace(20, 250, ERROR_MESSAGES.measurement.waist),
-		systolic: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.systolic),
-		diastolic: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.diastolic),
+		waistCircumference: decimalOnePlace(
+			20,
+			250,
+			ERROR_MESSAGES.measurement.waist,
+		),
+		systolicBp: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.systolic),
+		diastolicBp: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.diastolic),
 
 		// 혈액 검사
 		hemoglobin: decimalOnePlace(0, 30, ERROR_MESSAGES.bloodTest.hemoglobin),
@@ -39,21 +43,21 @@ export const checkupSchema = z
 			20,
 			ERROR_MESSAGES.bloodTest.serumCreatinine,
 		),
-		gfr: decimalOnePlace(0, 200, ERROR_MESSAGES.bloodTest.gfr),
+		egfr: decimalOnePlace(0, 200, ERROR_MESSAGES.bloodTest.gfr),
 		ast: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.ast),
 		alt: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.alt),
-		ggt: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.ggt),
+		gammaGtp: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.ggt),
 	})
 	.refine(
 		(data) => {
 			// 둘 다 입력된 경우에만 검증
-			if (data.systolic === undefined || data.diastolic === undefined)
+			if (data.systolicBp === undefined || data.diastolicBp === undefined)
 				return true;
-			return data.systolic > data.diastolic;
+			return data.systolicBp > data.diastolicBp;
 		},
 		{
 			message: ERROR_MESSAGES.measurement.bloodPressure,
-			path: ["diastolic"],
+			path: ["diastolicBp"],
 		},
 	);
 
