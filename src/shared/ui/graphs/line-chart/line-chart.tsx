@@ -27,7 +27,7 @@ const getAreaAnimationStyle = (shouldAnimate: boolean) =>
 			}
 		: undefined;
 
-type LineChartData = {
+export type LineChartData = {
 	/** yyyy-mm */
 	date: string;
 	value: number;

@@ -5,10 +5,10 @@ import CardAiDietRecommendation from "@/pages/health-menu/ui/card-ai-diet-recomm
 // 임시 AI 추천 메뉴 데이터
 const MOCK_AI_RECOMMENDATION = {
 	// AI 추천 요리명
-	dietName: "두부전",
+	dietName: "요리명",
 	// 추천 요리 설명 텍스트
 	description:
-		"단백질이 풍부하고 소화가 잘 되는 두부를 활용한 요리로, 기름 사용을 최소화해 부담 없이 즐길 수 있어요. 만성질환 관리에도 도움이 되는 메뉴예요.",
+		"케어나님의 건강 정보를 참고해,\n염분 섭취를 조금 더 신경 쓰고 싶을 때 선택하기 좋은 메뉴로 이 요리를 추천드려요.",
 };
 
 // 임시 메뉴 리스트 데이터
@@ -38,7 +38,7 @@ export const HealthMenuPage = () => {
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
 			{/* AI 추천 카드 */}
 			<section
-				className="flex w-full justify-center bg-center bg-cover px-[2rem] pt-[1.6rem] pb-[2rem]"
+				className="flex w-full justify-center bg-center bg-cover px-[2rem] pt-[2.4rem] pb-[2rem]"
 				style={{ backgroundImage: `url(${MenuBg})` }}
 				aria-label="AI 추천 식단"
 			>
