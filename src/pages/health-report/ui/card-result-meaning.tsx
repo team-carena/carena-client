@@ -40,7 +40,9 @@ export const CardResultMeaning = ({
 			</span>
 
 			{/* description */}
-			<p className="body05-r-12 text-gray-900">{description}</p>
+			<p className="body05-r-12 text-gray-900 whitespace-pre-line">
+				{description}
+			</p>
 		</div>
 	);
 };

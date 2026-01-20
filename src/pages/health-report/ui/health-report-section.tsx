@@ -1,66 +1,132 @@
+import type {
+	Gender,
+	HabitGuide,
+	HealthReportRange,
+} from "@/pages/health-report/model/health-report-types";
 import { CardResultMeaning } from "@/pages/health-report/ui/card-result-meaning";
 import { ContentCard } from "@/shared/ui/cards/card-content";
 import Label from "@/shared/ui/labels/label";
 
-interface HealthReportRange {
-	normalMax: number;
-	warningMin: number;
-	warningMax: number;
-	dangerMin: number;
-}
-
 interface HealthReportSectionProps {
 	title: string;
 	description: string;
-	range: HealthReportRange;
-	increaseText: string;
-	decreaseText: string;
-	habitText: string;
+
+	/** 정상 / 경계 / 의심 수치 범위 */
+	range?: HealthReportRange;
+
+	/** 사용자 성별 */
+	gender: Gender;
+
+	/** 결과값 의미 */
+	increaseText?: string;
+	decreaseText?: string;
+
+	/** 이런 습관이 도움돼요! */
+	habitGuide?: HabitGuide;
+
+	/** 출처 */
+	source?: string;
 }
 
 export const HealthReportSection = ({
 	title,
 	description,
 	range,
+	gender,
 	increaseText,
 	decreaseText,
-	habitText,
+	habitGuide,
+	source,
 }: HealthReportSectionProps) => {
-	const rangeText = `정상 ${range.normalMax}미만 | 경계 ${range.warningMin} ~ ${range.warningMax} | 의심 ${range.dangerMin} 이상`;
+	/**
+	 * 범위 텍스트 생성
+	 */
+	const rangeText = (() => {
+		if (!range) return null;
+
+		const value = range.type === "common" ? range.value : range[gender];
+
+		return (
+			<>
+				<span>정상 {value.normal}</span>
+				<span className="mx-[0.4rem]">|</span>
+				<span>경계 {value.warning}</span>
+				{value.danger && (
+					<>
+						<span className="mx-[0.4rem]">|</span>
+						<span>의심 {value.danger}</span>
+					</>
+				)}
+			</>
+		);
+	})();
 
 	return (
 		<section className="px-[2rem] pb-[4rem]">
-			{/* 타이틀 */}
+			{/* 항목 타이틀 */}
 			<h2 className="head01-b-18 text-black">{title}</h2>
 
 			{/* 설명 / 범위 / 그래프 */}
 			<div className="mt-[1.2rem] flex flex-col gap-[0.8rem]">
 				<p className="body05-r-12 text-gray-700">{description}</p>
 
-				<p className="body05-r-12 text-gray-900">{rangeText}</p>
+				{rangeText && <p className="body05-r-12 text-gray-900">{rangeText}</p>}
 
 				{/* 그래프 영역 */}
 				<div className="h-[120px] rounded-[12px] border border-gray-200" />
 			</div>
 
 			{/* 결과값 의미 */}
-			<div className="mt-[2rem] flex flex-col gap-[1.9rem]">
-				<Label>결과값 의미</Label>
-
-				<CardResultMeaning type="increase" description={increaseText} />
-				<CardResultMeaning type="decrease" description={decreaseText} />
-			</div>
+			{increaseText && decreaseText && (
+				<div className="mt-[2rem] flex flex-col gap-[1.9rem]">
+					<Label>결과값 의미</Label>
+					<CardResultMeaning type="increase" description={increaseText} />
+					<CardResultMeaning type="decrease" description={decreaseText} />
+				</div>
+			)}
 
 			{/* 이런 습관이 도움돼요 */}
-			<div className="mt-[2rem] flex flex-col gap-[1.2rem]">
-				<Label>이런 습관이 도움돼요!</Label>
+			{habitGuide && (
+				<div className="mt-[2rem] flex flex-col gap-[1.2rem]">
+					<Label>이런 습관이 도움돼요!</Label>
 
-				<ContentCard variant="muted">
-					<ContentCard.Content>{habitText}</ContentCard.Content>
-				</ContentCard>
+					<ContentCard variant="muted">
+						<ContentCard.Content className="flex flex-col gap-[1.2rem]">
+							{/* 일반 리스트 */}
+							{habitGuide.type === "list" && (
+								<ul className="list-disc pl-[1.6rem] space-y-[0.4rem]">
+									{habitGuide.items.map((item) => (
+										<li key={item} className="body05-r-12 text-gray-900">
+											{item}
+										</li>
+									))}
+								</ul>
+							)}
 
-				<p className="text-right body05-r-12 text-gray-700">출처: 여기저기</p>
-			</div>
+							{/* 소제목 + 리스트 */}
+							{habitGuide.type === "group" &&
+								habitGuide.groups.map((group) => (
+									<div key={group.title} className="flex flex-col gap-[0.4rem]">
+										<p className="body05-b-12 text-gray-900">{group.title}</p>
+										<ul className="list-disc pl-[1.6rem] space-y-[0.4rem]">
+											{group.items.map((item) => (
+												<li key={item} className="body05-r-12 text-gray-900">
+													{item}
+												</li>
+											))}
+										</ul>
+									</div>
+								))}
+						</ContentCard.Content>
+					</ContentCard>
+
+					{source && (
+						<p className="text-right body05-r-12 text-gray-700">
+							출처: {source}
+						</p>
+					)}
+				</div>
+			)}
 		</section>
 	);
 };
