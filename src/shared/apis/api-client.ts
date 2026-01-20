@@ -1,5 +1,4 @@
-import axios, { type AxiosError, type AxiosResponse } from "axios";
-import type { BaseResponse } from "./api-types";
+import axios, { type AxiosError } from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -17,8 +16,7 @@ export const apiClient = axios.create({
 	withCredentials: true,
 	timeout: 10000,
 });
-
 apiClient.interceptors.response.use(
-	(response: AxiosResponse<BaseResponse<unknown>>) => response,
+	(response) => response,
 	(error: AxiosError) => Promise.reject(error),
 );
