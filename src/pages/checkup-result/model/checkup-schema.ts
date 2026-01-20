@@ -1,21 +1,15 @@
 import { z } from "zod";
 import {
-	birthDateSchema,
 	checkupDateSchema,
 	decimalOnePlace,
 	decimalTwoPlaces,
 	ERROR_MESSAGES,
-	genderSchema,
 	hospitalSchema,
-	nameSchema,
 } from "@/shared/libs/validation";
 
 export const checkupSchema = z
 	.object({
 		// 기본 정보
-		name: nameSchema,
-		birthDate: birthDateSchema,
-		gender: genderSchema,
 		checkupDate: checkupDateSchema,
 		hospital: hospitalSchema,
 
@@ -48,6 +42,23 @@ export const checkupSchema = z
 		alt: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.alt),
 		gammaGtp: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.ggt),
 	})
+	// 검진일자 필수 검증
+	.refine(
+		(data) =>
+			data.checkupDate.year !== "" &&
+			data.checkupDate.month !== "" &&
+			data.checkupDate.day !== "",
+		{
+			message: ERROR_MESSAGES.checkupDate.required,
+			path: ["checkupDate"],
+		},
+	)
+	// 검진병원 필수 검증
+	.refine((data) => data.hospital && data.hospital.trim() !== "", {
+		message: ERROR_MESSAGES.hospital.required,
+		path: ["hospital"],
+	})
+	// 혈압 검증
 	.refine(
 		(data) => {
 			// 둘 다 입력된 경우에만 검증

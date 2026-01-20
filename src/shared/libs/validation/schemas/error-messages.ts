@@ -9,10 +9,12 @@ export const ERROR_MESSAGES = {
 		invalidDate: "올바른 날짜를 입력해 주세요.",
 	},
 	checkupDate: {
+		required: "검진일자를 입력해 주세요.",
 		invalidYear: "2000년~2026년 사이의 연도를 입력해 주세요.",
 		invalidDate: "올바른 날짜를 입력해 주세요.",
 	},
 	hospital: {
+		required: "검진병원을 입력해 주세요.",
 		maxLength: "병원명은 100자 이하로 입력해 주세요.",
 		invalidChar: "한글, 영어, 숫자만 입력 가능해요.",
 	},

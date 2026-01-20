@@ -12,7 +12,6 @@ import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
 import { InputSmall } from "@/shared/ui/inputs/input-small";
 import { CategoryLabel } from "@/shared/ui/labels/category-label";
-import { RadioButton } from "@/shared/ui/radio/radio";
 
 export const CheckupResultPage = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
@@ -20,17 +19,12 @@ export const CheckupResultPage = () => {
 	const {
 		register,
 		handleSubmit,
-		watch,
-		setValue,
 		trigger,
 		formState: { errors, isValid },
 	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
 		resolver: zodResolver(checkupSchema),
 		mode: "onBlur",
 		defaultValues: {
-			name: "",
-			birthDate: { year: "", month: "", day: "" },
-			gender: "MALE",
 			checkupDate: { year: "", month: "", day: "" },
 			hospital: "",
 			height: "",
@@ -49,23 +43,9 @@ export const CheckupResultPage = () => {
 		},
 	});
 
-	// 값 실시간 감시
-	const gender = watch("gender");
-	const name = watch("name");
-	const birthDate = watch("birthDate");
-
-	// 필수 필드가 모두 채워졌는지 확인
-	const isRequiredFilled =
-		name.trim() !== "" &&
-		birthDate.year !== "" &&
-		birthDate.month !== "" &&
-		birthDate.day !== "";
-
 	const onSubmit = (_data: CheckupFormData) => {};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
-	const birthDateError =
-		errors.birthDate?.root?.message || errors.birthDate?.message;
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
 
@@ -78,75 +58,11 @@ export const CheckupResultPage = () => {
 			>
 				{/* 기본정보 */}
 				<section className="flex flex-col gap-[2rem]">
-					<CategoryLabel label="기본정보" />
-					{/* 이름, 생년월일, 성별 */}
-					<div className="flex flex-col gap-[1.6rem]">
-						<InputMedium
-							label="이름"
-							required
-							{...register("name")}
-							errorMessage={errors.name?.message}
-						/>
-
-						{/* 생년월일 */}
-						<div className="flex flex-col gap-[0.8rem]">
-							<span className="body03-r-16 text-black">
-								생년월일 <span aria-hidden="true">*</span>
-							</span>
-							<DateInput
-								year={{
-									placeholder: "YYYY",
-									maxLength: 4,
-									...register("birthDate.year", {
-										onBlur: () => trigger("birthDate"),
-									}),
-								}}
-								month={{
-									placeholder: "MM",
-									maxLength: 2,
-									...register("birthDate.month", {
-										onBlur: () => trigger("birthDate"),
-									}),
-								}}
-								day={{
-									placeholder: "DD",
-									maxLength: 2,
-									...register("birthDate.day", {
-										onBlur: () => trigger("birthDate"),
-									}),
-								}}
-								errorMessage={birthDateError}
-							/>
-						</div>
-
-						{/* 성별 */}
-						<div className="flex items-center justify-between">
-							<span className="body03-r-16 text-black">
-								성별 <span aria-hidden="true">*</span>
-							</span>
-							<div className="flex gap-[1.2rem]">
-								<RadioButton
-									name="gender"
-									value="MALE"
-									text="남자"
-									checked={gender === "MALE"}
-									onChange={() => setValue("gender", "MALE")}
-								/>
-								<RadioButton
-									name="gender"
-									value="FEMALE"
-									text="여자"
-									checked={gender === "FEMALE"}
-									onChange={() => setValue("gender", "FEMALE")}
-								/>
-							</div>
-						</div>
-					</div>
-
-					{/* 검진일자, 검진병원 */}
 					<div className="flex flex-col gap-[1.2rem]">
 						<div className="flex flex-col gap-[0.8rem]">
-							<span className="body03-r-16 text-black">검진일자</span>
+							<span className="body03-r-16 text-black">
+								검진일자 <span aria-hidden="true">*</span>
+							</span>
 							<DateInput
 								year={{
 									placeholder: "YYYY",
@@ -175,6 +91,7 @@ export const CheckupResultPage = () => {
 
 						<InputMedium
 							label="검진병원"
+							required
 							placeholder="병원명 입력"
 							{...register("hospital")}
 							errorMessage={errors.hospital?.message}
@@ -316,7 +233,7 @@ export const CheckupResultPage = () => {
 					type="submit"
 					form="signup-form"
 					size="lg"
-					disabled={!isAgreed || !isRequiredFilled || !isValid}
+					disabled={!isAgreed || !isValid}
 				>
 					저장
 				</Button>
