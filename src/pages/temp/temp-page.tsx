@@ -1,5 +1,5 @@
 import { requestKakaoAuthorize } from "@/shared/libs/request-kakao-authorize";
-import { postSignUp } from "./api/post-sign-up";
+import { postSignUp } from "../signup/api/post-sign-up";
 
 // TODO: 실제 sign-up 페이지라면 저장 버튼에 중복 제출 방지 로직 추가해야 함!!
 
