@@ -5,6 +5,8 @@ import type {
 } from "@/pages/health-report/model/health-report-types";
 import { CardResultMeaning } from "@/pages/health-report/ui/card-result-meaning";
 import { ContentCard } from "@/shared/ui/cards/card-content";
+import type { LineChartData } from "@/shared/ui/graphs/line-chart/line-chart";
+import { LineChart } from "@/shared/ui/graphs/line-chart/line-chart";
 import Label from "@/shared/ui/labels/label";
 
 interface HealthReportSectionProps {
@@ -16,6 +18,9 @@ interface HealthReportSectionProps {
 
 	/** 사용자 성별 */
 	gender: Gender;
+
+	/** 그래프 데이터 */
+	chartData: LineChartData[];
 
 	/** 결과값 의미 */
 	increaseText?: string;
@@ -41,6 +46,7 @@ export const HealthReportSection = ({
 	habitGuide,
 	source,
 	showDivider = false,
+	chartData,
 }: HealthReportSectionProps) => {
 	/**
 	 * 범위 텍스트 생성
@@ -76,8 +82,7 @@ export const HealthReportSection = ({
 
 				{rangeText && <p className="body05-r-12 text-gray-900">{rangeText}</p>}
 
-				{/* 그래프 영역 */}
-				<div className="h-[120px] rounded-[12px] border border-gray-200" />
+				{chartData && <LineChart data={chartData} />}
 			</div>
 
 			{/* 결과값 의미 */}
@@ -98,7 +103,7 @@ export const HealthReportSection = ({
 						<ContentCard.Content className="flex flex-col gap-[1.2rem]">
 							{/* 일반 리스트 */}
 							{habitGuide.type === "list" && (
-								<ul className="list-disc pl-[1.6rem] space-y-[0.4rem]">
+								<ul className="list-disc space-y-[0.4rem] pl-[1.6rem]">
 									{habitGuide.items.map((item) => (
 										<li key={item} className="body05-r-12 text-gray-900">
 											{item}
@@ -112,7 +117,7 @@ export const HealthReportSection = ({
 								habitGuide.groups.map((group) => (
 									<div key={group.title} className="flex flex-col gap-[0.4rem]">
 										<p className="body05-b-12 text-gray-900">{group.title}</p>
-										<ul className="list-disc pl-[1.6rem] space-y-[0.4rem]">
+										<ul className="list-disc space-y-[0.4rem] pl-[1.6rem]">
 											{group.items.map((item) => (
 												<li key={item} className="body05-r-12 text-gray-900">
 													{item}
@@ -125,7 +130,7 @@ export const HealthReportSection = ({
 					</ContentCard>
 
 					{source && (
-						<p className="text-right body05-r-12 text-gray-700">
+						<p className="body05-r-12 text-right text-gray-700">
 							출처: {source}
 						</p>
 					)}

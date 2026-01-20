@@ -33,11 +33,25 @@ export const HEALTH_REPORT_CONFIG: Record<
 				key: "height",
 				title: "신장",
 				description: "정수리부터 발끝까지의 수직 길이를 측정한 값",
+				chartData: [
+					{ date: "2018-01", value: 170 },
+					{ date: "2020-01", value: 170 },
+					{ date: "2022-01", value: 171 },
+					{ date: "2024-01", value: 171 },
+					{ date: "2026-01", value: 171 },
+				],
 			},
 			{
 				key: "weight",
 				title: "체중",
 				description: "인체가 중력에 의해 측정되는 몸의 무게",
+				chartData: [
+					{ date: "2018-01", value: 60 },
+					{ date: "2020-01", value: 62 },
+					{ date: "2022-01", value: 63 },
+					{ date: "2024-01", value: 61 },
+					{ date: "2026-01", value: 64 },
+				],
 				showDivider: true,
 			},
 			{
@@ -55,6 +69,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						warning: "85 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 85 },
+					{ date: "2020-01", value: 85 },
+					{ date: "2022-01", value: 86 },
+					{ date: "2024-01", value: 86 },
+					{ date: "2026-01", value: 86 },
+				],
 				increaseText:
 					"수치가 클수록 내장지방이 많을 가능성이 높으며 제2형 당뇨병, 고혈압, 이상지질혈증, 관상동맥 질환 등의 발병 위험이 증가합니다",
 				decreaseText:
@@ -82,6 +103,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						danger: "30 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 23.1 },
+					{ date: "2020-01", value: 23.4 },
+					{ date: "2022-01", value: 23.0 },
+					{ date: "2024-01", value: 23.6 },
+					{ date: "2026-01", value: 23.3 },
+				],
 				increaseText:
 					"BMI 지수가 증가하면 비만으로 인해 고혈압, 당뇨, 심장병 등에 걸릴 위험이 높아집니다",
 				decreaseText:
@@ -116,6 +144,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						danger: "140 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 128 },
+					{ date: "2020-01", value: 132 },
+					{ date: "2022-01", value: 130 },
+					{ date: "2024-01", value: 138 },
+					{ date: "2026-01", value: 134 },
+				],
 				increaseText:
 					"수축기 혈압이 높으면 고혈압 상태로 심근경색, 뇌졸중 등 심뇌혈관 질환 위험이 증가합니다",
 				decreaseText:
@@ -155,6 +190,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						danger: "90 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 82 },
+					{ date: "2020-01", value: 85 },
+					{ date: "2022-01", value: 83 },
+					{ date: "2024-01", value: 88 },
+					{ date: "2026-01", value: 86 },
+				],
 				increaseText:
 					"이완기 혈압이 높으면 심장이 쉬는 동안에도 압력이 높아 혈관 손상 및 심혈관 질환 위험이 커질 수 있습니다",
 				decreaseText:
@@ -199,6 +241,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						danger: "126 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 98 },
+					{ date: "2020-01", value: 102 },
+					{ date: "2022-01", value: 105 },
+					{ date: "2024-01", value: 110 },
+					{ date: "2026-01", value: 108 },
+				],
 				increaseText:
 					"혈당 조절 기능이 저하된 상태로, 당뇨병 전단계 또는 당뇨병으로 진행될 가능성이 있습니다\n\n혈당 관리가 잘 되지 않을 경우 심혈관 질환, 신경 손상, 신장 기능 저하 등의 합병증 위험이 커질 수 있습니다",
 				decreaseText:
@@ -246,6 +295,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						danger: "51 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 32 },
+					{ date: "2020-01", value: 35 },
+					{ date: "2022-01", value: 41 },
+					{ date: "2024-01", value: 38 },
+					{ date: "2026-01", value: 36 },
+				],
 				increaseText:
 					" 간세포가 손상되어 효소가 혈액으로 빠져나왔다는 신호로 간염, 지방간, 간경변 등을 의심할 수 있습니다\n\n간 이외에도 심장·근육 등 여러 조직에도 존재하므로 전체적인 맥락에서 해석이 필요합니다",
 				decreaseText:
@@ -274,6 +330,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						danger: "46 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 32 },
+					{ date: "2020-01", value: 35 },
+					{ date: "2022-01", value: 41 },
+					{ date: "2024-01", value: 38 },
+					{ date: "2026-01", value: 36 },
+				],
 				increaseText:
 					"간세포 손상이 있을 때 혈중 농도가 상승하여 간 질환 위험을 의심할 수 있습니다",
 				decreaseText:
@@ -306,6 +369,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						danger: "46 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 42 },
+					{ date: "2020-01", value: 48 },
+					{ date: "2022-01", value: 55 },
+					{ date: "2024-01", value: 62 },
+					{ date: "2026-01", value: 58 },
+				],
 				increaseText:
 					"간이나 담도에 이상이 있을 때 증가하며, 음주·과체중·약물 복용에 의해서도 수치가 상승할 수 있습니다\n\n단독으로 높은 경우에는 음주 영향 가능성이 큽니다",
 				decreaseText:
@@ -338,6 +408,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						warning: "1.5 초과",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 32 },
+					{ date: "2020-01", value: 35 },
+					{ date: "2022-01", value: 41 },
+					{ date: "2024-01", value: 38 },
+					{ date: "2026-01", value: 36 },
+				],
 				increaseText:
 					"신장에서 노폐물을 걸러내는 기능이 저하된 상태로 신장 기능 저하, 탈수, 근육량 증가 등의 영향으로 수치가 높아질 수 있습니다",
 				decreaseText:
@@ -363,6 +440,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						warning: "60 미만",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 78 },
+					{ date: "2020-01", value: 75 },
+					{ date: "2022-01", value: 72 },
+					{ date: "2024-01", value: 70 },
+					{ date: "2026-01", value: 68 },
+				],
 				increaseText:
 					"일시적으로 높게 측정되는 경우는 수분 상태나 개인차에 따른 변화일 수 있으며, 대부분 임상적 의미는 크지 않습니다",
 				decreaseText:
@@ -400,6 +484,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 						danger: "10.0 미만 또는 15.6 이상",
 					},
 				},
+				chartData: [
+					{ date: "2018-01", value: 14.2 },
+					{ date: "2020-01", value: 13.9 },
+					{ date: "2022-01", value: 13.8 },
+					{ date: "2024-01", value: 13.6 },
+					{ date: "2026-01", value: 13.7 },
+				],
 				increaseText:
 					"혈색소 수치가 증가하면 혈액이 농축된 상태가 될 수 있으며, 혈액 순환에 부담이 생길 수 있습니다\n\n두통, 어지러움, 얼굴 홍조, 피로감 같은 증상이 동반될 수 있습니다",
 				decreaseText:

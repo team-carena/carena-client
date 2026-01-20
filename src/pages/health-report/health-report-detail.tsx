@@ -18,7 +18,7 @@ export const HealthReportDetailPage = () => {
 	return (
 		<>
 			{/* 상단 안내 문구 */}
-			<div className="pt-[2rem] pb-[2.4rem] px-[2rem] flex flex-col gap-[0.4rem] body06-r-10 text-gray-700">
+			<div className="body06-r-10 flex flex-col gap-[0.4rem] px-[2rem] pt-[2rem] pb-[2.4rem] text-gray-700">
 				<p>
 					※ 본 정보는 건강 관리에 참고하기 위한 자료이며, 진단이나 치료 목적이
 					아닙니다.

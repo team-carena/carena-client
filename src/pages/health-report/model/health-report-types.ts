@@ -1,3 +1,5 @@
+import type { LineChartData } from "@/shared/ui/graphs/line-chart/line-chart";
+
 // 검진결과 타입
 export type HealthReportType =
 	| "basic"
@@ -68,6 +70,8 @@ export interface HealthReportSection {
 
 	/** 정상/경계/의심 수치 범위 */
 	range?: HealthReportRange;
+
+	chartData: LineChartData[];
 
 	/** 결과값 의미 */
 	increaseText?: string;
