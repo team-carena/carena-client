@@ -38,6 +38,115 @@ export interface CreateHealthTipRequest {
 	hashtags: string[];
 }
 
+export interface CreateHealthReportRequest {
+	/** @format date */
+	healthCheckDate: string;
+	/** @minLength 1 */
+	institutionName: string;
+	/** @format double */
+	height?: number;
+	/** @format double */
+	weight?: number;
+	/** @format double */
+	waistCircumference?: number;
+	/** @format double */
+	bmi?: number;
+	/** @format int32 */
+	systolicBp?: number;
+	/** @format int32 */
+	diastolicBp?: number;
+	/** @format double */
+	hemoglobin?: number;
+	/** @format double */
+	fastingGlucose?: number;
+	/** @format double */
+	totalCholesterol?: number;
+	/** @format double */
+	hdl?: number;
+	/** @format double */
+	ldl?: number;
+	/** @format double */
+	triglycerides?: number;
+	/** @format double */
+	serumCreatinine?: number;
+	/** @format double */
+	egfr?: number;
+	/** @format double */
+	ast?: number;
+	/** @format double */
+	alt?: number;
+	/** @format double */
+	gammaGtp?: number;
+}
+
+export interface ExtractedTextView {
+	/** @format double */
+	height?: number;
+	/** @format double */
+	weight?: number;
+	/** @format double */
+	waistCircumference?: number;
+	/** @format double */
+	bmi?: number;
+	/** @format int32 */
+	systolicBp?: number;
+	/** @format int32 */
+	diastolicBp?: number;
+	/** @format double */
+	hemoglobin?: number;
+	/** @format double */
+	fastingGlucose?: number;
+	/** @format double */
+	totalCholesterol?: number;
+	/** @format double */
+	hdl?: number;
+	/** @format double */
+	ldl?: number;
+	/** @format double */
+	triglyceride?: number;
+	/** @format double */
+	serumCreatinine?: number;
+	/** @format double */
+	egfr?: number;
+	/** @format double */
+	ast?: number;
+	/** @format double */
+	alt?: number;
+	/** @format double */
+	gammaGtp?: number;
+}
+
+export interface SuccessResponseExtractedTextView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: ExtractedTextView;
+}
+
+export interface AdminDietChunkRequest {
+	/** @minLength 1 */
+	section: string;
+	/** @minLength 1 */
+	content: string;
+	/** @format int32 */
+	chunkOrder?: number;
+}
+
+export interface CreateAdminDietRequest {
+	/** @minLength 1 */
+	title: string;
+	/** @minLength 1 */
+	content: string;
+	/** @minLength 1 */
+	reference: string;
+	/** @minLength 1 */
+	referenceUrl: string;
+	chunks?: AdminDietChunkRequest[];
+	recommendedFoods?: Record<string, string[]>;
+	cautionaryFoods?: string[];
+}
+
 export interface MyPageResponse {
 	name?: string;
 	/** @format date */
@@ -106,6 +215,121 @@ export interface SuccessResponseReadHealthTipDetailView {
 	data?: ReadHealthTipDetailView;
 }
 
+export interface ReadHealthTipTickerView {
+	result?: HealthTipListElement[];
+}
+
+export interface SuccessResponseReadHealthTipTickerView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: ReadHealthTipTickerView;
+}
+
+export interface DisplayElement {
+	name?: string;
+	value?: number;
+	riskLevel?: string;
+}
+
+export interface EntireHealthReportView {
+	/** @format int64 */
+	id?: number;
+	/** @format date */
+	healthCheckDate?: string;
+	basic?: DisplayElement[];
+	bloodPressure?: DisplayElement[];
+	diabetes?: DisplayElement[];
+	liver?: DisplayElement[];
+	kidney?: DisplayElement[];
+	anemia?: DisplayElement[];
+}
+
+export interface SuccessResponseEntireHealthReportView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: EntireHealthReportView;
+}
+
+export interface HealthReportHistoryElement {
+	value?: number;
+	/** @format date */
+	healthCheckDate?: string;
+}
+
+export interface HealthReportHistoryView {
+	history?: HealthReportHistoryElement[];
+}
+
+export interface SuccessResponseHealthReportHistoryView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: HealthReportHistoryView;
+}
+
+export interface HealthReportDateListView {
+	reportDates?: ReportDateInfo[];
+	hasNext?: boolean;
+}
+
+export interface ReportDateInfo {
+	/** @format int64 */
+	id?: number;
+	/** @format date */
+	healthCheckDate?: string;
+	institutionName?: string;
+}
+
+export interface SuccessResponseHealthReportDateListView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: HealthReportDateListView;
+}
+
+export interface DietItem {
+	/** @format int64 */
+	id?: number;
+	title?: string;
+}
+
+export interface DietListResponse {
+	diets?: DietItem[];
+	hasNext?: boolean;
+}
+
+export interface SuccessResponseDietListResponse {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: DietListResponse;
+}
+
+export interface DietDetailResponse {
+	/** @format int64 */
+	id?: number;
+	title?: string;
+	content?: string;
+	recommends?: Record<string, string[]>;
+	cautionary?: string[];
+	reference?: string;
+}
+
+export interface SuccessResponseDietDetailResponse {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: DietDetailResponse;
+}
+
 export type AfterLoginData = SuccessResponseVoid;
 
 export type RefreshTokenData = SuccessResponseVoid;
@@ -118,6 +342,19 @@ export type ReadHealthTipListData = SuccessResponseReadHealthTipListView;
 
 export type CreateHealthTipData = SuccessResponseVoid;
 
+export type CreateHealthReportData = SuccessResponseVoid;
+
+export interface ExtractTextPayload {
+	/** @format binary */
+	file: File;
+}
+
+export type ExtractTextData = SuccessResponseExtractedTextView;
+
+export type GetDietListData = SuccessResponseDietListResponse;
+
+export type CreateDietData = SuccessResponseVoid;
+
 export type MyPageData = SuccessResponseMyPageResponse;
 
 export type MemberInfoData = SuccessResponseMemberInfoResponse;
@@ -125,3 +362,40 @@ export type MemberInfoData = SuccessResponseMemberInfoResponse;
 export type ReadHealthTipDetailData = SuccessResponseReadHealthTipDetailView;
 
 export type DeleteHealthTipData = SuccessResponseVoid;
+
+export type ReadHealthTipTickerData = SuccessResponseReadHealthTipTickerView;
+
+export type GetEntireHealthReportData = SuccessResponseEntireHealthReportView;
+
+export type GetWeightHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetWaistCircumferenceHistoryData =
+	SuccessResponseHealthReportHistoryView;
+
+export type GetHeightHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetBmiHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetGammaGtpHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetAstHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetAltHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetSerumCreatinineHistoryData =
+	SuccessResponseHealthReportHistoryView;
+
+export type GetEgfrHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetFastingGlucoseHistoryData =
+	SuccessResponseHealthReportHistoryView;
+
+export type GetReportDateListData = SuccessResponseHealthReportDateListView;
+
+export type GetSystolicBpHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetDiastolicBpHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type GetHemoglobinHistoryData = SuccessResponseHealthReportHistoryView;
+
+export type DietDetailData = SuccessResponseDietDetailResponse;
