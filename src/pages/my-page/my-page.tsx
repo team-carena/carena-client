@@ -12,10 +12,10 @@ const ACTION_LIST = [
 		label: "약관 바로보기",
 		onClick: () => {
 			window.open(
-				"https://www.notion.so/약관페이지주소",
+				"https://petalite-biplane-c36.notion.site/2eb5365471d180fcb539d7caf1ca2310",
 				"_blank",
 				"noopener, noreferrer",
-			); // TODO: 실제 노션 약관 페이지 링크로 대체
+			);
 		},
 	},
 	{

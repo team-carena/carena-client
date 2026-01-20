@@ -2,6 +2,7 @@ import { HealthMenuPage } from "@pages/health-menu/health-menu";
 import { MenuDetailPage } from "@pages/health-menu/health-menu-detail";
 import type { HeaderVariant } from "@shared/ui/navigations/header";
 import { createBrowserRouter, Navigate } from "react-router";
+import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
 import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
@@ -27,6 +28,18 @@ export const router = createBrowserRouter([
 		element: <LoginPage />,
 	},
 	{
+		path: ROUTE_PATH.SIGNUP,
+		element: <Signup />,
+		handle: {
+			header: "signup",
+			title: "회원가입",
+		} satisfies RouteHandle,
+	},
+	{
+		path: ROUTE_PATH.OAUTH_CALLBACK,
+		element: <OauthCallBack />,
+	},
+	{
 		element: <ProtectedRoute />,
 		children: [
 			{
@@ -36,14 +49,6 @@ export const router = createBrowserRouter([
 					{
 						index: true,
 						element: <Navigate to={ROUTE_PATH.HOME} replace />,
-					},
-					{
-						path: ROUTE_PATH.SIGNUP,
-						element: <Signup />,
-						handle: {
-							header: "signup",
-							title: "회원가입",
-						} satisfies RouteHandle,
 					},
 					{
 						path: ROUTE_PATH.HOME,
