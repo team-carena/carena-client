@@ -13,7 +13,7 @@ const CardAiDietRecommendation = ({
 }: CardAiDietRecommendationProps) => {
 	return (
 		<article
-			className="w-full px-[2rem] py-[1.2rem]"
+			className="w-full px-[2rem] pt-[2.4rem] pb-[2rem]"
 			aria-labelledby="diet-recommendation-title"
 		>
 			{/* 제목 */}
@@ -29,7 +29,9 @@ const CardAiDietRecommendation = ({
 			<div className="mt-[1.6rem] flex items-start gap-[1.2rem]">
 				<Ai className="shrink-0" aria-hidden />
 
-				<p className="body04-r-14 text-gray-900">{description}</p>
+				<p className="body04-r-14 whitespace-pre-line text-gray-900">
+					{description}
+				</p>
 			</div>
 		</article>
 	);
