@@ -2,10 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
-	type SignupFormData,
-	type SignupFormInput,
-	signupSchema,
-} from "@/pages/signup/model/signup-schema";
+	type CheckupFormData,
+	type CheckupFormInput,
+	checkupSchema,
+} from "@/pages/checkup-result/model/checkup-schema";
 import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
@@ -21,7 +21,7 @@ const CategoryLabel = ({ label }: CategoryLabelProps) => {
 	return <h3 className="head02-b-16 text-left text-primary-700">{label}</h3>;
 };
 
-export const Signup = () => {
+export const CheckupResultPage = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
 
 	const {
@@ -31,8 +31,8 @@ export const Signup = () => {
 		setValue,
 		trigger,
 		formState: { errors, isValid },
-	} = useForm<SignupFormInput, unknown, SignupFormData>({
-		resolver: zodResolver(signupSchema),
+	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
+		resolver: zodResolver(checkupSchema),
 		mode: "onBlur",
 		defaultValues: {
 			name: "",
@@ -68,7 +68,7 @@ export const Signup = () => {
 		birthDate.month !== "" &&
 		birthDate.day !== "";
 
-	const onSubmit = (_data: SignupFormData) => {};
+	const onSubmit = (_data: CheckupFormData) => {};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
 	const birthDateError =
