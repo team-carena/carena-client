@@ -54,7 +54,8 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 				ref={fileInputRef}
 				type="file"
 				accept="image/*"
-				hidden
+				className="sr-only"
+				aria-label="검진 결과지 이미지 선택"
 				onChange={handleFileChange}
 			/>
 
