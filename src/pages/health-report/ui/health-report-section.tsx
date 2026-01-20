@@ -60,11 +60,11 @@ export const HealthReportSection = ({
 			<>
 				<span>정상 {value.normal}</span>
 				<span className="mx-[0.4rem]">|</span>
-				<span>경계 {value.warning}</span>
-				{value.danger && (
+				<span>경계 {value.borderline}</span>
+				{value.suspicious && (
 					<>
 						<span className="mx-[0.4rem]">|</span>
-						<span>의심 {value.danger}</span>
+						<span>의심 {value.suspicious}</span>
 					</>
 				)}
 			</>

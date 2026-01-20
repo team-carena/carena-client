@@ -61,11 +61,11 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "sex",
 					MALE: {
 						normal: "90 미만",
-						warning: "90 이상",
+						borderline: "90 이상",
 					},
 					FEMALE: {
 						normal: "85 미만",
-						warning: "85 이상",
+						borderline: "85 이상",
 					},
 				},
 				chartData: [
@@ -98,8 +98,8 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "18.5~24.9",
-						warning: "18.5 미만 또는 25~29.9",
-						danger: "30 이상",
+						borderline: "18.5 미만 또는 25~29.9",
+						suspicious: "30 이상",
 					},
 				},
 				chartData: [
@@ -138,8 +138,8 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "120 미만",
-						warning: "120~139",
-						danger: "140 이상",
+						borderline: "120~139",
+						suspicious: "140 이상",
 					},
 				},
 				chartData: [
@@ -184,8 +184,8 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "80 미만",
-						warning: "80~90",
-						danger: "90 이상",
+						borderline: "80~90",
+						suspicious: "90 이상",
 					},
 				},
 				chartData: [
@@ -234,8 +234,8 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "100 미만",
-						warning: "100~125",
-						danger: "126 이상",
+						borderline: "100~125",
+						suspicious: "126 이상",
 					},
 				},
 				chartData: [
@@ -287,8 +287,8 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "40 이하",
-						warning: "41~50",
-						danger: "51 이상",
+						borderline: "41~50",
+						suspicious: "51 이상",
 					},
 				},
 				chartData: [
@@ -322,8 +322,8 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "35 이하",
-						warning: "36~45",
-						danger: "46 이상",
+						borderline: "36~45",
+						suspicious: "46 이상",
 					},
 				},
 				chartData: [
@@ -356,13 +356,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "sex",
 					MALE: {
 						normal: "11~63",
-						warning: "64~77",
-						danger: "78 이상",
+						borderline: "64~77",
+						suspicious: "78 이상",
 					},
 					FEMALE: {
 						normal: "8~35",
-						warning: "36~45",
-						danger: "46 이상",
+						borderline: "36~45",
+						suspicious: "46 이상",
 					},
 				},
 				chartData: [
@@ -400,7 +400,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "1.5 이하",
-						warning: "1.5 초과",
+						borderline: "1.5 초과",
 					},
 				},
 				chartData: [
@@ -432,7 +432,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "60 이상",
-						warning: "60 미만",
+						borderline: "60 미만",
 					},
 				},
 				chartData: [
@@ -469,13 +469,13 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "sex",
 					MALE: {
 						normal: "13.0~16.5",
-						warning: "12.0~12.9",
-						danger: "12.0 미만 또는 16.6 이상",
+						borderline: "12.0~12.9",
+						suspicious: "12.0 미만 또는 16.6 이상",
 					},
 					FEMALE: {
 						normal: "12.0~15.5",
-						warning: "10.0~11.9",
-						danger: "10.0 미만 또는 15.6 이상",
+						borderline: "10.0~11.9",
+						suspicious: "10.0 미만 또는 15.6 이상",
 					},
 				},
 				chartData: [
