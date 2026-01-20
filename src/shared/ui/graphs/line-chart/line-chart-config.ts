@@ -1,9 +1,3 @@
-// 차트 전체 크기
-export const CHART_SIZE = {
-	WIDTH: 311,
-	HEIGHT: 116,
-};
-
 // 차트 레이아웃 기준
 export const LAYOUT = {
 	PADDING: {
@@ -11,7 +5,9 @@ export const LAYOUT = {
 		right: 8,
 		bottom: 14, // X축 날짜 라벨 영역
 	},
-	POINT_GAP: 63, // 포인트 간 간격
+	BASE_POINT_GAP: 63, // 그래프의 포인트 기본 간격
+	BASE_WIDTH: 335, // 그래프의 컨테이너 기본 너비
+	BORDER_WIDTH: 1, // 컨테이너 border 두께
 };
 
 // 포인트 및 라벨

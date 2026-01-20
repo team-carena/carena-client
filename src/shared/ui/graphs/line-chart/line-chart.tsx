@@ -1,13 +1,31 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
 	ANIMATION,
-	CHART_SIZE,
 	COLORS,
 	LABEL_TOTAL_HEIGHT,
 	LAYOUT,
 	POINT,
 	TOP_SAFE_SPACE,
 } from "./line-chart-config";
+
+/** 애니메이션 적용 여부에 따른 line-draw 스타일 반환 */
+const getLineAnimationStyle = (shouldAnimate: boolean) =>
+	shouldAnimate
+		? {
+				strokeDasharray: ANIMATION.LINE_DASH,
+				strokeDashoffset: ANIMATION.LINE_DASH,
+				animation: `line-draw ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
+			}
+		: undefined;
+
+/** 애니메이션 적용 여부에 따른 area-fade 스타일 반환 */
+const getAreaAnimationStyle = (shouldAnimate: boolean) =>
+	shouldAnimate
+		? {
+				opacity: 0,
+				animation: `area-fade ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
+			}
+		: undefined;
 
 type LineChartData = {
 	/** yyyy-mm */
@@ -25,18 +43,39 @@ const formatDateLabel = (date: string) => {
 	return `${year.slice(2)}/${month}`;
 };
 
-export const LineChart = ({ data }: LineChartProps) => {
-	/**
-	 * - mount 시 1회만 실행
-	 * - re-render 시 불필요한 재실행 방지
-	 */
-	const [animated, setAnimated] = useState(false);
+// 기본 높이 (고정)
+const CHART_HEIGHT = 116;
 
-	useEffect(() => {
-		setAnimated(true);
+export const LineChart = ({ data }: LineChartProps) => {
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [containerWidth, setContainerWidth] = useState(0);
+
+	// 컨테이너 크기 측정 (borderBoxSize 사용 - border 포함)
+	useLayoutEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		const resizeObserver = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				// borderBoxSize는 border 포함한 전체 크기
+				const width =
+					entry.borderBoxSize?.[0]?.inlineSize ?? entry.contentRect.width;
+				setContainerWidth(width - LAYOUT.BORDER_WIDTH * 2);
+			}
+		});
+
+		resizeObserver.observe(container);
+
+		return () => resizeObserver.disconnect();
 	}, []);
 
-	/** 오래된 데이터 → 최신 데이터 순 정렬 (hook은 항상 최상단) */
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
+
+	/** 오래된 데이터 → 최신 데이터 순 정렬 */
 	const sortedData = useMemo(
 		() =>
 			[...data].sort(
@@ -56,17 +95,18 @@ export const LineChart = ({ data }: LineChartProps) => {
 
 	/**
 	 * X 좌표 계산
-	 * - 포인트 간 간격은 고정
-	 * - 데이터 개수에 따라 전체 그래프를 중앙 정렬
+	 * - BASE_WIDTH(335px) 기준으로 BASE_POINT_GAP(63px)을 설정하고, 컨테이너 너비에 비례하여 스케일링
+	 * - 그래프가 컨테이너 중앙에 정렬됨
 	 */
 	const chartWidth =
-		CHART_SIZE.WIDTH - LAYOUT.PADDING.left - LAYOUT.PADDING.right;
-
-	const usedWidth = isSingle ? 0 : (sortedData.length - 1) * LAYOUT.POINT_GAP;
+		containerWidth - LAYOUT.PADDING.left - LAYOUT.PADDING.right;
+	const scaledPointGap =
+		LAYOUT.BASE_POINT_GAP * (containerWidth / LAYOUT.BASE_WIDTH);
+	const usedWidth = isSingle ? 0 : (sortedData.length - 1) * scaledPointGap;
 	const startX = LAYOUT.PADDING.left + (chartWidth - usedWidth) / 2;
 
 	const getX = (index: number) =>
-		isSingle ? CHART_SIZE.WIDTH / 2 : startX + index * LAYOUT.POINT_GAP;
+		isSingle ? containerWidth / 2 : startX + index * scaledPointGap;
 
 	/**
 	 * Y 스케일 계산
@@ -77,7 +117,7 @@ export const LineChart = ({ data }: LineChartProps) => {
 	const yMin = Math.max(0, Math.min(...values) * 0.9);
 	const yMax = Math.max(...values) * 1.1;
 
-	const plotBottom = CHART_SIZE.HEIGHT - LAYOUT.PADDING.bottom;
+	const plotBottom = CHART_HEIGHT - LAYOUT.PADDING.bottom;
 
 	const yTop = 0;
 	const yBottom = plotBottom;
@@ -106,42 +146,44 @@ export const LineChart = ({ data }: LineChartProps) => {
 
 	return (
 		<div
-			className="rounded-[12px] border border-gray-200 bg-white"
-			style={{ width: CHART_SIZE.WIDTH, height: CHART_SIZE.HEIGHT }}
+			ref={containerRef}
+			className="w-full rounded-[12px] border border-gray-200 bg-white"
+			style={{ height: CHART_HEIGHT }}
 		>
-			<svg
-				width={CHART_SIZE.WIDTH}
-				height={CHART_SIZE.HEIGHT}
-				role="img"
-				aria-label="검진 수치 추이 라인 차트"
-			>
-				<defs>
-					<linearGradient
-						id="areaGrad"
-						x1="0"
-						y1={yTop}
-						x2="0"
-						y2={yBottom}
-						gradientUnits="userSpaceOnUse"
-					>
-						<stop offset="0%" stopColor={COLORS.LINE} stopOpacity={0.55} />
-						<stop offset="100%" stopColor={COLORS.LINE} stopOpacity={0} />
-					</linearGradient>
+			{containerWidth > 0 && (
+				<svg
+					width={containerWidth}
+					height={CHART_HEIGHT}
+					role="img"
+					aria-label="검진 수치 추이 라인 차트"
+				>
+					<defs>
+						<linearGradient
+							id="areaGrad"
+							x1="0"
+							y1={yTop}
+							x2="0"
+							y2={yBottom}
+							gradientUnits="userSpaceOnUse"
+						>
+							<stop offset="0%" stopColor={COLORS.LINE} stopOpacity={0.55} />
+							<stop offset="100%" stopColor={COLORS.LINE} stopOpacity={0} />
+						</linearGradient>
 
-					<linearGradient
-						id="singleLineGrad"
-						x1="0"
-						y1={yTop}
-						x2="0"
-						y2={yBottom}
-						gradientUnits="userSpaceOnUse"
-					>
-						<stop offset="0%" stopColor={COLORS.LINE} />
-						<stop offset="100%" stopColor={COLORS.LINE} stopOpacity={0} />
-					</linearGradient>
+						<linearGradient
+							id="singleLineGrad"
+							x1="0"
+							y1={yTop}
+							x2="0"
+							y2={yBottom}
+							gradientUnits="userSpaceOnUse"
+						>
+							<stop offset="0%" stopColor={COLORS.LINE} />
+							<stop offset="100%" stopColor={COLORS.LINE} stopOpacity={0} />
+						</linearGradient>
 
-					<style>
-						{`
+						<style>
+							{`
               @keyframes line-draw {
                 to { stroke-dashoffset: 0; }
               }
@@ -150,130 +192,110 @@ export const LineChart = ({ data }: LineChartProps) => {
                 to { opacity: 1; }
               }
             `}
-					</style>
-				</defs>
+						</style>
+					</defs>
 
-				{!isSingle && (
-					<path
-						d={`
+					{/* 데이터가 하나일 때 */}
+					{!isSingle && (
+						<path
+							d={`
               M ${points[0].x} ${yBottom}
               L ${points.map((p) => `${p.x} ${p.y}`).join(" L ")}
               L ${points[points.length - 1].x} ${yBottom}
               Z
             `}
-						fill="url(#areaGrad)"
-						style={
-							animated && !prefersReducedMotion
-								? {
-										opacity: 0,
-										animation: `area-fade ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
-									}
-								: undefined
-						}
-					/>
-				)}
+							fill="url(#areaGrad)"
+							style={getAreaAnimationStyle(isMounted && !prefersReducedMotion)}
+						/>
+					)}
 
-				{isSingle ? (
-					<line
-						x1={points[0].x}
-						y1={points[0].y}
-						x2={points[0].x}
-						y2={yBottom}
-						stroke="url(#singleLineGrad)"
-						strokeWidth={1}
-						style={
-							animated && !prefersReducedMotion
-								? {
-										strokeDasharray: ANIMATION.LINE_DASH,
-										strokeDashoffset: ANIMATION.LINE_DASH,
-										animation: `line-draw ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
-									}
-								: undefined
-						}
-					/>
-				) : (
-					<path
-						d={linePath}
-						fill="none"
-						stroke={COLORS.LINE}
-						strokeWidth={1}
-						strokeLinecap="round"
-						style={
-							animated && !prefersReducedMotion
-								? {
-										strokeDasharray: ANIMATION.LINE_DASH,
-										strokeDashoffset: ANIMATION.LINE_DASH,
-										animation: `line-draw ${ANIMATION.DURATION} ${ANIMATION.EASING} forwards`,
-									}
-								: undefined
-						}
-					/>
-				)}
+					{/* 데이터가 2개 이상일 때 */}
+					{isSingle ? (
+						<line
+							x1={points[0].x}
+							y1={points[0].y}
+							x2={points[0].x}
+							y2={yBottom}
+							stroke="url(#singleLineGrad)"
+							strokeWidth={1}
+							style={getLineAnimationStyle(isMounted && !prefersReducedMotion)}
+						/>
+					) : (
+						<path
+							d={linePath}
+							fill="none"
+							stroke={COLORS.LINE}
+							strokeWidth={1}
+							strokeLinecap="round"
+							style={getLineAnimationStyle(isMounted && !prefersReducedMotion)}
+						/>
+					)}
 
-				{points.map((p) => {
-					/**
-					 * 라벨 배치 규칙
-					 * - 기본은 포인트 위
-					 * - 라벨 전체 높이를 고려했을 때 상단 여백이 부족하면 아래로 배치
-					 */
-					const placeAbove = p.y - LABEL_TOTAL_HEIGHT >= TOP_SAFE_SPACE;
+					{points.map((p) => {
+						/**
+						 * 라벨 배치 규칙
+						 * - 기본은 포인트 위
+						 * - 라벨 전체 높이를 고려했을 때 상단 여백이 부족하면 아래로 배치
+						 */
+						const placeAbove = p.y - LABEL_TOTAL_HEIGHT >= TOP_SAFE_SPACE;
 
-					const triangleTipY = placeAbove
-						? p.y - POINT.RADIUS - POINT.LABEL_GAP
-						: p.y + POINT.RADIUS + POINT.LABEL_GAP;
+						const triangleTipY = placeAbove
+							? p.y - POINT.RADIUS - POINT.LABEL_GAP
+							: p.y + POINT.RADIUS + POINT.LABEL_GAP;
 
-					const triangleBaseY = placeAbove
-						? triangleTipY - POINT.TRIANGLE_HEIGHT
-						: triangleTipY + POINT.TRIANGLE_HEIGHT;
+						const triangleBaseY = placeAbove
+							? triangleTipY - POINT.TRIANGLE_HEIGHT
+							: triangleTipY + POINT.TRIANGLE_HEIGHT;
 
-					const textY = placeAbove
-						? triangleBaseY - POINT.LABEL_GAP
-						: triangleBaseY + POINT.LABEL_GAP + POINT.TEXT_HEIGHT;
+						const textY = placeAbove
+							? triangleBaseY - POINT.LABEL_GAP
+							: triangleBaseY + POINT.LABEL_GAP + POINT.TEXT_HEIGHT;
 
-					return (
-						<g key={p.label}>
-							<text
-								x={p.x}
-								y={textY}
-								textAnchor="middle"
-								className="body06-r-10"
-								fill={COLORS.TEXT}
-							>
-								{p.value.toFixed(1)}
-							</text>
+						return (
+							<g key={p.label}>
+								<text
+									x={p.x}
+									y={textY}
+									textAnchor="middle"
+									className="body06-r-10"
+									fill={COLORS.TEXT}
+								>
+									{p.value.toFixed(2)}
+								</text>
 
-							<polygon
-								points={`${p.x} ${triangleTipY}
+								<polygon
+									points={`${p.x} ${triangleTipY}
                   ${p.x - POINT.TRIANGLE_WIDTH / 2} ${triangleBaseY}
                   ${p.x + POINT.TRIANGLE_WIDTH / 2} ${triangleBaseY}`}
-								fill={COLORS.TRIANGLE}
-							/>
+									fill={COLORS.TRIANGLE}
+								/>
 
-							<circle
-								cx={p.x}
-								cy={p.y}
-								r={POINT.RADIUS}
-								fill={COLORS.POINT}
-								stroke={COLORS.POINT_STROKE}
-								strokeWidth={1}
-							/>
-						</g>
-					);
-				})}
+								<circle
+									cx={p.x}
+									cy={p.y}
+									r={POINT.RADIUS}
+									fill={COLORS.POINT}
+									stroke={COLORS.POINT_STROKE}
+									strokeWidth={1}
+								/>
+							</g>
+						);
+					})}
 
-				{points.map((p) => (
-					<text
-						key={p.label}
-						x={p.x}
-						y={axisLabelY}
-						textAnchor="middle"
-						className="body06-r-10"
-						fill={COLORS.AXIS_LABEL}
-					>
-						{p.label}
-					</text>
-				))}
-			</svg>
+					{points.map((p) => (
+						<text
+							key={p.label}
+							x={p.x}
+							y={axisLabelY}
+							textAnchor="middle"
+							className="body06-r-10"
+							fill={COLORS.AXIS_LABEL}
+						>
+							{p.label}
+						</text>
+					))}
+				</svg>
+			)}
 		</div>
 	);
 };
