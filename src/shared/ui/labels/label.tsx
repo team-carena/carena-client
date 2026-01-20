@@ -6,7 +6,7 @@ export interface LabelProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 const Label = ({ className, children, ...props }: LabelProps) => {
 	return (
-		<span
+		<h3
 			className={cn(
 				"head05-r-14 inline-flex w-fit items-center justify-center rounded-[4px] bg-primary-50 px-[0.8rem] py-[0.4rem] text-gray-900",
 				className,
@@ -14,7 +14,7 @@ const Label = ({ className, children, ...props }: LabelProps) => {
 			{...props}
 		>
 			{children}
-		</span>
+		</h3>
 	);
 };
 
