@@ -25,7 +25,7 @@ const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 		useInfiniteHealthTipList({ hashtagName });
 
 	const tips = useMemo(
-		() => (data?.pages ?? []).flatMap((pageData) => pageData.result),
+		() => (data?.pages ?? []).flatMap((pageData) => pageData.result ?? []),
 		[data],
 	);
 

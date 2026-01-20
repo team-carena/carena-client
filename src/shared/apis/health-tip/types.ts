@@ -1,12 +1,7 @@
-export interface HealthTipListItem {
-	id: number;
-	title: string;
-}
-
-export interface HealthTipListData {
-	result: HealthTipListItem[];
-	hasNext: boolean;
-}
+export type {
+	HealthTipListElement,
+	ReadHealthTipListView,
+} from "@/shared/apis/generated/data-contracts";
 
 export interface GetHealthTipListParams {
 	page: number;
