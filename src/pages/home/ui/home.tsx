@@ -1,39 +1,9 @@
-import { useEffect } from "react";
-import { useAuthStore } from "@/shared/store/auth-store";
 import { Tabs } from "@/shared/ui/tabs/tabs";
-import { postAccessToken } from "../api/post-access-token";
 import HealthAnalysisPage from "../health-analysis/health-analysis";
 import UserInfo from "../health-info/components/user-info";
 import HealthInfoPage from "../health-info/health-info";
+
 export const HomePage = () => {
-	const { setAccessToken, setAuthenticated, setAuthCheckLoading, logout } =
-		useAuthStore();
-
-	useEffect(() => {
-		const initAuth = async () => {
-			try {
-				const response = await postAccessToken();
-				const authHeader = response.headers["authorization"];
-
-				if (!authHeader) {
-					throw new Error("Authorization header not found");
-				}
-
-				const accessToken = authHeader.replace(/^Bearer\s+/i, "");
-
-				setAccessToken(accessToken);
-				setAuthenticated(true);
-			} catch (error) {
-				// refresh 실패 or 비로그인 상태
-				logout();
-			} finally {
-				setAuthCheckLoading(false);
-			}
-		};
-
-		void initAuth();
-	}, [setAccessToken, setAuthenticated, setAuthCheckLoading, logout]);
-
 	return (
 		<div className="flex w-full flex-col">
 			<UserInfo />
