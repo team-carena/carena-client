@@ -10,17 +10,10 @@ import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
+import { CategoryLabel } from "@/shared/ui/labels/category-label";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { RadioButton } from "@/shared/ui/radio/radio";
-
-interface CategoryLabelProps {
-	label: string;
-}
-
-const CategoryLabel = ({ label }: CategoryLabelProps) => {
-	return <h3 className="head02-b-16 text-left text-primary-700">{label}</h3>;
-};
 
 export const Signup = () => {
 	const [isAgreed, setIsAgreed] = useState(false);

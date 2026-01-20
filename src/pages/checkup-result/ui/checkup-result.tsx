@@ -11,15 +11,8 @@ import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
 import { InputSmall } from "@/shared/ui/inputs/input-small";
+import { CategoryLabel } from "@/shared/ui/labels/category-label";
 import { RadioButton } from "@/shared/ui/radio/radio";
-
-interface CategoryLabelProps {
-	label: string;
-}
-
-const CategoryLabel = ({ label }: CategoryLabelProps) => {
-	return <h3 className="head02-b-16 text-left text-primary-700">{label}</h3>;
-};
 
 export const CheckupResultPage = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
