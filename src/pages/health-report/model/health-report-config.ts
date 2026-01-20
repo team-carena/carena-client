@@ -59,11 +59,11 @@ export const HEALTH_REPORT_CONFIG: Record<
 				description: "배꼽 높이에서 수평으로 측정한 복부의 둘레",
 				range: {
 					type: "sex",
-					male: {
+					MALE: {
 						normal: "90 미만",
 						warning: "90 이상",
 					},
-					female: {
+					FEMALE: {
 						normal: "85 미만",
 						warning: "85 이상",
 					},
@@ -354,12 +354,12 @@ export const HEALTH_REPORT_CONFIG: Record<
 				description: "간과 담즙이 지나가는 쓸개관 세포에 존재하는 효소",
 				range: {
 					type: "sex",
-					male: {
+					MALE: {
 						normal: "11~63",
 						warning: "64~77",
 						danger: "78 이상",
 					},
-					female: {
+					FEMALE: {
 						normal: "8~35",
 						warning: "36~45",
 						danger: "46 이상",
@@ -467,12 +467,12 @@ export const HEALTH_REPORT_CONFIG: Record<
 				description: "혈액 속에서 산소를 운반하는 단백질",
 				range: {
 					type: "sex",
-					male: {
+					MALE: {
 						normal: "13.0~16.5",
 						warning: "12.0~12.9",
 						danger: "12.0 미만 또는 16.6 이상",
 					},
-					female: {
+					FEMALE: {
 						normal: "12.0~15.5",
 						warning: "10.0~11.9",
 						danger: "10.0 미만 또는 15.6 이상",

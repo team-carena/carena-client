@@ -10,7 +10,7 @@ export const HealthReportDetailPage = () => {
 	if (!type) return null;
 
 	// TODO: 실제 사용자 성별로 교체
-	const sex: Sex = "male";
+	const sex: Sex = "MALE";
 
 	const reportConfig = HEALTH_REPORT_CONFIG[type];
 	if (!reportConfig) return null;

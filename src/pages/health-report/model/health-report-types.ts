@@ -10,7 +10,7 @@ export type HealthReportType =
 	| "anemia";
 
 // 사용자 성별
-export type Sex = "male" | "female";
+export type Sex = "MALE" | "FEMALE";
 
 /**
  * 정상 / 경계 / 의심 수치 범위
@@ -30,7 +30,7 @@ export interface HealthReportRangeValue {
 /**
  * 수치 범위 타입
  * - 성별 구분 없는 경우: HealthReportRangeValue
- * - 성별 구분 필요한 경우: { male, female }
+ * - 성별 구분 필요한 경우: { MALE, FEMALE }
  */
 export type HealthReportRange =
 	| {
@@ -39,8 +39,8 @@ export type HealthReportRange =
 	  }
 	| {
 			type: "sex";
-			male: HealthReportRangeValue;
-			female: HealthReportRangeValue;
+			MALE: HealthReportRangeValue;
+			FEMALE: HealthReportRangeValue;
 	  };
 
 /** 이런 습관이 도움돼요! */
