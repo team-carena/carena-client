@@ -90,9 +90,6 @@ export interface HealthReportSection {
  * 검진결과 상세 페이지 설정
  */
 export interface HealthReportConfig {
-	/** 헤더 타이틀 */
-	headerTitle: string;
-
 	/** 항목별 결과 섹션 */
 	sections: HealthReportSection[];
 }

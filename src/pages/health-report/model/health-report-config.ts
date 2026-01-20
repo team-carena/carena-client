@@ -27,7 +27,6 @@ export const HEALTH_REPORT_CONFIG: Record<
 > = {
 	/** ================= 기본 검사 ================= */
 	basic: {
-		headerTitle: "기본 검사",
 		sections: [
 			{
 				key: "height",
@@ -129,7 +128,6 @@ export const HEALTH_REPORT_CONFIG: Record<
 
 	/** ================= 혈압 검사 ================= */
 	"blood-pressure": {
-		headerTitle: "혈압 검사",
 		sections: [
 			{
 				key: "systolic",
@@ -227,7 +225,6 @@ export const HEALTH_REPORT_CONFIG: Record<
 
 	/** ================= 당뇨 검사 ================= */
 	diabetes: {
-		headerTitle: "당뇨 검사",
 		sections: [
 			{
 				key: "fasting-glucose",
@@ -280,7 +277,6 @@ export const HEALTH_REPORT_CONFIG: Record<
 
 	/** ================= 간장질환 검사 ================= */
 	liver: {
-		headerTitle: "간장질환 검사",
 		sections: [
 			{
 				key: "ast",
@@ -395,7 +391,6 @@ export const HEALTH_REPORT_CONFIG: Record<
 
 	/** ================= 신장질환 검사 ================= */
 	kidney: {
-		headerTitle: "신장질환 검사",
 		sections: [
 			{
 				key: "creatinine",
@@ -465,7 +460,6 @@ export const HEALTH_REPORT_CONFIG: Record<
 
 	/** ================= 빈혈 검사 ================= */
 	anemia: {
-		headerTitle: "빈혈 검사",
 		sections: [
 			{
 				key: "hemoglobin",
