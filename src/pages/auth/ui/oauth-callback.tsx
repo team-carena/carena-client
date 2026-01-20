@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import Lottie from "react-lottie-player";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import { postTokenExchange } from "@/shared/apis/auth/post-token-exchange";
+import LoadingGraphic from "@/shared/assets/lottie/spinner.json";
 import { useAuthStore } from "@/shared/store/auth-store";
 
 export const OauthCallBack = () => {
@@ -41,5 +43,17 @@ export const OauthCallBack = () => {
 		void exchangeToken();
 	}, [navigate, setAccessToken, setAuthenticated, setAuthCheckLoading]);
 
-	return null; // TODO: 로딩 UI?
+	return (
+		<div className="flex min-h-dvh items-center justify-center">
+			<Lottie
+				animationData={LoadingGraphic}
+				aria-hidden="true"
+				tabIndex={-1}
+				speed={0.57}
+				loop
+				play
+				className="h-[22rem] w-[20rem]"
+			/>
+		</div>
+	);
 };
