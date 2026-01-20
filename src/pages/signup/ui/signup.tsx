@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { OcrSection } from "@/pages/signup/components/ocr-section";
 import {
 	type SignupFormData,
 	type SignupFormInput,
@@ -76,8 +77,20 @@ export const Signup = () => {
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
 
+	const handleOcrComplete = (data: Record<string, string>) => {
+		Object.entries(data).forEach(([key, value]) => {
+			if (value) {
+				setValue(key as keyof SignupFormData, value, {
+					shouldDirty: true,
+					shouldValidate: true,
+				});
+			}
+		});
+	};
+
 	return (
 		<>
+			<OcrSection onOcrComplete={handleOcrComplete} />
 			<form
 				id="signup-form"
 				onSubmit={handleSubmit(onSubmit)}
