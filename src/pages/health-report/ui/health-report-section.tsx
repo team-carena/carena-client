@@ -99,9 +99,7 @@ export const HealthReportSection = ({
 			{/* 이런 습관이 도움돼요 */}
 			{habitGuide && (
 				<div className="mt-[2rem] flex flex-col gap-[1.2rem]">
-					<Label role="heading" aria-level={3}>
-						이런 습관이 도움돼요!
-					</Label>
+					<Label>이런 습관이 도움돼요!</Label>
 
 					<ContentCard variant="muted">
 						<ContentCard.Content className="flex flex-col gap-[0.8rem]">

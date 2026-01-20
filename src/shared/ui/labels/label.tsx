@@ -1,6 +1,6 @@
 import { cn } from "@/shared/libs/cn";
 
-export interface LabelProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface LabelProps extends React.HTMLAttributes<HTMLHeadingElement> {
 	children: React.ReactNode;
 }
 
