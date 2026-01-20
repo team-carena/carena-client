@@ -44,16 +44,16 @@ export const Signup = () => {
 			height: "",
 			weight: "",
 			bmi: "",
-			waist: "",
-			systolic: "",
-			diastolic: "",
+			waistCircumference: "",
+			systolicBp: "",
+			diastolicBp: "",
 			hemoglobin: "",
 			fastingGlucose: "",
 			serumCreatinine: "",
-			gfr: "",
+			egfr: "",
 			ast: "",
 			alt: "",
-			ggt: "",
+			gammaGtp: "",
 		},
 	});
 
@@ -232,8 +232,8 @@ export const Signup = () => {
 							label="허리둘레"
 							unit="cm"
 							numeric
-							{...register("waist")}
-							errorMessage={errors.waist?.message}
+							{...register("waistCircumference")}
+							errorMessage={errors.waistCircumference?.message}
 						/>
 					</div>
 
@@ -244,15 +244,15 @@ export const Signup = () => {
 							left={{
 								label: "수축기",
 								unit: "mmHg",
-								...register("systolic"),
+								...register("systolicBp"),
 							}}
 							right={{
 								label: "이완기",
 								unit: "mmHg",
-								...register("diastolic"),
+								...register("diastolicBp"),
 							}}
 							errorMessage={
-								errors.systolic?.message || errors.diastolic?.message
+								errors.systolicBp?.message || errors.diastolicBp?.message
 							}
 						/>
 					</div>
@@ -287,8 +287,8 @@ export const Signup = () => {
 							label="신사구체여과율"
 							unit="mL/min/1.73m²"
 							numeric
-							{...register("gfr")}
-							errorMessage={errors.gfr?.message}
+							{...register("egfr")}
+							errorMessage={errors.egfr?.message}
 						/>
 						<InputMedium
 							label="에이에스티"
@@ -308,8 +308,8 @@ export const Signup = () => {
 							label="감마지티피"
 							unit="IU/L"
 							numeric
-							{...register("ggt")}
-							errorMessage={errors.ggt?.message}
+							{...register("gammaGtp")}
+							errorMessage={errors.gammaGtp?.message}
 						/>
 					</div>
 				</section>
