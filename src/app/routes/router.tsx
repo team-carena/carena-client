@@ -2,6 +2,7 @@ import { HealthMenuPage } from "@pages/health-menu/health-menu";
 import { MenuDetailPage } from "@pages/health-menu/health-menu-detail";
 import type { HeaderVariant } from "@shared/ui/navigations/header";
 import { createBrowserRouter, Navigate } from "react-router";
+import { CheckupResultPage } from "@/pages/checkup-result/ui/checkup-result";
 import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
@@ -88,6 +89,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "건강 팁 상세",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.CHECKUP_RESULT,
+						element: <CheckupResultPage />,
+						handle: {
+							header: "back",
+							title: "검진 결과 입력",
 						} satisfies RouteHandle,
 					},
 					{
