@@ -5,6 +5,8 @@ export interface BaseResponse<T = unknown> {
 	data: T;
 }
 
-export type QueryParams = Record<string, string | number | boolean>;
+export type QueryParams =
+	| Record<string, string | number | boolean | undefined>
+	| object;
 
 export type RequestBody = Record<string, unknown> | object | FormData;
