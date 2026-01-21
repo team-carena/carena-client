@@ -1,8 +1,9 @@
 import Lottie from "react-lottie-player";
 import LoginBackGround from "@/shared/assets/img/login-bg.png";
+import LandingGraphic from "@/shared/assets/lottie/landing-graphic.json";
 import { CarenaLogoText } from "@/shared/assets/svg";
+import { requestKakaoAuthorize } from "@/shared/libs/request-kakao-authorize";
 import { LoginButton } from "../components/login-button";
-import LandingGraphic from "../landing-graphic.json";
 
 export const LoginPage = () => {
 	return (
@@ -18,7 +19,7 @@ export const LoginPage = () => {
 					<p className="display03-sb-20 text-gray-900">
 						검진 결과 이후의 모든 순간을
 					</p>
-					<p className="display01-b-36 text-primary-500">더 쉽게</p>
+					<p className="display01-b-36 text-primary-500">더 쉽고 편리하게</p>
 				</header>
 
 				<Lottie
@@ -43,7 +44,7 @@ export const LoginPage = () => {
 				</section>
 
 				<div className="pb-[4rem]">
-					<LoginButton onClick={() => {}} />
+					<LoginButton onClick={requestKakaoAuthorize} />
 				</div>
 			</div>
 		</>

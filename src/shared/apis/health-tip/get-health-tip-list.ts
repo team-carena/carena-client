@@ -11,7 +11,7 @@ export const getHealthTipList = ({
 }: GetHealthTipListParams) => {
 	return request<ReadHealthTipListView>({
 		method: HTTP_METHOD.GET,
-		url: API_ENDPOINTS.HEALTH_TIP.LIST,
+		url: API_ENDPOINTS.healthTip.list,
 		query: {
 			page,
 			...(hashtagName ? { hashtagName } : {}),
