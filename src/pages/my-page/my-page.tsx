@@ -1,36 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import type { MyPageResponse } from "@/shared/apis/generated/data-contracts";
 import { getMyPageInfo } from "@/shared/apis/my-page/get-my-page-info";
+import { postLogout } from "@/shared/apis/my-page/post-logout";
 import { DefaultProfile } from "@/shared/assets/svg";
+import { useAuthStore } from "@/shared/store/auth-store";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { ActionSection } from "./action-section";
-
-const ACTION_LIST = [
-	{
-		id: "terms",
-		title: "약관",
-		label: "약관 바로보기",
-		onClick: () => {
-			window.open(
-				"https://petalite-biplane-c36.notion.site/2eb5365471d180fcb539d7caf1ca2310",
-				"_blank",
-				"noopener, noreferrer",
-			);
-		},
-	},
-	{
-		id: "logout",
-		title: "설정",
-		label: "로그아웃",
-		onClick: () =>
-			openModal({
-				size: "sm",
-				description: "로그아웃 하시겠습니까?",
-				primaryAction: { label: "확인", onClick: () => {} }, // TODO: 로그아웃 api 연동 시 핸들러 등록 -> 로그아웃 하면 랜딩 페이지로
-				secondaryAction: { label: "취소", onClick: () => {} },
-			}),
-	},
-];
 
 const formatBirthdate = (date: string) => {
 	const [year, month, day] = date.split("-");
@@ -39,19 +16,59 @@ const formatBirthdate = (date: string) => {
 
 export const MyPage = () => {
 	const [userInfo, setUserInfo] = useState<MyPageResponse | null>(null);
+	const navigate = useNavigate();
+	const logoutStore = useAuthStore((state) => state.logout);
 
 	useEffect(() => {
-		const fetchMyPageInfo = async () => {
+		const getMyPageInfoApi = async () => {
 			try {
 				const response = await getMyPageInfo();
 				setUserInfo(response);
-			} catch (error) {
-				console.error("마이페이지 정보 조회 실패", error);
-			}
+			} catch (error) {}
 		};
 
-		void fetchMyPageInfo();
+		void getMyPageInfoApi();
 	}, []);
+
+	const handleLogout = async () => {
+		try {
+			await postLogout();
+		} catch (error) {
+		} finally {
+			logoutStore();
+			void navigate(ROUTE_PATH.LOGIN);
+		}
+	};
+
+	const ACTION_LIST = [
+		{
+			id: "terms",
+			title: "약관",
+			label: "약관 바로보기",
+			onClick: () => {
+				window.open(
+					"https://petalite-biplane-c36.notion.site/2eb5365471d180fcb539d7caf1ca2310",
+					"_blank",
+					"noopener, noreferrer",
+				);
+			},
+		},
+		{
+			id: "logout",
+			title: "설정",
+			label: "로그아웃",
+			onClick: () =>
+				openModal({
+					size: "sm",
+					description: "로그아웃 하시겠습니까?",
+					primaryAction: {
+						label: "확인",
+						onClick: handleLogout,
+					},
+					secondaryAction: { label: "취소", onClick: () => {} },
+				}),
+		},
+	];
 
 	return (
 		<div className="min-h-dvh bg-white px-[2rem]">
