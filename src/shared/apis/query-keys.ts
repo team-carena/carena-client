@@ -12,8 +12,14 @@ export const queryKeys = {
 	healthTip: {
 		all: ["healthTip"] as const,
 		lists: () => [...queryKeys.healthTip.all, "list"] as const,
-		list: (params?: { page?: number; size?: number }) =>
-			[...queryKeys.healthTip.lists(), params] as const,
+		list: (params?: { page?: number; size?: number; hashtagName?: string }) =>
+			[
+				...queryKeys.healthTip.lists(),
+				{
+					...params,
+					hashtagName: params?.hashtagName ?? "all",
+				},
+			] as const,
 		details: () => [...queryKeys.healthTip.all, "detail"] as const,
 		detail: (id: string) => [...queryKeys.healthTip.details(), id] as const,
 		ticker: () => [...queryKeys.healthTip.all, "ticker"] as const,

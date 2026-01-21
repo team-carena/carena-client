@@ -23,10 +23,9 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 
 				const response = await postRefreshAccessToken();
 
-				const authorization = response.headers["authorization"];
+				const authorization = response.headers.authorization;
 
 				if (!authorization) {
-					console.error("[AuthInit] Authorization 헤더 누락");
 					throw new Error("Authorization header missing.");
 				}
 
@@ -34,7 +33,7 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 
 				setAccessToken(accessToken);
 				setAuthenticated(true);
-			} catch (error) {
+			} catch (_error) {
 				setAuthenticated(false);
 			} finally {
 				setAuthCheckLoading(false);
