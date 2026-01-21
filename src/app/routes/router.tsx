@@ -2,7 +2,9 @@ import { HealthMenuPage } from "@pages/health-menu/health-menu";
 import { MenuDetailPage } from "@pages/health-menu/health-menu-detail";
 import type { HeaderVariant } from "@shared/ui/navigations/header";
 import { createBrowserRouter, Navigate } from "react-router";
+import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
 import { CheckupResultPage } from "@/pages/checkup-result/ui/checkup-result";
+import { HealthReportDetailPage } from "@/pages/health-report/health-report-detail";
 import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
@@ -27,6 +29,19 @@ export const router = createBrowserRouter([
 		path: ROUTE_PATH.LOGIN,
 		element: <LoginPage />,
 	},
+	//
+	{
+		path: ROUTE_PATH.SIGNUP,
+		element: <Signup />,
+		handle: {
+			header: "signup",
+			title: "회원가입",
+		} satisfies RouteHandle,
+	},
+	{
+		path: ROUTE_PATH.OAUTH_CALLBACK,
+		element: <OauthCallBack />,
+	},
 	{
 		element: <ProtectedRoute />,
 		children: [
@@ -37,14 +52,6 @@ export const router = createBrowserRouter([
 					{
 						index: true,
 						element: <Navigate to={ROUTE_PATH.HOME} replace />,
-					},
-					{
-						path: ROUTE_PATH.SIGNUP,
-						element: <Signup />,
-						handle: {
-							header: "signup",
-							title: "회원가입",
-						} satisfies RouteHandle,
 					},
 					{
 						path: ROUTE_PATH.HOME,
@@ -89,6 +96,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "건강 팁 상세",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_REPORT_DETAIL,
+						element: <HealthReportDetailPage />,
+						handle: {
+							header: "back",
+							// title은 layout에서 type 보고 동적으로 처리
 						} satisfies RouteHandle,
 					},
 					{

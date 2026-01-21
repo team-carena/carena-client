@@ -15,7 +15,7 @@
     "build-storybook": "storybook build --stats-json",
     "chromatic": "chromatic --exit-zero-on-changes",
     "chromatic:ci": "chromatic --only-changed --exit-zero-on-changes",
-    "api:generate": "swagger-typescript-api generate -p {Swagger 문서 Path 추후 추가} -o src/shared/apis/generated --modular -d --extract-request-body --extract-response-body --extract-response-error"
+    "api:generate": "swagger-typescript-api generate -p https://api.care-na.com/v3/api-docs -o src/shared/apis/generated --no-client --modular -d --extract-request-body --extract-response-body --extract-response-error"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -38,7 +38,8 @@
     "recharts": "2.15.4",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
-    "zod": "^4.3.5"
+    "zod": "^4.3.5",
+    "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.10",
