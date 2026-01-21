@@ -116,17 +116,6 @@ export const Signup = () => {
 	const birthDateError =
 		errors.birthDate?.root?.message || errors.birthDate?.message;
 
-	const handleOcrComplete = (data: Record<string, string>) => {
-		Object.entries(data).forEach(([key, value]) => {
-			if (value) {
-				setValue(key as keyof SignupFormData, value, {
-					shouldDirty: true,
-					shouldValidate: true,
-				});
-			}
-		});
-	};
-
 	return (
 		// 하단 영역을 아래로 밀기 위해 헤더 제외한 높이 지정
 		<div className="flex h-[calc(100dvh-var(--header-height))] flex-col bg-white p-[2.4rem_2rem_5rem_2rem]">
