@@ -1,4 +1,4 @@
-import { type ReactNode, Suspense, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
 import { useHealthReportDateList } from "@/shared/apis/queries/use-get-health-report-date-list";
 import {
@@ -46,18 +46,18 @@ const formatHealthCheckDate = (value?: string) => {
 };
 
 const HealthAnalysisContent = () => {
-	const { data } = useHealthReportDateList({ index: 1 });
+	const { data, isPending, isError } = useHealthReportDateList({ index: 1 });
 	const options = useMemo(
 		() =>
-			(data.reportDates ?? []).map((dateInfo) => ({
+			(data?.reportDates ?? []).map((dateInfo) => ({
 				value: dateInfo.healthCheckDate ?? "",
 				label: formatHealthCheckDate(dateInfo.healthCheckDate),
 				subLabel: dateInfo.institutionName ?? "",
 			})),
-		[data.reportDates],
+		[data?.reportDates],
 	);
 	const [selectedDate, setSelectedDate] = useState(options[0]?.value ?? "");
-	const hasNoReports = options.length === 0;
+	const hasNoReports = !isPending && !isError && options.length === 0;
 
 	useEffect(() => {
 		if (options.length > 0) {
@@ -208,6 +208,8 @@ const HealthAnalysisContent = () => {
 		{ label: "혈압", riskLevel: RADAR_CHART_MAP.경계 },
 	];
 
+	if (isPending || isError) return null;
+
 	if (hasNoReports) {
 		return (
 			<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
@@ -280,11 +282,7 @@ const HealthAnalysisContent = () => {
 };
 
 const HealthAnalysisPage = () => {
-	return (
-		<Suspense fallback={null}>
-			<HealthAnalysisContent />
-		</Suspense>
-	);
+	return <HealthAnalysisContent />;
 };
 
 export default HealthAnalysisPage;
