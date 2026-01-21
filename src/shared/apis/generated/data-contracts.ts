@@ -227,10 +227,13 @@ export interface SuccessResponseReadHealthTipTickerView {
 	data?: ReadHealthTipTickerView;
 }
 
+export type RiskLevelLabel = "NONE" | "NORMAL" | "BORDERLINE" | "SUSPICIOUS";
+
 export interface DisplayElement {
 	name?: string;
 	value?: number;
-	riskLevel?: string;
+	riskLevelLabel?: RiskLevelLabel;
+	riskLevelValue?: string;
 }
 
 export interface EntireHealthReportView {
