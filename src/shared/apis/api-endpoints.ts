@@ -61,6 +61,6 @@ export const API_ENDPOINTS = {
 
 	// 추천 식단
 	recommendedMeal: {
-		latest: "/api/v1/recommend",
+		recommended: "/api/v1/recommend",
 	},
 } as const;
