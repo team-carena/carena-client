@@ -8,6 +8,7 @@ import { postTokenExchange } from "@/shared/apis/auth/post-token-exchange";
 import LoadingGraphic from "@/shared/assets/lottie/spinner.json";
 import { useAuthStore } from "@/shared/store/auth-store";
 
+// OauthCallback에서는 신규회원/기존회원 구분할 필요 없음
 export const OauthCallBack = () => {
 	const navigate = useNavigate();
 	const { setAccessToken, setAuthenticated, setAuthCheckLoading } =
@@ -31,9 +32,9 @@ export const OauthCallBack = () => {
 				setAccessToken(accessToken);
 				setAuthenticated(true);
 
-				await navigate(ROUTE_PATH.SIGNUP, { replace: true });
-			} catch (error) {
-				await navigate(ROUTE_PATH.LOGIN, { replace: true });
+				void navigate(ROUTE_PATH.HOME, { replace: true });
+			} catch (_error) {
+				void navigate(ROUTE_PATH.LOGIN, { replace: true });
 			} finally {
 				setAuthCheckLoading(false);
 			}
