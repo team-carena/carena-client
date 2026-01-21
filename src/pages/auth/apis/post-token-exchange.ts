@@ -1,11 +1,12 @@
+import { API_ENDPOINTS } from "@/shared/apis/api-endpoints";
 import type { SuccessResponseVoid } from "@/shared/apis/generated/data-contracts";
-import { request } from "@/shared/apis/request";
+import { HTTP_METHOD, request } from "@/shared/apis/request";
 
 // oauth-callback에서 사용
 export const postTokenExchange = () => {
 	return request<SuccessResponseVoid>({
-		method: "POST",
-		url: "/member/tokens",
+		method: HTTP_METHOD.POST,
+		url: API_ENDPOINTS.member.tokens,
 		rawResponse: true,
 	});
 };
