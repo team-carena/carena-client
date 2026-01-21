@@ -7,7 +7,7 @@ import {
 
 export const signupSchema = z.object({
 	name: nameSchema,
-	birthDate: birthDateSchema,
+	birthdate: birthDateSchema,
 	gender: genderSchema,
 });
 
