@@ -1,14 +1,20 @@
+import { useGetHealthReportHistory } from "@/pages/health-report-detail/api/queries/use-get-health-report-history";
 import type {
 	HabitGuide,
 	HealthReportRange,
 	Sex,
-} from "@/pages/health-report-detail/model/health-report-types";
+} from "@/pages/health-report-detail/config/health-report-types";
+import { HEALTH_REPORT_HISTORY_MAP } from "@/pages/health-report-detail/model/health-report-history-map";
+import { mapHistoryToLineChartData } from "@/pages/health-report-detail/model/health-report-mappers";
 import { CardResultMeaning } from "@/pages/health-report-detail/ui/card-result-meaning";
 import { ContentCard } from "@/shared/ui/cards/card-content";
 import type { LineChartData } from "@/shared/ui/graphs/line-chart/line-chart";
 import { LineChart } from "@/shared/ui/graphs/line-chart/line-chart";
 import Label from "@/shared/ui/labels/label";
 
+/** =========================
+ *  1) 프리젠터: UI만 담당
+ * ========================= */
 interface HealthReportSectionProps {
 	title: string;
 	description: string;
@@ -48,9 +54,6 @@ export const HealthReportSection = ({
 	showDivider = false,
 	chartData,
 }: HealthReportSectionProps) => {
-	/**
-	 * 범위 텍스트 생성
-	 */
 	const rangeText = (() => {
 		if (!range) return null;
 
@@ -73,19 +76,16 @@ export const HealthReportSection = ({
 
 	return (
 		<section className="px-[2rem] pb-[4rem]">
-			{/* 항목 타이틀 */}
 			<h2 className="head01-b-18 text-black">{title}</h2>
 
-			{/* 설명 / 범위 / 그래프 */}
 			<div className="mt-[1.2rem] flex flex-col gap-[0.8rem]">
 				<p className="body05-r-12 text-gray-700">{description}</p>
 
 				{rangeText && <p className="body05-r-12 text-gray-900">{rangeText}</p>}
 
-				{chartData && <LineChart data={chartData} />}
+				{chartData.length > 0 && <LineChart data={chartData} />}
 			</div>
 
-			{/* 결과값 의미 */}
 			{increaseText && decreaseText && (
 				<div className="mt-[2rem] flex flex-col gap-[1.9rem]">
 					<Label role="heading" aria-level={3}>
@@ -96,14 +96,12 @@ export const HealthReportSection = ({
 				</div>
 			)}
 
-			{/* 이런 습관이 도움돼요 */}
 			{habitGuide && (
 				<div className="mt-[2rem] flex flex-col gap-[1.2rem]">
 					<Label>이런 습관이 도움돼요!</Label>
 
 					<ContentCard variant="muted">
 						<ContentCard.Content className="flex flex-col gap-[0.8rem]">
-							{/* 일반 리스트 */}
 							{habitGuide.type === "list" && (
 								<ul className="list-disc space-y-[0.4rem] pl-[1.6rem]">
 									{habitGuide.items.map((item) => (
@@ -114,7 +112,6 @@ export const HealthReportSection = ({
 								</ul>
 							)}
 
-							{/* 소제목 + 리스트 */}
 							{habitGuide.type === "group" &&
 								habitGuide.groups.map((group) => (
 									<div key={group.title} className="flex flex-col gap-[0.4rem]">
@@ -132,19 +129,50 @@ export const HealthReportSection = ({
 					</ContentCard>
 
 					{source && (
-						<p className="body05-r-12 text-right text-gray-700">
+						<p className="body05-r-12 px-[0.8rem] text-right text-gray-700">
 							출처: {source}
 						</p>
 					)}
 				</div>
 			)}
 
-			{/* 섹션 구분선 */}
 			{showDivider && (
 				<div className="mt-[2rem] flex justify-center">
 					<div className="h-[1px] w-[calc(100%-2.3rem)] bg-gray-200" />
 				</div>
 			)}
 		</section>
+	);
+};
+
+/** =========================
+ *  2) 컨테이너: API 연동 + chartData 주입
+ * ========================= */
+
+type HistoryMapKey = keyof typeof HEALTH_REPORT_HISTORY_MAP;
+
+interface HealthReportSectionWithHistoryProps
+	extends Omit<HealthReportSectionProps, "chartData"> {
+	sectionKey: HistoryMapKey;
+	healthCheckDate: string;
+}
+
+export const HealthReportSectionWithHistory = ({
+	sectionKey,
+	healthCheckDate,
+	...rest
+}: HealthReportSectionWithHistoryProps) => {
+	const apiInfo = HEALTH_REPORT_HISTORY_MAP[sectionKey];
+
+	const { data, isPending } = useGetHealthReportHistory({
+		endpoint: apiInfo.endpoint,
+		queryKey: apiInfo.queryKey(),
+		healthCheckDate,
+	});
+
+	const chartData = mapHistoryToLineChartData(data?.history ?? []);
+
+	return (
+		<HealthReportSection {...rest} chartData={isPending ? [] : chartData} />
 	);
 };

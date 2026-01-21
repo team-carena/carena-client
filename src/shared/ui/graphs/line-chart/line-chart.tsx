@@ -28,16 +28,15 @@ const getAreaAnimationStyle = (shouldAnimate: boolean) =>
 		: undefined;
 
 export type LineChartData = {
-	/** yyyy-mm */
-	date: string;
 	value: number;
+	date: string;
 };
 
 interface LineChartProps {
 	data: LineChartData[];
 }
 
-/** yyyy-mm → YY/MM */
+/** yyyy-mm-dd → YY/MM */
 const formatDateLabel = (date: string) => {
 	const [year, month] = date.split("-");
 	return `${year.slice(2)}/${month}`;

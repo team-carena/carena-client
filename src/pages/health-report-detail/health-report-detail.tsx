@@ -1,12 +1,16 @@
-import { useParams } from "react-router";
+import { useParams, useSearchParams } from "react-router";
+import type { HealthReportType, Sex } from "./config/health-report-types";
 import { HEALTH_REPORT_CONFIG } from "./model/health-report-config";
-import type { HealthReportType, Sex } from "./model/health-report-types";
-import { HealthReportSection } from "./ui/health-report-section";
+import type { HEALTH_REPORT_HISTORY_MAP } from "./model/health-report-history-map";
+import { HealthReportSectionWithHistory } from "./ui/health-report-section";
 
 const DOUBLE_NOTICE_TYPES: HealthReportType[] = ["basic", "liver", "anemia"];
 
 export const HealthReportDetailPage = () => {
 	const { type } = useParams<{ type: HealthReportType }>();
+	const [searchParams] = useSearchParams();
+	const healthCheckDate = searchParams.get("healthCheckDate") ?? "";
+
 	if (!type) return null;
 
 	// TODO: 실제 사용자 성별로 교체
@@ -14,6 +18,8 @@ export const HealthReportDetailPage = () => {
 
 	const reportConfig = HEALTH_REPORT_CONFIG[type];
 	if (!reportConfig) return null;
+
+	if (!healthCheckDate) return null;
 
 	return (
 		<>
@@ -30,7 +36,13 @@ export const HealthReportDetailPage = () => {
 
 			{/* 섹션 */}
 			{reportConfig.sections.map(({ key, ...section }) => (
-				<HealthReportSection key={key} sex={sex} {...section} />
+				<HealthReportSectionWithHistory
+					key={key}
+					sectionKey={key as keyof typeof HEALTH_REPORT_HISTORY_MAP}
+					sex={sex}
+					healthCheckDate={healthCheckDate}
+					{...section}
+				/>
 			))}
 		</>
 	);
