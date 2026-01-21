@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { OcrSection } from "@/pages/signup/components/ocr-section";
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import {
 	type SignupFormData,
 	type SignupFormInput,
@@ -11,19 +12,16 @@ import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
-import { InputSmall } from "@/shared/ui/inputs/input-small";
+import { CategoryLabel } from "@/shared/ui/labels/category-label";
+import { Header } from "@/shared/ui/navigations/header";
+import { openModal } from "@/shared/ui/overlays/modal/open-modal";
+import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { RadioButton } from "@/shared/ui/radio/radio";
 
-interface CategoryLabelProps {
-	label: string;
-}
-
-const CategoryLabel = ({ label }: CategoryLabelProps) => {
-	return <h3 className="head02-b-16 text-left text-primary-700">{label}</h3>;
-};
-
 export const Signup = () => {
+	const navigate = useNavigate();
 	const [isAgreed, setIsAgreed] = useState(false);
+	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 
 	const {
 		register,
@@ -39,21 +37,6 @@ export const Signup = () => {
 			name: "",
 			birthDate: { year: "", month: "", day: "" },
 			gender: "MALE",
-			checkupDate: { year: "", month: "", day: "" },
-			hospital: "",
-			height: "",
-			weight: "",
-			bmi: "",
-			waistCircumference: "",
-			systolicBp: "",
-			diastolicBp: "",
-			hemoglobin: "",
-			fastingGlucose: "",
-			serumCreatinine: "",
-			egfr: "",
-			ast: "",
-			alt: "",
-			gammaGtp: "",
 		},
 	});
 
@@ -69,32 +52,91 @@ export const Signup = () => {
 		birthDate.month !== "" &&
 		birthDate.day !== "";
 
-	const onSubmit = (_data: SignupFormData) => {};
+	// 회원가입 완료 모달 열기
+	const openSignupCompleteModal = () => {
+		openModal({
+			size: "sm",
+			title: "회원가입이 완료되었어요",
+			description:
+				"이미 건강 검진을 받아보셨다면,\n결과를 계속해서 입력할까요?",
+			secondaryAction: {
+				label: "메인으로 가기",
+				onClick: () => navigate(ROUTE_PATH.HOME, { replace: true }),
+			},
+			primaryAction: {
+				label: "이어서 입력하기",
+				onClick: () => navigate(ROUTE_PATH.CHECKUP_RESULT, { replace: true }),
+			},
+		});
+	};
+
+	const onSubmit = (_data: SignupFormData) => {
+		if (!isAgreed) {
+			notifyError("개인정보 수집·이용에 동의해주세요");
+			return;
+		}
+
+		// TODO: 회원가입 API 실행
+		// TODO: 회원가입 API 요청 성공 시 카카오 로그인 실행
+		// TODO: 회원가입 실패 시 navigate(ROUTE_PATH.LOGIN, { replace: true }) 후 notifyError("다시 시도해주세요")
+
+		// 임시: 바로 모달 표시 (추후 API 연동 시 성공 콜백에서 호출)
+		void openSignupCompleteModal();
+	};
+
+	// 개인정보 수집·이용 모달 열기
+	const handleOpenPrivacyModal = () => {
+		openModal({
+			title: "개인정보 수집·이용 동의",
+			description: `케어나(이하 '서비스')는 이용자의 건강 정보를 안전하게 보호하기 위해 아래와 같이 개인정보를 수집·이용합니다.
+
+1. 수집하는 개인정보 항목
+- 필수 항목: 이름, 생년월일, 성별, 건강검진 결과(검진일자, 검진기관, 검사 수치 등)
+
+2. 개인정보의 수집·이용 목적
+- 건강검진 결과 분석 및 맞춤형 건강 정보 제공
+- 서비스 이용에 따른 본인 확인
+- 서비스 개선 및 신규 서비스 개발
+
+3. 개인정보의 보유 및 이용 기간
+- 회원 탈퇴 시까지 또는 동의 철회 시까지
+- 단, 관계 법령에 따라 보존이 필요한 경우 해당 기간 동안 보관
+
+4. 동의 거부권 및 불이익
+- 이용자는 개인정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.
+- 다만, 필수 항목에 대한 동의를 거부하실 경우 서비스 이용이 제한됩니다.`,
+			onScrollEnd: () => setIsCheckboxEnabled(true),
+			primaryAction: {
+				label: "확인",
+				onClick: () => {},
+			},
+		});
+	};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
 	const birthDateError =
 		errors.birthDate?.root?.message || errors.birthDate?.message;
-	const checkupDateError =
-		errors.checkupDate?.root?.message || errors.checkupDate?.message;
-
-	const handleOcrComplete = (data: Record<string, string>) => {
-		Object.entries(data).forEach(([key, value]) => {
-			if (value) {
-				setValue(key as keyof SignupFormData, value, {
-					shouldDirty: true,
-					shouldValidate: true,
-				});
-			}
-		});
-	};
 
 	return (
-		<>
-			<OcrSection onOcrComplete={handleOcrComplete} />
+		// flex-1으로 하단 영역을 아래로 밀기 위해 헤더 제외한 높이 지정
+		<div className="mt-[var(--header-height)] flex h-[calc(100dvh-var(--header-height))] flex-col bg-white p-[2.4rem_2rem_5rem_2rem]">
+			{/* 상단 컨텐츠 영역 */}
+
+			<Header variant="signup" title="회원가입" />
+
+			<div className="mb-[4rem] space-y-[1.2rem]">
+				<h1 className="head01-b-18 text-center">
+					검진 결과 입력하고 케어나 시작하기
+				</h1>
+				<h2 className="body04-r-14 text-center">
+					아래 정보는 필수 입력 정보예요
+				</h2>
+			</div>
+
 			<form
 				id="signup-form"
 				onSubmit={handleSubmit(onSubmit)}
-				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[11.2rem]"
+				className="flex flex-1 flex-col gap-[4rem]"
 			>
 				{/* 기본정보 */}
 				<section className="flex flex-col gap-[2rem]">
@@ -162,185 +204,47 @@ export const Signup = () => {
 							</div>
 						</div>
 					</div>
-
-					{/* 검진일자, 검진병원 */}
-					<div className="flex flex-col gap-[1.2rem]">
-						<div className="flex flex-col gap-[0.8rem]">
-							<span className="body03-r-16 text-black">검진일자</span>
-							<DateInput
-								year={{
-									placeholder: "YYYY",
-									maxLength: 4,
-									...register("checkupDate.year", {
-										onBlur: () => trigger("checkupDate"),
-									}),
-								}}
-								month={{
-									placeholder: "MM",
-									maxLength: 2,
-									...register("checkupDate.month", {
-										onBlur: () => trigger("checkupDate"),
-									}),
-								}}
-								day={{
-									placeholder: "DD",
-									maxLength: 2,
-									...register("checkupDate.day", {
-										onBlur: () => trigger("checkupDate"),
-									}),
-								}}
-								errorMessage={checkupDateError}
-							/>
-						</div>
-
-						<InputMedium
-							label="검진병원"
-							placeholder="병원명 입력"
-							{...register("hospital")}
-							errorMessage={errors.hospital?.message}
-						/>
-					</div>
 				</section>
-
-				{/* 계측검사 */}
-				<section className="flex flex-col gap-[2rem]">
-					<CategoryLabel label="계측검사" />
-
-					{/*키, 체질량, 허리둘레 */}
-					<div className="flex flex-col gap-[1.2rem]">
-						<InputSmall
-							left={{
-								label: "키",
-								unit: "cm",
-								...register("height"),
-							}}
-							right={{
-								label: "몸무게",
-								unit: "kg",
-								...register("weight"),
-							}}
-							errorMessage={errors.height?.message || errors.weight?.message}
-						/>
-						<InputMedium
-							label="체질량 지수"
-							unit="kg/m²"
-							numeric
-							{...register("bmi")}
-							errorMessage={errors.bmi?.message}
-						/>
-						<InputMedium
-							label="허리둘레"
-							unit="cm"
-							numeric
-							{...register("waistCircumference")}
-							errorMessage={errors.waistCircumference?.message}
-						/>
-					</div>
-
-					{/* 고혈압 */}
-					<div className="flex flex-col gap-[2rem]">
-						<span className="head02-b-16 text-black">고혈압</span>
-						<InputSmall
-							left={{
-								label: "수축기",
-								unit: "mmHg",
-								...register("systolicBp"),
-							}}
-							right={{
-								label: "이완기",
-								unit: "mmHg",
-								...register("diastolicBp"),
-							}}
-							errorMessage={
-								errors.systolicBp?.message || errors.diastolicBp?.message
-							}
-						/>
-					</div>
-				</section>
-
-				{/* 혈액검사 */}
-				<section className="flex flex-col gap-[2rem]">
-					<CategoryLabel label="혈액검사" />
-					<div className="flex flex-col gap-[1.2rem]">
-						<InputMedium
-							label="혈색소"
-							unit="g/dL"
-							numeric
-							{...register("hemoglobin")}
-							errorMessage={errors.hemoglobin?.message}
-						/>
-						<InputMedium
-							label="공복혈당"
-							unit="mg/dL"
-							numeric
-							{...register("fastingGlucose")}
-							errorMessage={errors.fastingGlucose?.message}
-						/>
-						<InputMedium
-							label="혈청 크레아티닌"
-							unit="mg/dL"
-							numeric
-							{...register("serumCreatinine")}
-							errorMessage={errors.serumCreatinine?.message}
-						/>
-						<InputMedium
-							label="신사구체여과율"
-							unit="mL/min/1.73m²"
-							numeric
-							{...register("egfr")}
-							errorMessage={errors.egfr?.message}
-						/>
-						<InputMedium
-							label="에이에스티"
-							unit="IU/L"
-							numeric
-							{...register("ast")}
-							errorMessage={errors.ast?.message}
-						/>
-						<InputMedium
-							label="에이엘티"
-							unit="IU/L"
-							numeric
-							{...register("alt")}
-							errorMessage={errors.alt?.message}
-						/>
-						<InputMedium
-							label="감마지티피"
-							unit="IU/L"
-							numeric
-							{...register("gammaGtp")}
-							errorMessage={errors.gammaGtp?.message}
-						/>
-					</div>
-				</section>
-
-				{/* 개인정보 동의 체크박스 */}
-				<div className="-mt-[1.6rem] flex items-center gap-[0.8rem]">
-					<CheckBox checked={isAgreed} onChange={setIsAgreed} />
-					<span className="body04-r-14 text-gray-900">
-						서비스 이용을 위한{" "}
-						<button
-							type="button"
-							className="text-primary-500 underline underline-offset-2"
-						>
-							개인정보 수집·이용
-						</button>
-						에 동의합니다.
-					</span>
-				</div>
 			</form>
 
-			{/* 저장 버튼 - 하단 고정 */}
-			<div className="fixed right-0 bottom-[2rem] left-0 mx-auto max-w-[var(--app-max-width)] px-[2rem]">
+			{/* 하단 영역 (개인정보 동의 + 버튼) */}
+			<div className="flex flex-col">
+				{/* 개인정보 동의 - 기본정보 입력 완료 시 표시 */}
+				{isRequiredFilled && isValid && (
+					<section className="fade-in-animation mb-[3.6rem] flex flex-col gap-[2rem]">
+						<h3 className="head02-b-16 text-gray-600">
+							개인정보 수집·이용 동의
+						</h3>
+						<div className="flex items-start gap-[0.8rem]">
+							<CheckBox
+								checked={isAgreed}
+								onChange={setIsAgreed}
+								disabled={!isCheckboxEnabled}
+							/>
+							<span className="body01-sb-12 whitespace-nowrap pt-[0.2rem] text-black">
+								[필수]{" "}
+								<button
+									type="button"
+									className="underline underline-offset-2"
+									onClick={handleOpenPrivacyModal}
+								>
+									개인정보 수집·이용
+								</button>{" "}
+								내용을 확인하였으며 이에 동의합니다.
+							</span>
+						</div>
+					</section>
+				)}
+
 				<Button
 					type="submit"
 					form="signup-form"
 					size="lg"
-					disabled={!isAgreed || !isRequiredFilled || !isValid}
+					disabled={!isRequiredFilled || !isValid}
 				>
-					저장
+					회원가입
 				</Button>
 			</div>
-		</>
+		</div>
 	);
 };

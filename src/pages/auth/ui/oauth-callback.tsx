@@ -31,8 +31,7 @@ export const OauthCallBack = () => {
 				setAccessToken(accessToken);
 				setAuthenticated(true);
 
-				// OCR 페이지로 이동 -> TODO: 라우터 상수 활용해야 함
-				await navigate("/ocr", { replace: true });
+				await navigate(ROUTE_PATH.SIGNUP, { replace: true });
 			} catch (error) {
 				await navigate(ROUTE_PATH.LOGIN, { replace: true });
 			} finally {

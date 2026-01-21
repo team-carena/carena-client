@@ -16,6 +16,8 @@ export type ModalProps = {
 	secondaryAction?: ModalAction;
 	size?: ModalSize;
 	onClose?: () => void;
+	/** 스크롤이 끝에 도달했을 때 호출되는 콜백 (size="lg"일 때만 동작) */
+	onScrollEnd?: () => void;
 };
 
 export const Modal = ({
@@ -25,17 +27,45 @@ export const Modal = ({
 	primaryAction,
 	secondaryAction,
 	size = "lg",
+	onScrollEnd,
 }: ModalProps) => {
+	const endMarkerRef = React.useRef<HTMLDivElement>(null);
+	const previousActiveElement = React.useRef<Element | null>(null);
+
 	React.useEffect(() => {
 		if (open) {
+			// 모달 열릴 때 현재 포커스된 요소 저장
+			previousActiveElement.current = document.activeElement;
 			const originalOverflow = document.body.style.overflow;
 			document.body.style.overflow = "hidden";
 
 			return () => {
 				document.body.style.overflow = originalOverflow;
+				// 모달 닫힐 때 이전 요소로 포커스 복원
+				if (previousActiveElement.current instanceof HTMLElement) {
+					previousActiveElement.current.focus();
+				}
 			};
 		}
 	}, [open]);
+
+	// 컨텐츠 끝이 화면에 보이는지 감지
+	React.useEffect(() => {
+		if (!open || !onScrollEnd || !endMarkerRef.current) return;
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					onScrollEnd();
+				}
+			},
+			{ threshold: 1.0 },
+		);
+
+		observer.observe(endMarkerRef.current);
+
+		return () => observer.disconnect();
+	}, [open, onScrollEnd]);
 
 	const hasTitle = Boolean(title);
 
@@ -59,7 +89,7 @@ export const Modal = ({
 				aria-modal="true"
 				className={cn(
 					"relative flex w-full flex-col rounded-[12px] border border-gray-200 bg-white text-gray-900 transition-opacity duration-200",
-					size === "sm" ? "w-[28rem]" : "max-h-[61rem] w-[31.1rem]",
+					size === "sm" ? "w-[28rem]" : "max-h-[62rem] w-[31.1rem]",
 					open ? "opacity-100" : "opacity-0",
 				)}
 			>
@@ -83,6 +113,13 @@ export const Modal = ({
 						)}
 					>
 						{description}
+						{size === "lg" && onScrollEnd && (
+							<div
+								ref={endMarkerRef}
+								className="h-[1px] w-full"
+								aria-hidden="true"
+							/>
+						)}
 					</div>
 				</div>
 				<div
