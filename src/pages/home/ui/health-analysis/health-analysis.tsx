@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
-import { useGetEntireHealthReport } from "@/pages/home/apis/queries/use-get-entire-health-report";
-import { useHealthReportDateList } from "@/pages/home/apis/queries/use-get-health-report-date-list";
+import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
+import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
 import {
 	getElementBadgeCode,
@@ -206,7 +206,7 @@ const HealthAnalysisContent = () => {
 		data: report,
 		isPending: isReportPending,
 		isError: isReportError,
-	} = useGetEntireHealthReport({
+	} = useEntireHealthReport({
 		healthReportId: selectedReportId,
 		enabled: hasValidReportId,
 	});
