@@ -1,5 +1,6 @@
-import { type ReactNode, useState } from "react";
+import { type ReactNode, Suspense, useEffect, useMemo, useState } from "react";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
+import { useHealthReportDateList } from "@/shared/apis/queries/use-get-health-report-date-list";
 import {
 	CHECKUP_BADGE_LABEL,
 	type CheckupBadgeCode,
@@ -37,8 +38,33 @@ interface SummarySection {
 	rows: SummaryRow[];
 }
 
-const HealthAnalysisPage = () => {
-	const [selectedDate, setSelectedDate] = useState("2025-02-18");
+const formatHealthCheckDate = (value?: string) => {
+	if (!value) return "";
+	const [year, month, day] = value.split("-");
+	if (!year || !month || !day) return value;
+	return `${year}년 ${month}월 ${day}일`;
+};
+
+const HealthAnalysisContent = () => {
+	const { data } = useHealthReportDateList(1);
+	const options = useMemo(
+		() =>
+			(data.reportDates ?? []).map((dateInfo) => ({
+				value: dateInfo.healthCheckDate ?? "",
+				label: formatHealthCheckDate(dateInfo.healthCheckDate),
+				subLabel: dateInfo.institutionName ?? "",
+			})),
+		[data.reportDates],
+	);
+	const [selectedDate, setSelectedDate] = useState(options[0]?.value ?? "");
+	const hasNoReports = options.length === 0;
+
+	useEffect(() => {
+		if (options.length > 0) {
+			setSelectedDate((prev) => prev || options[0].value);
+		}
+	}, [options]);
+
 	// API 연결 전 임시 값: 서버에서 variant가 내려온다고 가정
 	const summaryBadgeCode: CheckupBadgeCode = "normal";
 	const summaryBadgeText = CHECKUP_BADGE_LABEL[summaryBadgeCode];
@@ -173,18 +199,6 @@ const HealthAnalysisPage = () => {
 			],
 		},
 	];
-	const options = [
-		{
-			value: "2025-02-18",
-			label: "2025년 02월 18일",
-			subLabel: "서울의료원",
-		},
-		{
-			value: "2024-02-18",
-			label: "2024년 02월 18일",
-			subLabel: "강남세브란스",
-		},
-	];
 	const radarData = [
 		{ label: "당뇨", riskLevel: RADAR_CHART_MAP.의심 },
 		{ label: "빈혈", riskLevel: RADAR_CHART_MAP.경계 },
@@ -193,6 +207,16 @@ const HealthAnalysisPage = () => {
 		{ label: "비만", riskLevel: RADAR_CHART_MAP.경계 },
 		{ label: "혈압", riskLevel: RADAR_CHART_MAP.경계 },
 	];
+
+	if (hasNoReports) {
+		return (
+			<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
+				<p className="head03-sb-16 mt-[6rem] text-center text-gray-900">
+					검진 결과를 추가해주세요.
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
@@ -252,6 +276,14 @@ const HealthAnalysisPage = () => {
 				))}
 			</div>
 		</div>
+	);
+};
+
+const HealthAnalysisPage = () => {
+	return (
+		<Suspense fallback={null}>
+			<HealthAnalysisContent />
+		</Suspense>
 	);
 };
 
