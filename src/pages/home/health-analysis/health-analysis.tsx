@@ -46,7 +46,7 @@ const formatHealthCheckDate = (value?: string) => {
 };
 
 const HealthAnalysisContent = () => {
-	const { data } = useHealthReportDateList(1);
+	const { data } = useHealthReportDateList({ index: 1 });
 	const options = useMemo(
 		() =>
 			(data.reportDates ?? []).map((dateInfo) => ({
