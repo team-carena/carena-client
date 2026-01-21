@@ -14,6 +14,7 @@ export { default as ChevronSLeft } from "./chevron-s-left.svg?react";
 export { default as ChevronSRight } from "./chevron-s-right.svg?react";
 export { default as ChevronSUp } from "./chevron-s-up.svg?react";
 export { default as Close } from "./close.svg?react";
+export { default as Correct } from "./correct.svg?react";
 export { default as DefaultProfile } from "./default-profile.svg?react";
 export { default as HealthTipBackground } from "./health-tip-bg.svg?react";
 export { default as InfoBackground } from "./info-bg.svg?react";
