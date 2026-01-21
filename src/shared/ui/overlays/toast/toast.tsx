@@ -40,7 +40,7 @@ export const notifyError = (message: string) => {
 export const notifySuccess = (message: string) => {
 	toast.success(
 		<div className="flex items-center gap-[0.4rem]">
-			<Correct />
+			<Correct aria-hidden />
 			<span className="label05-r-14 text-white">{message}</span>
 		</div>,
 		{ icon: null },
