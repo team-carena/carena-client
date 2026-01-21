@@ -147,6 +147,24 @@ export interface CreateAdminDietRequest {
 	cautionaryFoods?: string[];
 }
 
+export interface RecommendedMealView {
+	/** @format int64 */
+	recommendedMealId?: number;
+	meal?: string;
+	description?: string;
+	/** @format int64 */
+	baseDietDocument?: number;
+	baseDietTitle?: string;
+}
+
+export interface SuccessResponseRecommendedMealView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: RecommendedMealView;
+}
+
 export interface MyPageResponse {
 	name?: string;
 	/** @format date */
@@ -179,8 +197,7 @@ export interface SuccessResponseMemberInfoResponse {
 }
 
 export interface HealthTipListElement {
-	/** @format int64 */
-	id?: number;
+	id?: string;
 	title?: string;
 }
 
@@ -230,12 +247,12 @@ export interface SuccessResponseReadHealthTipTickerView {
 export interface DisplayElement {
 	name?: string;
 	value?: number;
-	riskLevel?: string;
+	riskLevelLabel?: "NONE" | "NORMAL" | "BORDERLINE" | "SUSPICIOUS";
+	riskLevelValue?: string;
 }
 
 export interface EntireHealthReportView {
-	/** @format int64 */
-	id?: number;
+	id?: string;
 	/** @format date */
 	healthCheckDate?: string;
 	basic?: DisplayElement[];
@@ -278,8 +295,7 @@ export interface HealthReportDateListView {
 }
 
 export interface ReportDateInfo {
-	/** @format int64 */
-	id?: number;
+	healthReportId?: string;
 	/** @format date */
 	healthCheckDate?: string;
 	institutionName?: string;
@@ -294,8 +310,7 @@ export interface SuccessResponseHealthReportDateListView {
 }
 
 export interface DietItem {
-	/** @format int64 */
-	id?: number;
+	id?: string;
 	title?: string;
 }
 
@@ -313,8 +328,7 @@ export interface SuccessResponseDietListResponse {
 }
 
 export interface DietDetailResponse {
-	/** @format int64 */
-	id?: number;
+	id?: string;
 	title?: string;
 	content?: string;
 	recommends?: Record<string, string[]>;
@@ -329,6 +343,10 @@ export interface SuccessResponseDietDetailResponse {
 	message?: string;
 	data?: DietDetailResponse;
 }
+
+export type GetLatestRecommendedMealsData = SuccessResponseRecommendedMealView;
+
+export type CreateRecommendedMealData = SuccessResponseVoid;
 
 export type AfterLoginData = SuccessResponseVoid;
 
