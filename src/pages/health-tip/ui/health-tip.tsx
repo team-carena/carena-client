@@ -1,4 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import { useHealthTipList } from "@/pages/health-tip/apis/queries/use-health-tip-list";
 import CardTip from "@/shared/ui/cards/card-tip";
 import Chip from "@/shared/ui/chips/chip";
@@ -20,6 +22,7 @@ interface HealthTipListProps {
 }
 
 const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
+	const navigate = useNavigate();
 	const hashtagName = selectedChip === "전체" ? undefined : selectedChip;
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
 		useHealthTipList({ hashtagName });
@@ -69,11 +72,28 @@ const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 	return (
 		<section className="px-[2rem] py-[1.2rem]">
 			<ul className="flex flex-col gap-[1.2rem]">
-				{tips.map((tip) => (
-					<li key={tip.id}>
-						<CardTip more>{tip.title}</CardTip>
-					</li>
-				))}
+				{tips.map((tip, index) => {
+					const healthTipId = tip.id ?? "";
+					const isClickable = Boolean(healthTipId);
+
+					return (
+						<li key={`${healthTipId || tip.title || "health-tip"}-${index}`}>
+							<CardTip
+								more={isClickable}
+								onClick={() =>
+									navigate(
+										`${ROUTE_PATH.HEALTH_TIP_DETAIL.replace(
+											":healthTipId",
+											healthTipId,
+										)}`,
+									)
+								}
+							>
+								{tip.title}
+							</CardTip>
+						</li>
+					);
+				})}
 
 				<li aria-hidden="true">
 					<div ref={bottomRef} className={hasNextPage ? "h-px" : "h-0"} />
