@@ -1,21 +1,20 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
+import {
+	getElementBadgeCode,
+	getSummaryBadgeState,
+} from "@/pages/home/health-analysis/health-analysis.badge";
+import { buildRadarData } from "@/pages/home/health-analysis/health-analysis.radar";
 import type {
 	DisplayElement,
 	EntireHealthReportView,
-	RiskLevelLabel,
 } from "@/shared/apis/health-report/types";
 import { useGetEntireHealthReport } from "@/shared/apis/queries/use-get-entire-health-report";
 import { useHealthReportDateList } from "@/shared/apis/queries/use-get-health-report-date-list";
 import type { CheckupBadgeCode } from "@/shared/constants/checkup-badge";
 import { LargeBadge } from "@/shared/ui/badges/large-badge";
 import { DropDown } from "@/shared/ui/drop-down/drop-down";
-import {
-	RADAR_CHART_MAP,
-	RadarChart,
-	type RadarChartDataPoint,
-	type RiskLevelKey,
-} from "@/shared/ui/graphs/radar-chart/radar-chart";
+import { RadarChart } from "@/shared/ui/graphs/radar-chart/radar-chart";
 import type {
 	HealthMetricType,
 	Sex,
@@ -42,114 +41,16 @@ interface SummarySection {
 	description: string;
 	rows: SummaryRow[];
 }
-
+// 추후에 사용자 성별 정보를 받아올 수 있도록 수정 필요
 const DEFAULT_METRIC_SEX: Sex = "FEMALE";
-const RISK_RANK: Record<RiskLevelLabel, number> = {
-	NONE: 0,
-	NORMAL: 1,
-	BORDERLINE: 2,
-	SUSPICIOUS: 3,
-};
+const SUMMARY_TOOLTIP_TEXT =
+	"본 서비스의 검진결과 해석 및 종합판단은 보건복지부가 고시한 국가건강검진 판정 기준을 참고하여 제공됩니다. 단, 병원 및 검사기관에 따라 적용 기준이나 참고 범위가 일부 다를 수 있습니다.\n\n<구분 기준>\n정상 A: 모든 검진 항목이 정상 범위에 해당하는 경우\n정상 B(경계): 하나 이상의 검진 항목이 경계 범위에 해당하는 경우\n의심: 하나 이상의 검진 항목에서 질환이 의심되는 소견이 확인된 경우";
 
 const formatHealthCheckDate = (value?: string) => {
 	if (!value) return "";
 	const [year, month, day] = value.split("-");
 	if (!year || !month || !day) return value;
 	return `${year}년 ${month}월 ${day}일`;
-};
-
-const getRiskRank = (label?: RiskLevelLabel) =>
-	label ? RISK_RANK[label] : RISK_RANK.NONE;
-
-const getBadgeCode = (label?: RiskLevelLabel): CheckupBadgeCode => {
-	if (label === "SUSPICIOUS") return "suspicious";
-	if (label === "BORDERLINE") return "borderline";
-	return "normal";
-};
-
-const getRiskKey = (label?: RiskLevelLabel): RiskLevelKey => {
-	if (label === "SUSPICIOUS") return "의심";
-	if (label === "BORDERLINE") return "경계";
-	return "정상";
-};
-
-const getHighestRiskLabel = (items?: DisplayElement[]) => {
-	let highest: RiskLevelLabel = "NONE";
-	items?.forEach((item) => {
-		if (!item) return;
-		const candidate = item.riskLevelLabel;
-		if (getRiskRank(candidate) > getRiskRank(highest)) {
-			highest = candidate ?? highest;
-		}
-	});
-	return highest;
-};
-
-const getSummaryBadgeState = (
-	report?: EntireHealthReportView,
-): { variant: CheckupBadgeCode; text: string } => {
-	const lists = [
-		report?.basic,
-		report?.bloodPressure,
-		report?.diabetes,
-		report?.liver,
-		report?.kidney,
-		report?.anemia,
-	];
-	const labels = lists
-		.flatMap((list) => list ?? [])
-		.map((item) => item?.riskLevelLabel)
-		.filter(
-			(label): label is RiskLevelLabel => Boolean(label) && label !== "NONE",
-		);
-
-	if (labels.some((label) => label === "SUSPICIOUS")) {
-		return { variant: "suspicious", text: "의심" };
-	}
-	if (labels.some((label) => label === "BORDERLINE")) {
-		return { variant: "borderline", text: "정상 B(경계)" };
-	}
-	return { variant: "normal", text: "정상 A" };
-};
-
-const buildRadarData = (
-	report?: EntireHealthReportView,
-): RadarChartDataPoint[] => {
-	const basic = report?.basic ?? [];
-	const bmi = basic.find((item) => item.name === "bmi");
-
-	return [
-		{
-			label: "당뇨",
-			riskLevel:
-				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.diabetes))],
-		},
-		{
-			label: "빈혈",
-			riskLevel:
-				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.anemia))],
-		},
-		{
-			label: "신장질환",
-			riskLevel:
-				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.kidney))],
-		},
-		{
-			label: "간장질환",
-			riskLevel:
-				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.liver))],
-		},
-		{
-			label: "비만",
-			riskLevel:
-				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(bmi ? [bmi] : []))],
-		},
-		{
-			label: "혈압",
-			riskLevel:
-				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.bloodPressure))],
-		},
-	];
 };
 
 const buildSummarySections = (
@@ -193,7 +94,7 @@ const buildSummarySections = (
 			type: "badge",
 			label,
 			value: element.value,
-			badgeCode: getBadgeCode(element.riskLevelLabel),
+			badgeCode: getElementBadgeCode(element),
 			metricKey,
 			metricSex,
 		};
@@ -287,6 +188,7 @@ const buildSummarySections = (
 };
 
 const HealthAnalysisContent = () => {
+	//검진 날짜 목록 조회
 	const { data, isPending, isError } = useHealthReportDateList({ index: 1 });
 	const options = useMemo(
 		() =>
@@ -297,9 +199,8 @@ const HealthAnalysisContent = () => {
 			})),
 		[data?.reportDates],
 	);
-	const [selectedReportId, setSelectedReportId] = useState(
-		options[0]?.value ?? "",
-	);
+	const [selectedReportId, setSelectedReportId] = useState("");
+	//유효한 ID가 있을 때에 조회 API 호출
 	const hasValidReportId = selectedReportId !== "";
 	const {
 		data: report,
@@ -310,20 +211,17 @@ const HealthAnalysisContent = () => {
 		enabled: hasValidReportId,
 	});
 	const hasNoReports = !isPending && !isError && options.length === 0;
-
+	//첫번째 리포트를 기본 선택
 	useEffect(() => {
 		if (options.length > 0) {
 			setSelectedReportId((prev) => prev || options[0].value);
 		}
 	}, [options]);
-
-	const summaryBadgeState = useMemo(
+	//전체 리포트 기준 종합 배지 상태 계산
+	const { variant: summaryBadgeVariant, text: summaryBadgeText } = useMemo(
 		() => getSummaryBadgeState(report),
 		[report],
 	);
-	const summaryBadgeCode: CheckupBadgeCode = summaryBadgeState.variant;
-	const summaryBadgeText = summaryBadgeState.text;
-	const summaryBadgeVariant = summaryBadgeCode;
 	const summarySections = useMemo(() => buildSummarySections(report), [report]);
 	const radarData = useMemo(() => buildRadarData(report), [report]);
 
@@ -354,11 +252,7 @@ const HealthAnalysisContent = () => {
 					{summaryBadgeText}
 				</LargeBadge>
 				<Tooltip side="bottom" align="start" iconTone="black">
-					<div className="whitespace-pre-line">
-						{
-							"본 서비스의 검진결과 해석 및 종합판단은 보건복지부가 고시한 국가건강검진 판정 기준을 참고하여 제공됩니다. 단, 병원 및 검사기관에 따라 적용 기준이나 참고 범위가 일부 다를 수 있습니다.\n\n<구분 기준>\n정상 A: 모든 검진 항목이 정상 범위에 해당하는 경우\n정상 B(경계): 하나 이상의 검진 항목이 경계 범위에 해당하는 경우\n의심: 하나 이상의 검진 항목에서 질환이 의심되는 소견이 확인된 경우"
-						}
-					</div>
+					<div className="whitespace-pre-line">{SUMMARY_TOOLTIP_TEXT}</div>
 				</Tooltip>
 			</div>
 			<div className="mt-[-4.8rem]">
