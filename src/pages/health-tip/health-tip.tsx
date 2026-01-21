@@ -106,6 +106,7 @@ export const HealthTipPage = () => {
 				</div>
 			</section>
 
+            // TODO: 로딩 스켈레톤 추가 
 			<Suspense fallback={null}>
 				<HealthTipList selectedChip={selectedChip} />
 			</Suspense>
