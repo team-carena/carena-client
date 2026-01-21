@@ -89,7 +89,7 @@ export const Signup = () => {
 		mutate(
 			{
 				name: data.name,
-				birthdate: `${data.birthdate.year}-${data.birthdate.month}-${data.birthdate.day}`,
+				birthdate: `${data.birthdate.year}-${data.birthdate.month.padStart(2, "0")}-${data.birthdate.day.padStart(2, "0")}`,
 				gender: data.gender,
 			},
 			{
