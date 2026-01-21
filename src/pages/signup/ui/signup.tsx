@@ -46,14 +46,14 @@ export const Signup = () => {
 	// 값 실시간 감시
 	const gender = watch("gender");
 	const name = watch("name");
-	const birthDate = watch("birthdate");
+	const birthdate = watch("birthdate");
 
 	// 필수 필드가 모두 채워졌는지 확인
 	const isRequiredFilled =
 		name.trim() !== "" &&
-		birthDate.year !== "" &&
-		birthDate.month !== "" &&
-		birthDate.day !== "" &&
+		birthdate.year !== "" &&
+		birthdate.month !== "" &&
+		birthdate.day !== "" &&
 		gender !== undefined;
 
 	// 회원가입 완료 모달 열기
@@ -134,7 +134,7 @@ export const Signup = () => {
 	};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
-	const birthDateError =
+	const birthdateError =
 		errors.birthdate?.root?.message || errors.birthdate?.message;
 
 	return (
@@ -197,7 +197,7 @@ export const Signup = () => {
 										onBlur: () => trigger("birthdate"),
 									}),
 								}}
-								errorMessage={birthDateError}
+								errorMessage={birthdateError}
 							/>
 						</div>
 
