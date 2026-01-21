@@ -1,6 +1,6 @@
 import { Outlet, useMatches } from "react-router";
-import { HEALTH_REPORT_TITLE_MAP } from "@/pages/health-report/model/health-report-config";
-import type { HealthReportType } from "@/pages/health-report/model/health-report-types";
+import { HEALTH_REPORT_TITLE_MAP } from "@/pages/health-report-detail/model/health-report-config";
+import type { HealthReportType } from "@/pages/health-report-detail/model/health-report-types";
 import { cn } from "@/shared/libs/cn";
 import { Header } from "@/shared/ui/navigations/header";
 import type { RouteHandle } from "./router";

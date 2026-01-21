@@ -2,8 +2,8 @@ import type {
 	HabitGuide,
 	HealthReportRange,
 	Sex,
-} from "@/pages/health-report/model/health-report-types";
-import { CardResultMeaning } from "@/pages/health-report/ui/card-result-meaning";
+} from "@/pages/health-report-detail/model/health-report-types";
+import { CardResultMeaning } from "@/pages/health-report-detail/ui/card-result-meaning";
 import { ContentCard } from "@/shared/ui/cards/card-content";
 import type { LineChartData } from "@/shared/ui/graphs/line-chart/line-chart";
 import { LineChart } from "@/shared/ui/graphs/line-chart/line-chart";

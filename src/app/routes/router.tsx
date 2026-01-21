@@ -3,7 +3,7 @@ import { MenuDetailPage } from "@pages/health-menu/health-menu-detail";
 import type { HeaderVariant } from "@shared/ui/navigations/header";
 import { createBrowserRouter, Navigate } from "react-router";
 import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
-import { HealthReportDetailPage } from "@/pages/health-report/health-report-detail";
+import { HealthReportDetailPage } from "@/pages/health-report-detail/health-report-detail";
 import { HealthTipPage } from "@/pages/health-tip/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
