@@ -16,7 +16,7 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 				// AuthInitializer는 앱 시작 시 한 번 호출되며, UI 상태가 불필요하므로 굳이 useMutation 사용 불필요
 				const response = await postRefreshAccessToken();
 
-				const authorization = response.headers["authorization"];
+				const authorization = response.headers.authorization;
 
 				if (!authorization) {
 					throw new Error("Authorization header missing.");

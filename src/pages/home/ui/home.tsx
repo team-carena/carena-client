@@ -1,7 +1,7 @@
 import { Tabs } from "@/shared/ui/tabs/tabs";
-import HealthAnalysisPage from "../health-analysis/health-analysis";
 import UserInfo from "../health-info/components/user-info";
 import HealthInfoPage from "../health-info/health-info";
+import HealthAnalysisPage from "./health-analysis/health-analysis";
 
 export const HomePage = () => {
 	return (
