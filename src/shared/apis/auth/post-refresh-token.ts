@@ -9,6 +9,7 @@ export const useRefreshAccessToken = () => {
 	});
 };
 
+// auth-initializer에서 사용
 export const postRefreshAccessToken = () => {
 	return request<SuccessResponseVoid>({
 		method: HTTP_METHOD.POST,
