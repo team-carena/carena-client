@@ -36,7 +36,7 @@ export const Signup = () => {
 		defaultValues: {
 			name: "",
 			birthDate: { year: "", month: "", day: "" },
-			gender: "MALE",
+			gender: undefined, // 초기에는 성별 미결정 상태
 		},
 	});
 
@@ -50,7 +50,8 @@ export const Signup = () => {
 		name.trim() !== "" &&
 		birthDate.year !== "" &&
 		birthDate.month !== "" &&
-		birthDate.day !== "";
+		birthDate.day !== "" &&
+		gender !== undefined;
 
 	// 회원가입 완료 모달 열기
 	const openSignupCompleteModal = () => {
@@ -192,14 +193,20 @@ export const Signup = () => {
 									value="MALE"
 									text="남자"
 									checked={gender === "MALE"}
-									onChange={() => setValue("gender", "MALE")}
+									// shouldValidate: react-hook-form의 setValue 옵션
+									// radio 버튼은 blur 이벤트를 발생시키지 않으므로 값 변경과 동시에 해당 필드의 유효성 검사를 즉시 실행함
+									onChange={() =>
+										setValue("gender", "MALE", { shouldValidate: true })
+									}
 								/>
 								<RadioButton
 									name="gender"
 									value="FEMALE"
 									text="여자"
 									checked={gender === "FEMALE"}
-									onChange={() => setValue("gender", "FEMALE")}
+									onChange={() =>
+										setValue("gender", "FEMALE", { shouldValidate: true })
+									}
 								/>
 							</div>
 						</div>

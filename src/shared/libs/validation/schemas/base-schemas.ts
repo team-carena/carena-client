@@ -65,6 +65,9 @@ export const checkupDateSchema = z
 		{ message: ERROR_MESSAGES.checkupDate.invalidDate },
 	);
 
+// 성별 타입
+export type Gender = "MALE" | "FEMALE";
+
 // 성별 스키마
 export const genderSchema = z.enum(["MALE", "FEMALE"]);
 
