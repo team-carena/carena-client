@@ -10,6 +10,6 @@ export const getEntireHealthReport = ({
 }: GetEntireHealthReportParams) => {
 	return request<EntireHealthReportView>({
 		method: HTTP_METHOD.GET,
-		url: API_ENDPOINTS.HEALTH_REPORT.DETAIL(healthReportId),
+		url: API_ENDPOINTS.healthReport.entire(healthReportId),
 	});
 };

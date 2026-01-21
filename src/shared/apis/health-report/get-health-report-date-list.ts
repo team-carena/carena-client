@@ -10,7 +10,7 @@ export const getHealthReportDateList = ({
 }: GetHealthReportDateListParams) => {
 	return request<HealthReportDateListView>({
 		method: HTTP_METHOD.GET,
-		url: API_ENDPOINTS.HEALTH_REPORT.DATE_LIST,
+		url: API_ENDPOINTS.healthReport.dates,
 		query: {
 			index,
 		},
