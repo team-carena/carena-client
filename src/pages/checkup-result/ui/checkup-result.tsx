@@ -12,13 +12,17 @@ import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
 import { InputSmall } from "@/shared/ui/inputs/input-small";
 import { CategoryLabel } from "@/shared/ui/labels/category-label";
+import { openModal } from "@/shared/ui/overlays/modal/open-modal";
+import { notifyError } from "@/shared/ui/overlays/toast/toast";
 
 export const CheckupResultPage = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
+	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 
 	const {
 		register,
 		handleSubmit,
+		watch,
 		trigger,
 		formState: { errors, isValid },
 	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
@@ -43,7 +47,87 @@ export const CheckupResultPage = () => {
 		},
 	});
 
-	const onSubmit = (_data: CheckupFormData) => {};
+	// 필수 필드 감시
+	const checkupDate = watch("checkupDate");
+	const hospital = watch("hospital");
+
+	// 검사 결과 필드 감시
+	const height = watch("height");
+	const weight = watch("weight");
+	const bmi = watch("bmi");
+	const waistCircumference = watch("waistCircumference");
+	const systolicBp = watch("systolicBp");
+	const diastolicBp = watch("diastolicBp");
+	const hemoglobin = watch("hemoglobin");
+	const fastingGlucose = watch("fastingGlucose");
+	const serumCreatinine = watch("serumCreatinine");
+	const egfr = watch("egfr");
+	const ast = watch("ast");
+	const alt = watch("alt");
+	const gammaGtp = watch("gammaGtp");
+
+	// 필수 필드가 모두 채워졌는지 확인
+	const isRequiredFilled =
+		checkupDate.year !== "" &&
+		checkupDate.month !== "" &&
+		checkupDate.day !== "" &&
+		(hospital?.trim() ?? "") !== "";
+
+	// 검사 결과가 하나라도 입력되었는지 확인
+	const hasAnyTestResult =
+		height !== "" ||
+		weight !== "" ||
+		bmi !== "" ||
+		waistCircumference !== "" ||
+		systolicBp !== "" ||
+		diastolicBp !== "" ||
+		hemoglobin !== "" ||
+		fastingGlucose !== "" ||
+		serumCreatinine !== "" ||
+		egfr !== "" ||
+		ast !== "" ||
+		alt !== "" ||
+		gammaGtp !== "";
+
+	// 민감정보 수집·이용 모달 열기
+	const handleOpenPrivacyModal = () => {
+		openModal({
+			title: "민감정보 수집·이용 동의",
+			description: `케어나(이하 '서비스')는 이용자의 건강 정보를 안전하게 보호하기 위해 아래와 같이 민감정보를 수집·이용합니다.
+
+1. 수집하는 민감정보 항목
+- 건강검진 결과(검진일자, 검진기관, 검사 수치 등)
+
+2. 민감정보의 수집·이용 목적
+- 건강검진 결과 분석 및 맞춤형 건강 정보 제공
+- 서비스 개선 및 신규 서비스 개발
+
+3. 민감정보의 보유 및 이용 기간
+- 회원 탈퇴 시까지 또는 동의 철회 시까지
+- 단, 관계 법령에 따라 보존이 필요한 경우 해당 기간 동안 보관
+
+4. 동의 거부권 및 불이익
+- 이용자는 민감정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.
+- 다만, 필수 항목에 대한 동의를 거부하실 경우 서비스 이용이 제한됩니다.`,
+			onScrollEnd: () => setIsCheckboxEnabled(true),
+			primaryAction: {
+				label: "확인",
+				onClick: () => {},
+			},
+		});
+	};
+
+	const onSubmit = (_data: CheckupFormData) => {
+		if (!hasAnyTestResult) {
+			notifyError("검사 결과를 한 개 이상 입력하세요");
+			return;
+		}
+		if (!isAgreed) {
+			notifyError("민감정보 수집·이용에 동의해주세요");
+			return;
+		}
+		// TODO: API 호출 등 로직 추가
+	};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
 	const checkupDateError =
@@ -211,20 +295,32 @@ export const CheckupResultPage = () => {
 					</div>
 				</section>
 
-				{/* 개인정보 동의 체크박스 */}
-				<div className="-mt-[1.6rem] flex items-center gap-[0.8rem]">
-					<CheckBox checked={isAgreed} onChange={setIsAgreed} />
-					<span className="body04-r-14 text-gray-900">
-						서비스 이용을 위한{" "}
-						<button
-							type="button"
-							className="text-primary-500 underline underline-offset-2"
-						>
-							개인정보 수집·이용
-						</button>
-						에 동의합니다.
-					</span>
-				</div>
+				{/* 민감정보 동의 - 필수 필드 입력 완료 시 표시 */}
+				{isRequiredFilled && isValid && (
+					<section className="fade-in-animation -mt-[1.6rem] flex flex-col gap-[2rem]">
+						<h3 className="head02-b-16 text-gray-600">
+							민감정보 수집·이용 동의
+						</h3>
+						<div className="flex items-start gap-[0.8rem]">
+							<CheckBox
+								checked={isAgreed}
+								onChange={setIsAgreed}
+								disabled={!isCheckboxEnabled}
+							/>
+							<span className="body01-sb-12 whitespace-nowrap pt-[0.2rem] text-black">
+								[필수]{" "}
+								<button
+									type="button"
+									className="underline underline-offset-2"
+									onClick={handleOpenPrivacyModal}
+								>
+									민감정보 수집·이용
+								</button>{" "}
+								내용을 확인하였으며 이에 동의합니다.
+							</span>
+						</div>
+					</section>
+				)}
 			</form>
 
 			{/* 저장 버튼 - 하단 고정 */}
@@ -233,7 +329,7 @@ export const CheckupResultPage = () => {
 					type="submit"
 					form="signup-form"
 					size="lg"
-					disabled={!isAgreed || !isValid}
+					disabled={!isRequiredFilled || !isValid}
 				>
 					저장
 				</Button>
