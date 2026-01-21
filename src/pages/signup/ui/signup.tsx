@@ -57,7 +57,7 @@ export const Signup = () => {
 		gender !== undefined;
 
 	// 회원가입 완료 모달 열기
-	const _openSignupCompleteModal = () => {
+	const openSignupCompleteModal = () => {
 		openModal({
 			size: "sm",
 			title: "회원가입이 완료되었어요",
@@ -65,11 +65,17 @@ export const Signup = () => {
 				"이미 건강 검진을 받아보셨다면,\n결과를 계속해서 입력할까요?",
 			secondaryAction: {
 				label: "메인으로 가기",
-				onClick: () => navigate(ROUTE_PATH.HOME, { replace: true }),
+				onClick: () => {
+					localStorage.setItem("signupRedirect", "home");
+					requestKakaoAuthorize();
+				},
 			},
 			primaryAction: {
 				label: "이어서 입력하기",
-				onClick: () => navigate(ROUTE_PATH.CHECKUP_RESULT, { replace: true }),
+				onClick: () => {
+					localStorage.setItem("signupRedirect", "checkup-result");
+					requestKakaoAuthorize();
+				},
 			},
 		});
 	};
@@ -88,7 +94,7 @@ export const Signup = () => {
 			},
 			{
 				onSuccess: () => {
-					requestKakaoAuthorize();
+					openSignupCompleteModal();
 				},
 				onError: () => {
 					void navigate(ROUTE_PATH.LOGIN, { replace: true });
