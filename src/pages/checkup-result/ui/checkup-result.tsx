@@ -341,7 +341,7 @@ export const CheckupResultPage = () => {
 
 				{/* 민감정보 동의 - 필수 필드 입력 완료 시 표시 */}
 				{isRequiredFilled && isValid && (
-					<section className="fade-in-animation -mt-[1.6rem] flex flex-col gap-[2rem]">
+					<section className="fade-in-animation flex flex-col gap-[2rem]">
 						<h3 className="head02-b-16 text-gray-600">
 							민감정보 수집·이용 동의
 						</h3>

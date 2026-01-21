@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import {
 	type SignupFormData,
 	type SignupFormInput,
@@ -16,6 +18,7 @@ import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { RadioButton } from "@/shared/ui/radio/radio";
 
 export const Signup = () => {
+	const navigate = useNavigate();
 	const [isAgreed, setIsAgreed] = useState(false);
 	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 
@@ -48,12 +51,36 @@ export const Signup = () => {
 		birthDate.month !== "" &&
 		birthDate.day !== "";
 
+	// 회원가입 완료 모달 열기
+	const openSignupCompleteModal = () => {
+		openModal({
+			size: "sm",
+			title: "회원가입이 완료되었어요",
+			description:
+				"이미 건강 검진을 받아보셨다면,\n결과를 계속해서 입력할까요?",
+			secondaryAction: {
+				label: "메인으로 가기",
+				onClick: () => navigate(ROUTE_PATH.HOME, { replace: true }),
+			},
+			primaryAction: {
+				label: "이어서 입력하기",
+				onClick: () => navigate(ROUTE_PATH.CHECKUP_RESULT, { replace: true }),
+			},
+		});
+	};
+
 	const onSubmit = (_data: SignupFormData) => {
 		if (!isAgreed) {
 			notifyError("개인정보 수집·이용에 동의해주세요");
 			return;
 		}
-		// TODO: 회원가입 API 호출 등 로직 추가
+
+		// TODO: 회원가입 API 실행
+		// TODO: 회원가입 API 요청 성공 시 카카오 로그인 실행
+		// TODO: 회원가입 실패 시 navigate(ROUTE_PATH.LOGIN, { replace: true }) 후 notifyError("다시 시도해주세요")
+
+		// 임시: 바로 모달 표시 (추후 API 연동 시 성공 콜백에서 호출)
+		void openSignupCompleteModal();
 	};
 
 	// 개인정보 수집·이용 모달 열기
