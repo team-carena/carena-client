@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
  * 헤더 종류
  * - "main": 메인 페이지용 (로고 + 마이페이지 아이콘)
  * - "back": 서브 페이지용 (뒤로가기 + 타이틀)
- * - "signup": 회원가입 페이지용 (로고만)
+ * - "signup": 회원가입 페이지용 (로고 + 타이틀)
  * - "none": 헤더 숨김
  */
 export type HeaderVariant = "main" | "back" | "signup" | "none";
@@ -68,7 +68,7 @@ export const Header = ({
 				</div>
 			)}
 
-			{/* Right: 마이페이지 버튼 */}
+			{/* Right: 마이페이지 버튼 또는 빈 공간 (signup에서 대칭용) */}
 			<div className="flex items-center">
 				{showMyButton && (
 					<button
@@ -80,6 +80,7 @@ export const Header = ({
 						<My className="shrink-0" aria-hidden />
 					</button>
 				)}
+				{variant === "signup" && <div className="w-[2.4rem]" />}
 			</div>
 		</header>
 	);

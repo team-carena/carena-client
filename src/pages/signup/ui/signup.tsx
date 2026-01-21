@@ -13,6 +13,7 @@ import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
 import { CategoryLabel } from "@/shared/ui/labels/category-label";
+import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { RadioButton } from "@/shared/ui/radio/radio";
@@ -117,9 +118,12 @@ export const Signup = () => {
 		errors.birthDate?.root?.message || errors.birthDate?.message;
 
 	return (
-		// 하단 영역을 아래로 밀기 위해 헤더 제외한 높이 지정
-		<div className="flex h-[calc(100dvh-var(--header-height))] flex-col bg-white p-[2.4rem_2rem_5rem_2rem]">
+		// flex-1으로 하단 영역을 아래로 밀기 위해 헤더 제외한 높이 지정
+		<div className="mt-[var(--header-height)] flex h-[calc(100dvh-var(--header-height))] flex-col bg-white p-[2.4rem_2rem_5rem_2rem]">
 			{/* 상단 컨텐츠 영역 */}
+
+			<Header variant="signup" title="회원가입" />
+
 			<div className="mb-[4rem] space-y-[1.2rem]">
 				<h1 className="head01-b-18 text-center">
 					검진 결과 입력하고 케어나 시작하기
