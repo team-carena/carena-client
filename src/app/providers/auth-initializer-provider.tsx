@@ -13,6 +13,14 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 	useEffect(() => {
 		const initializeAuth = async () => {
 			try {
+				const storedToken = localStorage.getItem("accessToken");
+				if (storedToken) {
+					const accessToken = storedToken.replace(/^Bearer\s+/i, "");
+					setAccessToken(accessToken);
+					setAuthenticated(true);
+					return;
+				}
+
 				const response = await postRefreshAccessToken();
 
 				const authorization = response.headers["authorization"];

@@ -244,6 +244,8 @@ export interface SuccessResponseReadHealthTipTickerView {
 	data?: ReadHealthTipTickerView;
 }
 
+export type RiskLevelLabel = "NONE" | "NORMAL" | "BORDERLINE" | "SUSPICIOUS";
+
 export interface DisplayElement {
 	name?: string;
 	value?: number;
