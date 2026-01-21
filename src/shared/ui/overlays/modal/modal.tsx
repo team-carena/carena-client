@@ -30,14 +30,21 @@ export const Modal = ({
 	onScrollEnd,
 }: ModalProps) => {
 	const endMarkerRef = React.useRef<HTMLDivElement>(null);
+	const previousActiveElement = React.useRef<Element | null>(null);
 
 	React.useEffect(() => {
 		if (open) {
+			// 모달 열릴 때 현재 포커스된 요소 저장
+			previousActiveElement.current = document.activeElement;
 			const originalOverflow = document.body.style.overflow;
 			document.body.style.overflow = "hidden";
 
 			return () => {
 				document.body.style.overflow = originalOverflow;
+				// 모달 닫힐 때 이전 요소로 포커스 복원
+				if (previousActiveElement.current instanceof HTMLElement) {
+					previousActiveElement.current.focus();
+				}
 			};
 		}
 	}, [open]);
