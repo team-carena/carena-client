@@ -7,10 +7,10 @@ export const requestKakaoAuthorize = () => {
 		throw new Error("Kakao OAuth 환경변수가 설정되지 않았습니다.");
 	}
 
-	const url =
-		`https://kauth.kakao.com/oauth/authorize?response_type=code` +
-		`&client_id=${encodeURIComponent(KAKAO_REST_API_KEY)}` +
-		`&redirect_uri=${encodeURIComponent(KAKAO_REDIRECT_URI)}`;
+	const url = "https://api.care-na.com/oauth2/authorization/kakao";
+	// `https://kauth.kakao.com/oauth/authorize?response_type=code` +
+	// `&client_id=${encodeURIComponent(KAKAO_REST_API_KEY)}` +
+	// `&redirect_uri=${encodeURIComponent(KAKAO_REDIRECT_URI)}`;
 
 	window.location.assign(url);
 };

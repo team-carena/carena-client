@@ -54,7 +54,7 @@ const Content = ({ className, ...props }: ContentCardContentProps) => {
 	const variant = useContext(ContentCardVariantContext);
 
 	return (
-		<p
+		<div
 			className={cn(
 				variant === "muted" ? "body05-r-12" : "body03-r-16",
 				"text-gray-900",
