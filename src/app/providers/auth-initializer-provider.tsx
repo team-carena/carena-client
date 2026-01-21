@@ -13,12 +13,12 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 	useEffect(() => {
 		const initializeAuth = async () => {
 			try {
+				// AuthInitializer는 앱 시작 시 한 번 호출되며, UI 상태가 불필요하므로 굳이 useMutation 사용 불필요
 				const response = await postRefreshAccessToken();
 
 				const authorization = response.headers["authorization"];
 
 				if (!authorization) {
-					console.error("[AuthInit] Authorization 헤더 누락");
 					throw new Error("Authorization header missing.");
 				}
 
@@ -26,7 +26,7 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 
 				setAccessToken(accessToken);
 				setAuthenticated(true);
-			} catch (error) {
+			} catch {
 				setAuthenticated(false);
 			} finally {
 				setAuthCheckLoading(false);

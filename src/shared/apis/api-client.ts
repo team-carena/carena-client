@@ -1,5 +1,6 @@
 import axios, { type AxiosError } from "axios";
 import { useAuthStore } from "../store/auth-store";
+import { API_ENDPOINTS } from "./api-endpoints";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -48,7 +49,7 @@ apiClient.interceptors.response.use(
 			if (!refreshPromise) {
 				refreshPromise = (async () => {
 					const response = await apiClient.post(
-						"/member/token/refresh",
+						API_ENDPOINTS.member.tokenRefresh,
 						undefined,
 						{
 							headers: {
