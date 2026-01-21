@@ -37,11 +37,11 @@ apiClient.interceptors.response.use(
 	async (error: AxiosError) => {
 		const originalRequest = error.config;
 
-		if (
-			error.response?.status !== 401 ||
-			!originalRequest ||
-			(originalRequest.headers as any)?.["x-skip-auth-refresh"]
-		) {
+		const skipAuthRefresh = (
+			originalRequest?.headers as Record<string, string | undefined> | undefined
+		)?.["x-skip-auth-refresh"];
+
+		if (error.response?.status !== 401 || !originalRequest || skipAuthRefresh) {
 			return Promise.reject(error);
 		}
 
@@ -58,7 +58,7 @@ apiClient.interceptors.response.use(
 						},
 					);
 
-					const authorization = response.headers["authorization"];
+					const authorization = response.headers.authorization;
 					if (!authorization) {
 						throw new Error("Authorization header missing");
 					}
