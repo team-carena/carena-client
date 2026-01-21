@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
-import { useInfiniteHealthTipList } from "@/shared/apis/queries/use-get-health-tip-list";
+import { useHealthTipList } from "@/pages/health-tip/apis/queries/use-health-tip-list";
 import CardTip from "@/shared/ui/cards/card-tip";
 import Chip from "@/shared/ui/chips/chip";
 
@@ -22,7 +22,7 @@ interface HealthTipListProps {
 const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 	const hashtagName = selectedChip === "전체" ? undefined : selectedChip;
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-		useInfiniteHealthTipList({ hashtagName });
+		useHealthTipList({ hashtagName });
 
 	const tips = useMemo(
 		() => (data?.pages ?? []).flatMap((pageData) => pageData.result ?? []),
