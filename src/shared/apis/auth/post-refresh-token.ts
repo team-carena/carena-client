@@ -1,10 +1,18 @@
+import { useMutation } from "@tanstack/react-query";
+import { API_ENDPOINTS } from "../api-endpoints";
 import type { SuccessResponseVoid } from "../generated/data-contracts";
-import { request } from "../request";
+import { HTTP_METHOD, request } from "../request";
+
+export const useRefreshAccessToken = () => {
+	return useMutation({
+		mutationFn: postRefreshAccessToken,
+	});
+};
 
 export const postRefreshAccessToken = () => {
 	return request<SuccessResponseVoid>({
-		method: "POST",
-		url: "/member/token/refresh",
+		method: HTTP_METHOD.POST,
+		url: API_ENDPOINTS.member.tokenRefresh,
 		rawResponse: true,
 	});
 };
