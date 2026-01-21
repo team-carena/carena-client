@@ -116,7 +116,7 @@ export const Modal = ({
 						{size === "lg" && onScrollEnd && (
 							<div
 								ref={endMarkerRef}
-								className="h-px w-full"
+								className="h-[1px] w-full"
 								aria-hidden="true"
 							/>
 						)}
