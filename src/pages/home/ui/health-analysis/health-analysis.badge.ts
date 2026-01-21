@@ -2,7 +2,7 @@ import type {
 	DisplayElement,
 	EntireHealthReportView,
 	RiskLevelLabel,
-} from "@/shared/apis/health-report/types";
+} from "@/shared/configs/health-report/types";
 import type { CheckupBadgeCode } from "@/shared/constants/checkup-badge";
 
 const toBadgeVariant = (label?: RiskLevelLabel): CheckupBadgeCode => {

@@ -1,9 +1,9 @@
 import { API_ENDPOINTS } from "@/shared/apis/api-endpoints";
+import { HTTP_METHOD, request } from "@/shared/apis/request";
 import type {
 	EntireHealthReportView,
 	GetEntireHealthReportParams,
-} from "@/shared/apis/health-report/types";
-import { HTTP_METHOD, request } from "@/shared/apis/request";
+} from "@/shared/configs/health-report/types";
 
 export const getEntireHealthReport = ({
 	healthReportId,

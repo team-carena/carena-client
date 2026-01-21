@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getEntireHealthReport } from "@/shared/apis/health-report/get-entire-health-report";
-import type { GetEntireHealthReportParams } from "@/shared/apis/health-report/types";
+import { getEntireHealthReport } from "@/pages/home/apis/mutations/get-entire-health-report";
 import { queryKeys } from "@/shared/apis/query-keys";
+import type { GetEntireHealthReportParams } from "@/shared/configs/health-report/types";
 
 type UseGetEntireHealthReportParams = GetEntireHealthReportParams & {
 	enabled?: boolean;

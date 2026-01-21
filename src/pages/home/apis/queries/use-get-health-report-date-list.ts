@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getHealthReportDateList } from "@/shared/apis/health-report/get-health-report-date-list";
-import type { GetHealthReportDateListParams } from "@/shared/apis/health-report/types";
+import { getHealthReportDateList } from "@/pages/home/apis/mutations/get-health-report-date-list";
 import { queryKeys } from "@/shared/apis/query-keys";
+import type { GetHealthReportDateListParams } from "@/shared/configs/health-report/types";
 
 export const useHealthReportDateList = ({
 	index,

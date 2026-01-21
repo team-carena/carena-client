@@ -1,16 +1,16 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { useGetEntireHealthReport } from "@/pages/home/apis/queries/use-get-entire-health-report";
+import { useHealthReportDateList } from "@/pages/home/apis/queries/use-get-health-report-date-list";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
 import {
 	getElementBadgeCode,
 	getSummaryBadgeState,
-} from "@/pages/home/health-analysis/health-analysis.badge";
-import { buildRadarData } from "@/pages/home/health-analysis/health-analysis.radar";
+} from "@/pages/home/ui/health-analysis/health-analysis.badge";
+import { buildRadarData } from "@/pages/home/ui/health-analysis/health-analysis.radar";
 import type {
 	DisplayElement,
 	EntireHealthReportView,
-} from "@/shared/apis/health-report/types";
-import { useGetEntireHealthReport } from "@/shared/apis/queries/use-get-entire-health-report";
-import { useHealthReportDateList } from "@/shared/apis/queries/use-get-health-report-date-list";
+} from "@/shared/configs/health-report/types";
 import type { CheckupBadgeCode } from "@/shared/constants/checkup-badge";
 import { LargeBadge } from "@/shared/ui/badges/large-badge";
 import { DropDown } from "@/shared/ui/drop-down/drop-down";
