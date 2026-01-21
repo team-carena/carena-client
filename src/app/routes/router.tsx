@@ -94,9 +94,9 @@ export const router = createBrowserRouter([
 					{
 						path: ROUTE_PATH.CHECKUP_RESULT,
 						element: <CheckupResultPage />,
+
 						handle: {
-							header: "back",
-							title: "검진 결과 입력",
+							header: "none", // 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치
 						} satisfies RouteHandle,
 					},
 					{

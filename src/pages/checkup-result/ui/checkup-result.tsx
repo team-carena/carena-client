@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import {
 	type CheckupFormData,
 	type CheckupFormInput,
@@ -12,12 +14,48 @@ import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
 import { InputSmall } from "@/shared/ui/inputs/input-small";
 import { CategoryLabel } from "@/shared/ui/labels/category-label";
+import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 
 export const CheckupResultPage = () => {
+	const navigate = useNavigate();
 	const [isAgreed, setIsAgreed] = useState(false);
 	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
+
+	// 이탈방지 모달 열기
+	const openExitModal = useCallback(() => {
+		openModal({
+			size: "sm",
+			description: "검진 결과를 저장하지 않고\n메인 화면으로 이동하시겠어요?",
+			secondaryAction: {
+				label: "취소",
+				onClick: () => {},
+			},
+			primaryAction: {
+				label: "이동하기",
+				onClick: () => navigate(ROUTE_PATH.HOME, { replace: true }),
+			},
+		});
+	}, [navigate]);
+
+	// 브라우저의 기본 뒤로가기 감지 및 차단
+	useEffect(() => {
+		// 히스토리에 현재 상태 추가 (뒤로가기 감지용)
+		window.history.pushState(null, "", window.location.href);
+
+		const handlePopState = () => {
+			// 뒤로가기 시 다시 현재 페이지로 push하여 이탈 방지, 그 뒤 이탈방지 모달 띄우기
+			window.history.pushState(null, "", window.location.href);
+			openExitModal();
+		};
+
+		window.addEventListener("popstate", handlePopState);
+
+		return () => {
+			window.removeEventListener("popstate", handlePopState);
+		};
+	}, [openExitModal]);
 
 	const {
 		register,
@@ -135,10 +173,16 @@ export const CheckupResultPage = () => {
 
 	return (
 		<>
+			{/* 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치 */}
+			<Header
+				variant="back"
+				title="검진 결과 입력"
+				onBackClick={openExitModal}
+			/>
 			<form
-				id="signup-form"
+				id="checkup-form"
 				onSubmit={handleSubmit(onSubmit)}
-				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[11.2rem]"
+				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[calc(var(--header-height)+4rem)] pb-[11.2rem]"
 			>
 				{/* 기본정보 */}
 				<section className="flex flex-col gap-[2rem]">
@@ -327,7 +371,7 @@ export const CheckupResultPage = () => {
 			<div className="fixed right-0 bottom-[2rem] left-0 mx-auto max-w-[var(--app-max-width)] px-[2rem]">
 				<Button
 					type="submit"
-					form="signup-form"
+					form="checkup-form"
 					size="lg"
 					disabled={!isRequiredFilled || !isValid}
 				>
