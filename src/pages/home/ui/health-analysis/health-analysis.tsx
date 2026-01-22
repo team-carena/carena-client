@@ -252,7 +252,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 		enabled: hasValidReportId,
 	});
 
-	const hasNoReports = !isPending && !isError && options.length === 0;
+	const hasNoReports = !isPending && options.length === 0;
 
 	// 첫 진입/뒤로가기 시: query(reportId)가 유효하면 그 값 유지, 없거나 유효하지 않으면 첫 번째로 세팅 + query 정리
 	useEffect(() => {
@@ -295,8 +295,6 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 	);
 	const radarData = useMemo(() => buildRadarData(report), [report]);
 
-	if (isPending || isError || isReportPending || isReportError) return null;
-
 	if (hasNoReports) {
 		return (
 			<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
@@ -306,6 +304,8 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 			</div>
 		);
 	}
+
+	if (isPending || isError || isReportPending || isReportError) return null;
 
 	return (
 		<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
