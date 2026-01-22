@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router";
 
-import type { HealthReportType, Sex } from "./config/health-report-types";
-import { HEALTH_REPORT_CONFIG } from "./model/health-report-config";
-import type { HEALTH_REPORT_HISTORY_MAP } from "./model/health-report-history-map";
-import { HealthReportSectionWithHistory } from "./ui/health-report-section";
+import type { HealthReportType, Sex } from "../config/health-report-types";
+import { HEALTH_REPORT_CONFIG } from "../model/health-report-config";
+import type { HEALTH_REPORT_HISTORY_MAP } from "../model/health-report-history-map";
+import { HealthReportSectionWithHistory } from "./health-report-section";
 
 const DOUBLE_NOTICE_TYPES: HealthReportType[] = ["basic", "liver", "anemia"];
 
@@ -21,7 +21,7 @@ export const HealthReportDetailPage = () => {
 	if (!type) return null;
 
 	// TODO: 실제 사용자 성별로 교체
-	const sex: Sex = "MALE";
+	const sex: Sex = "FEMALE";
 
 	const reportConfig = HEALTH_REPORT_CONFIG[type];
 	if (!reportConfig) return null;
