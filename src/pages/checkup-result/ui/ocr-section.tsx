@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useLocation } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
-import { postOcr } from "@/pages/checkup-result/apis/post-ocr";
+import { postHealthReportOcr } from "@/pages/checkup-result/apis/post-health-report-ocr";
 import { OcrButton } from "@/shared/ui/buttons/ocr-button";
 
 type OcrSectionProps = {
@@ -22,7 +22,7 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 		if (!file) return;
 
 		try {
-			const data = await postOcr(file);
+			const data = await postHealthReportOcr(file);
 
 			// 서버에서 number로 내려오므로 Signup setValue용으로 string 변환
 			const stringifiedData = Object.fromEntries(
