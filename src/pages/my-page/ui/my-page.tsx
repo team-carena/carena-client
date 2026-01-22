@@ -6,6 +6,7 @@ import { getMyPageInfo } from "@/shared/apis/my-page/get-my-page-info";
 import { DefaultProfile } from "@/shared/assets/svg";
 import { useAuthStore } from "@/shared/store/auth-store";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
+import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { useLogout } from "../apis/mutations/use-logout";
 import { ActionSection } from "./action-section";
 
@@ -18,6 +19,7 @@ export const MyPage = () => {
 	const [userInfo, setUserInfo] = useState<MyPageResponse | null>(null);
 	const navigate = useNavigate();
 	const logoutStore = useAuthStore((state) => state.logout);
+	const { mutate: logout } = useLogout();
 
 	useEffect(() => {
 		const getMyPageInfoApi = async () => {
@@ -30,14 +32,16 @@ export const MyPage = () => {
 		void getMyPageInfoApi();
 	}, []);
 
-	const handleLogout = async () => {
-		try {
-			await postLogout();
-		} catch (error) {
-		} finally {
-			logoutStore();
-			void navigate(ROUTE_PATH.LOGIN);
-		}
+	const handleLogout = () => {
+		logout(undefined, {
+			onSuccess: () => {
+				logoutStore();
+				void navigate(ROUTE_PATH.LOGIN, { replace: true });
+			},
+			onError: () => {
+				notifyError("로그아웃에 실패했습니다");
+			},
+		});
 	};
 
 	const ACTION_LIST = [
