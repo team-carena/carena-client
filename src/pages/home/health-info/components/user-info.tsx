@@ -1,12 +1,27 @@
-import { useState } from "react";
 import { BlurNoise, InfoBackground } from "@/shared/assets/svg";
 import { AddButton } from "@/shared/ui/buttons/add-button";
 import { RadialChart } from "@/shared/ui/graphs/radial-chart/radial-chart";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
+import { useMyInfo } from "../../apis/queries/use-my-info";
+
+const GENDER_LABEL = {
+	MALE: "남",
+	FEMALE: "여",
+} as const;
 
 const UserInfo = () => {
-	// TODO: API 연동 시 검진기록에 따라 그래프 분기처리
-	const [showAlarmMessage, _setShowAlarmMessage] = useState(true);
+	const { data: userInfo, isPending } = useMyInfo();
+
+	const hasHealthReport = userInfo?.score !== 0;
+
+	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
+	const displayAge = isPending ? "-" : (userInfo?.age ?? "-");
+	const displayScore = isPending ? 0 : (userInfo?.score ?? 0);
+	const displayGender = isPending
+		? "-"
+		: userInfo?.gender
+			? GENDER_LABEL[userInfo.gender]
+			: "-";
 
 	return (
 		<section className="relative flex w-full">
@@ -14,8 +29,10 @@ const UserInfo = () => {
 			{/* 좌측 사용자 정보 */}
 			<div className="relative z-10 my-[4rem] ml-[3.6rem] flex flex-1 flex-col gap-[3.2rem]">
 				<hgroup className="space-y-[1.2rem] text-white">
-					<h2 className="display02-b-24">임지성님</h2>
-					<p className="body05-r-12">만 25세 (남)</p>
+					<h2 className="display02-b-24">{displayName}님</h2>
+					<p className="body05-r-12">
+						만 {displayAge}세 ({displayGender})
+					</p>
 				</hgroup>
 
 				<AddButton />
@@ -23,13 +40,15 @@ const UserInfo = () => {
 
 			{/* 우측 */}
 			<div className="relative z-10 flex flex-1 items-center justify-center">
-				{showAlarmMessage ? (
+				{hasHealthReport ? (
 					<>
 						{/* 우측 그래프 */}
 						<div className="relative">
 							<figure>
-								{/* TODO: 점수 없으면 기본값 70점 반영 */}
-								<RadialChart score={70} className="h-[15rem] w-[15rem]" />
+								<RadialChart
+									score={displayScore}
+									className="h-[15rem] w-[15rem]"
+								/>
 							</figure>
 							<div className="absolute right-[-5px] bottom-[-7px]">
 								<Tooltip side="bottom" align="end">

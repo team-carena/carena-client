@@ -4,14 +4,14 @@ import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts"
 import { queryKeys } from "@/shared/apis/query-keys";
 import { HTTP_METHOD, request } from "@/shared/apis/request";
 
-export const useMemberInfo = () => {
+export const useMyInfo = () => {
 	return useQuery({
 		queryKey: queryKeys.member.info(),
-		queryFn: () => getMemberInfo,
+		queryFn: getMyInfo,
 	});
 };
 
-export const getMemberInfo = () => {
+export const getMyInfo = () => {
 	return request<MemberInfoResponse>({
 		method: HTTP_METHOD.GET,
 		url: API_ENDPOINTS.member.myInfo,
