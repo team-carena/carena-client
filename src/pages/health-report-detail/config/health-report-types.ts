@@ -1,5 +1,3 @@
-import type { LineChartData } from "@/shared/ui/graphs/line-chart/line-chart";
-
 // 검진결과 타입
 export type HealthReportType =
 	| "basic"
@@ -8,6 +6,22 @@ export type HealthReportType =
 	| "liver"
 	| "kidney"
 	| "anemia";
+
+// 검진결과 항목 키
+export type HealthHistoryItemKey =
+	| "height"
+	| "weight"
+	| "waistCircumference"
+	| "bmi"
+	| "systolicBp"
+	| "diastolicBp"
+	| "fastingGlucose"
+	| "ast"
+	| "alt"
+	| "gammaGtp"
+	| "serumCreatinine"
+	| "egfr"
+	| "hemoglobin";
 
 // 사용자 성별
 export type Sex = "MALE" | "FEMALE";
@@ -72,8 +86,6 @@ export interface HealthReportSection {
 
 	/** 정상/경계/의심 수치 범위 */
 	range?: HealthReportRange;
-
-	chartData: LineChartData[];
 
 	/** 결과값 의미 */
 	increaseText?: string;
