@@ -74,6 +74,17 @@ apiClient.interceptors.response.use(
 			store.setAccessToken(newAccessToken);
 			store.setAuthenticated(true);
 
+			// 토큰이 만료되어 갱신된 경우에만 추천 식단 생성 요청
+			apiClient
+				.post(API_ENDPOINTS.recommendedMeal.recommended, undefined, {
+					headers: {
+						Authorization: `Bearer ${newAccessToken}`,
+					},
+				})
+				.catch(() => {
+					// 추천 식단 생성 실패는 무시 (메인 플로우에 영향 주지 않음)
+				});
+
 			originalRequest.headers = originalRequest.headers ?? {};
 			originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
