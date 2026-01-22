@@ -75,9 +75,15 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 								<p className="body01-sb-12 text-gray-700">
 									{displayName}님 맞춤 식단
 								</p>
-								<p className="head04-m-16 mt-[0.8rem] text-gray-900">
-									건오징어채 볶음
-								</p>
+								{isPending ? (
+									<p className="head04-m-16 text-gray-600">
+										AI가 요리를 찾는 중이에요
+									</p>
+								) : (
+									<p className="head04-m-16 mt-[0.8rem] text-gray-900">
+										건오징어채 볶음
+									</p>
+								)}
 							</>
 						)}
 					</div>
