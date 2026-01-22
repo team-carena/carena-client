@@ -148,8 +148,7 @@ export interface CreateAdminDietRequest {
 }
 
 export interface RecommendedMealView {
-	/** @format int64 */
-	recommendedMealId?: number;
+	recommendedMealId?: string;
 	meal?: string;
 	description?: string;
 	/** @format int64 */
@@ -186,6 +185,8 @@ export interface MemberInfoResponse {
 	gender?: "MALE" | "FEMALE";
 	/** @format int64 */
 	score?: number;
+	/** @format date */
+	latestHealthCheckDate?: string;
 }
 
 export interface SuccessResponseMemberInfoResponse {
