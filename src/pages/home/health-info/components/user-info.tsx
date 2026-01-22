@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import { BlurNoise, InfoBackground } from "@/shared/assets/svg";
 import { AddButton } from "@/shared/ui/buttons/add-button";
 import { RadialChart } from "@/shared/ui/graphs/radial-chart/radial-chart";
@@ -10,6 +12,7 @@ const GENDER_LABEL = {
 } as const;
 
 const UserInfo = () => {
+	const navigate = useNavigate();
 	const { data: userInfo, isPending } = useMyInfo();
 
 	// isPending 상태에서는 userInfo가 'undefined'
@@ -35,7 +38,7 @@ const UserInfo = () => {
 					</p>
 				</hgroup>
 
-				<AddButton />
+				<AddButton onClick={() => navigate(ROUTE_PATH.CHECKUP_RESULT)} />
 			</div>
 
 			{/* 우측 */}

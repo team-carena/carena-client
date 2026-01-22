@@ -3,11 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
+import { OCR_FIELD_KEYS } from "@/pages/checkup-result/apis/constants/ocr-field-keys";
 import {
 	type CheckupFormData,
 	type CheckupFormInput,
 	checkupSchema,
 } from "@/pages/checkup-result/model/checkup-schema";
+import type { CreateHealthReportRequest } from "@/shared/apis/generated/data-contracts";
 import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
@@ -17,9 +19,13 @@ import { CategoryLabel } from "@/shared/ui/labels/category-label";
 import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
+import { useHealthReportMutation } from "../apis/mutations/use-health-report-mutation";
+import { OcrSection } from "./ocr-section";
 
 export const CheckupResultPage = () => {
 	const navigate = useNavigate();
+	const { mutate: createHealthReport } = useHealthReportMutation();
+
 	const [isAgreed, setIsAgreed] = useState(false);
 	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 
@@ -62,6 +68,7 @@ export const CheckupResultPage = () => {
 		handleSubmit,
 		watch,
 		trigger,
+		setValue,
 		formState: { errors, isValid },
 	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
 		resolver: zodResolver(checkupSchema),
@@ -155,21 +162,67 @@ export const CheckupResultPage = () => {
 		});
 	};
 
-	const onSubmit = (_data: CheckupFormData) => {
+	const onSubmit = (data: CheckupFormData) => {
 		if (!hasAnyTestResult) {
 			notifyError("검사 결과를 한 개 이상 입력하세요");
 			return;
 		}
+
 		if (!isAgreed) {
 			notifyError("민감정보 수집·이용에 동의해주세요");
 			return;
 		}
-		// TODO: API 호출 등 로직 추가
+
+		const requestBody: CreateHealthReportRequest = {
+			healthCheckDate: `${data.checkupDate.year}-${data.checkupDate.month}-${data.checkupDate.day}`,
+			institutionName: data.hospital!,
+
+			height: toNumberOrUndefined(data.height),
+			weight: toNumberOrUndefined(data.weight),
+			waistCircumference: toNumberOrUndefined(data.waistCircumference),
+			bmi: toNumberOrUndefined(data.bmi),
+
+			systolicBp: toNumberOrUndefined(data.systolicBp),
+			diastolicBp: toNumberOrUndefined(data.diastolicBp),
+
+			hemoglobin: toNumberOrUndefined(data.hemoglobin),
+			fastingGlucose: toNumberOrUndefined(data.fastingGlucose),
+
+			serumCreatinine: toNumberOrUndefined(data.serumCreatinine),
+			egfr: toNumberOrUndefined(data.egfr),
+			ast: toNumberOrUndefined(data.ast),
+			alt: toNumberOrUndefined(data.alt),
+			gammaGtp: toNumberOrUndefined(data.gammaGtp),
+		};
+		createHealthReport(requestBody);
 	};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
+
+	const toNumberOrUndefined = (value?: string | number): number | undefined => {
+		if (value === undefined || value === null) return undefined;
+		const normalized = typeof value === "string" ? value.trim() : String(value);
+		if (normalized === "") return undefined;
+		const num = Number(normalized);
+		return Number.isFinite(num) ? num : undefined;
+	};
+
+	const handleOcrComplete = useCallback(
+		(data: Record<string, string>) => {
+			OCR_FIELD_KEYS.forEach((key) => {
+				const value = data[key];
+				if (value == null) return;
+				setValue(key, value, {
+					shouldDirty: true,
+					shouldTouch: true,
+					shouldValidate: true,
+				});
+			});
+		},
+		[setValue],
+	);
 
 	return (
 		<>
@@ -179,10 +232,11 @@ export const CheckupResultPage = () => {
 				title="검진 결과 입력"
 				onBackClick={openExitModal}
 			/>
+			<OcrSection onOcrComplete={handleOcrComplete} />
 			<form
 				id="checkup-form"
 				onSubmit={handleSubmit(onSubmit)}
-				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[calc(var(--header-height)+4rem)] pb-[11.2rem]"
+				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[11.2rem]"
 			>
 				{/* 기본정보 */}
 				<section className="flex flex-col gap-[2rem]">
