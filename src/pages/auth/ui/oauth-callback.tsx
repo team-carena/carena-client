@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import Lottie from "react-lottie-player";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
-import { postTokenExchange } from "@/shared/apis/auth/post-token-exchange";
+import { postTokenExchange } from "@/pages/auth/apis/post-token-exchange";
 import LoadingGraphic from "@/shared/assets/lottie/spinner.json";
 import { useAuthStore } from "@/shared/store/auth-store";
+import { notifyError } from "@/shared/ui/overlays/toast/toast";
 
+// OauthCallback에서는 신규회원/기존회원 구분할 필요 없음
 export const OauthCallBack = () => {
 	const navigate = useNavigate();
 	const { setAccessToken, setAuthenticated, setAuthCheckLoading } =
@@ -31,10 +33,22 @@ export const OauthCallBack = () => {
 				setAccessToken(accessToken);
 				setAuthenticated(true);
 
-				// OCR 페이지로 이동 -> TODO: 라우터 상수 활용해야 함
-				await navigate("/ocr", { replace: true });
-			} catch (error) {
-				await navigate(ROUTE_PATH.LOGIN, { replace: true });
+				const signupRedirect = localStorage.getItem("signupRedirect");
+				if (signupRedirect) {
+					// 회원가입 후 리다이렉트된 경우 회원가입 페이지에서 모달 선택값에 따라 리다이렉트 분기처리
+					localStorage.removeItem("signupRedirect");
+					if (signupRedirect === "checkup-result") {
+						void navigate(ROUTE_PATH.CHECKUP_RESULT, { replace: true });
+					} else {
+						void navigate(ROUTE_PATH.HOME, { replace: true });
+					}
+				} else {
+					// 이미 가입된 사용자의 로그인인 경우 HOME으로 즉시 리다이렉트
+					void navigate(ROUTE_PATH.HOME, { replace: true });
+				}
+			} catch (_error) {
+				void navigate(ROUTE_PATH.LOGIN, { replace: true });
+				notifyError("로그인에 실패했습니다");
 			} finally {
 				setAuthCheckLoading(false);
 			}

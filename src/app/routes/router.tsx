@@ -3,9 +3,10 @@ import { MenuDetailPage } from "@pages/health-menu/health-menu-detail";
 import type { HeaderVariant } from "@shared/ui/navigations/header";
 import { createBrowserRouter, Navigate } from "react-router";
 import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
+import { CheckupResultPage } from "@/pages/checkup-result/ui/checkup-result";
 import { HealthReportDetailPage } from "@/pages/health-report/health-report-detail";
-import { HealthTipPage } from "@/pages/health-tip/health-tip";
-import { HealthTipDetailPage } from "@/pages/health-tip/health-tip-detail";
+import { HealthTipPage } from "@/pages/health-tip/ui/health-tip";
+import { HealthTipDetailPage } from "@/pages/health-tip/ui/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
 import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/my-page";
@@ -103,6 +104,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							// title은 layout에서 type 보고 동적으로 처리
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.CHECKUP_RESULT,
+						element: <CheckupResultPage />,
+
+						handle: {
+							header: "none", // 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치
 						} satisfies RouteHandle,
 					},
 					{

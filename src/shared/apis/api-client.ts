@@ -1,5 +1,6 @@
 import axios, { type AxiosError } from "axios";
 import { useAuthStore } from "../store/auth-store";
+import { API_ENDPOINTS } from "./api-endpoints";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,17 +16,18 @@ export const apiClient = axios.create({
 	timeout: 10000,
 });
 
-apiClient.interceptors.request.use(
-	(config) => {
-		const { accessToken } = useAuthStore.getState();
+apiClient.interceptors.request.use((config) => {
+	const { accessToken } = useAuthStore.getState();
 
-		if (accessToken) {
-			config.headers = config.headers ?? {};
-			config.headers.Authorization = `Bearer ${accessToken}`;
-		}
+	if (accessToken) {
+		config.headers = config.headers ?? {};
+		config.headers.Authorization = `Bearer ${accessToken}`;
+	}
 
-		return config;
-	},
+	return config;
+});
+apiClient.interceptors.response.use(
+	(response) => response,
 	(error: AxiosError) => Promise.reject(error),
 );
 
@@ -36,11 +38,11 @@ apiClient.interceptors.response.use(
 	async (error: AxiosError) => {
 		const originalRequest = error.config;
 
-		if (
-			error.response?.status !== 401 ||
-			!originalRequest ||
-			(originalRequest.headers as any)?.["x-skip-auth-refresh"]
-		) {
+		const skipAuthRefresh = (
+			originalRequest?.headers as Record<string, string | undefined> | undefined
+		)?.["x-skip-auth-refresh"];
+
+		if (error.response?.status !== 401 || !originalRequest || skipAuthRefresh) {
 			return Promise.reject(error);
 		}
 
@@ -48,7 +50,7 @@ apiClient.interceptors.response.use(
 			if (!refreshPromise) {
 				refreshPromise = (async () => {
 					const response = await apiClient.post(
-						"/member/token/refresh",
+						API_ENDPOINTS.member.tokenRefresh,
 						undefined,
 						{
 							headers: {
@@ -57,7 +59,7 @@ apiClient.interceptors.response.use(
 						},
 					);
 
-					const authorization = response.headers["authorization"];
+					const authorization = response.headers.authorization;
 					if (!authorization) {
 						throw new Error("Authorization header missing");
 					}
