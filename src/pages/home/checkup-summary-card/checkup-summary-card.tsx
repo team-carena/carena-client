@@ -96,14 +96,14 @@ const Section = ({ className, children }: SectionProps) => (
 );
 
 const Title = ({ className, label, to }: TitleProps) => (
-	<NaviRow
-		label={label}
-		to={to}
+	<div
 		className={cn(
-			"h-[4.8rem] w-full rounded-none bg-white px-[2rem] pt-[1.2rem] pb-[0.4rem]",
+			"w-full bg-white px-[2rem] pt-[1.2rem] pb-[0.4rem]",
 			className,
 		)}
-	/>
+	>
+		<NaviRow label={label} to={to} />
+	</div>
 );
 
 const Description = ({ className, children, ...props }: DescriptionProps) => (
