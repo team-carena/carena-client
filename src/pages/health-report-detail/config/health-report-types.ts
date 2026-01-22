@@ -34,11 +34,11 @@ export interface HealthReportRangeValue {
 	/** 정상 범위 표시 텍스트 */
 	normal: string;
 
-	/** 경계 범위 표시 텍스트 */
-	borderline: string;
+	/** 경계 범위 표시 텍스트 (없는 항목도 있음) */
+	borderline?: string;
 
-	/** 의심 범위 표시 텍스트 (없을 수도 있음) */
-	suspicious?: string;
+	/** 의심 범위 표시 텍스트 */
+	suspicious: string;
 
 	none?: string;
 }
