@@ -19,6 +19,7 @@ export const useEntireHealthReport = ({
 		queryKey: queryKeys.healthReport.entire(healthReportId),
 		queryFn: () => getEntireHealthReport({ healthReportId }),
 		enabled,
+		throwOnError: false,
 	});
 };
 

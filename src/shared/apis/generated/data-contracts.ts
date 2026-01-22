@@ -151,8 +151,7 @@ export interface RecommendedMealView {
 	recommendedMealId?: string;
 	meal?: string;
 	description?: string;
-	/** @format int64 */
-	baseDietDocument?: number;
+	baseDietDocumentId?: string;
 	baseDietTitle?: string;
 }
 

@@ -13,6 +13,7 @@ export const useHealthReportDateList = ({
 	return useQuery({
 		queryKey: queryKeys.healthReport.dateList({ page: index }),
 		queryFn: () => getHealthReportDateList({ index }),
+		throwOnError: false,
 	});
 };
 
