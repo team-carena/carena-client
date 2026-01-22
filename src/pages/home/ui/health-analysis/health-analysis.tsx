@@ -10,7 +10,7 @@ import { buildRadarData } from "@/pages/home/ui/health-analysis/health-analysis.
 import type {
 	DisplayElement,
 	EntireHealthReportView,
-} from "@/shared/configs/health-report/types";
+} from "@/shared/configs/health-report/health-report.types";
 import type { CheckupBadgeCode } from "@/shared/constants/checkup-badge";
 import { LargeBadge } from "@/shared/ui/badges/large-badge";
 import { DropDown } from "@/shared/ui/drop-down/drop-down";
