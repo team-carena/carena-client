@@ -1,5 +1,4 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
 
 import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
 import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
@@ -216,8 +215,6 @@ const buildSummarySections = (
 };
 
 const HealthAnalysisContent = () => {
-	const navigate = useNavigate();
-
 	// 검진 날짜 목록 조회
 	const { data, isPending, isError } = useHealthReportDateList({ index: 1 });
 
@@ -282,11 +279,6 @@ const HealthAnalysisContent = () => {
 		);
 	}
 
-	const handleCardClick = (reportType: HealthReportDetailType) => {
-		const to = buildHealthReportDetailUrl(reportType, selectedHealthCheckDate);
-		void navigate(to);
-	};
-
 	return (
 		<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
 			<div className="mb-[2rem]">
@@ -319,54 +311,40 @@ const HealthAnalysisContent = () => {
 					);
 
 					return (
-						<div
-							key={section.title}
-							role="button"
-							tabIndex={0}
-							onClick={() => handleCardClick(section.reportType)}
-							onKeyDown={(e) => {
-								if (e.key === "Enter" || e.key === " ") {
-									e.preventDefault();
-									handleCardClick(section.reportType);
-								}
-							}}
-							className="cursor-pointer"
-						>
-							<CheckupSummaryCard>
-								<CheckupSummaryCard.Title label={section.title} to={to} />
+						<CheckupSummaryCard key={section.title}>
+							<CheckupSummaryCard.Title label={section.title} to={to} />
 
-								<CheckupSummaryCard.Section>
-									<CheckupSummaryCard.Description>
-										{section.description}
-									</CheckupSummaryCard.Description>
+							<CheckupSummaryCard.Section>
+								<CheckupSummaryCard.Description>
+									{section.description}
+								</CheckupSummaryCard.Description>
 
-									<CheckupSummaryCard.Rows>
-										{section.rows.map((row) => {
-											if (row.type === "simple") {
-												return (
-													<CheckupSummaryCard.Row
-														key={row.left}
-														left={row.left}
-														right={row.right}
-													/>
-												);
-											}
-
+								<CheckupSummaryCard.Rows>
+									{section.rows.map((row) => {
+										if (row.type === "simple") {
 											return (
-												<CheckupSummaryCard.RowWithBadgeAndGraph
-													key={row.label}
-													label={row.label}
-													value={row.value}
-													badgeCode={row.badgeCode}
-													metricKey={row.metricKey}
-													metricSex={row.metricSex}
+												<CheckupSummaryCard.Row
+													key={row.left}
+													left={row.left}
+													right={row.right}
 												/>
 											);
-										})}
-									</CheckupSummaryCard.Rows>
-								</CheckupSummaryCard.Section>
-							</CheckupSummaryCard>
-						</div>
+										}
+
+										return (
+											<CheckupSummaryCard.RowWithBadgeAndGraph
+												key={row.label}
+												label={row.label}
+												value={row.value}
+												badgeCode={row.badgeCode}
+												metricKey={row.metricKey}
+												metricSex={row.metricSex}
+											/>
+										);
+									})}
+								</CheckupSummaryCard.Rows>
+							</CheckupSummaryCard.Section>
+						</CheckupSummaryCard>
 					);
 				})}
 			</div>
