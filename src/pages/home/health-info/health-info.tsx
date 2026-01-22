@@ -38,8 +38,7 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 			{/* 생활 속 건강 팁 */}
 			<article className="overflow-hidden rounded-[12px] bg-white">
 				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
-					{/* TODO: 건강팁 라우팅 적용 */}
-					<NaviRow label="생활 속 건강 팁" to="" />
+					<NaviRow label="생활 속 건강 팁" to={ROUTE_PATH.HEALTH_TIP} />
 				</div>
 				<div className="relative p-[1.2rem_0.8rem_4.2rem_0.8rem]">
 					<HealthTipBackground className="absolute inset-0 z-0 h-full w-full" />
