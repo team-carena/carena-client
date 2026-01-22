@@ -48,6 +48,7 @@ const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 					return (
 						<li key={healthTipId}>
 							<CardTip
+								more={true}
 								onClick={() =>
 									navigate(
 										`${ROUTE_PATH.HEALTH_TIP_DETAIL.replace(
