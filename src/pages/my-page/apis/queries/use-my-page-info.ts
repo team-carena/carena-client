@@ -14,6 +14,6 @@ export const useMyPageInfo = () => {
 export const getMyPageInfo = () => {
 	return request<MyPageResponse>({
 		method: HTTP_METHOD.GET,
-		url: API_ENDPOINTS.member.logout,
+		url: API_ENDPOINTS.member.myPage,
 	});
 };
