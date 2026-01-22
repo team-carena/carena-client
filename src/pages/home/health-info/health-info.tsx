@@ -28,7 +28,7 @@ const HealthTipTicker = () => {
 
 const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
-	const hasHealthReport = userInfo?.score !== 0;
+	const hasHealthReport = userInfo?.score != null && userInfo.score !== 0;
 	const { data: mealData, isPending: isMealPending } = useRecommendedMeal();
 
 	return (
