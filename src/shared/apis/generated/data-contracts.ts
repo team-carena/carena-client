@@ -148,8 +148,7 @@ export interface CreateAdminDietRequest {
 }
 
 export interface RecommendedMealView {
-	/** @format int64 */
-	recommendedMealId?: number;
+	recommendedMealId?: string;
 	meal?: string;
 	description?: string;
 	/** @format int64 */

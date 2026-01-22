@@ -1,8 +1,22 @@
 import cardDietBg from "@img/card-diet-bg.png";
+import { Suspense } from "react";
 import { HealthTipBackground } from "@/shared/assets/svg";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
 import { NaviRowSmall } from "@/shared/ui/navigations/navi-row-small";
 import { Ticker } from "@/shared/ui/ticker/ticker";
+import { useTicker } from "../apis/queries/use-ticker";
+
+const HealthTipTicker = () => {
+	const { data } = useTicker();
+
+	const tips =
+		data?.result?.map((item) => ({
+			id: Number(item.id),
+			title: item.title ?? "",
+		})) ?? [];
+
+	return <Ticker tips={tips} />;
+};
 
 const HealthInfoPage = () => {
 	return (
@@ -16,13 +30,10 @@ const HealthInfoPage = () => {
 				<div className="relative p-[1.2rem_0.8rem_4.2rem_0.8rem]">
 					<HealthTipBackground className="absolute inset-0 z-0 h-full w-full" />
 					<div className="relative z-10">
-						<Ticker
-							tips={[
-								{ id: 1, title: "건강팁 한 줄 쪼로록" },
-								{ id: 2, title: "건강팁 두 줄 쪼로록" },
-								{ id: 3, title: "건강팁 세 줄 쪼로록" },
-							]}
-						/>
+						{/* useSuspenseQuery로 데이터 로딩 중에는 Suspense fallback이 표시됨 -> Layout Shift 방지를 위해 폴백에 Ticker와 동일한 높이 명시 */}
+						<Suspense fallback={<div className="h-[3.5rem]" />}>
+							<HealthTipTicker />
+						</Suspense>
 					</div>
 				</div>
 			</article>

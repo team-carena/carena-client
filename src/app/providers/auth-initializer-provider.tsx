@@ -12,6 +12,12 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 
 	useEffect(() => {
 		const initializeAuth = async () => {
+			// 첫 로그인이라 OauthCallback에서 이미 accessToken 인증이 완료된 경우 accessToken refresh 스킵
+			const { isAuthenticated } = useAuthStore.getState();
+			if (isAuthenticated) {
+				return;
+			}
+
 			try {
 				// AuthInitializer는 앱 시작 시 한 번 호출되며, UI 상태가 불필요하므로 굳이 useMutation 사용 불필요
 				const response = await postRefreshAccessToken();
