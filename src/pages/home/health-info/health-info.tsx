@@ -26,6 +26,7 @@ const HealthTipTicker = () => {
 
 const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
+	const hasHealthReport = userInfo?.score !== 0;
 
 	return (
 		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
@@ -60,12 +61,25 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 						className="absolute inset-0 z-0 h-full w-full"
 					/>
 					<div className="relative z-10 p-[2rem]">
-						<p className="body01-sb-12 text-gray-700">
-							{displayName}님 맞춤 식단
-						</p>
-						<p className="head04-m-16 mt-[0.8rem] text-gray-900">
-							건오징어채 볶음
-						</p>
+						{!hasHealthReport ? (
+							<>
+								<p className="head04-m-16 mt-[0.8rem] text-gray-900">
+									검진결과를 추가하고
+								</p>
+								<p className="head04-m-16 mt-[0.8rem] text-gray-900">
+									맞춤 식단을 추천 받아보세요!
+								</p>
+							</>
+						) : (
+							<>
+								<p className="body01-sb-12 text-gray-700">
+									{displayName}님 맞춤 식단
+								</p>
+								<p className="head04-m-16 mt-[0.8rem] text-gray-900">
+									건오징어채 볶음
+								</p>
+							</>
+						)}
 					</div>
 				</div>
 
