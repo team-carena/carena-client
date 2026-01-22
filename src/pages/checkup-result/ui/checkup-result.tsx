@@ -3,13 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
+import { OCR_FIELD_KEYS } from "@/pages/checkup-result/apis/constants/ocr-field-keys";
 import {
 	type CheckupFormData,
 	type CheckupFormInput,
 	checkupSchema,
 } from "@/pages/checkup-result/model/checkup-schema";
 import type { CreateHealthReportRequest } from "@/shared/apis/generated/data-contracts";
-import { OCR_FIELD_KEYS } from "@/shared/constants/ocr-field-keys";
 import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
