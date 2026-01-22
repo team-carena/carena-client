@@ -12,9 +12,7 @@ import type { LineChartData } from "@/shared/ui/graphs/line-chart/line-chart";
 import { LineChart } from "@/shared/ui/graphs/line-chart/line-chart";
 import Label from "@/shared/ui/labels/label";
 
-/** =========================
- *  1) 프리젠터: UI만 담당
- * ========================= */
+// 프리젠터: UI만 담당
 interface HealthReportSectionProps {
 	title: string;
 	description: string;
@@ -145,10 +143,7 @@ export const HealthReportSection = ({
 	);
 };
 
-/** =========================
- *  2) 컨테이너: API 연동 + chartData 주입
- * ========================= */
-
+// 컨테이너: API 연동 + chartData 주입
 type HistoryMapKey = keyof typeof HEALTH_REPORT_HISTORY_MAP;
 
 interface HealthReportSectionWithHistoryProps
@@ -164,7 +159,8 @@ export const HealthReportSectionWithHistory = ({
 }: HealthReportSectionWithHistoryProps) => {
 	const apiInfo = HEALTH_REPORT_HISTORY_MAP[sectionKey];
 
-	const { data, isPending } = useGetHealthReportHistory({
+	// 데이터 조회
+	const { data, isPending, isError } = useGetHealthReportHistory({
 		endpoint: apiInfo.endpoint,
 		queryKey: apiInfo.queryKey(),
 		healthCheckDate,
@@ -172,7 +168,11 @@ export const HealthReportSectionWithHistory = ({
 
 	const chartData = mapHistoryToLineChartData(data?.history ?? []);
 
+	// 로딩/에러 시 빈 차트로 표시
 	return (
-		<HealthReportSection {...rest} chartData={isPending ? [] : chartData} />
+		<HealthReportSection
+			{...rest}
+			chartData={isPending || isError ? [] : chartData}
+		/>
 	);
 };

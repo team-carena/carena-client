@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useSearchParams } from "react-router";
 
 import { Tabs } from "@/shared/ui/tabs/tabs";
@@ -6,19 +5,17 @@ import UserInfo from "../health-info/components/user-info";
 import HealthInfoPage from "../health-info/health-info";
 import HealthAnalysisPage from "./health-analysis/health-analysis";
 
-type HomeTab = "health-info" | "health-tips";
+type HomeTab = "health-info" | "health-analysis";
 
 const getTabFromQuery = (value: string | null): HomeTab => {
-	if (value === "health-tips") return "health-tips";
+	if (value === "health-analysis") return "health-analysis";
 	return "health-info";
 };
 
 export const HomePage = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const tabFromQuery = useMemo<HomeTab>(() => {
-		return getTabFromQuery(searchParams.get("tab"));
-	}, [searchParams]);
+	const tabFromQuery = getTabFromQuery(searchParams.get("tab"));
 
 	// query(tab)가 바뀔 때 Tabs를 remount해서 defaultTab이 다시 반영되도록 key 사용
 	const tabsKey = tabFromQuery;
@@ -45,8 +42,8 @@ export const HomePage = () => {
 					</Tabs.Trigger>
 
 					<Tabs.Trigger
-						value="health-tips"
-						onClick={() => setTabQuery("health-tips")}
+						value="health-analysis"
+						onClick={() => setTabQuery("health-analysis")}
 						type="button"
 					>
 						검진결과분석
@@ -57,7 +54,7 @@ export const HomePage = () => {
 					<HealthInfoPage />
 				</Tabs.Content>
 
-				<Tabs.Content value="health-tips">
+				<Tabs.Content value="health-analysis">
 					<HealthAnalysisPage />
 				</Tabs.Content>
 			</Tabs>

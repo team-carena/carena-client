@@ -42,7 +42,7 @@ export const getHealthReportHistory = ({
 		method: HTTP_METHOD.GET,
 		url: endpoint,
 		query: {
-			healthCheckDate: healthCheckDate,
+			healthCheckDate,
 		},
 	});
 };

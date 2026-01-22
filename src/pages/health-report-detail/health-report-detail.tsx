@@ -26,8 +26,6 @@ export const HealthReportDetailPage = () => {
 	const reportConfig = HEALTH_REPORT_CONFIG[type];
 	if (!reportConfig) return null;
 
-	if (!healthCheckDate) return null;
-
 	return (
 		<>
 			{/* 상단 안내 문구 */}

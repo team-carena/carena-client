@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
-
+import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
 import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
 import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
@@ -23,14 +23,6 @@ import type {
 } from "@/shared/ui/graphs/range-bar/health-metric-config";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 
-type HealthReportDetailType =
-	| "basic"
-	| "blood-pressure"
-	| "diabetes"
-	| "liver"
-	| "kidney"
-	| "anemia";
-
 type SummaryRow =
 	| {
 			type: "simple";
@@ -49,7 +41,7 @@ type SummaryRow =
 interface SummarySection {
 	title: string;
 	description: string;
-	reportType: HealthReportDetailType;
+	reportType: HealthReportType;
 	rows: SummaryRow[];
 }
 
@@ -66,7 +58,7 @@ const formatHealthCheckDate = (value?: string) => {
 };
 
 const buildHealthReportDetailUrl = (
-	type: HealthReportDetailType,
+	type: HealthReportType,
 	healthCheckDate: string,
 ) => {
 	const params = new URLSearchParams();
@@ -340,7 +332,7 @@ const HealthAnalysisContent = () => {
 					);
 
 					return (
-						<CheckupSummaryCard key={section.title}>
+						<CheckupSummaryCard key={section.reportType}>
 							<CheckupSummaryCard.Title label={section.title} to={to} />
 
 							<CheckupSummaryCard.Section>
