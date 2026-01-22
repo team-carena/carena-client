@@ -21,6 +21,12 @@ const DietListContent = () => {
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
 		useDietList();
 
+	const bottomRef = useInfiniteScroll({
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+	});
+
 	const allDiets = data.pages.flatMap((page) => page.diets ?? []);
 
 	const handleMenuClick = (dietId: string) => {
@@ -30,31 +36,22 @@ const DietListContent = () => {
 	};
 
 	return (
-		<>
-			<ul className="flex flex-col gap-[1.2rem]">
-				{allDiets.map((diet) => (
-					<li key={diet.id}>
-						<CardList
-							more
-							onClick={() => handleMenuClick(diet.id ?? "")}
-							aria-label={`${diet.title} 메뉴로 이동`}
-						>
-							{diet.title}
-						</CardList>
-					</li>
-				))}
-			</ul>
-			{hasNextPage && (
-				<button
-					type="button"
-					onClick={() => fetchNextPage()}
-					disabled={isFetchingNextPage}
-					className="body04-r-14 mt-[1.2rem] w-full py-[1.2rem] text-center text-gray-600"
-				>
-					{isFetchingNextPage ? "로딩 중..." : "더 보기"}
-				</button>
-			)}
-		</>
+		<ul className="flex flex-col gap-[1.2rem]">
+			{allDiets.map((diet) => (
+				<li key={diet.id}>
+					<CardList
+						more
+						onClick={() => handleMenuClick(diet.id ?? "")}
+						aria-label={`${diet.title} 메뉴로 이동`}
+					>
+						{diet.title}
+					</CardList>
+				</li>
+			))}
+			<li aria-hidden="true">
+				<div ref={bottomRef} className={hasNextPage ? "h-px" : "h-0"} />
+			</li>
+		</ul>
 	);
 };
 
