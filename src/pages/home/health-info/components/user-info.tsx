@@ -12,8 +12,8 @@ const GENDER_LABEL = {
 const UserInfo = () => {
 	const { data: userInfo, isPending } = useMyInfo();
 
-	const hasHealthReport = userInfo?.score !== 0;
-
+	// isPending 상태에서는 userInfo가 'undefined'
+	const hasHealthReport = !isPending && userInfo?.score !== 0;
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
 	const displayAge = isPending ? "-" : (userInfo?.age ?? "-");
 	const displayScore = isPending ? 0 : (userInfo?.score ?? 0);
@@ -63,12 +63,6 @@ const UserInfo = () => {
 					<>
 						{/* blur 영역 */}
 						<BlurNoise className="absolute" />
-						<div className="absolute flex items-center justify-center">
-							<div className="whitespace-pre-line text-center font-bold text-[1.5rem] text-white leading-[1.8rem]">
-								<p>좌측 버튼을 눌러</p>
-								<p className="mt-[1rem]">검진결과를 추가해주세요</p>
-							</div>
-						</div>
 					</>
 				)}
 			</div>
