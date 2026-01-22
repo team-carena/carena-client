@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
-import type { MyPageResponse } from "@/shared/apis/generated/data-contracts";
-import { getMyPageInfo } from "@/shared/apis/my-page/get-my-page-info";
 import { DefaultProfile } from "@/shared/assets/svg";
 import { useAuthStore } from "@/shared/store/auth-store";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { useLogout } from "../apis/mutations/use-logout";
+import { useMyPageInfo } from "../apis/queries/use-my-page-info";
 import { ActionSection } from "./action-section";
 
 const formatBirthdate = (date: string) => {
@@ -16,21 +14,11 @@ const formatBirthdate = (date: string) => {
 };
 
 export const MyPage = () => {
-	const [userInfo, setUserInfo] = useState<MyPageResponse | null>(null);
 	const navigate = useNavigate();
 	const logoutStore = useAuthStore((state) => state.logout);
 	const { mutate: logout } = useLogout();
-
-	useEffect(() => {
-		const getMyPageInfoApi = async () => {
-			try {
-				const response = await getMyPageInfo();
-				setUserInfo(response);
-			} catch (error) {}
-		};
-
-		void getMyPageInfoApi();
-	}, []);
+	// TODO: useSuspenseQuery 사용 or 스켈레톤 추가
+	const { data: userInfo } = useMyPageInfo();
 
 	const handleLogout = () => {
 		logout(undefined, {
