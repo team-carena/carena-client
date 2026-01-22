@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import CardAiDietRecommendation from "@/pages/health-menu/ui/card-ai-diet-recommendation";
+import { useInfiniteScroll } from "@/shared/libs/use-infinite-scroll";
 import { useDietList } from "./apis/queries/use-diet-list";
 
 // 임시 AI 추천 메뉴 데이터
