@@ -3,10 +3,10 @@ import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import type { MyPageResponse } from "@/shared/apis/generated/data-contracts";
 import { getMyPageInfo } from "@/shared/apis/my-page/get-my-page-info";
-import { postLogout } from "@/shared/apis/my-page/post-logout";
 import { DefaultProfile } from "@/shared/assets/svg";
 import { useAuthStore } from "@/shared/store/auth-store";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
+import { useLogout } from "../apis/mutations/use-logout";
 import { ActionSection } from "./action-section";
 
 const formatBirthdate = (date: string) => {
