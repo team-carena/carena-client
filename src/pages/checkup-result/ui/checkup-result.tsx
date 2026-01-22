@@ -8,6 +8,7 @@ import {
 	type CheckupFormInput,
 	checkupSchema,
 } from "@/pages/checkup-result/model/checkup-schema";
+import type { CreateHealthReportRequest } from "@/shared/apis/generated/data-contracts";
 import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
@@ -17,10 +18,13 @@ import { CategoryLabel } from "@/shared/ui/labels/category-label";
 import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
+import { useHealthReportMutation } from "../apis/mutations/use-health-report-mutation";
 import { OcrSection } from "./ocr-section";
 
 export const CheckupResultPage = () => {
 	const navigate = useNavigate();
+	const { mutate: createHealthReport } = useHealthReportMutation();
+
 	const [isAgreed, setIsAgreed] = useState(false);
 	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 
@@ -157,21 +161,51 @@ export const CheckupResultPage = () => {
 		});
 	};
 
-	const onSubmit = (_data: CheckupFormData) => {
+	const onSubmit = (data: CheckupFormData) => {
 		if (!hasAnyTestResult) {
 			notifyError("검사 결과를 한 개 이상 입력하세요");
 			return;
 		}
+
 		if (!isAgreed) {
 			notifyError("민감정보 수집·이용에 동의해주세요");
 			return;
 		}
-		// TODO: API 호출 등 로직 추가
+
+		const requestBody: CreateHealthReportRequest = {
+			healthCheckDate: `${data.checkupDate.year}-${data.checkupDate.month}-${data.checkupDate.day}`,
+			institutionName: data.hospital!,
+
+			height: toNumberOrUndefined(data.height),
+			weight: toNumberOrUndefined(data.weight),
+			waistCircumference: toNumberOrUndefined(data.waistCircumference),
+			bmi: toNumberOrUndefined(data.bmi),
+
+			systolicBp: toNumberOrUndefined(data.systolicBp),
+			diastolicBp: toNumberOrUndefined(data.diastolicBp),
+
+			hemoglobin: toNumberOrUndefined(data.hemoglobin),
+			fastingGlucose: toNumberOrUndefined(data.fastingGlucose),
+
+			serumCreatinine: toNumberOrUndefined(data.serumCreatinine),
+			egfr: toNumberOrUndefined(data.egfr),
+			ast: toNumberOrUndefined(data.ast),
+			alt: toNumberOrUndefined(data.alt),
+			gammaGtp: toNumberOrUndefined(data.gammaGtp),
+		};
+		createHealthReport(requestBody);
 	};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
+
+	const toNumberOrUndefined = (value?: string | number): number | undefined => {
+		if (value === undefined || value === null) return undefined;
+		if (typeof value === "number") return value;
+		if (value.trim() === "") return undefined;
+		return Number(value);
+	};
 
 	const handleOcrComplete = useCallback(
 		(data: Record<string, string>) => {
