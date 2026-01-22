@@ -13,6 +13,7 @@ export const useRecommendedMeal = (options?: UseRecommendedMealOptions) => {
 		queryKey: queryKeys.recommendedMeal.latest(),
 		queryFn: getRecommendedMeal,
 		enabled: options?.enabled ?? true,
+		throwOnError: false, // 404 등 에러 시 앱 크래시 방지, fallback UI로 처리
 	});
 };
 
