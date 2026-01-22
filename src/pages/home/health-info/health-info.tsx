@@ -26,12 +26,25 @@ const HealthTipTicker = () => {
 	return <Ticker tips={tips} />;
 };
 
+const DEFAULT_DIET_TITLE = "허혈성 심장질환";
+const DEFAULT_DIET_ID = "802267973184311798";
+
 const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
 	const hasHealthReport = userInfo?.score != null && userInfo.score !== 0;
 	const { data: mealData, isPending: isMealPending } = useRecommendedMeal({
 		enabled: hasHealthReport,
 	});
+
+	// 검진결과 있음 + mealData 있음: 실제 데이터 표시
+	// 검진결과 있음 + mealData 없음 (에러/빈 응답): "-" 표시
+	// 검진결과 없음: 기본 식단 표시
+	const dietLabel = hasHealthReport
+		? (mealData?.baseDietTitle ?? "-")
+		: DEFAULT_DIET_TITLE;
+	const dietId = hasHealthReport
+		? (mealData?.baseDietDocumentId ?? "")
+		: DEFAULT_DIET_ID;
 
 	return (
 		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
@@ -94,11 +107,8 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 
 				<div className="p-[1rem]">
 					<NaviRowSmall
-						label={mealData?.baseDietTitle ?? "허열성 심장실환"}
-						to={ROUTE_PATH.HEALTH_DIET_DETAIL.replace(
-							":healthDietId",
-							mealData?.baseDietDocumentId ?? "802267973184311798",
-						)}
+						label={dietLabel}
+						to={ROUTE_PATH.HEALTH_DIET_DETAIL.replace(":healthDietId", dietId)}
 					/>
 				</div>
 			</article>
