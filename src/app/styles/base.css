@@ -156,8 +156,8 @@
       var(--color-gray-600) 100%
     );
     background-size: 200% 100%;
-    background-clip: text;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: text-shimmer 2s linear infinite;
   }
