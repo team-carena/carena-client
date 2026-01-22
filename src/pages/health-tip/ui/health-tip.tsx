@@ -72,12 +72,12 @@ const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 	return (
 		<section className="px-[2rem] py-[1.2rem]">
 			<ul className="flex flex-col gap-[1.2rem]">
-				{tips.map((tip, index) => {
+				{tips.map((tip) => {
 					const healthTipId = tip.id ?? "";
 					const isClickable = Boolean(healthTipId);
 
 					return (
-						<li key={`${healthTipId || tip.title || "health-tip"}-${index}`}>
+						<li key={healthTipId}>
 							<CardTip
 								more={isClickable}
 								onClick={() =>

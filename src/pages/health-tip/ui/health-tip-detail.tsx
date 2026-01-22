@@ -36,7 +36,7 @@ export const HealthTipDetailPage = () => {
 
 			<section className="mt-[1.2rem]">
 				<ContentCard variant="default">
-					<ContentCard.Title>{data.subTitle ?? "건강 팁"}</ContentCard.Title>
+					<ContentCard.Title>{data.subTitle}</ContentCard.Title>
 					<ContentCard.Content>{data.content}</ContentCard.Content>
 					<ContentCard.Tags tags={hashtags} />
 				</ContentCard>
