@@ -47,11 +47,11 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "sex",
 					MALE: {
 						normal: "90 미만",
-						borderline: "90 이상",
+						suspicious: "90 이상",
 					},
 					FEMALE: {
 						normal: "85 미만",
-						borderline: "85 이상",
+						suspicious: "85 이상",
 					},
 				},
 				increaseText:
@@ -330,7 +330,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "1.5 이하",
-						borderline: "1.5 초과",
+						suspicious: "1.5 초과",
 					},
 				},
 				increaseText:
@@ -355,7 +355,7 @@ export const HEALTH_REPORT_CONFIG: Record<
 					type: "common",
 					value: {
 						normal: "60 이상",
-						borderline: "60 미만",
+						suspicious: "60 미만",
 					},
 				},
 				increaseText:
