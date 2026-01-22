@@ -4,10 +4,15 @@ import type { RecommendedMealView } from "@/shared/apis/generated/data-contracts
 import { queryKeys } from "@/shared/apis/query-keys";
 import { HTTP_METHOD, request } from "@/shared/apis/request";
 
-export const useRecommendedMeal = () => {
+interface UseRecommendedMealOptions {
+	enabled?: boolean;
+}
+
+export const useRecommendedMeal = (options?: UseRecommendedMealOptions) => {
 	return useQuery({
 		queryKey: queryKeys.recommendedMeal.latest(),
 		queryFn: getRecommendedMeal,
+		enabled: options?.enabled ?? true,
 	});
 };
 

@@ -29,7 +29,9 @@ const HealthTipTicker = () => {
 const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
 	const hasHealthReport = userInfo?.score != null && userInfo.score !== 0;
-	const { data: mealData, isPending: isMealPending } = useRecommendedMeal();
+	const { data: mealData, isPending: isMealPending } = useRecommendedMeal({
+		enabled: hasHealthReport,
+	});
 
 	return (
 		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
@@ -53,8 +55,7 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 			{/* 건강 식단 */}
 			<article className="rounded-[12px] bg-white">
 				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
-					{/* TODO: 건강 식단 라우팅 적용 */}
-					<NaviRow label="건강 식단" to={ROUTE_PATH.HEALTH_TIP} />
+					<NaviRow label="건강 식단" to={ROUTE_PATH.HEALTH_DIET} />
 				</div>
 
 				<div className="relative">
