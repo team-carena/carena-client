@@ -4,6 +4,7 @@ import { ROUTE_PATH } from "@/app/routes/paths";
 import { postHealthReportOcr } from "@/pages/checkup-result/apis/post-health-report-ocr";
 import { OcrButton } from "@/shared/ui/buttons/ocr-button";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
+import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { FullScreenOcrLoading } from "./full-screen-ocr-loading";
 
 type OcrSectionProps = {
@@ -62,7 +63,7 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 
 			onOcrComplete?.(stringifiedData);
 		} catch (err) {
-			console.error(err);
+			notifyError("OCR 변환에 실패했어요. 잠시 후 다시 시도해 주세요.");
 		} finally {
 			setIsOcrLoading(false);
 			e.target.value = "";
