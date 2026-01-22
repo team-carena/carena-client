@@ -5,6 +5,7 @@ import { HealthTipBackground } from "@/shared/assets/svg";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
 import { NaviRowSmall } from "@/shared/ui/navigations/navi-row-small";
 import { Ticker } from "@/shared/ui/ticker/ticker";
+import { useRecommendedMeal } from "../apis/queries/use-recommended-meals";
 import { useTicker } from "../apis/queries/use-ticker";
 
 interface HealthInfoPageProps {
@@ -27,6 +28,7 @@ const HealthTipTicker = () => {
 const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
 	const hasHealthReport = userInfo?.score !== 0;
+	const { data: mealData, isPending: isMealPending } = useRecommendedMeal();
 
 	return (
 		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
@@ -75,13 +77,13 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 								<p className="body01-sb-12 text-gray-700">
 									{displayName}님 맞춤 식단
 								</p>
-								{isPending ? (
-									<p className="head04-m-16 text-gray-600">
+								{isMealPending ? (
+									<p className="head04-m-16 mt-[0.8rem] text-shimmer">
 										AI가 요리를 찾는 중이에요
 									</p>
 								) : (
 									<p className="head04-m-16 mt-[0.8rem] text-gray-900">
-										건오징어채 볶음
+										{mealData?.meal ?? "-"}
 									</p>
 								)}
 							</>
@@ -90,7 +92,7 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 				</div>
 
 				<div className="p-[1rem]">
-					<NaviRowSmall label="고혈압식" to="" />
+					<NaviRowSmall label={mealData?.baseDietTitle ?? "-"} to="" />
 				</div>
 			</article>
 		</div>
