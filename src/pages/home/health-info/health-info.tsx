@@ -1,5 +1,6 @@
 import cardDietBg from "@img/card-diet-bg.png";
 import { Suspense } from "react";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import { HealthTipBackground } from "@/shared/assets/svg";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
@@ -53,7 +54,7 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 			<article className="rounded-[12px] bg-white">
 				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
 					{/* TODO: 건강 식단 라우팅 적용 */}
-					<NaviRow label="건강 식단" to="" />
+					<NaviRow label="건강 식단" to={ROUTE_PATH.HEALTH_TIP} />
 				</div>
 
 				<div className="relative">
@@ -92,7 +93,13 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 				</div>
 
 				<div className="p-[1rem]">
-					<NaviRowSmall label={mealData?.baseDietTitle ?? "-"} to="" />
+					<NaviRowSmall
+						label={mealData?.baseDietTitle ?? "-"}
+						to={ROUTE_PATH.HEALTH_DIET_DETAIL.replace(
+							":healthDietId",
+							String(mealData?.baseDietDocument ?? ""),
+						)}
+					/>
 				</div>
 			</article>
 		</div>
