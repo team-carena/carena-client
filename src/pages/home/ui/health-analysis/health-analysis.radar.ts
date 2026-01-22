@@ -25,11 +25,6 @@ const getRiskKey = (label?: RiskLevelLabel): RiskLevelKey => {
 	return "정상";
 };
 
-const toRiskLevelValue = (label?: RiskLevelLabel) => {
-	if (!label || label === "NONE") return 0.6;
-	return RADAR_CHART_MAP[getRiskKey(label)];
-};
-
 const getHighestRiskLabel = (items?: DisplayElement[]) => {
 	let highest: RiskLevelLabel = "NONE";
 	items?.forEach((item) => {
@@ -51,27 +46,33 @@ const buildRadarData = (
 	return [
 		{
 			label: "당뇨",
-			riskLevel: toRiskLevelValue(getHighestRiskLabel(report?.diabetes)),
+			riskLevel:
+				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.diabetes))],
 		},
 		{
 			label: "빈혈",
-			riskLevel: toRiskLevelValue(getHighestRiskLabel(report?.anemia)),
+			riskLevel:
+				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.anemia))],
 		},
 		{
 			label: "신장질환",
-			riskLevel: toRiskLevelValue(getHighestRiskLabel(report?.kidney)),
+			riskLevel:
+				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.kidney))],
 		},
 		{
 			label: "간장질환",
-			riskLevel: toRiskLevelValue(getHighestRiskLabel(report?.liver)),
+			riskLevel:
+				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.liver))],
 		},
 		{
 			label: "비만",
-			riskLevel: toRiskLevelValue(getHighestRiskLabel(bmi ? [bmi] : [])),
+			riskLevel:
+				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(bmi ? [bmi] : []))],
 		},
 		{
 			label: "혈압",
-			riskLevel: toRiskLevelValue(getHighestRiskLabel(report?.bloodPressure)),
+			riskLevel:
+				RADAR_CHART_MAP[getRiskKey(getHighestRiskLabel(report?.bloodPressure))],
 		},
 	];
 };
