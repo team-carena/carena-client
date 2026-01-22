@@ -185,8 +185,6 @@ export interface MemberInfoResponse {
 	gender?: "MALE" | "FEMALE";
 	/** @format int64 */
 	score?: number;
-	/** @format date */
-	latestHealthCheckDate?: string;
 }
 
 export interface SuccessResponseMemberInfoResponse {
