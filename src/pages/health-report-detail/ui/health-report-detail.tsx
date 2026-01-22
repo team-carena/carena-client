@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router";
+import { useMyInfo } from "@/shared/apis/member/use-my-info";
 
 import type { HealthReportType, Sex } from "../config/health-report-types";
 import { HEALTH_REPORT_CONFIG } from "../model/health-report-config";
@@ -7,6 +8,7 @@ import type { HEALTH_REPORT_HISTORY_MAP } from "../model/health-report-history-m
 import { HealthReportSectionWithHistory } from "./health-report-section";
 
 const DOUBLE_NOTICE_TYPES: HealthReportType[] = ["basic", "liver", "anemia"];
+const DEFAULT_SEX: Sex = "FEMALE";
 
 export const HealthReportDetailPage = () => {
 	// 페이지 진입 시 스크롤을 맨 위로 이동 (중간부터 보이는 현상 방지)
@@ -17,11 +19,11 @@ export const HealthReportDetailPage = () => {
 	const { type } = useParams<{ type: HealthReportType }>();
 	const [searchParams] = useSearchParams();
 	const healthCheckDate = searchParams.get("healthCheckDate") ?? "";
+	const { data: userInfo, isPending } = useMyInfo();
 
 	if (!type) return null;
 
-	// TODO: 실제 사용자 성별로 교체
-	const sex: Sex = "FEMALE";
+	const sex: Sex = isPending ? DEFAULT_SEX : (userInfo?.gender ?? DEFAULT_SEX);
 
 	const reportConfig = HEALTH_REPORT_CONFIG[type];
 	if (!reportConfig) return null;
