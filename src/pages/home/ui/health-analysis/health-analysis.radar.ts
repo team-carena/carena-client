@@ -20,6 +20,7 @@ const getRiskRank = (label?: RiskLevelLabel) =>
 	label ? RISK_RANK[label] : RISK_RANK.NONE;
 
 const getRiskKey = (label?: RiskLevelLabel): RiskLevelKey => {
+	if (!label || label === "NONE") return "없음";
 	if (label === "SUSPICIOUS") return "의심";
 	if (label === "BORDERLINE") return "경계";
 	return "정상";

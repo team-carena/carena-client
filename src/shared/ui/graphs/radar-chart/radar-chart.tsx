@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const RADAR_CHART_MAP = {
+	없음: 0.6,
 	정상: 1.2,
 	경계: 1.8,
 	의심: 2.4,
