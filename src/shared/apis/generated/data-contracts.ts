@@ -214,8 +214,7 @@ export interface SuccessResponseReadHealthTipListView {
 }
 
 export interface ReadHealthTipDetailView {
-	/** @format int64 */
-	id?: number;
+	id?: string;
 	title?: string;
 	subTitle?: string;
 	content?: string;
@@ -242,8 +241,6 @@ export interface SuccessResponseReadHealthTipTickerView {
 	message?: string;
 	data?: ReadHealthTipTickerView;
 }
-
-export type RiskLevelLabel = "NONE" | "NORMAL" | "BORDERLINE" | "SUSPICIOUS";
 
 export interface DisplayElement {
 	name?: string;
@@ -311,7 +308,7 @@ export interface SuccessResponseHealthReportDateListView {
 }
 
 export interface DietItem {
-	id?: string;
+	dietInformationId?: string;
 	title?: string;
 }
 
@@ -329,7 +326,7 @@ export interface SuccessResponseDietListResponse {
 }
 
 export interface DietDetailResponse {
-	id?: string;
+	dietInformationId?: string;
 	title?: string;
 	content?: string;
 	recommends?: Record<string, string[]>;
