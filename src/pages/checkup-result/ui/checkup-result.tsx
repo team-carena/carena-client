@@ -17,6 +17,7 @@ import { CategoryLabel } from "@/shared/ui/labels/category-label";
 import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
+import { OcrSection } from "./ocr-section";
 
 export const CheckupResultPage = () => {
 	const navigate = useNavigate();
@@ -62,6 +63,7 @@ export const CheckupResultPage = () => {
 		handleSubmit,
 		watch,
 		trigger,
+		setValue,
 		formState: { errors, isValid },
 	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
 		resolver: zodResolver(checkupSchema),
@@ -171,6 +173,19 @@ export const CheckupResultPage = () => {
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
 
+	const handleOcrComplete = useCallback(
+		(data: Record<string, string>) => {
+			Object.entries(data).forEach(([key, value]) => {
+				setValue(key as keyof CheckupFormInput, value, {
+					shouldDirty: true,
+					shouldTouch: true,
+					shouldValidate: true,
+				});
+			});
+		},
+		[setValue],
+	);
+
 	return (
 		<>
 			{/* 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치 */}
@@ -179,10 +194,11 @@ export const CheckupResultPage = () => {
 				title="검진 결과 입력"
 				onBackClick={openExitModal}
 			/>
+			<OcrSection onOcrComplete={handleOcrComplete} />
 			<form
 				id="checkup-form"
 				onSubmit={handleSubmit(onSubmit)}
-				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[calc(var(--header-height)+4rem)] pb-[11.2rem]"
+				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[11.2rem]"
 			>
 				{/* 기본정보 */}
 				<section className="flex flex-col gap-[2rem]">
