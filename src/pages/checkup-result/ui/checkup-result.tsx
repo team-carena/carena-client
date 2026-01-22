@@ -203,9 +203,10 @@ export const CheckupResultPage = () => {
 
 	const toNumberOrUndefined = (value?: string | number): number | undefined => {
 		if (value === undefined || value === null) return undefined;
-		if (typeof value === "number") return value;
-		if (value.trim() === "") return undefined;
-		return Number(value);
+		const normalized = typeof value === "string" ? value.trim() : String(value);
+		if (normalized === "") return undefined;
+		const num = Number(normalized);
+		return Number.isFinite(num) ? num : undefined;
 	};
 
 	const handleOcrComplete = useCallback(
