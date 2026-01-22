@@ -5,7 +5,7 @@ import { HTTP_METHOD, request } from "@/shared/apis/request";
 import type {
 	GetHealthReportDateListParams,
 	HealthReportDateListView,
-} from "@/shared/configs/health-report/types";
+} from "@/shared/configs/health-report/health-report.types";
 
 export const useHealthReportDateList = ({
 	index,

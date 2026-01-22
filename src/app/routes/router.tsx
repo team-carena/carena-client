@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
 						} satisfies RouteHandle,
 					},
 					{
-						path: ROUTE_PATH.HEALTH_MENU_DETAIL,
+						path: ROUTE_PATH.HEALTH_DIET_DETAIL,
 						element: <MenuDetailPage />,
 						handle: {
 							header: "back",
@@ -74,7 +74,7 @@ export const router = createBrowserRouter([
 						} satisfies RouteHandle,
 					},
 					{
-						path: ROUTE_PATH.HEALTH_MENU,
+						path: ROUTE_PATH.HEALTH_DIET,
 						element: <HealthMenuPage />,
 						handle: {
 							header: "back",

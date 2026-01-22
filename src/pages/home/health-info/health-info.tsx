@@ -1,10 +1,18 @@
 import cardDietBg from "@img/card-diet-bg.png";
 import { Suspense } from "react";
+import { ROUTE_PATH } from "@/app/routes/paths";
+import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import { HealthTipBackground } from "@/shared/assets/svg";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
 import { NaviRowSmall } from "@/shared/ui/navigations/navi-row-small";
 import { Ticker } from "@/shared/ui/ticker/ticker";
+import { useRecommendedMeal } from "../apis/queries/use-recommended-meals";
 import { useTicker } from "../apis/queries/use-ticker";
+
+interface HealthInfoPageProps {
+	userInfo: MemberInfoResponse | undefined;
+	isPending: boolean;
+}
 
 const HealthTipTicker = () => {
 	const { data } = useTicker();
@@ -18,7 +26,13 @@ const HealthTipTicker = () => {
 	return <Ticker tips={tips} />;
 };
 
-const HealthInfoPage = () => {
+const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
+	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
+	const hasHealthReport = userInfo?.score != null && userInfo.score !== 0;
+	const { data: mealData, isPending: isMealPending } = useRecommendedMeal({
+		enabled: hasHealthReport,
+	});
+
 	return (
 		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
 			{/* 생활 속 건강 팁 */}
@@ -41,8 +55,7 @@ const HealthInfoPage = () => {
 			{/* 건강 식단 */}
 			<article className="rounded-[12px] bg-white">
 				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
-					{/* TODO: 건강 식단 라우팅 적용 */}
-					<NaviRow label="건강 식단" to="" />
+					<NaviRow label="건강 식단" to={ROUTE_PATH.HEALTH_DIET} />
 				</div>
 
 				<div className="relative">
@@ -52,15 +65,42 @@ const HealthInfoPage = () => {
 						className="absolute inset-0 z-0 h-full w-full"
 					/>
 					<div className="relative z-10 p-[2rem]">
-						<p className="body01-sb-12 text-gray-700">김경아님 맞춤 식단</p>
-						<p className="head04-m-16 mt-[0.8rem] text-gray-900">
-							건오징어채 볶음
-						</p>
+						{!hasHealthReport ? (
+							<>
+								<p className="head04-m-16 mt-[0.8rem] text-gray-900">
+									검진결과를 추가하고
+								</p>
+								<p className="head04-m-16 mt-[0.8rem] text-gray-900">
+									맞춤 식단을 추천 받아보세요!
+								</p>
+							</>
+						) : (
+							<>
+								<p className="body01-sb-12 text-gray-700">
+									{displayName}님 맞춤 식단
+								</p>
+								{isMealPending ? (
+									<p className="head04-m-16 mt-[0.8rem] text-shimmer">
+										AI가 요리를 찾는 중이에요
+									</p>
+								) : (
+									<p className="head04-m-16 mt-[0.8rem] text-gray-900">
+										{mealData?.meal ?? "-"}
+									</p>
+								)}
+							</>
+						)}
 					</div>
 				</div>
 
 				<div className="p-[1rem]">
-					<NaviRowSmall label="고혈압식" to="" />
+					<NaviRowSmall
+						label={mealData?.baseDietTitle ?? "-"}
+						to={ROUTE_PATH.HEALTH_DIET_DETAIL.replace(
+							":healthDietId",
+							String(mealData?.baseDietDocument ?? ""),
+						)}
+					/>
 				</div>
 			</article>
 		</div>

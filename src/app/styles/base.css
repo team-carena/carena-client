@@ -141,4 +141,24 @@
   .fade-in-animation {
     animation: fade-in 300ms ease-out;
   }
+
+  /* 텍스트 shimmer 애니메이션 */
+  @keyframes text-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .text-shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-gray-600) 0%,
+      var(--color-gray-400) 50%,
+      var(--color-gray-600) 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-shimmer 2s linear infinite;
+  }
 }

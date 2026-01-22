@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router";
-
+import { useMyInfo } from "@/pages/home/apis/queries/use-my-info";
 import { Tabs } from "@/shared/ui/tabs/tabs";
 import UserInfo from "../health-info/components/user-info";
 import HealthInfoPage from "../health-info/health-info";
@@ -13,6 +13,7 @@ const getTabFromQuery = (value: string | null): HomeTab => {
 };
 
 export const HomePage = () => {
+	const { data: userInfo, isPending } = useMyInfo();
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const tabFromQuery = getTabFromQuery(searchParams.get("tab"));
@@ -29,7 +30,7 @@ export const HomePage = () => {
 
 	return (
 		<div className="flex w-full flex-col">
-			<UserInfo />
+			<UserInfo userInfo={userInfo} isPending={isPending} />
 
 			<Tabs key={tabsKey} defaultTab={tabFromQuery}>
 				<Tabs.List>
@@ -51,11 +52,11 @@ export const HomePage = () => {
 				</Tabs.List>
 
 				<Tabs.Content value="health-info">
-					<HealthInfoPage />
+					<HealthInfoPage userInfo={userInfo} isPending={isPending} />
 				</Tabs.Content>
 
 				<Tabs.Content value="health-analysis">
-					<HealthAnalysisPage />
+					<HealthAnalysisPage userInfo={userInfo} isPending={isPending} />
 				</Tabs.Content>
 			</Tabs>
 		</div>
