@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect } from "react";
-import { postRefreshAccessToken } from "@/shared/apis/auth/post-refresh-token";
+import { postRefreshAccessToken } from "@/shared/apis/auth/use-refresh-token";
 import { useAuthStore } from "@/shared/store/auth-store";
 
 type AuthInitializerProps = {

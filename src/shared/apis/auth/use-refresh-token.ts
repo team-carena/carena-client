@@ -3,6 +3,7 @@ import { API_ENDPOINTS } from "../api-endpoints";
 import type { SuccessResponseVoid } from "../generated/data-contracts";
 import { HTTP_METHOD, request } from "../request";
 
+// 현재 사용 X
 export const useRefreshAccessToken = () => {
 	return useMutation({
 		mutationFn: postRefreshAccessToken,
