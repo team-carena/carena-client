@@ -97,7 +97,7 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 						label={mealData?.baseDietTitle ?? "-"}
 						to={ROUTE_PATH.HEALTH_DIET_DETAIL.replace(
 							":healthDietId",
-							String(mealData?.baseDietDocument ?? ""),
+							mealData?.baseDietDocumentId ?? "",
 						)}
 					/>
 				</div>
