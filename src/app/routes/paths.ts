@@ -8,7 +8,7 @@ export const ROUTE_PATH = {
 	HEALTH_MENU_DETAIL: "/health-menu-detail",
 	HEALTH_MENU: "/health-menu",
 	HEALTH_TIP: "/health-tip",
-	HEALTH_TIP_DETAIL: "/health-tip-detail",
+	HEALTH_TIP_DETAIL: "/health-tip-detail/:healthTipId",
 	HEALTH_REPORT_DETAIL: "/health-report/:type",
 	CHECKUP_RESULT: "/checkup-result",
 } as const;
