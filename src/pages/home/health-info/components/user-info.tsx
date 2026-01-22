@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import { BlurNoise, InfoBackground } from "@/shared/assets/svg";
 import { AddButton } from "@/shared/ui/buttons/add-button";
@@ -15,6 +17,8 @@ interface UserInfoProps {
 }
 
 const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
+	const navigate = useNavigate();
+
 	// isPending 상태에서는 userInfo가 'undefined'
 	const hasHealthReport = !isPending && userInfo?.score !== 0;
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
@@ -38,7 +42,7 @@ const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
 					</p>
 				</hgroup>
 
-				<AddButton />
+				<AddButton onClick={() => navigate(ROUTE_PATH.CHECKUP_RESULT)} />
 			</div>
 
 			{/* 우측 */}
