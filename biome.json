@@ -27,6 +27,9 @@
 				"noConfusingVoidType": "off",
 				"noConsole": "warn"
 			},
+			"complexity": {
+				"useLiteralKeys": "off"
+			},
 			"nursery": {
 				"noFloatingPromises": "error",
 				"useSortedClasses": {

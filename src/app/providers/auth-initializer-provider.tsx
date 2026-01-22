@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect } from "react";
-import { postRefreshAccessToken } from "@/shared/apis/auth/post-refresh-token";
+import { postRefreshAccessToken } from "@/shared/apis/auth/use-refresh-token";
 import { useAuthStore } from "@/shared/store/auth-store";
 
 type AuthInitializerProps = {
@@ -13,14 +13,7 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 	useEffect(() => {
 		const initializeAuth = async () => {
 			try {
-				const storedToken = localStorage.getItem("accessToken");
-				if (storedToken) {
-					const accessToken = storedToken.replace(/^Bearer\s+/i, "");
-					setAccessToken(accessToken);
-					setAuthenticated(true);
-					return;
-				}
-
+				// AuthInitializer는 앱 시작 시 한 번 호출되며, UI 상태가 불필요하므로 굳이 useMutation 사용 불필요
 				const response = await postRefreshAccessToken();
 
 				const authorization = response.headers.authorization;
@@ -33,7 +26,7 @@ export const AuthInitializerProvider = ({ children }: AuthInitializerProps) => {
 
 				setAccessToken(accessToken);
 				setAuthenticated(true);
-			} catch (_error) {
+			} catch {
 				setAuthenticated(false);
 			} finally {
 				setAuthCheckLoading(false);

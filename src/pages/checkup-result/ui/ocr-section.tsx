@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useLocation } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
-import { postOcr } from "@/shared/apis/post-ocr/post-ocr";
+import { postOcr } from "@/pages/checkup-result/apis/post-ocr";
 import { OcrButton } from "@/shared/ui/buttons/ocr-button";
 
 type OcrSectionProps = {
@@ -40,7 +40,7 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 	};
 
 	return (
-		<section className="mx-auto bg-white pt-[2.4rem]">
+		<section className="mx-auto w-full bg-white pt-[2.4rem]">
 			<div className="mb-[2.4rem] flex flex-col items-center gap-[0.9rem]">
 				{isSignUp && (
 					<p className="head01-b-18">검진 결과 입력하고 케어나 시작하기</p>

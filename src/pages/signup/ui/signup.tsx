@@ -3,11 +3,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
+import { useSignUp } from "@/pages/signup/apis/mutations/use-signup";
 import {
 	type SignupFormData,
 	type SignupFormInput,
 	signupSchema,
 } from "@/pages/signup/model/signup-schema";
+import { requestKakaoAuthorize } from "@/shared/libs/request-kakao-authorize";
 import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
@@ -22,6 +24,7 @@ export const Signup = () => {
 	const navigate = useNavigate();
 	const [isAgreed, setIsAgreed] = useState(false);
 	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
+	const { mutate } = useSignUp();
 
 	const {
 		register,
@@ -35,7 +38,7 @@ export const Signup = () => {
 		mode: "onBlur",
 		defaultValues: {
 			name: "",
-			birthDate: { year: "", month: "", day: "" },
+			birthdate: { year: "", month: "", day: "" },
 			gender: undefined, // 초기에는 성별 미결정 상태
 		},
 	});
@@ -43,14 +46,14 @@ export const Signup = () => {
 	// 값 실시간 감시
 	const gender = watch("gender");
 	const name = watch("name");
-	const birthDate = watch("birthDate");
+	const birthdate = watch("birthdate");
 
 	// 필수 필드가 모두 채워졌는지 확인
 	const isRequiredFilled =
 		name.trim() !== "" &&
-		birthDate.year !== "" &&
-		birthDate.month !== "" &&
-		birthDate.day !== "" &&
+		birthdate.year !== "" &&
+		birthdate.month !== "" &&
+		birthdate.day !== "" &&
 		gender !== undefined;
 
 	// 회원가입 완료 모달 열기
@@ -62,27 +65,43 @@ export const Signup = () => {
 				"이미 건강 검진을 받아보셨다면,\n결과를 계속해서 입력할까요?",
 			secondaryAction: {
 				label: "메인으로 가기",
-				onClick: () => navigate(ROUTE_PATH.HOME, { replace: true }),
+				onClick: () => {
+					localStorage.setItem("signupRedirect", "home");
+					requestKakaoAuthorize();
+				},
 			},
 			primaryAction: {
 				label: "이어서 입력하기",
-				onClick: () => navigate(ROUTE_PATH.CHECKUP_RESULT, { replace: true }),
+				onClick: () => {
+					localStorage.setItem("signupRedirect", "checkup-result");
+					requestKakaoAuthorize();
+				},
 			},
 		});
 	};
 
-	const onSubmit = (_data: SignupFormData) => {
+	const onSubmit = (data: SignupFormData) => {
 		if (!isAgreed) {
 			notifyError("개인정보 수집·이용에 동의해주세요");
 			return;
 		}
 
-		// TODO: 회원가입 API 실행
-		// TODO: 회원가입 API 요청 성공 시 카카오 로그인 실행
-		// TODO: 회원가입 실패 시 navigate(ROUTE_PATH.LOGIN, { replace: true }) 후 notifyError("다시 시도해주세요")
-
-		// 임시: 바로 모달 표시 (추후 API 연동 시 성공 콜백에서 호출)
-		void openSignupCompleteModal();
+		mutate(
+			{
+				name: data.name,
+				birthdate: `${data.birthdate.year}-${data.birthdate.month.padStart(2, "0")}-${data.birthdate.day.padStart(2, "0")}`,
+				gender: data.gender,
+			},
+			{
+				onSuccess: () => {
+					openSignupCompleteModal();
+				},
+				onError: () => {
+					void navigate(ROUTE_PATH.LOGIN, { replace: true });
+					notifyError("회원가입에 실패했습니다");
+				},
+			},
+		);
 	};
 
 	// 개인정보 수집·이용 모달 열기
@@ -115,8 +134,8 @@ export const Signup = () => {
 	};
 
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
-	const birthDateError =
-		errors.birthDate?.root?.message || errors.birthDate?.message;
+	const birthdateError =
+		errors.birthdate?.root?.message || errors.birthdate?.message;
 
 	return (
 		// flex-1으로 하단 영역을 아래로 밀기 위해 헤더 제외한 높이 지정
@@ -160,25 +179,25 @@ export const Signup = () => {
 								year={{
 									placeholder: "YYYY",
 									maxLength: 4,
-									...register("birthDate.year", {
-										onBlur: () => trigger("birthDate"),
+									...register("birthdate.year", {
+										onBlur: () => trigger("birthdate"),
 									}),
 								}}
 								month={{
 									placeholder: "MM",
 									maxLength: 2,
-									...register("birthDate.month", {
-										onBlur: () => trigger("birthDate"),
+									...register("birthdate.month", {
+										onBlur: () => trigger("birthdate"),
 									}),
 								}}
 								day={{
 									placeholder: "DD",
 									maxLength: 2,
-									...register("birthDate.day", {
-										onBlur: () => trigger("birthDate"),
+									...register("birthdate.day", {
+										onBlur: () => trigger("birthdate"),
 									}),
 								}}
-								errorMessage={birthDateError}
+								errorMessage={birthdateError}
 							/>
 						</div>
 
