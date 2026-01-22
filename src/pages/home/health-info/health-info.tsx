@@ -94,10 +94,10 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 
 				<div className="p-[1rem]">
 					<NaviRowSmall
-						label={mealData?.baseDietTitle ?? "-"}
+						label={mealData?.baseDietTitle ?? "허열성 심장실환"}
 						to={ROUTE_PATH.HEALTH_DIET_DETAIL.replace(
 							":healthDietId",
-							mealData?.baseDietDocumentId ?? "",
+							mealData?.baseDietDocumentId ?? "802267973184311798",
 						)}
 					/>
 				</div>
