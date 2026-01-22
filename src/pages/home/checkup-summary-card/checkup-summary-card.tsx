@@ -98,7 +98,7 @@ const Section = ({ className, children }: SectionProps) => (
 const Title = ({ className, label, to }: TitleProps) => (
 	<div
 		className={cn(
-			"w-full bg-white px-[2rem] pt-[1.2rem] pb-[0.4rem]",
+			"w-full bg-white px-[1.2rem] pt-[1.2rem] pb-[0.4rem]",
 			className,
 		)}
 	>
