@@ -38,10 +38,10 @@ const DietListContent = () => {
 	return (
 		<ul className="flex flex-col gap-[1.2rem]">
 			{allDiets.map((diet) => (
-				<li key={diet.id}>
+				<li key={diet.dietInformationId}>
 					<CardList
 						more
-						onClick={() => handleMenuClick(diet.id ?? "")}
+						onClick={() => handleMenuClick(diet.dietInformationId ?? "")}
 						aria-label={`${diet.title} 메뉴로 이동`}
 					>
 						{diet.title}

@@ -9,7 +9,7 @@ interface CardTableRow {
 interface CardTableProps extends React.HTMLAttributes<HTMLDivElement> {
 	headerLeft: React.ReactNode;
 	headerRight: React.ReactNode;
-	rows: readonly [CardTableRow, CardTableRow, CardTableRow];
+	rows: readonly CardTableRow[];
 }
 
 export const CardTable = ({

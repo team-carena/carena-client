@@ -8,7 +8,7 @@ export const useDietDetail = (dietId: string) => {
 	return useQuery({
 		queryKey: queryKeys.diet.detail(dietId),
 		queryFn: () => getDietDetail(dietId),
-		enabled: Boolean(dietId),
+		enabled: !!dietId,
 	});
 };
 
