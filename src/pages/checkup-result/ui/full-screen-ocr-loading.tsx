@@ -8,6 +8,7 @@ export const FullScreenOcrLoading = () => {
 				<Lottie
 					animationData={ocrLoadingLottie}
 					loop
+					play
 					className="h-[10rem] w-[20rem]"
 				/>
 				<p className="head03-sb-16 text-white">정보를 불러오는 중이에요</p>

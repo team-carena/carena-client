@@ -4,7 +4,7 @@ import { HTTP_METHOD, request } from "../../../shared/apis/request";
 
 export const postHealthReportOcr = (file: File) => {
 	const formData = new FormData();
-	formData.append("image", file);
+	formData.append("file", file);
 
 	return request<ExtractedTextView>({
 		method: HTTP_METHOD.POST,
