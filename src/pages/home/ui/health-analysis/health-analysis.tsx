@@ -1,4 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
+import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
 import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
 import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
 import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
@@ -39,8 +41,10 @@ type SummaryRow =
 interface SummarySection {
 	title: string;
 	description: string;
+	reportType: HealthReportType;
 	rows: SummaryRow[];
 }
+
 // 추후에 사용자 성별 정보를 받아올 수 있도록 수정 필요
 const DEFAULT_METRIC_SEX: Sex = "FEMALE";
 const SUMMARY_TOOLTIP_TEXT =
@@ -51,6 +55,16 @@ const formatHealthCheckDate = (value?: string) => {
 	const [year, month, day] = value.split("-");
 	if (!year || !month || !day) return value;
 	return `${year}년 ${month}월 ${day}일`;
+};
+
+const buildHealthReportDetailUrl = (
+	type: HealthReportType,
+	healthCheckDate: string,
+) => {
+	const params = new URLSearchParams();
+	if (healthCheckDate) params.set("healthCheckDate", healthCheckDate);
+	const qs = params.toString();
+	return qs ? `/health-report/${type}?${qs}` : `/health-report/${type}`;
 };
 
 const buildSummarySections = (
@@ -107,6 +121,7 @@ const buildSummarySections = (
 		{
 			title: "기본 검사",
 			description: "기본검사에 대한 설명입니다.",
+			reportType: "basic",
 			rows: rows([
 				toSimpleRow("신장", findElement(basic, "height"), "cm"),
 				toSimpleRow("체중", findElement(basic, "weight"), "kg"),
@@ -122,6 +137,7 @@ const buildSummarySections = (
 		{
 			title: "혈압 검사",
 			description: "혈압 검사에 대한 설명입니다.",
+			reportType: "blood-pressure",
 			rows: rows([
 				toBadgeRow(
 					"수축기 혈압",
@@ -138,6 +154,7 @@ const buildSummarySections = (
 		{
 			title: "당뇨 검사",
 			description: "당뇨 검사에 대한 설명입니다.",
+			reportType: "diabetes",
 			rows: rows([
 				toBadgeRow(
 					"공복 혈당",
@@ -149,6 +166,7 @@ const buildSummarySections = (
 		{
 			title: "간장질환 검사",
 			description: "간장질환 검사에 대한 설명입니다.",
+			reportType: "liver",
 			rows: rows([
 				toBadgeRow("에이에스티(AST)", "ast", findElement(liver, "ast")),
 				toBadgeRow("에이엘티(ALT)", "alt", findElement(liver, "alt")),
@@ -163,6 +181,7 @@ const buildSummarySections = (
 		{
 			title: "신장질환 검사",
 			description: "신장질환 검사에 대한 설명입니다.",
+			reportType: "kidney",
 			rows: rows([
 				toBadgeRow(
 					"혈청 크레아티닌",
@@ -175,6 +194,7 @@ const buildSummarySections = (
 		{
 			title: "빈혈 검사",
 			description: "빈혈 검사에 대한 설명입니다.",
+			reportType: "anemia",
 			rows: rows([
 				toBadgeRow(
 					"혈색소",
@@ -188,8 +208,14 @@ const buildSummarySections = (
 };
 
 const HealthAnalysisContent = () => {
-	//검진 날짜 목록 조회
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	// URL에 저장된 reportId (뒤로가기/새로고침 시 선택값 유지)
+	const reportIdFromQuery = searchParams.get("reportId") ?? "";
+
+	// 검진 날짜 목록 조회
 	const { data, isPending, isError } = useHealthReportDateList({ index: 1 });
+
 	const options = useMemo(
 		() =>
 			(data?.reportDates ?? []).map((dateInfo) => ({
@@ -199,8 +225,19 @@ const HealthAnalysisContent = () => {
 			})),
 		[data?.reportDates],
 	);
-	const [selectedReportId, setSelectedReportId] = useState("");
-	//유효한 ID가 있을 때에 조회 API 호출
+
+	// 초기값을 query 우선으로 설정 (options가 준비되면 effect에서 유효성 검증)
+	const [selectedReportId, setSelectedReportId] = useState(reportIdFromQuery);
+
+	// 선택된 reportId로 healthCheckDate 찾기 (상세페이지로 넘길 값)
+	const selectedHealthCheckDate = useMemo(() => {
+		const found = (data?.reportDates ?? []).find(
+			(d) => String(d.healthReportId) === selectedReportId,
+		);
+		return found?.healthCheckDate ?? "";
+	}, [data?.reportDates, selectedReportId]);
+
+	// 유효한 ID가 있을 때에 조회 API 호출
 	const hasValidReportId = selectedReportId !== "";
 	const {
 		data: report,
@@ -210,18 +247,44 @@ const HealthAnalysisContent = () => {
 		healthReportId: selectedReportId,
 		enabled: hasValidReportId,
 	});
+
 	const hasNoReports = !isPending && !isError && options.length === 0;
-	//첫번째 리포트를 기본 선택
+
+	// 첫 진입/뒤로가기 시: query(reportId)가 유효하면 그 값 유지, 없거나 유효하지 않으면 첫 번째로 세팅 + query 정리
 	useEffect(() => {
-		if (options.length > 0) {
-			setSelectedReportId((prev) => prev || options[0].value);
+		if (options.length === 0) return;
+
+		const isValidQuery = reportIdFromQuery
+			? options.some((o) => o.value === reportIdFromQuery)
+			: false;
+
+		const nextReportId = isValidQuery ? reportIdFromQuery : options[0].value;
+
+		setSelectedReportId(nextReportId);
+
+		// query가 비어있거나 유효하지 않으면 URL도 정리 (기존 tab 등 다른 query는 유지)
+		if (!reportIdFromQuery || !isValidQuery) {
+			const next = new URLSearchParams(searchParams);
+			next.set("reportId", nextReportId);
+			setSearchParams(next, { replace: true });
 		}
-	}, [options]);
-	//전체 리포트 기준 종합 배지 상태 계산
+	}, [options, reportIdFromQuery, searchParams, setSearchParams]);
+
+	// 드롭다운 선택 변경 시 query(reportId) 동기화
+	const handleReportChange = (nextReportId: string) => {
+		setSelectedReportId(nextReportId);
+
+		const next = new URLSearchParams(searchParams);
+		next.set("reportId", nextReportId);
+		setSearchParams(next);
+	};
+
+	// 전체 리포트 기준 종합 배지 상태 계산
 	const { variant: summaryBadgeVariant, text: summaryBadgeText } = useMemo(
 		() => getSummaryBadgeState(report),
 		[report],
 	);
+
 	const summarySections = useMemo(() => buildSummarySections(report), [report]);
 	const radarData = useMemo(() => buildRadarData(report), [report]);
 
@@ -242,10 +305,11 @@ const HealthAnalysisContent = () => {
 			<div className="mb-[2rem]">
 				<DropDown
 					value={selectedReportId}
-					onValueChange={setSelectedReportId}
+					onValueChange={handleReportChange}
 					options={options}
 				/>
 			</div>
+
 			{/* RadarChart 위에 배지/툴팁 레이어 고정 */}
 			<div className="relative z-[5] flex items-center gap-[0.3rem]">
 				<LargeBadge variant={summaryBadgeVariant}>
@@ -255,44 +319,55 @@ const HealthAnalysisContent = () => {
 					<div className="whitespace-pre-line">{SUMMARY_TOOLTIP_TEXT}</div>
 				</Tooltip>
 			</div>
+
 			<div className="mt-[-4.8rem]">
 				<RadarChart data={radarData} />
 			</div>
+
 			<div className="mt-[0.5rem] flex flex-col gap-[2rem]">
-				{summarySections.map((section) => (
-					<CheckupSummaryCard key={section.title}>
-						<CheckupSummaryCard.Title label={section.title} to="/" />
-						<CheckupSummaryCard.Section>
-							<CheckupSummaryCard.Description>
-								{section.description}
-							</CheckupSummaryCard.Description>
-							<CheckupSummaryCard.Rows>
-								{section.rows.map((row) => {
-									if (row.type === "simple") {
+				{summarySections.map((section) => {
+					const to = buildHealthReportDetailUrl(
+						section.reportType,
+						selectedHealthCheckDate,
+					);
+
+					return (
+						<CheckupSummaryCard key={section.reportType}>
+							<CheckupSummaryCard.Title label={section.title} to={to} />
+
+							<CheckupSummaryCard.Section>
+								<CheckupSummaryCard.Description>
+									{section.description}
+								</CheckupSummaryCard.Description>
+
+								<CheckupSummaryCard.Rows>
+									{section.rows.map((row) => {
+										if (row.type === "simple") {
+											return (
+												<CheckupSummaryCard.Row
+													key={row.left}
+													left={row.left}
+													right={row.right}
+												/>
+											);
+										}
+
 										return (
-											<CheckupSummaryCard.Row
-												key={row.left}
-												left={row.left}
-												right={row.right}
+											<CheckupSummaryCard.RowWithBadgeAndGraph
+												key={row.label}
+												label={row.label}
+												value={row.value}
+												badgeCode={row.badgeCode}
+												metricKey={row.metricKey}
+												metricSex={row.metricSex}
 											/>
 										);
-									}
-
-									return (
-										<CheckupSummaryCard.RowWithBadgeAndGraph
-											key={row.label}
-											label={row.label}
-											value={row.value}
-											badgeCode={row.badgeCode}
-											metricKey={row.metricKey}
-											metricSex={row.metricSex}
-										/>
-									);
-								})}
-							</CheckupSummaryCard.Rows>
-						</CheckupSummaryCard.Section>
-					</CheckupSummaryCard>
-				))}
+									})}
+								</CheckupSummaryCard.Rows>
+							</CheckupSummaryCard.Section>
+						</CheckupSummaryCard>
+					);
+				})}
 			</div>
 		</div>
 	);

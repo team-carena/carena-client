@@ -4,7 +4,7 @@ import type { HeaderVariant } from "@shared/ui/navigations/header";
 import { createBrowserRouter, Navigate } from "react-router";
 import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
 import { CheckupResultPage } from "@/pages/checkup-result/ui/checkup-result";
-import { HealthReportDetailPage } from "@/pages/health-report/health-report-detail";
+import { HealthReportDetailPage } from "@/pages/health-report-detail/ui/health-report-detail";
 import { HealthTipPage } from "@/pages/health-tip/ui/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/ui/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
