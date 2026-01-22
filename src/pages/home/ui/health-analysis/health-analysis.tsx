@@ -9,6 +9,7 @@ import {
 	getSummaryBadgeState,
 } from "@/pages/home/ui/health-analysis/health-analysis.badge";
 import { buildRadarData } from "@/pages/home/ui/health-analysis/health-analysis.radar";
+import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import type {
 	DisplayElement,
 	EntireHealthReportView,
@@ -22,6 +23,11 @@ import type {
 	Sex,
 } from "@/shared/ui/graphs/range-bar/health-metric-config";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
+
+interface HealthAnalysisPageProps {
+	userInfo: MemberInfoResponse | undefined;
+	isPending: boolean;
+}
 
 type SummaryRow =
 	| {
@@ -45,8 +51,6 @@ interface SummarySection {
 	rows: SummaryRow[];
 }
 
-// 추후에 사용자 성별 정보를 받아올 수 있도록 수정 필요
-const DEFAULT_METRIC_SEX: Sex = "FEMALE";
 const SUMMARY_TOOLTIP_TEXT =
 	"본 서비스의 검진결과 해석 및 종합판단은 보건복지부가 고시한 국가건강검진 판정 기준을 참고하여 제공됩니다. 단, 병원 및 검사기관에 따라 적용 기준이나 참고 범위가 일부 다를 수 있습니다.\n\n<구분 기준>\n정상 A: 모든 검진 항목이 정상 범위에 해당하는 경우\n정상 B(경계): 하나 이상의 검진 항목이 경계 범위에 해당하는 경우\n의심: 하나 이상의 검진 항목에서 질환이 의심되는 소견이 확인된 경우";
 
@@ -68,7 +72,8 @@ const buildHealthReportDetailUrl = (
 };
 
 const buildSummarySections = (
-	report?: EntireHealthReportView,
+	report: EntireHealthReportView | undefined,
+	userSex: Sex,
 ): SummarySection[] => {
 	const basic = report?.basic ?? [];
 	const bloodPressure = report?.bloodPressure ?? [];
@@ -129,7 +134,7 @@ const buildSummarySections = (
 					"허리둘레",
 					"waist",
 					findElement(basic, "waistCircumference"),
-					DEFAULT_METRIC_SEX,
+					userSex,
 				),
 				toBadgeRow("BMI 수치", "bmi", findElement(basic, "bmi")),
 			]),
@@ -174,7 +179,7 @@ const buildSummarySections = (
 					"감마지티피(γ-GTP)",
 					"ggtp",
 					findElement(liver, "gammaGtp"),
-					DEFAULT_METRIC_SEX,
+					userSex,
 				),
 			]),
 		},
@@ -196,18 +201,17 @@ const buildSummarySections = (
 			description: "빈혈 검사에 대한 설명입니다.",
 			reportType: "anemia",
 			rows: rows([
-				toBadgeRow(
-					"혈색소",
-					"hb",
-					findElement(anemia, "hemoglobin"),
-					DEFAULT_METRIC_SEX,
-				),
+				toBadgeRow("혈색소", "hb", findElement(anemia, "hemoglobin"), userSex),
 			]),
 		},
 	];
 };
 
-const HealthAnalysisContent = () => {
+interface HealthAnalysisContentProps {
+	userSex: Sex;
+}
+
+const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	// URL에 저장된 reportId (뒤로가기/새로고침 시 선택값 유지)
@@ -285,7 +289,10 @@ const HealthAnalysisContent = () => {
 		[report],
 	);
 
-	const summarySections = useMemo(() => buildSummarySections(report), [report]);
+	const summarySections = useMemo(
+		() => buildSummarySections(report, userSex),
+		[report, userSex],
+	);
 	const radarData = useMemo(() => buildRadarData(report), [report]);
 
 	if (isPending || isError || isReportPending || isReportError) return null;
@@ -373,8 +380,17 @@ const HealthAnalysisContent = () => {
 	);
 };
 
-const HealthAnalysisPage = () => {
-	return <HealthAnalysisContent />;
+const DEFAULT_SEX: Sex = "FEMALE";
+
+const HealthAnalysisPage = ({
+	userInfo,
+	isPending: isUserInfoPending,
+}: HealthAnalysisPageProps) => {
+	const userSex = isUserInfoPending
+		? DEFAULT_SEX
+		: (userInfo?.gender ?? DEFAULT_SEX);
+
+	return <HealthAnalysisContent userSex={userSex} />;
 };
 
 export default HealthAnalysisPage;

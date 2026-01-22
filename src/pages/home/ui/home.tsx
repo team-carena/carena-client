@@ -56,7 +56,7 @@ export const HomePage = () => {
 				</Tabs.Content>
 
 				<Tabs.Content value="health-analysis">
-					<HealthAnalysisPage />
+					<HealthAnalysisPage userInfo={userInfo} isPending={isPending} />
 				</Tabs.Content>
 			</Tabs>
 		</div>
