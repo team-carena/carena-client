@@ -74,12 +74,10 @@ const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 			<ul className="flex flex-col gap-[1.2rem]">
 				{tips.map((tip) => {
 					const healthTipId = tip.id ?? "";
-					const isClickable = Boolean(healthTipId);
 
 					return (
 						<li key={healthTipId}>
 							<CardTip
-								more={isClickable}
 								onClick={() =>
 									navigate(
 										`${ROUTE_PATH.HEALTH_TIP_DETAIL.replace(
