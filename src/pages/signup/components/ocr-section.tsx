@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useLocation } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
-import { postOcr } from "@/shared/apis/post-ocr/post-ocr";
+import { postOcr } from "@/pages/checkup-result/apis/post-ocr";
 import { OcrButton } from "@/shared/ui/buttons/ocr-button";
 
 type OcrSectionProps = {
