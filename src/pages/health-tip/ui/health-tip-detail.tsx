@@ -11,11 +11,8 @@ export const HealthTipDetailPage = () => {
 	);
 
 	if (isPending) {
-		return (
-			<main className="px-[2rem] py-[2.4rem]">
-				<p className="body04-r-14 text-gray-900">불러오는 중...</p>
-			</main>
-		);
+		// TODO: 로딩스피너 적용
+		return null;
 	}
 
 	if (isError || !data) {
