@@ -16,7 +16,7 @@ export const useLogout = () => {
 };
 
 export const postLogout = () => {
-	return request<SuccessResponseVoid>({
+	return request<void>({
 		method: HTTP_METHOD.POST,
 		url: API_ENDPOINTS.member.logout,
 	});
