@@ -9,6 +9,7 @@ import {
 	checkupSchema,
 } from "@/pages/checkup-result/model/checkup-schema";
 import type { CreateHealthReportRequest } from "@/shared/apis/generated/data-contracts";
+import { OCR_FIELD_KEYS } from "@/shared/constants/ocr-field-keys";
 import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
@@ -209,8 +210,10 @@ export const CheckupResultPage = () => {
 
 	const handleOcrComplete = useCallback(
 		(data: Record<string, string>) => {
-			Object.entries(data).forEach(([key, value]) => {
-				setValue(key as keyof CheckupFormInput, value, {
+			OCR_FIELD_KEYS.forEach((key) => {
+				const value = data[key];
+				if (value == null) return;
+				setValue(key, value, {
 					shouldDirty: true,
 					shouldTouch: true,
 					shouldValidate: true,
