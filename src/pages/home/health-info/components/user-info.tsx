@@ -1,17 +1,20 @@
+import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import { BlurNoise, InfoBackground } from "@/shared/assets/svg";
 import { AddButton } from "@/shared/ui/buttons/add-button";
 import { RadialChart } from "@/shared/ui/graphs/radial-chart/radial-chart";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
-import { useMyInfo } from "../../apis/queries/use-my-info";
 
 const GENDER_LABEL = {
 	MALE: "남",
 	FEMALE: "여",
 } as const;
 
-const UserInfo = () => {
-	const { data: userInfo, isPending } = useMyInfo();
+interface UserInfoProps {
+	userInfo: MemberInfoResponse | undefined;
+	isPending: boolean;
+}
 
+const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
 	// isPending 상태에서는 userInfo가 'undefined'
 	const hasHealthReport = !isPending && userInfo?.score !== 0;
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");

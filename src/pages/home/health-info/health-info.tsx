@@ -1,10 +1,16 @@
 import cardDietBg from "@img/card-diet-bg.png";
 import { Suspense } from "react";
+import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import { HealthTipBackground } from "@/shared/assets/svg";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
 import { NaviRowSmall } from "@/shared/ui/navigations/navi-row-small";
 import { Ticker } from "@/shared/ui/ticker/ticker";
 import { useTicker } from "../apis/queries/use-ticker";
+
+interface HealthInfoPageProps {
+	userInfo: MemberInfoResponse | undefined;
+	isPending: boolean;
+}
 
 const HealthTipTicker = () => {
 	const { data } = useTicker();
@@ -18,7 +24,9 @@ const HealthTipTicker = () => {
 	return <Ticker tips={tips} />;
 };
 
-const HealthInfoPage = () => {
+const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
+	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
+
 	return (
 		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
 			{/* 생활 속 건강 팁 */}
@@ -52,7 +60,9 @@ const HealthInfoPage = () => {
 						className="absolute inset-0 z-0 h-full w-full"
 					/>
 					<div className="relative z-10 p-[2rem]">
-						<p className="body01-sb-12 text-gray-700">김경아님 맞춤 식단</p>
+						<p className="body01-sb-12 text-gray-700">
+							{displayName}님 맞춤 식단
+						</p>
 						<p className="head04-m-16 mt-[0.8rem] text-gray-900">
 							건오징어채 볶음
 						</p>
