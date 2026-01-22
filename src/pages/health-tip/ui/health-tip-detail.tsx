@@ -17,16 +17,16 @@ export const HealthTipDetailPage = () => {
 
 	if (isError || !data) {
 		return (
-			<main className="px-[2rem] py-[2.4rem]">
+			<div className="px-[2rem] py-[2.4rem]">
 				<p className="body04-r-14 text-gray-900">
 					건강팁을 불러오지 못했습니다.
 				</p>
-			</main>
+			</div>
 		);
 	}
 
 	return (
-		<main className="px-[2rem] py-[2.4rem]">
+		<div className="px-[2rem] py-[2.4rem]">
 			<section>
 				<CardTip>{data.title}</CardTip>
 			</section>
@@ -42,6 +42,6 @@ export const HealthTipDetailPage = () => {
 					출처: <cite className="not-italic">{data.reference}</cite>
 				</p>
 			</section>
-		</main>
+		</div>
 	);
 };
