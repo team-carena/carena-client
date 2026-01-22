@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 
 import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
 import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
@@ -215,6 +216,11 @@ const buildSummarySections = (
 };
 
 const HealthAnalysisContent = () => {
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	// URL에 저장된 reportId (뒤로가기/새로고침 시 선택값 유지)
+	const reportIdFromQuery = searchParams.get("reportId") ?? "";
+
 	// 검진 날짜 목록 조회
 	const { data, isPending, isError } = useHealthReportDateList({ index: 1 });
 
@@ -228,7 +234,8 @@ const HealthAnalysisContent = () => {
 		[data?.reportDates],
 	);
 
-	const [selectedReportId, setSelectedReportId] = useState("");
+	// 초기값을 query 우선으로 설정 (options가 준비되면 effect에서 유효성 검증)
+	const [selectedReportId, setSelectedReportId] = useState(reportIdFromQuery);
 
 	// 선택된 reportId로 healthCheckDate 찾기 (상세페이지로 넘길 값)
 	const selectedHealthCheckDate = useMemo(() => {
@@ -251,12 +258,34 @@ const HealthAnalysisContent = () => {
 
 	const hasNoReports = !isPending && !isError && options.length === 0;
 
-	// 첫번째 리포트를 기본 선택
+	// 첫 진입/뒤로가기 시: query(reportId)가 유효하면 그 값 유지, 없거나 유효하지 않으면 첫 번째로 세팅 + query 정리
 	useEffect(() => {
-		if (options.length > 0) {
-			setSelectedReportId((prev) => prev || options[0].value);
+		if (options.length === 0) return;
+
+		const isValidQuery = reportIdFromQuery
+			? options.some((o) => o.value === reportIdFromQuery)
+			: false;
+
+		const nextReportId = isValidQuery ? reportIdFromQuery : options[0].value;
+
+		setSelectedReportId(nextReportId);
+
+		// query가 비어있거나 유효하지 않으면 URL도 정리 (기존 tab 등 다른 query는 유지)
+		if (!reportIdFromQuery || !isValidQuery) {
+			const next = new URLSearchParams(searchParams);
+			next.set("reportId", nextReportId);
+			setSearchParams(next, { replace: true });
 		}
-	}, [options]);
+	}, [options, reportIdFromQuery, searchParams, setSearchParams]);
+
+	// 드롭다운 선택 변경 시 query(reportId) 동기화
+	const handleReportChange = (nextReportId: string) => {
+		setSelectedReportId(nextReportId);
+
+		const next = new URLSearchParams(searchParams);
+		next.set("reportId", nextReportId);
+		setSearchParams(next);
+	};
 
 	// 전체 리포트 기준 종합 배지 상태 계산
 	const { variant: summaryBadgeVariant, text: summaryBadgeText } = useMemo(
@@ -284,7 +313,7 @@ const HealthAnalysisContent = () => {
 			<div className="mb-[2rem]">
 				<DropDown
 					value={selectedReportId}
-					onValueChange={setSelectedReportId}
+					onValueChange={handleReportChange}
 					options={options}
 				/>
 			</div>
