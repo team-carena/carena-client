@@ -26,7 +26,11 @@ function Tooltip({
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<button type="button" className="inline-flex" aria-label="정보 보기">
+				<button
+					type="button"
+					className="inline-flex outline-none [-webkit-tap-highlight-color:transparent]"
+					aria-label="정보 보기"
+				>
 					{iconTone === "black" ? <InfoBlack /> : <InfoGray />}
 				</button>
 			</PopoverTrigger>
