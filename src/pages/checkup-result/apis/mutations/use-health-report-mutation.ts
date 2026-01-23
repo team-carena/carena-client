@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -7,16 +7,21 @@ import type {
 	CreateHealthReportRequest,
 	SuccessResponseVoid,
 } from "@/shared/apis/generated/data-contracts";
+import { queryKeys } from "@/shared/apis/query-keys";
 import { HTTP_METHOD, request } from "@/shared/apis/request";
 import { notifyError, notifySuccess } from "@/shared/ui/overlays/toast/toast";
 
 export const useHealthReportMutation = () => {
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	return useMutation({
 		mutationFn: (data: CreateHealthReportRequest) => postHealthReport(data),
 		throwOnError: false,
 		onSuccess: () => {
+			void queryClient.invalidateQueries({
+				queryKey: queryKeys.member.info(),
+			});
 			notifySuccess("검진 결과가 추가되었습니다");
 			void navigate(ROUTE_PATH.HOME, { replace: true });
 		},
