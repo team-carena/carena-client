@@ -287,8 +287,8 @@ export const healthMetricConfigs: Record<string, HealthMetricConfig> = {
 		segments: makeSegments([
 			{ from: 10, to: 12.0, tone: "danger" },
 			{ from: 12.0, to: 13.0, tone: "border" },
-			{ from: 13.0, to: 16.5, tone: "normal" },
-			{ from: 16.5, to: 18, tone: "danger" },
+			{ from: 13.0, to: 16.6, tone: "normal" },
+			{ from: 16.6, to: 18, tone: "danger" },
 		]),
 	},
 
