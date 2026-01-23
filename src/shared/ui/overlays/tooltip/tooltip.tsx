@@ -1,4 +1,4 @@
-import type * as React from "react";
+import * as React from "react";
 
 import { InfoBlack, InfoGray } from "@/shared/assets/svg";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
@@ -22,13 +22,34 @@ function Tooltip({
 }: TooltipProps) {
 	// 툴팁 UI의 삼각형 중앙이 info 아이콘 중앙을 가리키도록 offset 조정
 	const ALIGN_OFFSET = -25;
+	const [open, setOpen] = React.useState(false);
+	//스크롤 시 툴팁 닫기
+	React.useEffect(() => {
+		if (!open) return undefined;
+		const handleScroll = () => setOpen(false);
+
+		window.addEventListener("scroll", handleScroll, {
+			capture: true,
+			passive: true,
+		});
+		window.addEventListener("touchmove", handleScroll, {
+			capture: true,
+			passive: true,
+		});
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll, { capture: true });
+			window.removeEventListener("touchmove", handleScroll, { capture: true });
+		};
+	}, [open]);
 
 	return (
-		<Popover>
+		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<button
 					type="button"
-					className="inline-flex outline-none [-webkit-tap-highlight-color:transparent]"
+					className="inline-flex outline-none focus:outline-none focus-visible:outline-none"
+					style={{ WebkitTapHighlightColor: "transparent" }}
 					aria-label="정보 보기"
 				>
 					{iconTone === "black" ? <InfoBlack /> : <InfoGray />}
