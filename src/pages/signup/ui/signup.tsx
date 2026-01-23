@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -25,6 +25,8 @@ export const Signup = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
 	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 	const { mutate } = useSignUp();
+
+	const agreementSectionRef = useRef<HTMLElement>(null);
 
 	const {
 		register,
@@ -238,7 +240,10 @@ export const Signup = () => {
 			<div className="flex flex-col">
 				{/* 개인정보 동의 - 기본정보 입력 완료 시 표시 */}
 				{isRequiredFilled && isValid && (
-					<section className="fade-in-animation mb-[3.6rem] flex flex-col gap-[2rem]">
+					<section
+						ref={agreementSectionRef}
+						className="fade-in-animation mb-[3.6rem] flex flex-col gap-[2rem]"
+					>
 						<h3 className="head02-b-16 text-gray-600">
 							개인정보 수집·이용 동의
 						</h3>
