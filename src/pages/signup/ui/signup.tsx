@@ -84,6 +84,10 @@ export const Signup = () => {
 
 	const onSubmit = (data: SignupFormData) => {
 		if (!isAgreed) {
+			agreementSectionRef.current?.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+			});
 			notifyError("개인정보 수집·이용에 동의해주세요");
 			return;
 		}
