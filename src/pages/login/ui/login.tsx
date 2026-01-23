@@ -7,12 +7,13 @@ import { LoginButton } from "../components/login-button";
 
 export const LoginPage = () => {
 	return (
-		<>
+		<div className="relative min-h-dvh">
 			<div
 				aria-hidden="true"
-				className="fixed inset-0 -z-10 bg-center bg-cover bg-no-repeat"
+				className="absolute inset-0 -z-10 bg-center bg-cover bg-no-repeat"
 				style={{ backgroundImage: `url(${LoginBackGround})` }}
 			/>
+
 			<div className="px-[2rem]">
 				<h1 className="sr-only">CareNA 로그인 페이지</h1>
 				<header className="flex flex-col gap-[1.9rem] px-[0.4rem] pt-[6.4rem] pb-[1.6rem]">
@@ -47,6 +48,6 @@ export const LoginPage = () => {
 					<LoginButton onClick={requestKakaoAuthorize} />
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
