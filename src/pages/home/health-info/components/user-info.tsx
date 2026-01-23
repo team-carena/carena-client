@@ -46,7 +46,7 @@ const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
 			</div>
 
 			{/* 우측 */}
-			<div className="relative z-10 flex flex-1 items-center justify-center">
+			<div className="relative z-10 mr-[1.2rem] flex flex-1 items-center justify-center">
 				{hasHealthReport ? (
 					<>
 						{/* 우측 그래프 */}
