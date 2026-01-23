@@ -22,6 +22,9 @@ export const useHealthReportMutation = () => {
 			void queryClient.invalidateQueries({
 				queryKey: queryKeys.member.info(),
 			});
+			void queryClient.invalidateQueries({
+				queryKey: queryKeys.healthReport.all,
+			});
 			notifySuccess("검진 결과가 추가되었습니다");
 			void navigate(ROUTE_PATH.HOME, { replace: true });
 		},
