@@ -246,16 +246,19 @@ export const LineChart = ({ data }: LineChartProps) => {
 							? triangleTipY - POINT.TRIANGLE_HEIGHT
 							: triangleTipY + POINT.TRIANGLE_HEIGHT;
 
-						const textY = placeAbove
-							? triangleBaseY - POINT.LABEL_GAP
-							: triangleBaseY + POINT.LABEL_GAP + POINT.TEXT_HEIGHT;
+						const textCenterY = placeAbove
+							? // 삼각형 base 위로: (삼각형 base - gap) 지점이 텍스트 "아랫변"
+								triangleBaseY - POINT.LABEL_GAP - POINT.TEXT_HEIGHT / 2
+							: // 삼각형 base 아래로: (삼각형 base + gap) 지점이 텍스트 "윗변"
+								triangleBaseY + POINT.LABEL_GAP + POINT.TEXT_HEIGHT / 2;
 
 						return (
 							<g key={p.label}>
 								<text
 									x={p.x}
-									y={textY}
+									y={textCenterY}
 									textAnchor="middle"
+									dominantBaseline="central"
 									className="body06-r-10"
 									fill={COLORS.TEXT}
 								>
