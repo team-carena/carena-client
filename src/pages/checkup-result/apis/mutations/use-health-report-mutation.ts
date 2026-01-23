@@ -7,7 +7,7 @@ import type {
 	SuccessResponseVoid,
 } from "@/shared/apis/generated/data-contracts";
 import { HTTP_METHOD, request } from "@/shared/apis/request";
-import { notifyError } from "@/shared/ui/overlays/toast/toast";
+import { notifyError, notifySuccess } from "@/shared/ui/overlays/toast/toast";
 
 export const useHealthReportMutation = () => {
 	const navigate = useNavigate();
@@ -15,6 +15,7 @@ export const useHealthReportMutation = () => {
 	return useMutation({
 		mutationFn: (data: CreateHealthReportRequest) => postHealthReport(data),
 		onSuccess: () => {
+			notifySuccess("검진 결과가 추가되었습니다");
 			void navigate(ROUTE_PATH.HOME, { replace: true });
 		},
 		onError: () => {
