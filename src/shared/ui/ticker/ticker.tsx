@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
+import type { HealthTipListElement } from "@/shared/apis/generated/data-contracts";
 import { cn } from "@/shared/libs/cn";
 
-interface Tips {
-	id: number;
-	title: string;
-} // TODO: 건강 팁 api 응답 타입을 export 해오기
-
 interface TickerProps {
-	tips: Tips[];
+	tips: HealthTipListElement[];
 }
 
 const TRANSITION_DURATION = 400;
