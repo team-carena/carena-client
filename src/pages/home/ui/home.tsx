@@ -1,9 +1,9 @@
 import { useSearchParams } from "react-router";
 import { useMyInfo } from "@/shared/apis/member/use-my-info";
 import { Tabs } from "@/shared/ui/tabs/tabs";
-import UserInfo from "../health-info/components/user-info";
-import HealthInfoPage from "../health-info/health-info";
 import HealthAnalysisPage from "./health-analysis/health-analysis";
+import UserInfo from "./health-info/components/user-info";
+import HealthInfoPage from "./health-info/health-info";
 
 type HomeTab = "health-info" | "health-analysis";
 

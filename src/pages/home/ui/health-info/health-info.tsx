@@ -6,8 +6,8 @@ import { HealthTipBackground } from "@/shared/assets/svg";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
 import { NaviRowSmall } from "@/shared/ui/navigations/navi-row-small";
 import { Ticker } from "@/shared/ui/ticker/ticker";
-import { useRecommendedMeal } from "../apis/queries/use-recommended-meals";
-import { useTicker } from "../apis/queries/use-ticker";
+import { useRecommendedMeal } from "../../apis/queries/use-recommended-meals";
+import { useTicker } from "../../apis/queries/use-ticker";
 
 interface HealthInfoPageProps {
 	userInfo: MemberInfoResponse | undefined;

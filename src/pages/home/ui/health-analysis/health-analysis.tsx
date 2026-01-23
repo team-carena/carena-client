@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router";
 import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
 import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
 import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
-import CheckupSummaryCard from "@/pages/home/checkup-summary-card/checkup-summary-card";
+import CheckupSummaryCard from "@/pages/home/ui/checkup-summary-card/checkup-summary-card";
 import {
 	getElementBadgeCode,
 	getSummaryBadgeState,
