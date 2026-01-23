@@ -7,6 +7,7 @@ import { ROUTE_PATH } from "@/app/routes/paths";
 import { useDietList } from "@/pages/health-menu/apis/queries/use-diet-list.ts";
 import CardAiDietRecommendation from "@/pages/health-menu/ui/card-ai-diet-recommendation";
 import { useRecommendedMeal } from "@/pages/home/apis/queries/use-recommended-meals";
+import { useMyInfo } from "@/shared/apis/member/use-my-info";
 import { useInfiniteScroll } from "@/shared/libs/use-infinite-scroll";
 
 const DietListContent = () => {
@@ -66,10 +67,16 @@ const EmptyRecommendation = () => {
 };
 
 export const HealthMenuPage = () => {
-	const { data: mealData } = useRecommendedMeal({ enabled: true });
+	// 사용자 score 확인
+	const { data: myInfo } = useMyInfo();
 
-	const hasRecommendation =
-		Boolean(mealData?.meal) && Boolean(mealData?.description);
+	// score 없거나 0이면 “검진결과 없음”
+	const hasHealthReport = myInfo?.score != null && myInfo.score !== 0;
+
+	// 검진결과 있을 때만 추천식단 조회
+	const { data: mealData } = useRecommendedMeal({
+		enabled: hasHealthReport,
+	});
 
 	return (
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
@@ -79,7 +86,7 @@ export const HealthMenuPage = () => {
 				style={{ backgroundImage: `url(${MenuBg})` }}
 				aria-label="AI 추천 식단"
 			>
-				{hasRecommendation ? (
+				{hasHealthReport ? (
 					<CardAiDietRecommendation
 						dietName={mealData?.meal ?? "-"}
 						description={mealData?.description ?? "-"}
