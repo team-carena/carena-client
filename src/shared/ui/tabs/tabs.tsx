@@ -84,10 +84,18 @@ const TabsTrigger = ({
 	children,
 	value,
 	className,
+	onClick,
 	...props
 }: TabsTriggerProps) => {
 	const { selectedTab, changeTab } = useTabsContext();
 	const isSelected = selectedTab === value;
+
+	// onClick을 ...props에서 분리해 changeTab과 함께 실행
+	// '...props' spread가 onClick을 덮어씌워 changeTab이 실행되지 않는 문제 방지)
+	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		changeTab(value); // 탭 트리거 기본 동작
+		onClick?.(e); // 사용처에서 전달받은 동작
+	};
 
 	return (
 		<button
@@ -97,12 +105,12 @@ const TabsTrigger = ({
 				"relative flex-1 py-[1.2rem] text-center transition-colors duration-200",
 				isSelected ? "head03-sb-16 text-gray-900" : "head04-m-16 text-gray-500",
 				// 인디케이터 (항상 존재, 선택 시만 보임)
-				"after:absolute after:bottom-[-1.5px] after:left-1/2 after:h-[2px] after:w-[60%] after:-translate-x-1/2 after:bg-gray-900 after:transition-opacity after:duration-200",
+				"after:absolute after:bottom-[-1.5px] after:left-1/2 after:h-[2px] after:w-[60%] after:-translate-x-1/2 after:rounded-full after:bg-gray-900 after:transition-opacity after:duration-200",
 				isSelected ? "after:opacity-100" : "after:opacity-0",
 				className,
 			)}
 			data-selected={isSelected}
-			onClick={() => changeTab(value)}
+			onClick={handleClick}
 			{...props}
 		>
 			{children}

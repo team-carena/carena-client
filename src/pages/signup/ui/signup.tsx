@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -25,6 +25,8 @@ export const Signup = () => {
 	const [isAgreed, setIsAgreed] = useState(false);
 	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 	const { mutate } = useSignUp();
+
+	const agreementSectionRef = useRef<HTMLElement>(null);
 
 	const {
 		register,
@@ -82,6 +84,10 @@ export const Signup = () => {
 
 	const onSubmit = (data: SignupFormData) => {
 		if (!isAgreed) {
+			agreementSectionRef.current?.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+			});
 			notifyError("개인정보 수집·이용에 동의해주세요");
 			return;
 		}
@@ -233,11 +239,15 @@ export const Signup = () => {
 				</section>
 			</form>
 
+			{/* TODO: 공컴 추출 */}
 			{/* 하단 영역 (개인정보 동의 + 버튼) */}
 			<div className="flex flex-col">
 				{/* 개인정보 동의 - 기본정보 입력 완료 시 표시 */}
 				{isRequiredFilled && isValid && (
-					<section className="fade-in-animation mb-[3.6rem] flex flex-col gap-[2rem]">
+					<section
+						ref={agreementSectionRef}
+						className="fade-in-animation mb-[3.6rem] flex flex-col gap-[2rem]"
+					>
 						<h3 className="head02-b-16 text-gray-600">
 							개인정보 수집·이용 동의
 						</h3>
@@ -247,17 +257,19 @@ export const Signup = () => {
 								onChange={setIsAgreed}
 								disabled={!isCheckboxEnabled}
 							/>
-							<span className="body01-sb-12 whitespace-nowrap pt-[0.2rem] text-black">
-								[필수]{" "}
+							<p className="whitespace-nowrap pt-[0.2rem] text-black">
+								<span className="body01-sb-12">[필수] </span>
 								<button
 									type="button"
-									className="underline underline-offset-2"
+									className="body01-sb-12 underline underline-offset-2"
 									onClick={handleOpenPrivacyModal}
 								>
 									개인정보 수집·이용
 								</button>{" "}
-								내용을 확인하였으며 이에 동의합니다.
-							</span>
+								<span className="body05-r-12">
+									내용을 확인하였으며 이에 동의합니다.
+								</span>
+							</p>
 						</div>
 					</section>
 				)}
