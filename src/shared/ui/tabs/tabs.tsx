@@ -22,7 +22,6 @@ const TabsRoot = ({
 		(newTab: string) => {
 			// 같은 탭 클릭 시 최상단으로 이동
 			if (selectedTab === newTab) {
-				console.log("같은 탭 클릭 - 상단 이동 시도", { selectedTab, newTab });
 				window.scrollTo({ top: 0, behavior: "smooth" });
 				return;
 			}
