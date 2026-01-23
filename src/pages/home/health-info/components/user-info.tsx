@@ -46,7 +46,7 @@ const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
 			</div>
 
 			{/* 우측 */}
-			<div className="relative z-10 flex flex-1 items-center justify-center">
+			<div className="relative z-10 mr-[1.2rem] flex flex-1 items-center justify-center">
 				{hasHealthReport ? (
 					<>
 						{/* 우측 그래프 */}
@@ -58,7 +58,7 @@ const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
 								/>
 							</figure>
 							<div className="absolute right-[-5px] bottom-[-7px]">
-								<Tooltip side="bottom" align="end">
+								<Tooltip side="bottom" align="end" className="z-[30]">
 									건강점수는 체형, 혈압, 혈당, 간·신장 관련 최근 검진 항목을
 									점수로 변환해 종합한 지표로, 현재 건강 상태를 이해하기 쉽게
 									보여줍니다. 자세한 산출 기준은{" "}

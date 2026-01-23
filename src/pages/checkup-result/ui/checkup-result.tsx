@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -23,11 +23,15 @@ import { useHealthReportMutation } from "../apis/mutations/use-health-report-mut
 import { OcrSection } from "./ocr-section";
 
 export const CheckupResultPage = () => {
+	// TODO: OCR 로직과 입력값 검증 로직 나누기
+
 	const navigate = useNavigate();
 	const { mutate: createHealthReport } = useHealthReportMutation();
 
 	const [isAgreed, setIsAgreed] = useState(false);
 	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
+
+	const agreementSectionRef = useRef<HTMLElement>(null);
 
 	// 이탈방지 모달 열기
 	const openExitModal = useCallback(() => {
@@ -169,6 +173,10 @@ export const CheckupResultPage = () => {
 		}
 
 		if (!isAgreed) {
+			agreementSectionRef.current?.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+			});
 			notifyError("민감정보 수집·이용에 동의해주세요");
 			return;
 		}
@@ -395,7 +403,10 @@ export const CheckupResultPage = () => {
 
 				{/* 민감정보 동의 - 필수 필드 입력 완료 시 표시 */}
 				{isRequiredFilled && isValid && (
-					<section className="fade-in-animation flex flex-col gap-[2rem]">
+					<section
+						ref={agreementSectionRef}
+						className="fade-in-animation flex flex-col gap-[2rem]"
+					>
 						<h3 className="head02-b-16 text-gray-600">
 							민감정보 수집·이용 동의
 						</h3>
@@ -405,17 +416,19 @@ export const CheckupResultPage = () => {
 								onChange={setIsAgreed}
 								disabled={!isCheckboxEnabled}
 							/>
-							<span className="body01-sb-12 whitespace-nowrap pt-[0.2rem] text-black">
-								[필수]{" "}
+							<p className="whitespace-nowrap pt-[0.2rem] text-black">
+								<span className="body01-sb-12">[필수] </span>
 								<button
 									type="button"
-									className="underline underline-offset-2"
+									className="body01-sb-12 underline underline-offset-2"
 									onClick={handleOpenPrivacyModal}
 								>
 									민감정보 수집·이용
 								</button>{" "}
-								내용을 확인하였으며 이에 동의합니다.
-							</span>
+								<span className="body05-r-12">
+									내용을 확인하였으며 이에 동의합니다.
+								</span>
+							</p>
 						</div>
 					</section>
 				)}

@@ -125,7 +125,7 @@ const buildSummarySections = (
 	return [
 		{
 			title: "기본 검사",
-			description: "기본검사에 대한 설명입니다.",
+			description: "비만 여부와 대사질환 위험을 평가합니다",
 			reportType: "basic",
 			rows: rows([
 				toSimpleRow("신장", findElement(basic, "height"), "cm"),
@@ -141,7 +141,7 @@ const buildSummarySections = (
 		},
 		{
 			title: "혈압 검사",
-			description: "혈압 검사에 대한 설명입니다.",
+			description: "고혈압 및 심혈관 질환 위험을 평가합니다",
 			reportType: "blood-pressure",
 			rows: rows([
 				toBadgeRow(
@@ -158,7 +158,7 @@ const buildSummarySections = (
 		},
 		{
 			title: "당뇨 검사",
-			description: "당뇨 검사에 대한 설명입니다.",
+			description: "당뇨병 위험 여부를 확인합니다",
 			reportType: "diabetes",
 			rows: rows([
 				toBadgeRow(
@@ -170,7 +170,7 @@ const buildSummarySections = (
 		},
 		{
 			title: "간장질환 검사",
-			description: "간장질환 검사에 대한 설명입니다.",
+			description: "간 효소 수치를 통해 간 기능 이상 여부를 확인합니다",
 			reportType: "liver",
 			rows: rows([
 				toBadgeRow("에이에스티(AST)", "ast", findElement(liver, "ast")),
@@ -185,7 +185,7 @@ const buildSummarySections = (
 		},
 		{
 			title: "신장질환 검사",
-			description: "신장질환 검사에 대한 설명입니다.",
+			description: "신장 기능 저하 여부를 평가합니다",
 			reportType: "kidney",
 			rows: rows([
 				toBadgeRow(
@@ -198,7 +198,7 @@ const buildSummarySections = (
 		},
 		{
 			title: "빈혈 검사",
-			description: "빈혈 검사에 대한 설명입니다.",
+			description: "빈혈 여부를 확인합니다",
 			reportType: "anemia",
 			rows: rows([
 				toBadgeRow("혈색소", "hb", findElement(anemia, "hemoglobin"), userSex),
@@ -318,7 +318,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 			</div>
 
 			{/* RadarChart 위에 배지/툴팁 레이어 고정 */}
-			<div className="relative z-[5] flex items-center gap-[0.3rem]">
+			<div className="relative z-[5] flex items-center gap-[0.8rem]">
 				<LargeBadge variant={summaryBadgeVariant}>
 					{summaryBadgeText}
 				</LargeBadge>

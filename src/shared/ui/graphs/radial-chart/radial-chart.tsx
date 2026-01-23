@@ -1,4 +1,10 @@
-import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
+import {
+	Label,
+	PolarAngleAxis,
+	PolarRadiusAxis,
+	RadialBar,
+	RadialBarChart,
+} from "recharts";
 import { type ChartConfig, ChartContainer } from "./chart";
 
 const chartConfig = {
@@ -18,7 +24,7 @@ interface RadialChartProps {
 }
 
 export function RadialChart({ score, className }: RadialChartProps) {
-	const data = [{ score, remaining: 100 }];
+	const data = [{ score }];
 	const chartSize = 120;
 	const outerRadius = 89;
 	const innerRadius = 49; // 두께: 40px
@@ -45,6 +51,8 @@ export function RadialChart({ score, className }: RadialChartProps) {
 					innerRadius={innerRadius}
 					outerRadius={outerRadius}
 				>
+					{/* domain=[0, 100]으로 설정해 score가 100 기준 비율로 표시되도록 함 */}
+					<PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
 					<defs>
 						<filter
 							id="chartShadow"
@@ -93,14 +101,7 @@ export function RadialChart({ score, className }: RadialChartProps) {
 							}}
 						/>
 					</PolarRadiusAxis>
-					{/* SVG는 나중에 그려진 요소가 위에 표시 -> remaining(배경) 먼저, score 나중에 */}
-					<RadialBar
-						dataKey="remaining"
-						fill="var(--color-remaining)"
-						stroke="var(--color-remaining)"
-						strokeWidth={1}
-						isAnimationActive={false}
-					/>
+					{/* background: 회색 배경(100%), RadialBar: 보라색 점수가 그 위에 겹쳐서 표시 */}
 					<RadialBar
 						dataKey="score"
 						fill="var(--color-score)"
@@ -108,6 +109,7 @@ export function RadialChart({ score, className }: RadialChartProps) {
 						strokeWidth={1}
 						cornerRadius={1.5}
 						style={{ filter: "url(#chartShadow)" }}
+						background={{ fill: "var(--color-remaining)" }}
 					/>
 				</RadialBarChart>
 			</ChartContainer>
