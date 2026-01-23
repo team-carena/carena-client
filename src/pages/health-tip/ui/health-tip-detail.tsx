@@ -33,7 +33,9 @@ export const HealthTipDetailPage = () => {
 
 			<section className="mt-[1.2rem]">
 				<ContentCard variant="default">
-					<ContentCard.Title>{data.subTitle}</ContentCard.Title>
+					<ContentCard.Title className="mb-[2rem]">
+						{data.subTitle}
+					</ContentCard.Title>
 					<ContentCard.Content className="whitespace-pre-wrap">
 						{data.content}
 					</ContentCard.Content>
