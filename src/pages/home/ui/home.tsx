@@ -32,6 +32,7 @@ export const HomePage = () => {
 		<div className="flex w-full flex-col">
 			<UserInfo userInfo={userInfo} isPending={isPending} />
 
+			{/* TODO: key={tabsKey}로 인해 탭 전환 시 Tabs가 remount되어 스크롤 위치 기억 로직이 동작 안 함. */}
 			<Tabs key={tabsKey} defaultTab={tabFromQuery}>
 				<Tabs.List>
 					<Tabs.Trigger

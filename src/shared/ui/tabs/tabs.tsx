@@ -22,6 +22,7 @@ const TabsRoot = ({
 		(newTab: string) => {
 			// 같은 탭 클릭 시 최상단으로 이동
 			if (selectedTab === newTab) {
+				console.log("같은 탭 클릭 - 상단 이동 시도", { selectedTab, newTab });
 				window.scrollTo({ top: 0, behavior: "smooth" });
 				return;
 			}
@@ -84,10 +85,18 @@ const TabsTrigger = ({
 	children,
 	value,
 	className,
+	onClick,
 	...props
 }: TabsTriggerProps) => {
 	const { selectedTab, changeTab } = useTabsContext();
 	const isSelected = selectedTab === value;
+
+	// onClick을 ...props에서 분리해 changeTab과 함께 실행
+	// '...props' spread가 onClick을 덮어씌워 changeTab이 실행되지 않는 문제 방지)
+	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		changeTab(value); // 탭 트리거 기본 동작
+		onClick?.(e); // 사용처에서 전달받은 동작
+	};
 
 	return (
 		<button
@@ -102,7 +111,7 @@ const TabsTrigger = ({
 				className,
 			)}
 			data-selected={isSelected}
-			onClick={() => changeTab(value)}
+			onClick={handleClick}
 			{...props}
 		>
 			{children}
