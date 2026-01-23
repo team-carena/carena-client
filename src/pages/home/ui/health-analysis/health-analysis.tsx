@@ -322,7 +322,12 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 				<LargeBadge variant={summaryBadgeVariant}>
 					{summaryBadgeText}
 				</LargeBadge>
-				<Tooltip side="bottom" align="start" iconTone="black">
+				<Tooltip
+					side="bottom"
+					align="start"
+					iconTone="black"
+					avoidCollisions={false}
+				>
 					<div className="whitespace-pre-line">{SUMMARY_TOOLTIP_TEXT}</div>
 				</Tooltip>
 			</div>
