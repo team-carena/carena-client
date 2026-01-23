@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
+import type { HealthTipListElement } from "@/shared/apis/generated/data-contracts";
 import { cn } from "@/shared/libs/cn";
 
-interface Tips {
-	id: number;
-	title: string;
-} // TODO: 건강 팁 api 응답 타입을 export 해오기
-
 interface TickerProps {
-	tips: Tips[];
+	tips: HealthTipListElement[];
 }
 
 const TRANSITION_DURATION = 400;
 
 export const Ticker = ({ tips = [] }: TickerProps) => {
+	const navigate = useNavigate();
 	const [visibleIndex, setVisibleIndex] = useState(0);
 	const [isTransitionEnabled, setIsTransitionEnabled] = useState(false);
 
@@ -45,7 +44,19 @@ export const Ticker = ({ tips = [] }: TickerProps) => {
 	}
 
 	return (
-		<div className="label04-r-16 h-[3.5rem] w-full min-w-[31.1rem] overflow-hidden rounded-[8px] px-[1.2rem] py-[0.8rem]">
+		<div
+			onClick={() => {
+				if (!extendedTips[visibleIndex].id) return;
+
+				void navigate(
+					ROUTE_PATH.HEALTH_TIP_DETAIL.replace(
+						":healthTipId",
+						String(extendedTips[visibleIndex].id),
+					),
+				);
+			}}
+			className="label04-r-16 h-[3.5rem] w-full min-w-[31.1rem] cursor-pointer overflow-hidden rounded-[8px] px-[1.2rem] py-[0.8rem]"
+		>
 			<div
 				className={cn(
 					"will-change-transform",

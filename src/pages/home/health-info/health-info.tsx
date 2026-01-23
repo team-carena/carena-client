@@ -19,7 +19,7 @@ const HealthTipTicker = () => {
 
 	const tips =
 		data?.result?.map((item) => ({
-			id: Number(item.id),
+			id: item.id,
 			title: item.title ?? "",
 		})) ?? [];
 
