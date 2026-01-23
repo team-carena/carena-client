@@ -1,17 +1,25 @@
-# CareNA
+# CareNA <img width="100" alt="로고 이미지" src="https://github.com/user-attachments/assets/83d269e3-0bcb-46ab-878d-d6da50dcd3d5" align="left" />
+<h3>건강검진 결과를 쉽게, 관리까지 한 번에!</h3>
 
-> **복잡한 건강검진 결과를 이해하기 쉽게 해설하고, 개인 상태에 맞춘 건강 관리 방향을 제안하는 헬스케어 서비스**
+<br/> 
+
+> 복잡한 건강검진 결과를 이해하기 쉽게 해설하고, 개인 상태에 맞춘 건강 관리 방향을 제안하는 헬스케어 서비스
 
 <br/>
+<img width="5680" height="2320" alt="102" src="https://github.com/user-attachments/assets/0f17a212-02a2-4cb0-a798-456553f5dc46" />
 
-## 팀원
+<br/>
+<br/>
+<br/>
+
+## 🫶🏻 CareNA Web Developers
 
 <table width="100%">
   <tr>
-    <td align="center"><img src="https://github.com/jstar000.png" width="120" /></td>
-    <td align="center"><img src="https://github.com/eojindesu.png" width="120" /></td>
-    <td align="center"><img src="https://github.com/wonpark1.png" width="120" /></td>
-    <td align="center"><img src="https://github.com/mimizae.png" width="120" /></td>
+    <td align="center"><img width="250" height="400" alt="임지성" src="https://github.com/user-attachments/assets/6b8d30cb-1de2-4697-b08d-33d75ac9de86" /></td>
+    <td align="center"><img width="250" height="400" alt="김어진" src="https://github.com/user-attachments/assets/508efb89-9cbe-41ca-9098-7d2173e2aa3f" /></td>
+    <td align="center"><img width="250" height="400" alt="박원" src="https://github.com/user-attachments/assets/b6b92f5f-1324-455c-8328-e3be0b2fc189" /></td>
+    <td align="center"><img width="250" height="400" alt="지민재" src="https://github.com/user-attachments/assets/3bfa52ce-990c-4ff5-a9d5-3d260fa0ceda" /></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/jstar000">임지성 👑</a></td>
@@ -21,12 +29,13 @@
   </tr>
 </table>
 
+
 <br/>
 
-## 기술 스택
+## 🛠️ Tech Stack
 
 | 역할                     | 종류                                                                                                 | 선정 근거                                                                  |
-| :----------------------: | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------- |
+| ---------------------- | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------- |
 | **Build Tool**           | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)      | ESBuild 기반의 빠른 번들링과 HMR로 개발 생산성 향상                        |
 | **Library**              | ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)   | 컴포넌트 기반 아키텍처로 UI 구축을 간소화하고 효율적인 상태 관리           |
 | **Programming Language** | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) | 정적 타입 검사로 런타임 오류를 사전에 방지하고 코드 안정성 확보            |
@@ -42,9 +51,12 @@
 
 <br/>
 
-## 폴더 구조
+## 📂 Architecture
+> Feature-Sliced Design(FSD)는 함께 수정되는 코드들을 하나의 단위로 관리할 수 있도록 도와주어 구조 파악과 유지보수를 수월하게 해줍니다.
+> <br/> 프로젝트 규모가 커질수록 폴더 구조와 파일 위치에 대한 기준을 명확히 하고자 FSD를 도입하게 되었어요.
+> <br/> 자세한 FSD 구조와 설계 기준은 [해당 PR](https://github.com/team-carena/carena-client/pull/4)에서 확인할 수 있어요!
 
-[FSD(Feature-Sliced Design)](https://feature-sliced.github.io/docs) 아키텍처를 기반으로 구성
+<br/>
 
 ```
 src/
@@ -72,19 +84,25 @@ src/
 
 <br/>
 
-## 컨벤션
+## 👀 Conventions
+
+### 🧩 Git Convention
 
 <details>
-<summary><strong>깃 컨벤션</strong></summary>
-<br/>
-
-### 3 브랜치 (`main`, `develop`, `feat`)
-
+  <summary><strong>3 브랜치 전략 (`main`, `develop`, `feat`)</strong></summary>
+  
+  <br/>
+  
 - **`main`** : 오직 배포를 위한 브랜치
 - **`develop`** : 팀원끼리 작업한 내용(feature)을 합치는 곳
 - **`feat`** : 각 작업에 따라 새로 파고 사용할 브랜치 (하나의 feat 브랜치는 하나의 Issue와 연결)
+</details>
 
-### Prefix
+
+<details>
+  <summary><strong>Prefix</strong></summary>
+  
+  <br/>
 
 | 머릿말     | 설명                                                            |
 | ---------- | --------------------------------------------------------------- |
@@ -101,8 +119,15 @@ src/
 | `remove`   | 파일을 삭제하는 작업만 수행한 경우                              |
 | `docs`     | 문서 수정                                                       |
 
-### 브랜치 네이밍
+</details>
 
+
+
+<details>
+  <summary><strong>브랜치 네이밍</strong></summary>
+  
+  <br/>
+  
 ```
 prefix/#이슈번호/설명
 ```
@@ -110,54 +135,79 @@ prefix/#이슈번호/설명
 - 여러 단어는 `-`으로 연결
 - 예시: `setting/#1/router-setting`, `feat/#5/login`, `fix/#6/register-form-bug-fix`
 
-### 커밋 컨벤션
+</details>
 
+<details>
+  <summary><strong>커밋 컨벤션</strong></summary>
+  
+  <br/>
+  
 ```
 prefix: 커밋 메시지
 ```
 
 - 예시: `feat: login form 구현`, `refactor: image upload 로직 커스텀훅으로 분리`
+</details>
 
-### 브랜치 병합 규칙
 
+
+<details>
+  <summary><strong>브랜치 병합 규칙</strong></summary>
+  
+  <br/>
+  
 1. 메인 브랜치(main, develop)에서 직접적인 커밋은 하지 않는다.
 2. 작업 브랜치(feat)에서만 커밋하고, 병합은 PR(Pull Request)을 통해서만 진행한다.
 3. 작업 전에는 항상 `git pull origin develop`으로 feature 브랜치를 최신화한다.
 4. 팀원들의 리뷰 후 2명 이상의 approve를 받아야 merge할 수 있다.
-
 </details>
 
-<details>
-<summary><strong>코딩 컨벤션</strong></summary>
 <br/>
 
-### 1. 네이밍
+### 🖥️ Coding Convention
 
-| 대상                 | 규칙                  | 예시                          |
+<details>
+  <summary><strong>네이밍</strong></summary>
+  
+  <br/>
+  
+  | 대상                 | 규칙                  | 예시                          |
 | -------------------- | --------------------- | ----------------------------- |
 | 컴포넌트 / class     | `PascalCase`          | `UserProfile`, `HealthReport` |
 | 폴더명, 파일명       | `kebab-case` (복수형) | `apis/`, `components/`        |
 | 변수, 함수, 파라미터 | `camelCase`           | `userName`, `getUserData`     |
 | 상수                 | `UPPER_SNAKE_CASE`    | `API_BASE_URL`                |
+</details>
 
-### 2. 변수
+<details>
+  <summary><strong>변수</strong></summary>
 
+  <br/>
+  
 - `var` 사용 금지. `const` 기본, 필요시 `let` 사용
 - 전역 변수 최대한 지양
 - 구조 분해 할당 적극 활용: `const { name, age } = user;`
 - 문자열 조합 시 템플릿 리터럴 사용: `` `Hello, ${name}` ``
+</details>
 
-### 3. 함수
+<details>
+  <summary><strong>함수</strong></summary>
 
+  <br/>
+  
 - 화살표 함수 기본 사용
 - 이벤트 핸들러: `handle + 이벤트` (예: `handleBtnClick`)
 - props 전달 시: `on + 이벤트` (예: `onClick={handleBtnClick}`)
 - boolean 변수: `is/can/should/has + 상태` (예: `isLogined`, `canSubmit`)
 - API 함수: `HTTP 메서드 + 명사` (예: `getUserList`, `postUserLike`)
 - 배열 처리: 스프레드 연산자, 함수형 메서드(`map`, `filter` 등) 사용
+</details>
 
-### 4. TypeScript
+<details>
+  <summary><strong>TypeScript</strong></summary>
 
+  <br/>
+  
 - object: `interface`, 단일 변수: `type`
 - 컴포넌트 props 타입: `역할 + Props` (예: `HeaderProps`)
 - API response/request 타입: `OOOResponse`, `OOORequest`
@@ -172,43 +222,45 @@ const Header = ({ title, description }: HeaderProps) => {
   // ...
 }
 ```
-
-### 5. 기타
-
-- 변수/함수명 20자 미만, 필요시 주석 추가
-- 의미없는 `<div>` 지양, 최상단은 fragment(`<>`) 사용
-- children 불필요 시 self-closing: `<Component />`
-- named export 기본 사용
-
 </details>
 
 <details>
-<summary><strong>그라운드 룰</strong></summary>
+  <summary><strong>기타</strong></summary>
+
+  <br/>
+  
+ - 변수/함수명 20자 미만, 필요시 주석 추가
+- 의미없는 `<div>` 지양, 최상단은 fragment(`<>`) 사용
+- children 불필요 시 self-closing: `<Component />`
+- named export 기본 사용
+</details>
+
 <br/>
+
+## 🤝🏻 Ground Rule
 
 ### 1. 소통
 
-- 업무 관련 연락은 확인 즉시 응답해요
-- 의사 표현은 명확하게, 전달 방식은 부드럽게 표현해요
-- 진행 상황은 수시로 공유해요
-- 아이디어와 개선 의견을 자유롭게 제안해요
+- 업무 관련 연락은 확인 즉시 응답해요.
+- 의사 표현은 명확하게, 전달 방식은 부드럽게 표현해요.
+- 진행 상황은 수시로 공유해요.
+- 아이디어와 개선 의견을 자유롭게 제안해요.
 
 ### 2. 일정
 
-- 마감 기한과 약속 시간을 준수해요
-- 일정 준수가 어려울 경우 사전에 공유해요
+- 마감 기한과 약속 시간을 준수해요.
+- 일정 준수가 어려울 경우 사전에 공유해요.
 
 ### 3. 협업
 
-- 어려운 상황은 함께 고민하고 해결해요
-- 긍정적인 팀 분위기를 유지해요
-- 개발할 때는 적절한 긴장감을 유지해요
+- 어려운 상황은 함께 고민하고 해결해요.
+- 긍정적인 팀 분위기를 유지해요.
+- 개발할 때는 적절한 긴장감을 유지해요.
 
 ### 4. PR과 코드리뷰
 
-- 브랜치 룰셋과 PR 템플릿을 준수해요
-- PR 단위는 작게, 설명은 자세히, 리뷰는 꼼꼼히 진행해요
-- PR 작성 시 관련 컨텍스트(고민한 지점, 해결 과정 등)를 충분히 제공해요
-- 수정 요청 시 근거와 개선 방향을 함께 제시해요
+- 브랜치 룰셋과 PR 템플릿을 준수해요.
+- PR 단위는 작게, 설명은 자세히, 리뷰는 꼼꼼히 진행해요.
+- PR 작성 시 관련 컨텍스트(고민한 지점, 해결 과정 등)를 충분히 제공해요.
+- 수정 요청 시 근거와 개선 방향을 함께 제시해요.
 
-</details>
