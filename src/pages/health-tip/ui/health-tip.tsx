@@ -2,24 +2,20 @@ import { Suspense, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import { useHealthTipList } from "@/pages/health-tip/apis/queries/use-health-tip-list";
+import { useMyInfo } from "@/shared/apis/member/use-my-info";
 import { useInfiniteScroll } from "@/shared/libs/use-infinite-scroll";
 import CardTip from "@/shared/ui/cards/card-tip";
 import Chip from "@/shared/ui/chips/chip";
 
-const chips = [
-	"전체",
-	"만성질환",
-	"복약",
-	"식단",
-	"운동",
-	"생활습관",
-	"검진",
-] as const;
+const getAgeGroup = (age: number | undefined): string => {
+	if (!age) return "20대";
 
-type ChipValue = (typeof chips)[number];
+	const ageGroup = Math.floor(age / 10) * 10;
+	return `${ageGroup}대`;
+};
 
 interface HealthTipListProps {
-	selectedChip: ChipValue;
+	selectedChip: string;
 }
 
 const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
@@ -73,9 +69,26 @@ const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 };
 
 export const HealthTipPage = () => {
-	const [selectedChip, setSelectedChip] = useState<ChipValue>("전체");
+	const { data: myInfo } = useMyInfo();
+	const ageGroup = getAgeGroup(myInfo?.age);
 
-	const handleChipClick = (value: ChipValue) => {
+	const chips = useMemo(
+		() =>
+			[
+				"전체",
+				"겨울",
+				ageGroup,
+				"생활습관",
+				"건강목표",
+				"검진 전",
+				"검진 후",
+			] as const,
+		[ageGroup],
+	);
+
+	const [selectedChip, setSelectedChip] = useState<string>("전체");
+
+	const handleChipClick = (value: string) => {
 		setSelectedChip(value);
 	};
 
