@@ -6,7 +6,9 @@
 > 복잡한 건강검진 결과를 이해하기 쉽게 해설하고, 개인 상태에 맞춘 건강 관리 방향을 제안하는 헬스케어 서비스
 
 <br/>
-<img width="5680" height="2320" alt="102" src="https://github.com/user-attachments/assets/0f17a212-02a2-4cb0-a798-456553f5dc46" />
+
+
+![케어나 소개](https://github.com/user-attachments/assets/c91b56f6-cab6-4e9d-a9f0-a4383b67ab1e)
 
 <br/>
 <br/>
