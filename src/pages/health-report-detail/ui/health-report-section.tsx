@@ -57,17 +57,20 @@ export const HealthReportSection = ({
 
 		const value = range.type === "common" ? range.value : range[sex];
 
+		const texts = [
+			`정상 ${value.normal}`,
+			value.borderline ? `경계 ${value.borderline}` : null,
+			`의심 ${value.suspicious}`,
+		].filter(Boolean) as string[];
+
 		return (
 			<>
-				<span>정상 {value.normal}</span>
-				<span className="mx-[0.4rem]">|</span>
-				<span>경계 {value.borderline}</span>
-				{value.suspicious && (
-					<>
-						<span className="mx-[0.4rem]">|</span>
-						<span>의심 {value.suspicious}</span>
-					</>
-				)}
+				{texts.map((text, idx) => (
+					<span key={text}>
+						{text}
+						{idx < texts.length - 1 && <span className="mx-[0.4rem]">|</span>}
+					</span>
+				))}
 			</>
 		);
 	})();
