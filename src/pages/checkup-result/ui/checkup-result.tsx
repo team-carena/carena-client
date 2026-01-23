@@ -405,17 +405,19 @@ export const CheckupResultPage = () => {
 								onChange={setIsAgreed}
 								disabled={!isCheckboxEnabled}
 							/>
-							<span className="body01-sb-12 whitespace-nowrap pt-[0.2rem] text-black">
-								[필수]{" "}
+							<p className="whitespace-nowrap pt-[0.2rem] text-black">
+								<span className="body01-sb-12">[필수] </span>
 								<button
 									type="button"
-									className="underline underline-offset-2"
+									className="body01-sb-12 underline underline-offset-2"
 									onClick={handleOpenPrivacyModal}
 								>
 									민감정보 수집·이용
 								</button>{" "}
-								내용을 확인하였으며 이에 동의합니다.
-							</span>
+								<span className="body05-r-12">
+									내용을 확인하였으며 이에 동의합니다.
+								</span>
+							</p>
 						</div>
 					</section>
 				)}

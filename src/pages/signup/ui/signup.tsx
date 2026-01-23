@@ -233,6 +233,7 @@ export const Signup = () => {
 				</section>
 			</form>
 
+			{/* TODO: 공컴 추출 */}
 			{/* 하단 영역 (개인정보 동의 + 버튼) */}
 			<div className="flex flex-col">
 				{/* 개인정보 동의 - 기본정보 입력 완료 시 표시 */}
@@ -247,17 +248,19 @@ export const Signup = () => {
 								onChange={setIsAgreed}
 								disabled={!isCheckboxEnabled}
 							/>
-							<span className="body01-sb-12 whitespace-nowrap pt-[0.2rem] text-black">
-								[필수]{" "}
+							<p className="whitespace-nowrap pt-[0.2rem] text-black">
+								<span className="body01-sb-12">[필수] </span>
 								<button
 									type="button"
-									className="underline underline-offset-2"
+									className="body01-sb-12 underline underline-offset-2"
 									onClick={handleOpenPrivacyModal}
 								>
 									개인정보 수집·이용
 								</button>{" "}
-								내용을 확인하였으며 이에 동의합니다.
-							</span>
+								<span className="body05-r-12">
+									내용을 확인하였으며 이에 동의합니다.
+								</span>
+							</p>
 						</div>
 					</section>
 				)}
