@@ -39,7 +39,7 @@ const getSummaryBadgeState = (
 		return { variant: toBadgeVariant(highestLabel), text: "의심" };
 	}
 	if (highestLabel === "BORDERLINE") {
-		return { variant: toBadgeVariant(highestLabel), text: "정상 B(경계)" };
+		return { variant: toBadgeVariant(highestLabel), text: "정상 B" };
 	}
 	return { variant: toBadgeVariant(highestLabel), text: "정상 A" };
 };
