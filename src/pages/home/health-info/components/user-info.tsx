@@ -61,7 +61,16 @@ const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
 								<Tooltip side="bottom" align="end">
 									건강점수는 체형, 혈압, 혈당, 간·신장 관련 최근 검진 항목을
 									점수로 변환해 종합한 지표로, 현재 건강 상태를 이해하기 쉽게
-									보여줍니다. 자세한 산출 기준은 보기를 통해 확인할 수 있습니다.
+									보여줍니다. 자세한 산출 기준은{" "}
+									<a
+										href="https://petalite-biplane-c36.notion.site/2eb5365471d18031bef8cf286084a362?source=copy_link"
+										target="_blank"
+										rel="noopener noreferrer"
+										className="body01-sb-12 text-gray-900 underline"
+									>
+										보기
+									</a>
+									를 통해 확인할 수 있습니다.
 								</Tooltip>
 							</div>
 						</div>

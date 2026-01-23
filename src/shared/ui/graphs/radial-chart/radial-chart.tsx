@@ -18,7 +18,7 @@ interface RadialChartProps {
 }
 
 export function RadialChart({ score, className }: RadialChartProps) {
-	const data = [{ score, remaining: 100 - score }];
+	const data = [{ score, remaining: 100 }];
 	const chartSize = 120;
 	const outerRadius = 89;
 	const innerRadius = 49; // 두께: 40px
@@ -93,24 +93,21 @@ export function RadialChart({ score, className }: RadialChartProps) {
 							}}
 						/>
 					</PolarRadiusAxis>
-					{/* SVG는 나중에 그려진 요소가 위에 표시 -> remaining 먼저, score 나중에 */}
-
+					{/* SVG는 나중에 그려진 요소가 위에 표시 -> remaining(배경) 먼저, score 나중에 */}
+					<RadialBar
+						dataKey="remaining"
+						fill="var(--color-remaining)"
+						stroke="var(--color-remaining)"
+						strokeWidth={1}
+						isAnimationActive={false}
+					/>
 					<RadialBar
 						dataKey="score"
-						stackId="a"
 						fill="var(--color-score)"
 						stroke="var(--color-white)"
 						strokeWidth={1}
 						cornerRadius={1.5}
 						style={{ filter: "url(#chartShadow)" }}
-					/>
-					<RadialBar
-						dataKey="remaining"
-						stackId="a"
-						fill="var(--color-remaining)"
-						stroke="var(--color-remaining)"
-						strokeWidth={1}
-						isAnimationActive={false}
 					/>
 				</RadialBarChart>
 			</ChartContainer>

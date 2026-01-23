@@ -36,12 +36,12 @@ export const CardTable = ({
 			{rows.map((row) => (
 				<div
 					key={row.id}
-					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-white px-[2rem] py-[0.8rem]"
+					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-white"
 				>
-					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words text-left text-gray-900">
+					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words px-[2rem] py-[0.8rem] text-left text-gray-900">
 						{row.label}
 					</div>
-					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words text-left text-gray-900">
+					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words px-[2rem] py-[0.8rem] text-left text-gray-900">
 						{row.value}
 					</div>
 				</div>

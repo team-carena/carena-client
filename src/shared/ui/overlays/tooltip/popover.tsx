@@ -32,7 +32,7 @@ function PopoverContent({
 				avoidCollisions={avoidCollisions}
 				className={cn(
 					// Popover 내용을 나타내는 영역의 css
-					"group body05-r-12 z-50 w-[25.6rem] whitespace-pre-wrap rounded-[12px] border border-gray-300 bg-white p-[2.4rem] text-gray-900",
+					"group body05-r-12 z-5 w-[25.6rem] whitespace-pre-wrap rounded-[12px] border border-gray-300 bg-white p-[2.4rem] text-gray-900",
 					// 커스텀 opacity 애니메이션 (tw-animate-css는 layout-shift 발생시키므로 제거)
 					"popover-fade",
 					className,
