@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
 import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
@@ -233,6 +233,9 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 	// 초기값을 query 우선으로 설정 (options가 준비되면 effect에서 유효성 검증)
 	const [selectedReportId, setSelectedReportId] = useState(reportIdFromQuery);
 
+	// 이전 첫 번째 항목 ID를 저장 (새 검진 추가 시 첫 번째가 변경되었는지 감지용)
+	const prevFirstOptionIdRef = useRef<string | null>(null);
+
 	// 선택된 reportId로 healthCheckDate 찾기 (상세페이지로 넘길 값)
 	const selectedHealthCheckDate = useMemo(() => {
 		const found = (data?.reportDates ?? []).find(
@@ -255,19 +258,32 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 	const hasNoReports = !isPending && options.length === 0;
 
 	// 첫 진입/뒤로가기 시: query(reportId)가 유효하면 그 값 유지, 없거나 유효하지 않으면 첫 번째로 세팅 + query 정리
+	// 새 검진 추가 시: 첫 번째 항목이 변경되면 첫 번째를 선택
 	useEffect(() => {
 		if (options.length === 0) return;
+
+		const currentFirstId = options[0].value;
+		const prevFirstId = prevFirstOptionIdRef.current;
+
+		// 첫 번째 항목이 변경된 경우 (새 검진 추가됨) → 첫 번째 선택
+		const isFirstOptionChanged =
+			prevFirstId !== null && prevFirstId !== currentFirstId;
 
 		const isValidQuery = reportIdFromQuery
 			? options.some((o) => o.value === reportIdFromQuery)
 			: false;
 
-		const nextReportId = isValidQuery ? reportIdFromQuery : options[0].value;
+		const nextReportId = isFirstOptionChanged
+			? currentFirstId
+			: isValidQuery
+				? reportIdFromQuery
+				: currentFirstId;
 
 		setSelectedReportId(nextReportId);
+		prevFirstOptionIdRef.current = currentFirstId;
 
-		// query가 비어있거나 유효하지 않으면 URL도 정리 (기존 tab 등 다른 query는 유지)
-		if (!reportIdFromQuery || !isValidQuery) {
+		// query 동기화
+		if (nextReportId !== reportIdFromQuery) {
 			const next = new URLSearchParams(searchParams);
 			next.set("reportId", nextReportId);
 			setSearchParams(next, { replace: true });
