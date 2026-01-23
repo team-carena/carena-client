@@ -1,7 +1,7 @@
 import { ContentCard } from "@shared/ui/cards/card-content";
 import { CardTable } from "@shared/ui/cards/card-table";
 import { useParams } from "react-router";
-import { useDietDetail } from "./apis/queries/use-diet-detail";
+import { useDietDetail } from "../apis/queries/use-diet-detail";
 
 const SECTION_LAYOUT = "flex flex-col items-start";
 

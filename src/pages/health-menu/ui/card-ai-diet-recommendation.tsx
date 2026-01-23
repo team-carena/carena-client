@@ -1,9 +1,9 @@
 import { Ai } from "@shared/assets/svg";
 
 export interface CardAiDietRecommendationProps {
-	// AI 추천 요리명 (ex. "두부전")
+	// AI 추천 요리명
 	dietName: string;
-	// 추천 요리 설명 텍스트 (길이 무제한)
+	// AI 추천 설명 텍스트
 	description: string;
 }
 
@@ -25,7 +25,6 @@ const CardAiDietRecommendation = ({
 			{/* AI 아이콘 + 설명 */}
 			<div className="mt-[1.6rem] flex items-start gap-[1.2rem]">
 				<Ai className="shrink-0" aria-hidden />
-
 				<p className="body04-r-14 whitespace-pre-line text-gray-900">
 					{description}
 				</p>
