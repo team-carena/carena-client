@@ -282,7 +282,7 @@ export const healthMetricConfigs: Record<string, HealthMetricConfig> = {
 		inputMax: 30,
 		domainMin: 10,
 		domainMax: 18,
-		mode: 3,
+		mode: 4,
 		fractionDigits: 1,
 		segments: makeSegments([
 			{ from: 10, to: 12.0, tone: "danger" },
