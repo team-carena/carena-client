@@ -318,7 +318,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 			</div>
 
 			{/* RadarChart 위에 배지/툴팁 레이어 고정 */}
-			<div className="relative z-[5] flex items-center gap-[0.3rem]">
+			<div className="relative z-[5] flex items-center gap-[0.8rem]">
 				<LargeBadge variant={summaryBadgeVariant}>
 					{summaryBadgeText}
 				</LargeBadge>
