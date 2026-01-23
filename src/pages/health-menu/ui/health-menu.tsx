@@ -1,20 +1,13 @@
 import MenuBg from "@shared/assets/img/menu-bg.png";
+import { Ai } from "@shared/assets/svg";
 import CardList from "@shared/ui/cards/card-list";
 import { Suspense } from "react";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
+import { useDietList } from "@/pages/health-menu/apis/queries/use-diet-list.ts";
 import CardAiDietRecommendation from "@/pages/health-menu/ui/card-ai-diet-recommendation";
+import { useRecommendedMeal } from "@/pages/home/apis/queries/use-recommended-meals";
 import { useInfiniteScroll } from "@/shared/libs/use-infinite-scroll";
-import { useDietList } from "./apis/queries/use-diet-list";
-
-// 임시 AI 추천 메뉴 데이터
-const MOCK_AI_RECOMMENDATION = {
-	// AI 추천 요리명
-	dietName: "요리명",
-	// 추천 요리 설명 텍스트
-	description:
-		"케어나님의 건강 정보를 참고해,\n염분 섭취를 조금 더 신경 쓰고 싶을 때 선택하기 좋은 메뉴로 이 요리를 추천드려요.",
-};
 
 const DietListContent = () => {
 	const navigate = useNavigate();
@@ -55,24 +48,50 @@ const DietListContent = () => {
 	);
 };
 
+const EmptyRecommendation = () => {
+	return (
+		<div className="w-full">
+			<p className="head03-sb-16 text-gray-900">
+				사용자님의 건강상태에 맞는 요리
+			</p>
+
+			<div className="mt-[1.6rem] mb-[2rem] flex items-start gap-[1.2rem]">
+				<Ai className="shrink-0" aria-hidden />
+				<p className="body04-r-14 whitespace-pre-line text-gray-900">
+					{"검진 결과를 추가하고\n맞춤 식단을 추천받아보세요!"}
+				</p>
+			</div>
+		</div>
+	);
+};
+
 export const HealthMenuPage = () => {
+	const { data: mealData } = useRecommendedMeal({ enabled: true });
+
+	const hasRecommendation =
+		Boolean(mealData?.meal) && Boolean(mealData?.description);
+
 	return (
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
-			{/* AI 추천 카드 */}
+			{/* 상단 영역 */}
 			<section
 				className="flex w-full justify-center bg-center bg-cover px-[2rem] pt-[2.4rem] pb-[2rem]"
 				style={{ backgroundImage: `url(${MenuBg})` }}
 				aria-label="AI 추천 식단"
 			>
-				<CardAiDietRecommendation
-					dietName={MOCK_AI_RECOMMENDATION.dietName}
-					description={MOCK_AI_RECOMMENDATION.description}
-				/>
+				{hasRecommendation ? (
+					<CardAiDietRecommendation
+						dietName={mealData?.meal ?? "-"}
+						description={mealData?.description ?? "-"}
+					/>
+				) : (
+					<EmptyRecommendation />
+				)}
 			</section>
 
 			{/* 메뉴 리스트 */}
 			<section className="px-[2rem] pb-[2rem]" aria-label="건강 식단 메뉴 목록">
-				<Suspense fallback={<div></div>}>
+				<Suspense fallback={<div />}>
 					<DietListContent />
 				</Suspense>
 			</section>
