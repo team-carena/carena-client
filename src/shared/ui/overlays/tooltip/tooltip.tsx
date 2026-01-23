@@ -8,6 +8,7 @@ interface TooltipProps {
 	side?: "top" | "bottom" | "left" | "right"; // PopoverTrigger를 기준으로 한 popover의 위치
 	align?: "start" | "center" | "end"; // 삼각형 위치
 	iconTone?: "gray" | "black";
+	avoidCollisions?: boolean;
 	className?: string;
 }
 
@@ -16,6 +17,7 @@ function Tooltip({
 	side = "top",
 	align = "start",
 	iconTone = "gray",
+	avoidCollisions = true,
 	className,
 }: TooltipProps) {
 	// 툴팁 UI의 삼각형 중앙이 info 아이콘 중앙을 가리키도록 offset 조정
@@ -32,6 +34,7 @@ function Tooltip({
 				side={side}
 				align={align}
 				alignOffset={ALIGN_OFFSET}
+				avoidCollisions={avoidCollisions}
 				className={className}
 			>
 				{children}
