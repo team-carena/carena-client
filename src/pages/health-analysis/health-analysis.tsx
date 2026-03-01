@@ -7,8 +7,8 @@ import CheckupSummaryCard from "@/pages/home/ui/checkup-summary-card/checkup-sum
 import {
 	getElementBadgeCode,
 	getSummaryBadgeState,
-} from "@/pages/home/ui/health-analysis/health-analysis.badge";
-import { buildRadarData } from "@/pages/home/ui/health-analysis/health-analysis.radar";
+} from "@/pages/health-analysis/health-analysis.badge";
+import { buildRadarData } from "@/pages/health-analysis/health-analysis.radar";
 import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import type {
 	DisplayElement,
@@ -23,11 +23,7 @@ import type {
 	Sex,
 } from "@/shared/ui/graphs/range-bar/health-metric-config";
 import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
-
-interface HealthAnalysisPageProps {
-	userInfo: MemberInfoResponse | undefined;
-	isPending: boolean;
-}
+import { useMyInfo } from "@/shared/apis/member/use-my-info";
 
 type SummaryRow =
 	| {
@@ -403,11 +399,9 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 
 const DEFAULT_SEX: Sex = "FEMALE";
 
-const HealthAnalysisPage = ({
-	userInfo,
-	isPending: isUserInfoPending,
-}: HealthAnalysisPageProps) => {
-	const userSex = isUserInfoPending
+const HealthAnalysisPage = () => {
+	const { data: userInfo, isPending } = useMyInfo();
+	const userSex = isPending
 		? DEFAULT_SEX
 		: (userInfo?.gender ?? DEFAULT_SEX);
 

@@ -10,6 +10,7 @@ import { HomePage } from "@/pages/home/ui/home";
 import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/ui/my-page";
 import { Signup } from "@/pages/signup/ui/signup";
+import HealthAnalysisPage from "@/pages/health-analysis/health-analysis";
 import type { HeaderVariant } from "@/shared/ui/navigations/header";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
@@ -63,6 +64,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "마이페이지",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_ANALYSIS,
+						element: <HealthAnalysisPage />,
+						handle: {
+							header: "back",
+							title: "검진 결과 분석",
 						} satisfies RouteHandle,
 					},
 					{
