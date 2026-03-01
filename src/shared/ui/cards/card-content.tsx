@@ -29,10 +29,9 @@ const Root = ({
 		<ContentCardVariantContext.Provider value={variant}>
 			<div
 				className={cn(
-					"w-full rounded-[12px] border",
-					variant === "default" &&
-						"border-gray-100 bg-white px-[2rem] py-[2.4rem]",
-					variant === "muted" && "border-gray-300 bg-gray-50 p-[1.2rem]",
+					"rounded-[12px] border border-gray-100 bg-white",
+					variant === "default" && "w-full px-[2rem] py-[2.4rem]",
+					variant === "muted" && "w-[34.3rem] p-[1.2rem]",
 					className,
 				)}
 				{...props}
