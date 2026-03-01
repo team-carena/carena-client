@@ -1,11 +1,21 @@
 // tos(terms-of-services), 약관동의 페이지
 
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
+import { useSignUp } from "@/pages/signup/apis/mutations/use-signup";
+import { requestKakaoAuthorize } from "@/shared/libs/request-kakao-authorize";
 import { Button } from "@/shared/ui/buttons/button";
 import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { Header } from "@/shared/ui/navigations/header";
+import { openModal } from "@/shared/ui/overlays/modal/open-modal";
+import { notifyError } from "@/shared/ui/overlays/toast/toast";
+
+type SignupNavigationState = {
+	name: string;
+	birthdate: string;
+	gender: "MALE" | "FEMALE";
+};
 
 const SERVICE_TERMS_TEXT = `제1조 (목적)
 본 약관은 케어나(이하 '서비스')가 제공하는 건강관리 서비스의 이용에 관한 조건 및 절차를 규정함을 목적으로 합니다.
@@ -66,18 +76,61 @@ const TermsScrollBox = ({ text }: TermsScrollBoxProps) => {
 
 const ToSPage = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const signupData = location.state as SignupNavigationState | null;
+	const { mutate, isPending } = useSignUp();
+
 	const [serviceTerms, setServiceTerms] = useState(false);
 	const [privacyTerms, setPrivacyTerms] = useState(false);
 
 	const allAgreed = serviceTerms && privacyTerms;
+
+	// /signup을 거치지 않고 직접 접근한 경우 되돌려보냄
+	useEffect(() => {
+		if (!signupData) {
+			void navigate(ROUTE_PATH.SIGNUP, { replace: true });
+		}
+	}, [signupData, navigate]);
 
 	const handleAllAgreed = (checked: boolean) => {
 		setServiceTerms(checked);
 		setPrivacyTerms(checked);
 	};
 
+	const openSignupCompleteModal = () => {
+		openModal({
+			size: "sm",
+			title: "회원가입이 완료되었어요",
+			description:
+				"이미 건강 검진을 받아보셨다면,\n결과를 계속해서 입력할까요?",
+			secondaryAction: {
+				label: "메인으로 가기",
+				onClick: () => {
+					localStorage.setItem("signupRedirect", "home");
+					requestKakaoAuthorize();
+				},
+			},
+			primaryAction: {
+				label: "이어서 입력하기",
+				onClick: () => {
+					localStorage.setItem("signupRedirect", "checkup-result");
+					requestKakaoAuthorize();
+				},
+			},
+		});
+	};
+
 	const handleSubmit = () => {
-		void navigate(ROUTE_PATH.SIGNUP);
+		if (!signupData || isPending) return;
+		mutate(signupData, {
+			onSuccess: () => {
+				openSignupCompleteModal();
+			},
+			onError: () => {
+				void navigate(ROUTE_PATH.LOGIN, { replace: true });
+				notifyError("회원가입에 실패했습니다");
+			},
+		});
 	};
 
 	return (
@@ -154,7 +207,7 @@ const ToSPage = () => {
 
 			{/* 하단 버튼 */}
 			<div className="px-[2rem] pt-[2rem] pb-[5rem]">
-				<Button disabled={!allAgreed} onClick={handleSubmit}>
+				<Button disabled={!allAgreed || isPending} onClick={handleSubmit}>
 					회원가입
 				</Button>
 			</div>
