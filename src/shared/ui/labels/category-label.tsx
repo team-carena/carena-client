@@ -3,5 +3,5 @@ interface CategoryLabelProps {
 }
 
 export const CategoryLabel = ({ label }: CategoryLabelProps) => {
-	return <h3 className="head02-b-16 text-left text-primary-700">{label}</h3>;
+	return <h3 className="head02-b-16 text-left">{label}</h3>;
 };

@@ -168,7 +168,7 @@ export const Signup = () => {
 				<section className="flex flex-col gap-[2rem]">
 					<CategoryLabel label="기본정보" />
 					{/* 이름, 생년월일, 성별 */}
-					<div className="flex flex-col gap-[1.6rem]">
+					<div className="flex flex-col gap-[1.2rem]">
 						<InputMedium
 							label="이름"
 							required
