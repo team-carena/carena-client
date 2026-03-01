@@ -9,7 +9,6 @@ import {
 	getSummaryBadgeState,
 } from "@/pages/health-analysis/health-analysis.badge";
 import { buildRadarData } from "@/pages/health-analysis/health-analysis.radar";
-import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import type {
 	DisplayElement,
 	EntireHealthReportView,
@@ -22,8 +21,9 @@ import type {
 	HealthMetricType,
 	Sex,
 } from "@/shared/ui/graphs/range-bar/health-metric-config";
-import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
 import { useMyInfo } from "@/shared/apis/member/use-my-info";
+import { ChevronXSRight } from "@/shared/assets/svg";
+
 
 type SummaryRow =
 	| {
@@ -321,7 +321,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 
 	return (
 		<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
-			<div className="mb-[2rem]">
+			<div className="mb-[2.7rem]">
 				<DropDown
 					value={selectedReportId}
 					onValueChange={handleReportChange}
@@ -329,23 +329,18 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 				/>
 			</div>
 
-			{/* RadarChart 위에 배지/툴팁 레이어 고정 */}
-			<div className="relative z-[5] flex items-center gap-[0.8rem]">
+			<div className="mt-[-4.8rem]">
+				<RadarChart data={radarData} />
+			</div>
+
+			<div className="relative z-[5] flex flex-col gap-[0.8rem] mb-[2rem]">
 				<LargeBadge variant={summaryBadgeVariant}>
 					{summaryBadgeText}
 				</LargeBadge>
-				<Tooltip
-					side="bottom"
-					align="start"
-					iconTone="black"
-					avoidCollisions={false}
-				>
-					<div className="whitespace-pre-line">{SUMMARY_TOOLTIP_TEXT}</div>
-				</Tooltip>
-			</div>
-
-			<div className="mt-[-4.8rem]">
-				<RadarChart data={radarData} />
+				<div className="flex items-center">
+					<button className="text-gray-900 body06-r-9">판정기준 보러가기</button>
+					<ChevronXSRight />
+				</div>
 			</div>
 
 			<div className="mt-[0.5rem] flex flex-col gap-[2rem]">

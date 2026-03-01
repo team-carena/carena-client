@@ -12,6 +12,7 @@ export { default as ChevronMUp } from "./chevron-m-up.svg?react";
 export { default as ChevronSDown } from "./chevron-s-down.svg?react";
 export { default as ChevronSLeft } from "./chevron-s-left.svg?react";
 export { default as ChevronSRight } from "./chevron-s-right.svg?react";
+export { default as ChevronXSRight } from "./chevron-xs-right.svg?react";
 export { default as ChevronSUp } from "./chevron-s-up.svg?react";
 export { default as Close } from "./close.svg?react";
 export { default as Correct } from "./correct.svg?react";
