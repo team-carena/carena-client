@@ -106,7 +106,7 @@ export const HealthReportSection = ({
 
 			{interpretationItems.length > 0 && (
 				<div className="px-[2rem]">
-					<section className="mt-[4rem] flex flex-col gap-[1.2rem]">
+					<div className="mt-[4rem] flex flex-col gap-[1.2rem]">
 						<p className="head03-sb-16 text-gray-900">결과 해석</p>
 
 						<div className="flex flex-col gap-[2rem]">
@@ -117,7 +117,7 @@ export const HealthReportSection = ({
 								</div>
 							))}
 						</div>
-					</section>
+					</div>
 				</div>
 			)}
 
