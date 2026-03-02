@@ -6,6 +6,7 @@ export const ROUTE_PATH = {
 	HOME: "/home",
 	MY_PAGE: "/my-page",
 	HEALTH_ANALYSIS: "/health-analysis",
+	HEALTH_ANALYSIS_BASE: "/health-analysis-base",
 	HEALTH_DIET_DETAIL: "/health-diet-detail/:healthDietId",
 	HEALTH_DIET: "/health-diet",
 	HEALTH_TIP: "/health-tip",

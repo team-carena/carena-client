@@ -15,6 +15,7 @@ import type { HeaderVariant } from "@/shared/ui/navigations/header";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
+import { HealthAnalysisBase } from "@/pages/health-analysis/health-analysis-base";
 
 /**
  * 라우트 핸들 인터페이스
@@ -72,6 +73,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "검진 결과 분석",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_ANALYSIS_BASE,
+						element: <HealthAnalysisBase />,
+						handle: {
+							header: "back",
+							title: "판정 기준",
 						} satisfies RouteHandle,
 					},
 					{
