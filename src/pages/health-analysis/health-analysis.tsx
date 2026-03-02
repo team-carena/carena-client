@@ -388,6 +388,10 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 					);
 				})}
 			</div>
+			<div className="flex justify-center item-center mt-[4rem]">
+				<button className="text-gray-700 body05-r-12">결과 수정하기</button>
+				<ChevronXSRight />
+			</div>
 		</div>
 	);
 };
