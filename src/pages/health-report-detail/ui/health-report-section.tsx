@@ -80,6 +80,11 @@ export const HealthReportSection = ({
 		] as const
 	).filter(({ text }) => Boolean(text));
 
+	// 불릿 커스텀
+	const Bullet = () => (
+		<span className="mt-[0.65rem] h-[0.25rem] w-[0.25rem] shrink-0 rounded-full bg-gray-900" />
+	);
+
 	return (
 		<section className="pb-[4rem]">
 			<div className="px-[2rem]">
@@ -126,31 +131,44 @@ export const HealthReportSection = ({
 						<ContentCard variant="muted">
 							<ContentCard.Content className="flex flex-col gap-[0.8rem]">
 								{habitGuide.type === "list" && (
-									<ul className="list-disc space-y-[0.4rem] pl-[1.6rem]">
+									<ul className="flex flex-col gap-[0.4rem]">
 										{habitGuide.items.map((item) => (
-											<li key={item} className="body05-r-12 text-gray-900">
-												{item}
+											<li key={item} className="flex items-start gap-[0.6rem]">
+												<Bullet />
+												<p className="body05-r-12 text-gray-900">{item}</p>
 											</li>
 										))}
 									</ul>
 								)}
 
-								{habitGuide.type === "group" &&
-									habitGuide.groups.map((group) => (
-										<div
-											key={group.title}
-											className="flex flex-col gap-[0.4rem]"
-										>
-											<p className="body05-b-12 text-gray-900">{group.title}</p>
-											<ul className="list-disc space-y-[0.4rem] pl-[1.6rem]">
-												{group.items.map((item) => (
-													<li key={item} className="body05-r-12 text-gray-900">
-														{item}
-													</li>
-												))}
-											</ul>
-										</div>
-									))}
+								{habitGuide.type === "group" && (
+									<div className="flex flex-col gap-[1.8rem]">
+										{habitGuide.groups.map((group) => (
+											<div
+												key={group.title}
+												className="flex flex-col gap-[0.4rem]"
+											>
+												<p className="body05-b-12 text-gray-900">
+													{group.title}
+												</p>
+
+												<ul className="flex flex-col gap-[0.4rem]">
+													{group.items.map((item) => (
+														<li
+															key={item}
+															className="flex items-start gap-[0.6rem]"
+														>
+															<Bullet />
+															<p className="body05-r-12 text-gray-900">
+																{item}
+															</p>
+														</li>
+													))}
+												</ul>
+											</div>
+										))}
+									</div>
+								)}
 							</ContentCard.Content>
 						</ContentCard>
 					</div>
