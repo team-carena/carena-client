@@ -26,7 +26,7 @@ export const CardTable = ({
 		>
 			<div
 				className={cn(
-					"grid grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-gray-200",
+					"grid grid-cols-[11rem_18.5rem] items-center rounded-[8px] bg-primary-50",
 					"body01-sb-12 text-gray-900",
 				)}
 			>
@@ -36,7 +36,7 @@ export const CardTable = ({
 			{rows.map((row) => (
 				<div
 					key={row.id}
-					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-white"
+					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[8px] bg-white"
 				>
 					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words px-[2rem] py-[0.8rem] text-left text-gray-900">
 						{row.label}
