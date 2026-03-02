@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
 import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
 import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
@@ -206,6 +206,7 @@ interface HealthAnalysisContentProps {
 
 const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
 
 	// URL에 저장된 reportId (뒤로가기/새로고침 시 선택값 유지)
 	const reportIdFromQuery = searchParams.get("reportId") ?? "";
@@ -335,7 +336,12 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 					{summaryBadgeText}
 				</LargeBadge>
 				<div className="flex items-center">
-					<button className="text-gray-900 body06-r-9">판정기준 보러가기</button>
+					<button 
+						onClick={() => navigate("/health-analysis-base")}
+						className="text-gray-900 body06-r-9"
+					>
+						판정기준 보러가기
+					</button>
 					<ChevronXSRight />
 				</div>
 			</div>
