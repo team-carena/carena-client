@@ -56,7 +56,7 @@ const Content = ({ className, ...props }: ContentCardContentProps) => {
 	return (
 		<div
 			className={cn(
-				variant === "muted" ? "body05-r-12" : "body03-r-16",
+				variant === "muted" ? "body05-r-12" : "body04-r-14",
 				"text-gray-900",
 				className,
 			)}
@@ -70,7 +70,7 @@ const Tags = ({ tags, className, ...props }: ContentCardTagsProps) => {
 
 	return (
 		<div
-			className={cn("mt-[2rem] flex flex-wrap gap-[0.8rem]", className)}
+			className={cn("mt-[4rem] flex flex-wrap gap-[0.8rem]", className)}
 			{...props}
 		>
 			{tags.map((tag) => (

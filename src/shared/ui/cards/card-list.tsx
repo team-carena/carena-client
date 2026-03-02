@@ -30,7 +30,7 @@ const CardList = ({
 			disabled={!more}
 			{...props}
 		>
-			<span className="head04-m-16 text-gray-900">{children}</span>
+			<span className="head03-sb-16 text-gray-900">{children}</span>
 			{more && <ChevronSRight className="ml-[1rem] shrink-0" />}
 		</button>
 	);
