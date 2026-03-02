@@ -28,7 +28,7 @@ interface HealthReportSectionProps {
 	increaseText?: string;
 	decreaseText?: string;
 
-	/** 이런 습관이 도움돼요! */
+	/** 도움되는 습관 */
 	habitGuide?: HabitGuide;
 
 	/** 출처 */
@@ -118,12 +118,10 @@ export const HealthReportSection = ({
 
 			{habitGuide && (
 				<div className="mt-[4rem]">
-					{/* 타이틀 2rem */}
 					<div className="px-[2rem]">
 						<p className="head03-sb-16 text-gray-900">이런 습관이 도움돼요!</p>
 					</div>
 
-					{/* 카드만 1.6rem */}
 					<div className="mt-[1.2rem] px-[1.6rem]">
 						<ContentCard variant="muted">
 							<ContentCard.Content className="flex flex-col gap-[0.8rem]">
