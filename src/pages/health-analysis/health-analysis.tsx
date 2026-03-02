@@ -47,9 +47,6 @@ interface SummarySection {
 	rows: SummaryRow[];
 }
 
-const SUMMARY_TOOLTIP_TEXT =
-	"본 서비스의 검진결과 해석 및 종합판단은 보건복지부가 고시한 국가건강검진 판정 기준을 참고하여 제공됩니다. 단, 병원 및 검사기관에 따라 적용 기준이나 참고 범위가 일부 다를 수 있습니다.\n\n<구분 기준>\n정상 A: 모든 검진 항목이 정상 범위에 해당하는 경우\n정상 B(경계): 하나 이상의 검진 항목이 경계 범위에 해당하는 경우\n의심: 하나 이상의 검진 항목에서 질환이 의심되는 소견이 확인된 경우";
-
 const formatHealthCheckDate = (value?: string) => {
 	if (!value) return "";
 	const [year, month, day] = value.split("-");
