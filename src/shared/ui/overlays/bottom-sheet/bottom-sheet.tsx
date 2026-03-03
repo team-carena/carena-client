@@ -33,7 +33,7 @@ export const BottomSheet = ({
 	children,
 	snapPoints,
 	height,
-	dismissible = true,
+	dismissible = false,
 	className,
 	footer,
 }: BottomSheetProps) => {
@@ -59,13 +59,18 @@ export const BottomSheet = ({
 
 	const isExpanded = expandedPoint ? snap === expandedPoint : true;
 
+	// vaul의 discriminated union 타입: snapPoints가 있으면 fadeFromIndex 필수
+	const snapPointsProps = vaulSnapPoints
+		? { snapPoints: vaulSnapPoints, fadeFromIndex: 0 }
+		: {};
+
 	return (
 		<Drawer.Root
 			open={open}
 			onOpenChange={(isOpen) => {
 				if (!isOpen) onClose();
 			}}
-			snapPoints={vaulSnapPoints}
+			{...snapPointsProps}
 			activeSnapPoint={snap}
 			setActiveSnapPoint={setSnap}
 			dismissible={dismissible}
