@@ -49,6 +49,7 @@ const DietListContent = () => {
 	);
 };
 
+// 검진 결과 없음
 const EmptyRecommendation = () => {
 	return (
 		<div className="w-full">
@@ -66,6 +67,22 @@ const EmptyRecommendation = () => {
 	);
 };
 
+// AI 로딩 중
+const LoadingRecommendation = () => {
+	return (
+		<div className="w-full">
+			<p className="head03-sb-16 text-gray-900">
+				사용자님의 건강상태에 맞는 요리
+			</p>
+
+			<div className="mt-[1.6rem] mb-[2rem] flex items-start gap-[1.2rem]">
+				<Ai className="shrink-0" aria-hidden />
+				<p className="body04-r-14 text-gray-900">AI가 요리를 찾는 중이에요</p>
+			</div>
+		</div>
+	);
+};
+
 export const HealthMenuPage = () => {
 	// 사용자 score 확인
 	const { data: myInfo } = useMyInfo();
@@ -74,7 +91,7 @@ export const HealthMenuPage = () => {
 	const hasHealthReport = myInfo?.score != null && myInfo.score !== 0;
 
 	// 검진결과 있을 때만 추천식단 조회
-	const { data: mealData } = useRecommendedMeal({
+	const { data: mealData, isPending: isMealPending } = useRecommendedMeal({
 		enabled: hasHealthReport,
 	});
 
@@ -82,15 +99,19 @@ export const HealthMenuPage = () => {
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
 			{/* 상단 영역 */}
 			<section
-				className="flex w-full justify-center bg-center bg-cover px-[2rem] pt-[2.4rem] pb-[2rem]"
+				className="flex w-full justify-center bg-center bg-cover px-[2rem] pt-[2.4rem] pb-[4rem]"
 				style={{ backgroundImage: `url(${MenuBg})` }}
 				aria-label="AI 추천 식단"
 			>
 				{hasHealthReport ? (
-					<CardAiDietRecommendation
-						dietName={mealData?.meal ?? "-"}
-						description={mealData?.description ?? "-"}
-					/>
+					isMealPending ? (
+						<LoadingRecommendation />
+					) : (
+						<CardAiDietRecommendation
+							dietName={mealData?.meal ?? "-"}
+							description={mealData?.description ?? "-"}
+						/>
+					)
 				) : (
 					<EmptyRecommendation />
 				)}
