@@ -63,7 +63,7 @@ export const MenuDetailPage = () => {
 
 					<ContentCard variant="muted">
 						<ContentCard.Content>
-							<ul className="flex flex-col gap-[0.8rem]">
+							<ul className="flex flex-col gap-[0.4rem]">
 								{(data?.cautionary ?? []).map((food) => (
 									<li key={food} className="flex items-start gap-[0.8rem]">
 										<Bullet />
