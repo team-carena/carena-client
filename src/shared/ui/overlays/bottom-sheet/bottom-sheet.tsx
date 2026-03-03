@@ -174,7 +174,7 @@ export const BottomSheet = ({
 						onPointerDown={handlePointerDown}
 						onPointerMove={handlePointerMove}
 						onPointerUp={handlePointerUp}
-						className="flex shrink-0 cursor-grab justify-center pt-[1.2rem] pb-[1.6rem]"
+						className="flex shrink-0 cursor-grab justify-center pt-[1.2rem] pb-[2rem]"
 						style={{ touchAction: "none" }}
 					>
 						<div className="h-[0.5rem] w-[3rem] rounded-full bg-gray-300" />
