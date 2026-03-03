@@ -112,7 +112,6 @@ export const HealthMenuPage = () => {
 						<CardAiDietRecommendation
 							dietName={mealData?.meal ?? "-"}
 							description={mealData?.description ?? "-"}
-							usedUserData={hasHealthReport}
 							userName={userName}
 						/>
 					)
