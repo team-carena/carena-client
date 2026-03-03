@@ -1,11 +1,11 @@
 import { cn } from "@shared/libs/cn";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Drawer } from "vaul";
 
 type BottomSheetSnapPoints = {
 	/** 접힌 상태 높이 (e.g. "467px") */
 	collapsed: string;
-	/** 펼친 상태 높이 (e.g. "779px") */
+	/** 펼친 상태 높이 (e.g. "calc(100dvh - 33px)") */
 	expanded: string;
 };
 
@@ -27,42 +27,56 @@ export type BottomSheetProps = {
 	footer?: React.ReactNode;
 };
 
+const SWIPE_THRESHOLD = 30;
+
 export const BottomSheet = ({
 	open,
 	onClose,
 	children,
 	snapPoints,
 	height,
-	dismissible = false,
+	dismissible = true,
 	className,
 	footer,
 }: BottomSheetProps) => {
-	const collapsedPoint = snapPoints?.collapsed;
-	const expandedPoint = snapPoints?.expanded;
+	const [isExpanded, setIsExpanded] = useState(false);
+	const dragStartY = useRef(0);
 
-	const vaulSnapPoints =
-		collapsedPoint && expandedPoint
-			? [collapsedPoint, expandedPoint]
-			: height
-				? [height]
-				: undefined;
-
-	const [snap, setSnap] = useState<number | string | null>(
-		collapsedPoint ?? null,
-	);
-
+	// 열릴 때마다 collapsed로 리셋
 	useEffect(() => {
-		if (open && collapsedPoint) {
-			setSnap(collapsedPoint);
-		}
-	}, [open, collapsedPoint]);
+		if (open) setIsExpanded(false);
+	}, [open]);
 
-	const isExpanded = expandedPoint ? snap === expandedPoint : true;
+	// 현재 높이 결정
+	const currentHeight = snapPoints
+		? isExpanded
+			? snapPoints.expanded
+			: snapPoints.collapsed
+		: height;
 
-	// vaul의 discriminated union 타입: snapPoints가 있으면 fadeFromIndex 필수
-	const snapPointsProps = vaulSnapPoints
-		? { snapPoints: vaulSnapPoints, fadeFromIndex: 0 }
-		: {};
+	// 드래그 핸들 스와이프 감지
+	const handlePointerDown = useCallback((e: React.PointerEvent) => {
+		dragStartY.current = e.clientY;
+	}, []);
+
+	const handlePointerUp = useCallback(
+		(e: React.PointerEvent) => {
+			const deltaY = dragStartY.current - e.clientY;
+
+			if (deltaY > SWIPE_THRESHOLD) {
+				// 위로 스와이프 → 확장
+				setIsExpanded(true);
+			} else if (deltaY < -SWIPE_THRESHOLD) {
+				// 아래로 스와이프 → 축소 또는 닫기
+				if (isExpanded) {
+					setIsExpanded(false);
+				} else if (dismissible) {
+					onClose();
+				}
+			}
+		},
+		[isExpanded, dismissible, onClose],
+	);
 
 	return (
 		<Drawer.Root
@@ -70,9 +84,6 @@ export const BottomSheet = ({
 			onOpenChange={(isOpen) => {
 				if (!isOpen) onClose();
 			}}
-			{...snapPointsProps}
-			activeSnapPoint={snap}
-			setActiveSnapPoint={setSnap}
 			dismissible={dismissible}
 			modal
 		>
@@ -80,23 +91,27 @@ export const BottomSheet = ({
 				<Drawer.Overlay className="fixed inset-0 z-50 bg-black/20" />
 
 				<Drawer.Content
+					style={{ height: currentHeight }}
 					className={cn(
-						"fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[calc(100dvh-33px)] max-w-[var(--app-max-width)] flex-col rounded-t-[20px] bg-white",
+						"fixed inset-x-0 bottom-0 z-50 mx-auto flex max-w-[var(--app-max-width)] flex-col rounded-t-[20px] bg-white transition-[height] duration-300 ease-out",
 						className,
 					)}
 					aria-describedby={undefined}
 				>
 					{/* 드래그 핸들 */}
-					<div className="flex shrink-0 justify-center pt-[1.2rem] pb-[1.6rem]">
+					<div
+						onPointerDown={handlePointerDown}
+						onPointerUp={handlePointerUp}
+						className="flex shrink-0 cursor-grab justify-center pt-[1.2rem] pb-[1.6rem]"
+						style={{ touchAction: "none" }}
+					>
 						<div className="h-[0.5rem] w-[3rem] rounded-full bg-gray-300" />
 					</div>
 
 					{/* 스크롤 가능한 컨텐츠 영역 */}
 					<div
-						className={cn(
-							"min-h-0 flex-1 px-[2rem]",
-							isExpanded ? "overflow-y-auto" : "overflow-hidden",
-						)}
+						className="min-h-0 flex-1 overflow-y-auto px-[2rem]"
+						style={{ touchAction: "pan-y" }}
 					>
 						{children}
 					</div>

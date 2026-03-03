@@ -30,7 +30,7 @@ export const openPrivacyConsentSheet = (): Promise<boolean> => {
 					resolve(false);
 					close();
 				}}
-				snapPoints={{ collapsed: "467px", expanded: "779px" }}
+				snapPoints={{ collapsed: "467px", expanded: "calc(100dvh - 33px)" }}
 				footer={
 					<>
 						<Button
