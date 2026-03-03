@@ -75,7 +75,7 @@ export const MenuDetailPage = () => {
 					</ContentCard>
 
 					<p className="body06-r-10 h-[1.5rem] self-end text-gray-700">
-						출처: {data?.reference ?? "-"}
+						출처: 국내 의료기관 영양지침
 					</p>
 				</section>
 			</main>
