@@ -3,13 +3,16 @@ import { Ai } from "@shared/assets/svg";
 export interface CardAiDietRecommendationProps {
 	// AI 추천 요리명
 	dietName: string;
-	// AI 추천 설명 텍스트
+	// AI 추천 설명 텍스트(추천 이유 한 문장)
 	description: string;
+	// 사용자 이름
+	userName: string;
 }
 
 const CardAiDietRecommendation = ({
 	dietName,
 	description,
+	userName,
 }: CardAiDietRecommendationProps) => {
 	return (
 		<article className="w-full" aria-labelledby="diet-recommendation-title">
@@ -26,7 +29,7 @@ const CardAiDietRecommendation = ({
 			<div className="mt-[1.6rem] flex items-start gap-[1.2rem]">
 				<Ai className="shrink-0" aria-hidden />
 				<p className="body04-r-14 whitespace-pre-line text-gray-900">
-					{description}
+					{`${userName}님의 건강 정보를 참고해,\n${description}`}
 				</p>
 			</div>
 		</article>
