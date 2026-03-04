@@ -68,7 +68,7 @@ export const CheckupResultPage = () => {
 		watch,
 		trigger,
 		setValue,
-		formState: { errors, isValid },
+		formState: { errors, isValid, isSubmitting },
 	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
 		resolver: zodResolver(checkupSchema),
 		mode: "onBlur",
@@ -369,7 +369,7 @@ export const CheckupResultPage = () => {
 					type="submit"
 					form="checkup-form"
 					size="lg"
-					disabled={!isRequiredFilled || !isValid}
+					disabled={!isRequiredFilled || !isValid || isSubmitting}
 				>
 					저장
 				</Button>

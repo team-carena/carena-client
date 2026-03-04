@@ -5,7 +5,7 @@ import { Drawer } from "vaul";
 type BottomSheetSnapPoints = {
 	// 접힌 상태 높이 (467px)
 	collapsed: string;
-	// 펼친 상태 높이 (calc(100dvh - 33px)
+	// 펼친 상태 높이 (calc(100dvh - 40px)
 	expanded: string;
 };
 
