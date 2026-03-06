@@ -89,6 +89,7 @@ export const Signup = () => {
 					<div className="flex flex-col gap-[1.2rem]">
 						<InputMedium
 							label="이름"
+							placeholder="성명 입력"
 							required
 							{...register("name")}
 							errorMessage={errors.name?.message}
