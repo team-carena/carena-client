@@ -41,7 +41,8 @@ export const Header = ({
 	return (
 		<header
 			className={cn(
-				`fixed top-0 left-1/2 z-50 flex w-full min-w-[var(--app-min-width)] max-w-[var(--app-max-width)] -translate-x-1/2 items-center justify-between bg-white px-[2rem] py-[1.6rem]`,
+				`fixed top-0 left-1/2 z-50 flex w-full min-w-[var(--app-min-width)] max-w-[var(--app-max-width)] -translate-x-1/2 items-center justify-between px-[2rem] py-[1.6rem]`,
+				variant === "main" ? "bg-transparent" : "bg-white",
 				className,
 			)}
 			{...props}

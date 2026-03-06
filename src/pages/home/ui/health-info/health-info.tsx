@@ -48,22 +48,6 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 
 	return (
 		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
-			{/* 생활 속 건강 팁 */}
-			<article className="overflow-hidden rounded-[12px] bg-white">
-				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
-					<NaviRow label="생활 속 건강 팁" to={ROUTE_PATH.HEALTH_TIP} />
-				</div>
-				<div className="relative p-[1.2rem_0.8rem_4.2rem_0.8rem]">
-					<HealthTipBackground className="absolute inset-0 z-0 h-full w-full" />
-					<div className="relative z-10">
-						{/* useSuspenseQuery로 데이터 로딩 중에는 Suspense fallback이 표시됨 -> Layout Shift 방지를 위해 폴백에 Ticker와 동일한 높이 명시 */}
-						<Suspense fallback={<div className="h-[3.5rem]" />}>
-							<HealthTipTicker />
-						</Suspense>
-					</div>
-				</div>
-			</article>
-
 			{/* 건강 식단 */}
 			<article className="rounded-[12px] bg-white">
 				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
@@ -110,6 +94,22 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 						label={dietLabel}
 						to={ROUTE_PATH.HEALTH_DIET_DETAIL.replace(":healthDietId", dietId)}
 					/>
+				</div>
+			</article>
+
+			{/* 생활 속 건강 팁 */}
+			<article className="overflow-hidden rounded-[12px] bg-white">
+				<div className="p-[1.2rem_1.2rem_0.4rem_1.2rem]">
+					<NaviRow label="생활 속 건강 팁" to={ROUTE_PATH.HEALTH_TIP} />
+				</div>
+				<div className="relative p-[1.2rem_0.8rem_4.2rem_0.8rem]">
+					<HealthTipBackground className="absolute inset-0 z-0 h-full w-full" />
+					<div className="relative z-10">
+						{/* useSuspenseQuery로 데이터 로딩 중에는 Suspense fallback이 표시됨 -> Layout Shift 방지를 위해 폴백에 Ticker와 동일한 높이 명시 */}
+						<Suspense fallback={<div className="h-[3.5rem]" />}>
+							<HealthTipTicker />
+						</Suspense>
+					</div>
 				</div>
 			</article>
 		</div>
