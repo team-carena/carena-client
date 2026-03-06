@@ -1,5 +1,5 @@
 import { ROUTE_PATH } from "@app/routes/paths";
-import { CarenaLogo, ChevronMLeft, My } from "@shared/assets/svg";
+import { CarenaLogo, ChevronMLeft, IcSetting } from "@shared/assets/svg";
 import { cn } from "@shared/libs/cn";
 import type * as React from "react";
 import { useNavigate } from "react-router";
@@ -75,10 +75,10 @@ export const Header = ({
 					<button
 						type="button"
 						onClick={onMyClick ?? (() => navigate(ROUTE_PATH.MY_PAGE))}
-						aria-label="마이페이지"
+						aria-label="설정"
 						className="flex items-center justify-center"
 					>
-						<My className="shrink-0" aria-hidden />
+						<IcSetting className="shrink-0" aria-hidden />
 					</button>
 				)}
 				{variant === "signup" && <div className="w-[2.4rem]" />}
