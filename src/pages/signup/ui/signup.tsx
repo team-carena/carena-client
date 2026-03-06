@@ -63,17 +63,17 @@ export const Signup = () => {
 
 	return (
 		// flex-1으로 하단 영역을 아래로 밀기 위해 헤더 제외한 높이 지정
-		<div className="mt-[var(--header-height)] flex h-[calc(100dvh-var(--header-height))] flex-col bg-white p-[2.4rem_2rem_5rem_2rem]">
+		<div className="mt-[var(--header-height)] flex h-[calc(100dvh-var(--header-height))] flex-col bg-white p-[2.4rem_2rem_4rem_2rem]">
 			{/* 상단 컨텐츠 영역 */}
 
 			<Header variant="signup" title="회원가입" />
 
 			<div className="mb-[4rem] space-y-[1.2rem]">
 				<h1 className="head01-b-18 text-center">
-					검진 결과 입력하고 케어나 시작하기
+					간단한 정보 입력으로 케어나 시작하기
 				</h1>
 				<h2 className="body04-r-14 text-center">
-					아래 정보는 필수 입력 정보예요
+					아래 정보는 필수 입력 정보에요
 				</h2>
 			</div>
 
