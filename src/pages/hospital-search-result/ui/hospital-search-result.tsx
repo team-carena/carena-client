@@ -51,7 +51,7 @@ export const HospitalSearchResultPage = () => {
 	if (totalCount === 0) {
 		return (
 			<main className="flex items-center justify-center pt-[19.6rem]">
-				<p className="body04-r-14 text-gray-900">조회된 검진기관이 없습니다</p>
+				<p className="body04-r-14 text-gray-900">조회된 검진 기관이 없습니다</p>
 			</main>
 		);
 	}
