@@ -41,7 +41,7 @@ export const MyPage = () => {
 					label: "서비스 이용 약관",
 					onClick: () => {
 						window.open(
-							"https://petalite-biplane-c36.notion.site/2eb5365471d180fcb539d7caf1ca2310",
+							"https://petalite-biplane-c36.notion.site/3185365471d1809ea43aebb2ea407608?pvs=74",
 							"_blank",
 							"noopener,noreferrer",
 						);
@@ -50,13 +50,21 @@ export const MyPage = () => {
 				{
 					label: "개인정보 처리방침",
 					onClick: () => {
-						window.open("노션링크", "_blank", "noopener,noreferrer");
+						window.open(
+							"https://petalite-biplane-c36.notion.site/2eb5365471d180fcb539d7caf1ca2310?pvs=74",
+							"_blank",
+							"noopener,noreferrer",
+						);
 					},
 				},
 				{
 					label: "개인정보 및 민감정보 수집·이용 동의",
 					onClick: () => {
-						window.open("노션링크", "_blank", "noopener,noreferrer");
+						window.open(
+							"https://petalite-biplane-c36.notion.site/3185365471d180a6804adee3f1ffe1c8?pvs=74",
+							"_blank",
+							"noopener,noreferrer",
+						);
 					},
 				},
 			],
