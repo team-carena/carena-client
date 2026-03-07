@@ -44,7 +44,7 @@ export const HealthAnalysisCriteria = () => {
 			</div>
 
 			<div className="flex flex-col gap-[2rem]">
-				<span className="head04-m-16">[구분 기준]</span>
+				<h2 className="head04-m-16">[구분 기준]</h2>
 
 				{CRITERIA_LIST.map((item) => (
 					<div key={item.label} className="flex flex-col gap-[0.8rem]">
