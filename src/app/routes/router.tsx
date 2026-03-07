@@ -7,6 +7,7 @@ import { HealthReportDetailPage } from "@/pages/health-report-detail/ui/health-r
 import { HealthTipPage } from "@/pages/health-tip/ui/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/ui/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
+import { HospitalSearchResultPage } from "@/pages/hospital-search-result/ui/hospital-search-result";
 import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/ui/my-page";
 import { Signup } from "@/pages/signup/ui/signup";
@@ -112,6 +113,14 @@ export const router = createBrowserRouter([
 
 						handle: {
 							header: "none", // 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HOSPITAL_SEARCH_RESULT,
+						element: <HospitalSearchResultPage />,
+						handle: {
+							header: "back",
+							title: "검진기관 조회",
 						} satisfies RouteHandle,
 					},
 					{
