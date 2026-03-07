@@ -6,7 +6,6 @@ export const ROUTE_PATH = {
 	SIGNUP_TOS: "/signup/tos",
 	HOME: "/home",
 	MY_PAGE: "/my-page",
-	HEALTH_ANALYSIS: "/health-analysis",
 	HEALTH_ANALYSIS_CRITERIA: "/health-analysis-criteria",
 	HEALTH_DIET_DETAIL: "/health-diet-detail/:healthDietId",
 	HEALTH_DIET: "/health-diet",
