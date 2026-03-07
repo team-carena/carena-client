@@ -262,7 +262,7 @@ export const LineChart = ({ data }: LineChartProps) => {
 									className="body06-r-10"
 									fill={COLORS.TEXT}
 								>
-									{p.value.toFixed(2)}
+									{p.value}
 								</text>
 
 								<polygon

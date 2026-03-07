@@ -10,6 +10,7 @@ import { HomePage } from "@/pages/home/ui/home";
 import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/ui/my-page";
 import { Signup } from "@/pages/signup/ui/signup";
+import ToSPage from "@/pages/signup/ui/tos";
 import HealthAnalysisPage from "@/pages/health-analysis/health-analysis";
 import type { HeaderVariant } from "@/shared/ui/navigations/header";
 import { Layout } from "./layout";
@@ -34,10 +35,10 @@ export const router = createBrowserRouter([
 	{
 		path: ROUTE_PATH.SIGNUP,
 		element: <Signup />,
-		handle: {
-			header: "signup",
-			title: "회원가입",
-		} satisfies RouteHandle,
+	},
+	{
+		path: ROUTE_PATH.SIGNUP_TOS,
+		element: <ToSPage />,
 	},
 	{
 		path: ROUTE_PATH.OAUTH_CALLBACK,

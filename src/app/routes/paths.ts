@@ -3,6 +3,7 @@ export const ROUTE_PATH = {
 	LOGIN: "/login",
 	OAUTH_CALLBACK: "/oauth-callback",
 	SIGNUP: "/signup",
+	SIGNUP_TOS: "/signup/tos",
 	HOME: "/home",
 	MY_PAGE: "/my-page",
 	HEALTH_ANALYSIS: "/health-analysis",

@@ -76,7 +76,7 @@ export const InputMedium = ({
 	const fieldState = disabled ? "disabled" : readOnly ? "readonly" : "default";
 
 	return (
-		<div className="flex items-start justify-between">
+		<div className="flex items-center justify-between">
 			{/* label */}
 			<label htmlFor={inputId} className="body03-r-16 shrink-0 text-black">
 				{label}

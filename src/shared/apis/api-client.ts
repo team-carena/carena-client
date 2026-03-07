@@ -87,6 +87,7 @@ apiClient.interceptors.response.use(
 
 			originalRequest.headers = originalRequest.headers ?? {};
 			originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+			originalRequest.headers["x-skip-auth-refresh"] = "true";
 
 			return apiClient(originalRequest);
 		} catch (refreshError) {
