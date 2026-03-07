@@ -1,14 +1,16 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
-import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
-import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
-import CheckupSummaryCard from "@/pages/home/ui/checkup-summary-card/checkup-summary-card";
 import {
 	getElementBadgeCode,
 	getSummaryBadgeState,
 } from "@/pages/health-analysis/health-analysis.badge";
 import { buildRadarData } from "@/pages/health-analysis/health-analysis.radar";
+import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
+import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
+import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
+import CheckupSummaryCard from "@/pages/home/ui/checkup-summary-card/checkup-summary-card";
+import { useMyInfo } from "@/shared/apis/member/use-my-info";
+import { ChevronXSRight } from "@/shared/assets/svg";
 import type {
 	DisplayElement,
 	EntireHealthReportView,
@@ -21,9 +23,6 @@ import type {
 	HealthMetricType,
 	Sex,
 } from "@/shared/ui/graphs/range-bar/health-metric-config";
-import { useMyInfo } from "@/shared/apis/member/use-my-info";
-import { ChevronXSRight } from "@/shared/assets/svg";
-
 
 type SummaryRow =
 	| {
@@ -327,22 +326,25 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 				/>
 			</div>
 
-			<div className="mt-[-4.8rem]">
-				<RadarChart data={radarData} />
-			</div>
+			<div className="relative mb-[2rem]">
+				<div className="mt-[-4.8rem]">
+					<RadarChart data={radarData} />
+				</div>
 
-			<div className="relative z-[5] flex flex-col gap-[0.8rem] mb-[2rem]">
-				<LargeBadge variant={summaryBadgeVariant}>
-					{summaryBadgeText}
-				</LargeBadge>
-				<div className="flex items-center">
-					<button 
-						onClick={() => navigate("/health-analysis-base")}
-						className="text-gray-900 body06-r-9"
-					>
-						판정기준 보러가기
-					</button>
-					<ChevronXSRight />
+				<div className="absolute bottom-[0.5rem] flex flex-col gap-[0.8rem]">
+					<LargeBadge variant={summaryBadgeVariant}>
+						{summaryBadgeText}
+					</LargeBadge>
+
+					<div className="flex items-center">
+						<button
+							onClick={() => navigate("/health-analysis-base")}
+							className="body06-r-9 text-gray-900"
+						>
+							판정기준 보러가기
+						</button>
+						<ChevronXSRight />
+					</div>
 				</div>
 			</div>
 
@@ -391,8 +393,8 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 					);
 				})}
 			</div>
-			<div className="flex justify-center item-center mt-[4rem]">
-				<button className="text-gray-700 body05-r-12">결과 수정하기</button>
+			<div className="item-center mt-[4rem] flex justify-center">
+				<button className="body05-r-12 text-gray-700">결과 수정하기</button>
 				<ChevronXSRight />
 			</div>
 		</div>
@@ -403,9 +405,7 @@ const DEFAULT_SEX: Sex = "FEMALE";
 
 const HealthAnalysisPage = () => {
 	const { data: userInfo, isPending } = useMyInfo();
-	const userSex = isPending
-		? DEFAULT_SEX
-		: (userInfo?.gender ?? DEFAULT_SEX);
+	const userSex = isPending ? DEFAULT_SEX : (userInfo?.gender ?? DEFAULT_SEX);
 
 	return <HealthAnalysisContent userSex={userSex} />;
 };
