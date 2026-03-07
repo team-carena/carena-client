@@ -339,6 +339,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 
 					<div className="flex items-center">
 						<button
+							type="button"
 							onClick={() => navigate(ROUTE_PATH.HEALTH_ANALYSIS_CRITERIA)}
 							className="body06-r-9 text-gray-900"
 						>
@@ -394,7 +395,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 					);
 				})}
 			</div>
-			<div className="item-center mt-[4rem] flex justify-center">
+			<div className="mt-[4rem] flex justify-center">
 				<button className="body05-r-12 text-gray-700">결과 수정하기</button>
 				<ChevronXSRight />
 			</div>
