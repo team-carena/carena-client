@@ -1,6 +1,8 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
 import { CheckupResultPage } from "@/pages/checkup-result/ui/checkup-result";
+import HealthAnalysisPage from "@/pages/health-analysis/health-analysis";
+import { HealthAnalysisCriteria } from "@/pages/health-analysis/health-analysis-criteria";
 import { HealthMenuPage } from "@/pages/health-menu/ui/health-menu";
 import { MenuDetailPage } from "@/pages/health-menu/ui/health-menu-detail";
 import { HealthReportDetailPage } from "@/pages/health-report-detail/ui/health-report-detail";
@@ -11,12 +13,10 @@ import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/ui/my-page";
 import { Signup } from "@/pages/signup/ui/signup";
 import ToSPage from "@/pages/signup/ui/tos";
-import HealthAnalysisPage from "@/pages/health-analysis/health-analysis";
 import type { HeaderVariant } from "@/shared/ui/navigations/header";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
 import { ProtectedRoute } from "./protected-route";
-import { HealthAnalysisBase } from "@/pages/health-analysis/health-analysis-base";
 
 /**
  * 라우트 핸들 인터페이스
@@ -77,8 +77,8 @@ export const router = createBrowserRouter([
 						} satisfies RouteHandle,
 					},
 					{
-						path: ROUTE_PATH.HEALTH_ANALYSIS_BASE,
-						element: <HealthAnalysisBase />,
+						path: ROUTE_PATH.HEALTH_ANALYSIS_CRITERIA,
+						element: <HealthAnalysisCriteria />,
 						handle: {
 							header: "back",
 							title: "판정 기준",

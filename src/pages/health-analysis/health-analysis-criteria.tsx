@@ -34,7 +34,7 @@ const CRITERIA_LIST: CriteriaItem[] = [
 	},
 ];
 
-export const HealthAnalysisBase = () => {
+export const HealthAnalysisCriteria = () => {
 	return (
 		<div className="body04-r-14 mt-[2.4rem] flex flex-col gap-[4rem] px-[2rem] text-gray-900">
 			<div className="flex flex-col gap-[2rem]">
