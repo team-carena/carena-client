@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import {
 	getElementBadgeCode,
 	getSummaryBadgeState,
@@ -338,7 +339,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 
 					<div className="flex items-center">
 						<button
-							onClick={() => navigate("/health-analysis-base")}
+							onClick={() => navigate(ROUTE_PATH.HEALTH_ANALYSIS_CRITERIA)}
 							className="body06-r-9 text-gray-900"
 						>
 							판정기준 보러가기
