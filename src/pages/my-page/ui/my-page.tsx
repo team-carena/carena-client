@@ -71,9 +71,7 @@ export const MyPage = () => {
 						openModal({
 							size: "lg",
 							title: "정말 탈퇴하시겠어요?",
-							description: `회원 탈퇴 시 계정이 삭제되며,
-                회원 정보가 소멸되어
-                복구가 불가능합니다.`,
+							description: `회원 탈퇴 시 계정이 삭제되며, 회원 정보가 소멸되어 복구가 불가능합니다.`,
 							primaryAction: {
 								label: "탈퇴하기",
 								onClick: () => {}, // TODO: 탈퇴 핸들러 연결
