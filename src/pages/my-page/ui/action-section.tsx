@@ -13,7 +13,7 @@ interface ActionSectionProps {
 export const ActionSection = ({ title, items }: ActionSectionProps) => {
 	return (
 		<section className="flex flex-col gap-[2rem] rounded-[12px] bg-gray-50 p-[2rem]">
-			<span className="head02-b-16">{title}</span>
+			<span className="head03-sb-16">{title}</span>
 
 			<div className="flex flex-col gap-[2rem]">
 				{items.map((item) => (
