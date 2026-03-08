@@ -19,7 +19,8 @@ export function InputField({
 
 			<input
 				className={cn(
-					`label04-r-16 w-full rounded-[0.8rem] border border-gray-200 px-[1.6rem] py-[0.8rem] placeholder-gray-500 outline-none focus:outline-none focus:ring-0`,
+					`label04-r-16 w-full rounded-[0.8rem] border px-[1.6rem] py-[0.8rem] placeholder-gray-500 outline-none focus:outline-none focus:ring-0`,
+					!!props.value ? "border-gray-500" : "border-gray-200",
 					className,
 				)}
 				{...props}
