@@ -28,7 +28,7 @@ const CardHospital = ({
 			<h3 className="head01-b-18 truncate text-gray-900">{hospitalName}</h3>
 
 			<div className="flex items-center gap-[0.8rem]">
-				<p className="body05-r-12 line-clamp-2 break-keep text-gray-900">
+				<p className="body05-r-12 line-clamp-2 min-w-0 flex-1 break-keep text-gray-900">
 					{address}
 				</p>
 
