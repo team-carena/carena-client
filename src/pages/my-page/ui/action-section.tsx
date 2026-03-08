@@ -3,6 +3,7 @@ import { SelectList } from "@/shared/ui/navigations/select-list";
 interface ActionItem {
 	label: string;
 	onClick: () => void;
+	external?: boolean;
 }
 
 interface ActionSectionProps {
@@ -21,7 +22,7 @@ export const ActionSection = ({ title, items }: ActionSectionProps) => {
 						key={item.label}
 						label={item.label}
 						onClick={item.onClick}
-						link={title === "약관 및 정책"}
+						link={item.external}
 					/>
 				))}
 			</div>

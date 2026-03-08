@@ -46,6 +46,7 @@ export const MyPage = () => {
 							"noopener,noreferrer",
 						);
 					},
+					external: true,
 				},
 				{
 					label: "개인정보 처리방침",
@@ -56,6 +57,7 @@ export const MyPage = () => {
 							"noopener,noreferrer",
 						);
 					},
+					external: true,
 				},
 				{
 					label: "개인정보 및 민감정보 수집·이용 동의",
@@ -66,6 +68,7 @@ export const MyPage = () => {
 							"noopener,noreferrer",
 						);
 					},
+					external: true,
 				},
 			],
 		},
