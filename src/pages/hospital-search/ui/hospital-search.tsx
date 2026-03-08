@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { Button } from "@/shared/ui/buttons/button";
 import Chip from "@/shared/ui/chips/chip";
 import { InputField } from "./input-field";
 import { SectionHeader } from "./section-header";
 
+// TODO: 시도, 시군구 조회는 조회 페이지에서 받아와 url 파라미터로 조회 결과 페이지에 시도, 시군구, 칩, 타입 넘기기
 const screeningTypeChips = [
 	"전체",
 	"일반",
@@ -15,13 +17,36 @@ const screeningTypeChips = [
 ] as const;
 
 export const HospitalSearchPage = () => {
+	const navigate = useNavigate();
 	const [hospitalName, setHospitalName] = useState("");
 	const [selectedScreeningTypeChip, setSelectedScreeningTypeChip] =
 		useState<string>("전체");
 
+	const [sidoCode] = useState("11"); // 서울
+	const [sigunguCode] = useState("11010"); // 종로구
+
 	const handleScreeningTypeChipClick = (value: string) => {
 		setSelectedScreeningTypeChip(value);
 	};
+
+	const handleSearchBtnClick = () => {
+		const params = new URLSearchParams();
+
+		// 시도 / 시군구
+		params.set("sidoCode", sidoCode);
+		params.set("sigunguCode", sigunguCode);
+
+		// 병원 이름
+		if (hospitalName) {
+			params.set("name", hospitalName);
+		}
+
+		// 검진 타입
+		params.set("type", selectedScreeningTypeChip);
+
+		void navigate(`/hospital-search-result?${params.toString()}`);
+	};
+
 	const handleResetBtnClick = () => {
 		setHospitalName("");
 		setSelectedScreeningTypeChip("전체");
@@ -32,9 +57,9 @@ export const HospitalSearchPage = () => {
 				title="주소 검색"
 				icon
 				readOnly
-				value=""
+				value="서울 종로구" // TODO: 바텀시트 붙이면 변경
 				placeholder="주소를 선택해주세요"
-				className="cursor-default"
+				className="cursor-default bg-gray-100"
 			/>
 
 			<InputField
@@ -69,7 +94,12 @@ export const HospitalSearchPage = () => {
 						초기화
 					</button>
 
-					<Button className="flex-1 rounded-[1.2rem]">조회</Button>
+					<Button
+						onClick={handleSearchBtnClick}
+						className="flex-1 rounded-[1.2rem]"
+					>
+						조회
+					</Button>
 				</div>
 			</div>
 		</div>
