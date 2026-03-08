@@ -88,6 +88,7 @@ export const HospitalSearchPage = () => {
 			<div className="fixed right-0 bottom-[40px] left-0 z-50 mx-auto w-full max-w-[var(--app-max-width)] px-[2rem]">
 				<div className="flex gap-[0.8rem]">
 					<button
+						type="button"
 						onClick={handleResetBtnClick}
 						className="label04-r-16 whitespace-nowrap rounded-[1.2rem] bg-gray-100 px-[2rem] text-gray-700"
 					>
