@@ -8,7 +8,7 @@ type HeaderProps<T extends React.ElementType = "button"> = {
 	icon?: boolean;
 } & React.ComponentPropsWithoutRef<T>;
 
-export function Header<T extends React.ElementType = "button">({
+export function SectionHeader<T extends React.ElementType = "button">({
 	as,
 	title,
 	icon = false,
