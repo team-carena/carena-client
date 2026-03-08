@@ -1,4 +1,5 @@
 import { cn } from "@/shared/libs/cn";
+import Tag from "@/shared/ui/tags/tag";
 
 export interface CardHospitalProps
 	extends React.HTMLAttributes<HTMLDivElement> {
@@ -41,9 +42,7 @@ const CardHospital = ({
 			</div>
 
 			<div className="flex items-center gap-[0.8rem]">
-				<span className="body06-r-10 shrink-0 rounded-full bg-primary-50 px-[0.8rem] py-[0.4rem] text-gray-900">
-					검진항목
-				</span>
+				<Tag className="body06-r-10 shrink-0">검진항목</Tag>
 
 				<p className="body05-r-12 text-gray-900">{checkupItems.join(", ")}</p>
 			</div>
@@ -51,4 +50,4 @@ const CardHospital = ({
 	);
 };
 
-export default CardHospital;
+export { CardHospital };

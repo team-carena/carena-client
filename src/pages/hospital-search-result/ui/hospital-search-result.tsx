@@ -3,7 +3,7 @@ import {
 	type HospitalItem,
 	MOCK_HOSPITALS,
 } from "@/pages/hospital-search-result/api/mock-hospitals";
-import CardHospital from "@/pages/hospital-search-result/ui/card-hospital";
+import { CardHospital } from "@/pages/hospital-search-result/ui/card-hospital";
 import { Pagination } from "@/pages/hospital-search-result/ui/pagination/pagination";
 import { usePagination } from "@/pages/hospital-search-result/ui/pagination/use-pagination";
 
