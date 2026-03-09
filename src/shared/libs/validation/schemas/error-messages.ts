@@ -5,7 +5,7 @@ export const ERROR_MESSAGES = {
 		invalidChar: "한글만 입력 가능해요.",
 	},
 	birthDate: {
-		invalidYear: "1960년~2007년 사이의 연도를 입력해 주세요.",
+		invalidYear: "1956년~2007년 사이의 연도를 입력해 주세요.",
 		invalidDate: "올바른 날짜를 입력해 주세요.",
 	},
 	checkupDate: {
