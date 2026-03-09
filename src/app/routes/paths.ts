@@ -12,6 +12,7 @@ export const ROUTE_PATH = {
 	HEALTH_TIP_DETAIL: "/health-tip-detail/:healthTipId",
 	HEALTH_REPORT_DETAIL: "/health-report/:type",
 	CHECKUP_RESULT: "/checkup-result",
+	HOSPITAL_SEARCH_RESULT: "/hospital-search-result",
 	CHECKUP_RESULT_EDIT: "/checkup-result-edit",
 } as const;
 
