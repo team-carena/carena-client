@@ -24,7 +24,7 @@ export const birthDateSchema = z
 		(data) => {
 			if (!data.year) return true;
 			const year = Number(data.year);
-			return year >= 1960 && year <= 2007;
+			return year >= 1956 && year <= 2007;
 		},
 		{ message: ERROR_MESSAGES.birthDate.invalidYear },
 	)

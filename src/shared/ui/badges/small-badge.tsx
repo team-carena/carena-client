@@ -2,13 +2,13 @@ import { cn } from "@shared/libs/cn";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const smallBadgeVariants = cva(
-	"label01-sb-14 inline-flex w-fit items-center justify-center rounded-full px-[0.8rem] py-[0.4rem] text-white",
+	"label01-sb-14 inline-flex w-fit items-center justify-center rounded-full px-[0.8rem] py-[0.4rem]",
 	{
 		variants: {
 			variant: {
-				normal: "bg-green-500",
-				borderline: "bg-blue-500",
-				suspicious: "bg-red-500",
+				normal: "bg-green-100 text-green-500",
+				borderline: "bg-orange-100 text-orange-500",
+				suspicious: "bg-red-100 text-red-500",
 			},
 		},
 		defaultVariants: {

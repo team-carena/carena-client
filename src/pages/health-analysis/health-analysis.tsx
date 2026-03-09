@@ -1,15 +1,17 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
+import {
+	getElementBadgeCode,
+	getSummaryBadgeState,
+} from "@/pages/health-analysis/health-analysis.badge";
+import { buildRadarData } from "@/pages/health-analysis/health-analysis.radar";
 import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
 import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
 import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
 import CheckupSummaryCard from "@/pages/home/ui/checkup-summary-card/checkup-summary-card";
-import {
-	getElementBadgeCode,
-	getSummaryBadgeState,
-} from "@/pages/home/ui/health-analysis/health-analysis.badge";
-import { buildRadarData } from "@/pages/home/ui/health-analysis/health-analysis.radar";
-import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
+import { useMyInfo } from "@/shared/apis/member/use-my-info";
+import { ChevronXSRight } from "@/shared/assets/svg";
 import type {
 	DisplayElement,
 	EntireHealthReportView,
@@ -22,12 +24,6 @@ import type {
 	HealthMetricType,
 	Sex,
 } from "@/shared/ui/graphs/range-bar/health-metric-config";
-import { Tooltip } from "@/shared/ui/overlays/tooltip/tooltip";
-
-interface HealthAnalysisPageProps {
-	userInfo: MemberInfoResponse | undefined;
-	isPending: boolean;
-}
 
 type SummaryRow =
 	| {
@@ -50,9 +46,6 @@ interface SummarySection {
 	reportType: HealthReportType;
 	rows: SummaryRow[];
 }
-
-const SUMMARY_TOOLTIP_TEXT =
-	"본 서비스의 검진결과 해석 및 종합판단은 보건복지부가 고시한 국가건강검진 판정 기준을 참고하여 제공됩니다. 단, 병원 및 검사기관에 따라 적용 기준이나 참고 범위가 일부 다를 수 있습니다.\n\n<구분 기준>\n정상 A: 모든 검진 항목이 정상 범위에 해당하는 경우\n정상 B(경계): 하나 이상의 검진 항목이 경계 범위에 해당하는 경우\n의심: 하나 이상의 검진 항목에서 질환이 의심되는 소견이 확인된 경우";
 
 const formatHealthCheckDate = (value?: string) => {
 	if (!value) return "";
@@ -213,6 +206,7 @@ interface HealthAnalysisContentProps {
 
 const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
 
 	// URL에 저장된 reportId (뒤로가기/새로고침 시 선택값 유지)
 	const reportIdFromQuery = searchParams.get("reportId") ?? "";
@@ -325,7 +319,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 
 	return (
 		<div className="mb-[3rem] flex w-full flex-col px-[2rem] pt-[2.4rem]">
-			<div className="mb-[2rem]">
+			<div className="mb-[2.7rem]">
 				<DropDown
 					value={selectedReportId}
 					onValueChange={handleReportChange}
@@ -333,23 +327,27 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 				/>
 			</div>
 
-			{/* RadarChart 위에 배지/툴팁 레이어 고정 */}
-			<div className="relative z-[5] flex items-center gap-[0.8rem]">
-				<LargeBadge variant={summaryBadgeVariant}>
-					{summaryBadgeText}
-				</LargeBadge>
-				<Tooltip
-					side="bottom"
-					align="start"
-					iconTone="black"
-					avoidCollisions={false}
-				>
-					<div className="whitespace-pre-line">{SUMMARY_TOOLTIP_TEXT}</div>
-				</Tooltip>
-			</div>
+			<div className="relative mb-[2rem]">
+				<div className="mt-[-4.8rem]">
+					<RadarChart data={radarData} />
+				</div>
 
-			<div className="mt-[-4.8rem]">
-				<RadarChart data={radarData} />
+				<div className="absolute bottom-[0.5rem] flex flex-col gap-[0.8rem]">
+					<LargeBadge variant={summaryBadgeVariant}>
+						{summaryBadgeText}
+					</LargeBadge>
+
+					<div className="flex items-center">
+						<button
+							type="button"
+							onClick={() => navigate(ROUTE_PATH.HEALTH_ANALYSIS_CRITERIA)}
+							className="body06-r-9 text-gray-900"
+						>
+							판정기준 보러가기
+						</button>
+						<ChevronXSRight />
+					</div>
+				</div>
 			</div>
 
 			<div className="mt-[0.5rem] flex flex-col gap-[2rem]">
@@ -397,19 +395,19 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 					);
 				})}
 			</div>
+			<div className="mt-[4rem] flex justify-center">
+				<button className="body05-r-12 text-gray-700">결과 수정하기</button>
+				<ChevronXSRight />
+			</div>
 		</div>
 	);
 };
 
 const DEFAULT_SEX: Sex = "FEMALE";
 
-const HealthAnalysisPage = ({
-	userInfo,
-	isPending: isUserInfoPending,
-}: HealthAnalysisPageProps) => {
-	const userSex = isUserInfoPending
-		? DEFAULT_SEX
-		: (userInfo?.gender ?? DEFAULT_SEX);
+const HealthAnalysisPage = () => {
+	const { data: userInfo, isPending } = useMyInfo();
+	const userSex = isPending ? DEFAULT_SEX : (userInfo?.gender ?? DEFAULT_SEX);
 
 	return <HealthAnalysisContent userSex={userSex} />;
 };

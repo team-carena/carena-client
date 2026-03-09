@@ -45,9 +45,9 @@ export interface HealthMetricConfig {
 }
 
 const COLOR = {
-	normal: "#98EA94",
-	border: "#9CCBFF",
-	danger: "#FFC1C7",
+	normal: "#96E095",
+	border: "#F8BB79",
+	danger: "#FFAAA2",
 } as const;
 
 const makeSegments = (

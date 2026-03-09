@@ -6,12 +6,15 @@ export const ROUTE_PATH = {
 	SIGNUP_TOS: "/signup/tos",
 	HOME: "/home",
 	MY_PAGE: "/my-page",
+	HEALTH_ANALYSIS_CRITERIA: "/health-analysis-criteria",
 	HEALTH_DIET_DETAIL: "/health-diet-detail/:healthDietId",
 	HEALTH_DIET: "/health-diet",
 	HEALTH_TIP: "/health-tip",
 	HEALTH_TIP_DETAIL: "/health-tip-detail/:healthTipId",
 	HEALTH_REPORT_DETAIL: "/health-report/:type",
 	CHECKUP_RESULT: "/checkup-result",
+	HOSPITAL_SEARCH_RESULT: "/hospital-search-result",
+	CHECKUP_RESULT_EDIT: "/checkup-result-edit",
 	HOSPITAL_SEARCH: "/hospital-search",
 } as const;
 

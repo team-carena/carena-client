@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router";
+import HealthAnalysisPage from "@/pages/health-analysis/health-analysis";
 import { useMyInfo } from "@/shared/apis/member/use-my-info";
 import { Tabs } from "@/shared/ui/tabs/tabs";
-import HealthAnalysisPage from "./health-analysis/health-analysis";
 import UserInfo from "./health-info/components/user-info";
 import HealthInfoPage from "./health-info/health-info";
 
@@ -57,7 +57,7 @@ export const HomePage = () => {
 				</Tabs.Content>
 
 				<Tabs.Content value="health-analysis">
-					<HealthAnalysisPage userInfo={userInfo} isPending={isPending} />
+					<HealthAnalysisPage />
 				</Tabs.Content>
 			</Tabs>
 		</div>

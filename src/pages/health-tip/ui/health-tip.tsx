@@ -76,7 +76,7 @@ export const HealthTipPage = () => {
 		() =>
 			[
 				"전체",
-				"겨울",
+				"봄",
 				ageGroup,
 				"생활습관",
 				"건강목표",

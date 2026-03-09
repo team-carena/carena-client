@@ -12,6 +12,9 @@ interface CardTableProps extends React.HTMLAttributes<HTMLDivElement> {
 	rows: readonly CardTableRow[];
 }
 
+const TABLE_COLS = "grid-cols-[14rem_minmax(0,1fr)]";
+const CELL_PADDING = "px-[1.2rem] py-[1.2rem]";
+
 export const CardTable = ({
 	className,
 	headerLeft,
@@ -24,24 +27,41 @@ export const CardTable = ({
 			className={cn("flex w-full flex-col gap-[0.4rem]", className)}
 			{...props}
 		>
+			{/* Header */}
 			<div
 				className={cn(
-					"grid grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-gray-200",
+					"grid w-full items-center rounded-[8px] bg-primary-50",
+					TABLE_COLS,
 					"body01-sb-12 text-gray-900",
 				)}
 			>
-				<div className="min-w-0 px-[2rem] py-[0.8rem]">{headerLeft}</div>
-				<div className="min-w-0 px-[2rem] py-[0.8rem]">{headerRight}</div>
+				<div className={cn("min-w-0", CELL_PADDING)}>{headerLeft}</div>
+				<div className={cn("min-w-0", CELL_PADDING)}>{headerRight}</div>
 			</div>
+
+			{/* Rows */}
 			{rows.map((row) => (
 				<div
 					key={row.id}
-					className="grid w-full grid-cols-[11rem_18.5rem] items-center rounded-[12px] bg-white"
+					className={cn(
+						"grid w-full items-center rounded-[8px] bg-white",
+						TABLE_COLS,
+					)}
 				>
-					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words px-[2rem] py-[0.8rem] text-left text-gray-900">
+					<div
+						className={cn(
+							"body05-r-12 min-w-0 whitespace-pre-line break-words text-gray-900",
+							CELL_PADDING,
+						)}
+					>
 						{row.label}
 					</div>
-					<div className="body05-r-12 min-w-0 whitespace-pre-line break-words px-[2rem] py-[0.8rem] text-left text-gray-900">
+					<div
+						className={cn(
+							"body05-r-12 min-w-0 whitespace-pre-line break-words text-gray-900",
+							CELL_PADDING,
+						)}
+					>
 						{row.value}
 					</div>
 				</div>

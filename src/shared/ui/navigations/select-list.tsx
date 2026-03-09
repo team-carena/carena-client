@@ -1,14 +1,15 @@
-import { ChevronSRight } from "@shared/assets/svg";
+import { ChevronSRight, Link } from "@shared/assets/svg";
 import { cn } from "@shared/libs/cn";
 import * as React from "react";
 
 export interface SelectListProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	label: string;
+	link?: boolean;
 }
 
 export const SelectList = React.forwardRef<HTMLButtonElement, SelectListProps>(
-	({ label, className, ...props }, ref) => {
+	({ label, link, className, ...props }, ref) => {
 		return (
 			<button
 				ref={ref}
@@ -23,7 +24,11 @@ export const SelectList = React.forwardRef<HTMLButtonElement, SelectListProps>(
 				<span className="body04-r-14 flex-[1_0_0] text-left">{label}</span>
 
 				{/* icon */}
-				<ChevronSRight className="shrink-0" aria-hidden />
+				{link ? (
+					<Link className="shrink-0" aria-hidden />
+				) : (
+					<ChevronSRight className="shrink-0" aria-hidden />
+				)}
 			</button>
 		);
 	},
