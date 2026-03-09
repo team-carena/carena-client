@@ -14,6 +14,7 @@ type OcrSectionProps = {
 export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 	const location = useLocation();
 	const isSignUp = location.pathname === ROUTE_PATH.SIGNUP;
+	const isEdit = location.pathname === ROUTE_PATH.CHECKUP_RESULT_EDIT;
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const [isOcrLoading, setIsOcrLoading] = useState(false);
@@ -80,11 +81,17 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 		<>
 			{isOcrLoading && <FullScreenOcrLoading />}
 			<section className="mx-auto w-full bg-white pt-[calc(var(--header-height)+2.4rem)]">
-				<div className="mb-[2.4rem] flex flex-col items-center gap-[0.9rem]">
+				<div className="mb-[2.4rem] flex flex-col items-center gap-[0.8rem]">
 					{isSignUp && (
 						<p className="head01-b-18">검진 결과 입력하고 케어나 시작하기</p>
 					)}
-					<p className="body04-r-14">
+
+					{isEdit && (
+						<p className="body04-r-14 text-center">
+							해당 일자에 동의한 민감정보 이용 범위 내에서 관리됩니다
+						</p>
+					)}
+					<p className="body04-r-14 text-center">
 						결과값이 기억나지 않는 항목은 비워둬도 괜찮아요
 					</p>
 				</div>

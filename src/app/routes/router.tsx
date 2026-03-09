@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
 import { CheckupResultPage } from "@/pages/checkup-result/ui/checkup-result";
+import { CheckupResultEditPage } from "@/pages/checkup-result-edit/ui/checkup-result-edit";
 import { HealthMenuPage } from "@/pages/health-menu/ui/health-menu";
 import { MenuDetailPage } from "@/pages/health-menu/ui/health-menu-detail";
 import { HealthReportDetailPage } from "@/pages/health-report-detail/ui/health-report-detail";
@@ -112,6 +113,14 @@ export const router = createBrowserRouter([
 
 						handle: {
 							header: "none", // 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.CHECKUP_RESULT_EDIT,
+						element: <CheckupResultEditPage />,
+
+						handle: {
+							header: "none",
 						} satisfies RouteHandle,
 					},
 					{

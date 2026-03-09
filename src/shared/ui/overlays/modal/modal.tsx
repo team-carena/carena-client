@@ -80,7 +80,7 @@ export const Modal = ({
 			<div
 				aria-hidden="true"
 				className={cn(
-					"absolute inset-0 bg-black-30 transition-opacity duration-200",
+					"absolute inset-0 bg-black-40 transition-opacity duration-200",
 					open ? "opacity-100" : "opacity-0",
 				)}
 			/>
@@ -108,7 +108,7 @@ export const Modal = ({
 						className={cn(
 							"body04-r-14 text-gray-900",
 							size === "sm"
-								? "flex h-[5.2rem] items-center justify-center text-center"
+								? "flex h-[5.2rem] items-center justify-center whitespace-pre-wrap text-center"
 								: "min-h-0 flex-1 overflow-y-auto whitespace-pre-wrap",
 						)}
 					>
