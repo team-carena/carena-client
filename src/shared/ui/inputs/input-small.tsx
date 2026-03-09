@@ -5,7 +5,7 @@ import * as React from "react";
 
 // label-input wrapper
 const inputWrapperVariants = cva(
-	"flex items-center gap-[1rem] rounded-[6px] border px-[1.2rem] py-[0.6rem] transition-colors",
+	"flex items-center gap-[1rem] rounded-[6px] border px-[1.2rem] py-[0.9rem] transition-colors",
 	{
 		variants: {
 			state: {
@@ -13,7 +13,6 @@ const inputWrapperVariants = cva(
 				focused: "border-primary-500",
 				completed: "border-gray-900",
 				error: "border-red-500",
-				disabled: "border-gray-500 bg-gray-100",
 				readonly: "border-gray-500 bg-gray-100",
 			},
 		},
@@ -25,12 +24,11 @@ const inputWrapperVariants = cva(
 
 // input필드
 const inputFieldVariants = cva(
-	"label04-r-16 h-full min-w-0 flex-1 bg-transparent outline-none",
+	"label02-m-14 h-full min-w-0 flex-1 bg-transparent outline-none",
 	{
 		variants: {
 			state: {
 				default: "text-gray-900",
-				disabled: "cursor-not-allowed text-gray-500",
 				readonly: "cursor-default text-gray-900",
 			},
 		},
@@ -62,10 +60,8 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 	const getWrapperState = (
 		value: string | number | readonly string[] | undefined,
 		isFocused: boolean,
-		disabled?: boolean,
 		readOnly?: boolean,
 	) => {
-		if (disabled) return "disabled";
 		if (readOnly) return "readonly";
 		if (hasError) return "error";
 		if (isFocused) return "focused";
@@ -73,8 +69,8 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 		return "default";
 	};
 
-	const getTextState = (disabled?: boolean, readOnly?: boolean) =>
-		disabled ? "disabled" : readOnly ? "readonly" : "default";
+	const getTextState = (readOnly?: boolean) =>
+		readOnly ? "readonly" : "default";
 
 	// left/right 필드의 반복되는 렌더링 로직을 함수로 추출, 컴포넌트 반환
 	const renderInput = (
@@ -85,7 +81,6 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 		const {
 			label,
 			unit,
-			disabled,
 			readOnly,
 			value,
 			onFocus,
@@ -103,12 +98,7 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 					className={cn(
 						"w-[10.4rem] shrink-0",
 						inputWrapperVariants({
-							state: getWrapperState(
-								value,
-								focused === side,
-								disabled,
-								readOnly,
-							),
+							state: getWrapperState(value, focused === side, readOnly),
 						}),
 					)}
 				>
@@ -117,11 +107,10 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 						type="text"
 						inputMode="decimal"
 						value={value}
-						disabled={disabled}
 						readOnly={readOnly}
 						onFocus={(e) => {
 							// input focus 상태에 따라 wrapper 스타일 결정
-							if (!disabled && !readOnly) setFocused(side);
+							if (!readOnly) setFocused(side);
 							// register가 내려준 react-hook-form의 onFocus -> react-hook-form의 onFocus 추적
 							onFocus?.(e);
 						}}
@@ -131,12 +120,12 @@ export const InputSmall = ({ left, right, errorMessage }: InputSmallProps) => {
 						}}
 						className={cn(
 							inputFieldVariants({
-								state: getTextState(disabled, readOnly),
+								state: getTextState(readOnly),
 							}),
 						)}
 						{...inputProps}
 					/>
-					<span className="label03-m-12 shrink-0">{unit}</span>
+					<span className="label02-m-14 shrink-0">{unit}</span>
 				</div>
 			</div>
 		);

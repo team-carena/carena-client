@@ -5,7 +5,7 @@ import * as React from "react";
 
 // input wrapper 스타일
 const dateInputWrapperVariants = cva(
-	"flex items-center rounded-[6px] border px-[1.6rem] py-[0.8rem] transition-colors",
+	"flex items-center rounded-[8px] border px-[1.6rem] py-[0.8rem] transition-colors",
 	{
 		variants: {
 			state: {
@@ -13,7 +13,6 @@ const dateInputWrapperVariants = cva(
 				focused: "border-primary-500",
 				completed: "border-gray-900",
 				error: "border-red-500",
-				disabled: "border-gray-500 bg-gray-100",
 				readonly: "border-gray-500 bg-gray-100",
 			},
 		},
@@ -30,7 +29,6 @@ const dateInputTextVariants = cva(
 		variants: {
 			state: {
 				default: "text-gray-900",
-				disabled: "cursor-not-allowed text-gray-500",
 				readonly: "cursor-default text-gray-900",
 			},
 		},
@@ -66,10 +64,8 @@ export const DateInput = ({
 	const getWrapperState = (
 		value: string | number | readonly string[] | undefined,
 		isFocused: boolean,
-		disabled?: boolean,
 		readOnly?: boolean,
 	) => {
-		if (disabled) return "disabled";
 		if (readOnly) return "readonly";
 		if (hasError) return "error";
 		if (isFocused) return "focused";
@@ -77,8 +73,8 @@ export const DateInput = ({
 		return "default";
 	};
 
-	const getTextState = (disabled?: boolean, readOnly?: boolean) =>
-		disabled ? "disabled" : readOnly ? "readonly" : "default";
+	const getTextState = (readOnly?: boolean) =>
+		readOnly ? "readonly" : "default";
 
 	// year/month/day 필드의 반복되는 렌더링 로직을 함수로 추출
 	const renderInput = (
@@ -88,7 +84,6 @@ export const DateInput = ({
 	) => {
 		const {
 			placeholder,
-			disabled,
 			readOnly,
 			value,
 			onFocus,
@@ -103,12 +98,7 @@ export const DateInput = ({
 					"w-full",
 					minWidth,
 					dateInputWrapperVariants({
-						state: getWrapperState(
-							value,
-							focused === fieldName,
-							disabled,
-							readOnly,
-						),
+						state: getWrapperState(value, focused === fieldName, readOnly),
 					}),
 				)}
 			>
@@ -121,10 +111,9 @@ export const DateInput = ({
 						fieldName === "year" ? "연도" : fieldName === "month" ? "월" : "일"
 					}
 					value={value}
-					disabled={disabled}
 					readOnly={readOnly}
 					onFocus={(e) => {
-						if (!disabled && !readOnly) setFocused(fieldName);
+						if (!readOnly) setFocused(fieldName);
 						onFocus?.(e);
 					}}
 					onBlur={(e) => {
@@ -145,7 +134,7 @@ export const DateInput = ({
 						onChange?.(e);
 					}}
 					className={cn(
-						dateInputTextVariants({ state: getTextState(disabled, readOnly) }),
+						dateInputTextVariants({ state: getTextState(readOnly) }),
 					)}
 					{...inputProps}
 				/>

@@ -35,30 +35,76 @@ export const MyPage = () => {
 	const ACTION_LIST = [
 		{
 			id: "terms",
-			title: "약관",
-			label: "약관 바로보기",
-			onClick: () => {
-				window.open(
-					"https://petalite-biplane-c36.notion.site/2eb5365471d180fcb539d7caf1ca2310",
-					"_blank",
-					"noopener, noreferrer",
-				);
-			},
+			title: "약관 및 정책",
+			items: [
+				{
+					label: "서비스 이용 약관",
+					onClick: () => {
+						window.open(
+							"https://petalite-biplane-c36.notion.site/3185365471d1809ea43aebb2ea407608?pvs=74",
+							"_blank",
+							"noopener,noreferrer",
+						);
+					},
+					external: true,
+				},
+				{
+					label: "개인정보 처리방침",
+					onClick: () => {
+						window.open(
+							"https://petalite-biplane-c36.notion.site/2eb5365471d180fcb539d7caf1ca2310?pvs=74",
+							"_blank",
+							"noopener,noreferrer",
+						);
+					},
+					external: true,
+				},
+				{
+					label: "개인정보 및 민감정보 수집·이용 동의",
+					onClick: () => {
+						window.open(
+							"https://petalite-biplane-c36.notion.site/3185365471d180a6804adee3f1ffe1c8?pvs=74",
+							"_blank",
+							"noopener,noreferrer",
+						);
+					},
+					external: true,
+				},
+			],
 		},
 		{
-			id: "logout",
+			id: "settings",
 			title: "설정",
-			label: "로그아웃",
-			onClick: () =>
-				openModal({
-					size: "sm",
-					description: "로그아웃 하시겠습니까?",
-					primaryAction: {
-						label: "확인",
-						onClick: handleLogout,
-					},
-					secondaryAction: { label: "취소", onClick: () => {} },
-				}),
+			items: [
+				{
+					label: "회원탈퇴",
+					onClick: () =>
+						openModal({
+							size: "lg",
+							title: "정말 탈퇴하시겠어요?",
+							description: `회원 탈퇴 시 계정이 삭제되며, 
+회원 정보가 소멸되어 복구가 불가능합니다.`,
+							primaryAction: {
+								label: "탈퇴하기",
+								onClick: () => {}, // TODO: 탈퇴 핸들러 연결, 토스트 추가
+							},
+							secondaryAction: { label: "취소", onClick: () => {} },
+						}),
+				},
+				{
+					label: "로그아웃",
+					onClick: () =>
+						openModal({
+							size: "sm",
+							description: "로그아웃 하시겠습니까?",
+							primaryAction: {
+								label: "확인",
+								onClick: handleLogout,
+							},
+							secondaryAction: { label: "취소", onClick: () => {} },
+						}),
+				},
+			],
 		},
 	];
 
@@ -67,20 +113,16 @@ export const MyPage = () => {
 			<section className="flex items-center gap-[2rem] pt-[2.4rem] pb-[4rem]">
 				<DefaultProfile className="rounded-[12px]" />
 				<div className="flex flex-col gap-[2rem]">
-					<h3 className="head03-sb-16">{userInfo?.name ?? "-"}</h3>
-					<p className="head05-r-14">
+					<h3 className="head03-sb-16">{userInfo?.name ?? "-"} (여)</h3>{" "}
+					{/* TODO: api 연동 시, {userInfo?.sex ?? ''} 추가 */}
+					<p className="label02-m-14">
 						{userInfo?.birthdate ? formatBirthdate(userInfo.birthdate) : "-"}
 					</p>
 				</div>
 			</section>
 			<div className="flex flex-col gap-[2rem]">
-				{ACTION_LIST.map(({ id, title, label, onClick }) => (
-					<ActionSection
-						key={id}
-						title={title}
-						label={label}
-						onClick={onClick}
-					/>
+				{ACTION_LIST.map(({ id, title, items }) => (
+					<ActionSection key={id} title={title} items={items} />
 				))}
 			</div>
 		</div>

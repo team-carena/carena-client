@@ -6,7 +6,7 @@ export const toasterProps = {
 	toastOptions: {
 		unstyled: true, // sooner 기본 스타일 제거
 		className:
-			"flex w-[calc(100vw-4rem)] items-center gap-[0.4rem] rounded-[12px] bg-gray-800 px-[1.2rem] py-[0.8rem] text-white",
+			"flex w-[calc(100vw-4rem)] items-center gap-[0.4rem] rounded-[8px] bg-gray-800 px-[1.2rem] py-[0.8rem] text-white",
 		duration: 3000,
 	},
 	style: {
