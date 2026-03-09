@@ -21,17 +21,23 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 	const handleOcrButtonClick = () => {
 		openModal({
 			title: "OCR 기능 안내",
-			description: `
-• OCR 기능은 검진 결과 입력을 돕기 위한 텍스트 추출 용도로만 사용됩니다.
-
-• 업로드된 이미지는 네이버 클라우드 OCR을 통해 일시적으로 처리되며, 텍스트 추출 후 즉시 폐기됩니다.
-
-• 추출된 텍스트는 저장 시에만 분석 및 서비스 제공 목적으로 이용됩니다.
-
-• OCR 결과에는 일부 오류가 있을 수 있으므로, 저장 전 반드시 내용을 확인해 주세요.
-
-• 원활한 인식을 위해 검진 결과서 2페이지를 캡처하여 등록해 주세요.
-			`,
+			description: (
+				<>
+					• OCR 기능은 검진 결과 입력을 돕기 위한 텍스트 추출 용도로만
+					사용됩니다.
+					{"\n\n"}• 업로드된 이미지는 네이버 클라우드 OCR을 통해 일시적으로
+					처리되며, 텍스트 추출 후 즉시 폐기됩니다.
+					{"\n\n"}• 추출된 텍스트는 저장 시에만 분석 및 서비스 제공 목적으로
+					이용됩니다.
+					{"\n\n"}• OCR 결과에는 일부 오류가 있을 수 있으므로,{" "}
+					<span className="text-primary-400">
+						저장 전 반드시 내용을 확인해 주세요.
+					</span>
+					{"\n\n"}• 원활한 인식을 위해{" "}
+					<span className="text-primary-400">검진 결과서 2페이지를</span>{" "}
+					캡처하여 등록해 주세요.
+				</>
+			),
 			secondaryAction: {
 				label: "취소",
 				onClick: () => {},
@@ -62,7 +68,7 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 			);
 
 			onOcrComplete?.(stringifiedData);
-		} catch (err) {
+		} catch (_err) {
 			notifyError("OCR 변환에 실패했어요. 잠시 후 다시 시도해 주세요.");
 		} finally {
 			setIsOcrLoading(false);
