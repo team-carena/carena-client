@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -11,7 +11,6 @@ import {
 } from "@/pages/checkup-result/model/checkup-schema";
 import type { CreateHealthReportRequest } from "@/shared/apis/generated/data-contracts";
 import { Button } from "@/shared/ui/buttons/button";
-import { CheckBox } from "@/shared/ui/check-box/check-box";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
 import { InputSmall } from "@/shared/ui/inputs/input-small";
@@ -21,17 +20,13 @@ import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { useHealthReportMutation } from "../apis/mutations/use-health-report-mutation";
 import { OcrSection } from "./ocr-section";
+import { openPrivacyConsentSheet } from "./privacy-consent-sheet";
 
 export const CheckupResultPage = () => {
 	// TODO: OCR 로직과 입력값 검증 로직 나누기
 
 	const navigate = useNavigate();
 	const { mutate: createHealthReport } = useHealthReportMutation();
-
-	const [isAgreed, setIsAgreed] = useState(false);
-	const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
-
-	const agreementSectionRef = useRef<HTMLElement>(null);
 
 	// 이탈방지 모달 열기
 	const openExitModal = useCallback(() => {
@@ -73,7 +68,7 @@ export const CheckupResultPage = () => {
 		watch,
 		trigger,
 		setValue,
-		formState: { errors, isValid },
+		formState: { errors, isValid, isSubmitting },
 	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
 		resolver: zodResolver(checkupSchema),
 		mode: "onBlur",
@@ -138,48 +133,14 @@ export const CheckupResultPage = () => {
 		alt !== "" ||
 		gammaGtp !== "";
 
-	// 민감정보 수집·이용 모달 열기
-	const handleOpenPrivacyModal = () => {
-		openModal({
-			title: "민감정보 수집·이용 동의",
-			description: `케어나(이하 '서비스')는 이용자의 건강 정보를 안전하게 보호하기 위해 아래와 같이 민감정보를 수집·이용합니다.
-
-1. 수집하는 민감정보 항목
-- 건강검진 결과(검진일자, 검진기관, 검사 수치 등)
-
-2. 민감정보의 수집·이용 목적
-- 건강검진 결과 분석 및 맞춤형 건강 정보 제공
-- 서비스 개선 및 신규 서비스 개발
-
-3. 민감정보의 보유 및 이용 기간
-- 회원 탈퇴 시까지 또는 동의 철회 시까지
-- 단, 관계 법령에 따라 보존이 필요한 경우 해당 기간 동안 보관
-
-4. 동의 거부권 및 불이익
-- 이용자는 민감정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.
-- 다만, 필수 항목에 대한 동의를 거부하실 경우 서비스 이용이 제한됩니다.`,
-			onScrollEnd: () => setIsCheckboxEnabled(true),
-			primaryAction: {
-				label: "확인",
-				onClick: () => {},
-			},
-		});
-	};
-
-	const onSubmit = (data: CheckupFormData) => {
+	const onSubmit = async (data: CheckupFormData) => {
 		if (!hasAnyTestResult) {
 			notifyError("검사 결과를 한 개 이상 입력하세요");
 			return;
 		}
 
-		if (!isAgreed) {
-			agreementSectionRef.current?.scrollIntoView({
-				behavior: "smooth",
-				block: "center",
-			});
-			notifyError("민감정보 수집·이용에 동의해주세요");
-			return;
-		}
+		const agreed = await openPrivacyConsentSheet();
+		if (!agreed) return;
 
 		const requestBody: CreateHealthReportRequest = {
 			healthCheckDate: `${data.checkupDate.year}-${data.checkupDate.month}-${data.checkupDate.day}`,
@@ -243,7 +204,7 @@ export const CheckupResultPage = () => {
 			<OcrSection onOcrComplete={handleOcrComplete} />
 			<form
 				id="checkup-form"
-				onSubmit={handleSubmit(onSubmit)}
+				onSubmit={(e) => void handleSubmit(onSubmit)(e)}
 				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[11.2rem]"
 			>
 				{/* 기본정보 */}
@@ -400,38 +361,6 @@ export const CheckupResultPage = () => {
 						/>
 					</div>
 				</section>
-
-				{/* 민감정보 동의 - 필수 필드 입력 완료 시 표시 */}
-				{isRequiredFilled && isValid && (
-					<section
-						ref={agreementSectionRef}
-						className="fade-in-animation flex flex-col gap-[2rem]"
-					>
-						<h3 className="head02-b-16 text-gray-600">
-							민감정보 수집·이용 동의
-						</h3>
-						<div className="flex items-start gap-[0.8rem]">
-							<CheckBox
-								checked={isAgreed}
-								onChange={setIsAgreed}
-								disabled={!isCheckboxEnabled}
-							/>
-							<p className="whitespace-nowrap pt-[0.2rem] text-black">
-								<span className="body01-sb-12">[필수] </span>
-								<button
-									type="button"
-									className="body01-sb-12 underline underline-offset-2"
-									onClick={handleOpenPrivacyModal}
-								>
-									민감정보 수집·이용
-								</button>{" "}
-								<span className="body05-r-12">
-									내용을 확인하였으며 이에 동의합니다.
-								</span>
-							</p>
-						</div>
-					</section>
-				)}
 			</form>
 
 			{/* 저장 버튼 - 하단 고정 */}
@@ -440,7 +369,7 @@ export const CheckupResultPage = () => {
 					type="submit"
 					form="checkup-form"
 					size="lg"
-					disabled={!isRequiredFilled || !isValid}
+					disabled={!isRequiredFilled || !isValid || isSubmitting}
 				>
 					저장
 				</Button>

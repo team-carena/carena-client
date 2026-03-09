@@ -1,6 +1,8 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
 import { CheckupResultPage } from "@/pages/checkup-result/ui/checkup-result";
+import { CheckupResultEditPage } from "@/pages/checkup-result-edit/ui/checkup-result-edit";
+import { HealthAnalysisCriteria } from "@/pages/health-analysis/health-analysis-criteria";
 import { HealthAnalysisPage } from "@/pages/health-analysis/ui/health-analysis-page";
 import { HealthMenuPage } from "@/pages/health-menu/ui/health-menu";
 import { MenuDetailPage } from "@/pages/health-menu/ui/health-menu-detail";
@@ -8,9 +10,11 @@ import { HealthReportDetailPage } from "@/pages/health-report-detail/ui/health-r
 import { HealthTipPage } from "@/pages/health-tip/ui/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/ui/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
+import { HospitalSearchResultPage } from "@/pages/hospital-search-result/ui/hospital-search-result";
 import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/ui/my-page";
 import { Signup } from "@/pages/signup/ui/signup";
+import ToSPage from "@/pages/signup/ui/tos";
 import type { HeaderVariant } from "@/shared/ui/navigations/header";
 import { Layout } from "./layout";
 import { ROUTE_PATH } from "./paths";
@@ -33,10 +37,10 @@ export const router = createBrowserRouter([
 	{
 		path: ROUTE_PATH.SIGNUP,
 		element: <Signup />,
-		handle: {
-			header: "signup",
-			title: "회원가입",
-		} satisfies RouteHandle,
+	},
+	{
+		path: ROUTE_PATH.SIGNUP_TOS,
+		element: <ToSPage />,
 	},
 	{
 		path: ROUTE_PATH.OAUTH_CALLBACK,
@@ -64,6 +68,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "마이페이지",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_ANALYSIS_CRITERIA,
+						element: <HealthAnalysisCriteria />,
+						handle: {
+							header: "back",
+							title: "판정 기준",
 						} satisfies RouteHandle,
 					},
 					{
@@ -117,9 +129,23 @@ export const router = createBrowserRouter([
 					{
 						path: ROUTE_PATH.CHECKUP_RESULT,
 						element: <CheckupResultPage />,
-
 						handle: {
 							header: "none", // 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HOSPITAL_SEARCH_RESULT,
+						element: <HospitalSearchResultPage />,
+						handle: {
+							header: "back",
+							title: "검진기관 조회",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.CHECKUP_RESULT_EDIT,
+						element: <CheckupResultEditPage />,
+						handle: {
+							header: "none",
 						} satisfies RouteHandle,
 					},
 					{

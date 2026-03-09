@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import * as React from "react";
 
 const inputMediumVariants = cva(
-	"flex items-center justify-between rounded-[6px] border px-[1.6rem] py-[0.8rem] transition-colors",
+	"flex items-center justify-between rounded-[8px] border px-[1.6rem] py-[0.8rem] transition-colors",
 	{
 		variants: {
 			state: {
@@ -12,7 +12,6 @@ const inputMediumVariants = cva(
 				focused: "border-primary-500",
 				completed: "border-gray-900",
 				error: "border-red-500",
-				disabled: "border-gray-500 bg-gray-100",
 				readonly: "border-gray-500 bg-gray-100",
 			},
 		},
@@ -28,7 +27,6 @@ const inputFieldVariants = cva(
 		variants: {
 			state: {
 				default: "text-gray-900",
-				disabled: "cursor-not-allowed text-gray-500",
 				readonly: "cursor-default text-gray-900",
 			},
 		},
@@ -52,7 +50,6 @@ export const InputMedium = ({
 	unit,
 	errorMessage,
 	numeric = false,
-	disabled,
 	readOnly,
 	value,
 	onFocus,
@@ -65,7 +62,6 @@ export const InputMedium = ({
 	const hasError = !!errorMessage;
 
 	const wrapperState = (() => {
-		if (disabled) return "disabled";
 		if (readOnly) return "readonly";
 		if (hasError) return "error";
 		if (isFocused) return "focused";
@@ -73,10 +69,10 @@ export const InputMedium = ({
 		return "default";
 	})();
 
-	const fieldState = disabled ? "disabled" : readOnly ? "readonly" : "default";
+	const fieldState = readOnly ? "readonly" : "default";
 
 	return (
-		<div className="flex items-start justify-between">
+		<div className="flex items-center justify-between">
 			{/* label */}
 			<label htmlFor={inputId} className="body03-r-16 shrink-0 text-black">
 				{label}
@@ -97,10 +93,9 @@ export const InputMedium = ({
 						aria-required={required}
 						aria-invalid={hasError}
 						value={value}
-						disabled={disabled}
 						readOnly={readOnly}
 						onFocus={(e) => {
-							if (!disabled && !readOnly) setIsFocused(true);
+							if (!readOnly) setIsFocused(true);
 							onFocus?.(e);
 						}}
 						onBlur={(e) => {
@@ -116,7 +111,7 @@ export const InputMedium = ({
 						className={cn(
 							"label02-m-14 shrink-0 text-right",
 							unit ? "visible" : "invisible",
-							disabled ? "text-gray-500" : "text-gray-900",
+							"text-gray-900",
 						)}
 					>
 						{unit ?? ""}
