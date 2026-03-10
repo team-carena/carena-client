@@ -55,6 +55,7 @@ export const API_ENDPOINTS = {
 		tokenRefresh: "/api/v1/member/token/refresh",
 		signup: "/api/v1/member/signup",
 		logout: "/api/v1/member/logout",
+		withdrawal: "/api/v1/member/withdrawal",
 		myPage: "/api/v1/member/my-page",
 		myInfo: "/api/v1/member/my-info",
 	},
