@@ -194,6 +194,72 @@ export interface SuccessResponseMemberInfoResponse {
 	data?: MemberInfoResponse;
 }
 
+export interface InstitutionInfo {
+	institutionName?: string;
+	institutionAddress?: string;
+	/** @format double */
+	latitude?: number;
+	/** @format double */
+	longitude?: number;
+	types?: string[];
+}
+
+export interface InstitutionListView {
+	result?: InstitutionInfo[];
+	/** @format int32 */
+	currentPage?: number;
+	/** @format int32 */
+	totalPage?: number;
+	/** @format int32 */
+	totalCount?: number;
+}
+
+export interface SuccessResponseInstitutionListView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: InstitutionListView;
+}
+
+export interface SigunguCodeInfo {
+	sigunguName?: string;
+	/** @format int32 */
+	sidoCode?: number;
+	/** @format int32 */
+	sigunguCode?: number;
+}
+
+export interface SigunguCodeView {
+	result?: SigunguCodeInfo[];
+}
+
+export interface SuccessResponseSigunguCodeView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: SigunguCodeView;
+}
+
+export interface SidoCodeInfo {
+	sidoName?: string;
+	/** @format int32 */
+	sidoCode?: number;
+}
+
+export interface SidoCodeView {
+	result?: SidoCodeInfo[];
+}
+
+export interface SuccessResponseSidoCodeView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: SidoCodeView;
+}
+
 export interface HealthTipListElement {
 	id?: string;
 	title?: string;
@@ -345,6 +411,8 @@ export type GetLatestRecommendedMealsData = SuccessResponseRecommendedMealView;
 
 export type CreateRecommendedMealData = SuccessResponseVoid;
 
+export type WithdrawalData = SuccessResponseVoid;
+
 export type AfterLoginData = SuccessResponseVoid;
 
 export type RefreshTokenData = SuccessResponseVoid;
@@ -373,6 +441,12 @@ export type CreateDietData = SuccessResponseVoid;
 export type MyPageData = SuccessResponseMyPageResponse;
 
 export type MemberInfoData = SuccessResponseMemberInfoResponse;
+
+export type GetInstitutionInfoData = SuccessResponseInstitutionListView;
+
+export type GetSigunguCodeData = SuccessResponseSigunguCodeView;
+
+export type GetSidoCodeData = SuccessResponseSidoCodeView;
 
 export type ReadHealthTipDetailData = SuccessResponseReadHealthTipDetailView;
 
