@@ -1,4 +1,4 @@
-import imgMaintop from "@img/img-maintop.png";
+import imgMaintopBlur from "@img/img-maintop-blur.png";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import { useHealthReportDateList } from "@/pages/home/apis/queries/use-health-report-date-list";
@@ -45,7 +45,7 @@ const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
 			{/* Top 카드 */}
 			<div className="relative h-[17.1rem] w-full overflow-hidden rounded-[1.6rem]">
 				<img
-					src={imgMaintop}
+					src={imgMaintopBlur}
 					alt=""
 					className="absolute inset-0 h-full w-full object-cover"
 				/>
