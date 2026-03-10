@@ -19,6 +19,7 @@ import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { useHealthReportMutation } from "../apis/mutations/use-health-report-mutation";
+import { FullScreenSubmitLoading } from "./full-screen-submit-loading";
 import { OcrSection } from "./ocr-section";
 import { openPrivacyConsentSheet } from "./privacy-consent-sheet";
 
@@ -26,7 +27,7 @@ export const CheckupResultPage = () => {
 	// TODO: OCR 로직과 입력값 검증 로직 나누기
 
 	const navigate = useNavigate();
-	const { mutate: createHealthReport } = useHealthReportMutation();
+	const { mutate: createHealthReport, isPending } = useHealthReportMutation();
 
 	// 이탈방지 모달 열기
 	const openExitModal = useCallback(() => {
@@ -195,6 +196,7 @@ export const CheckupResultPage = () => {
 
 	return (
 		<>
+			{isPending && <FullScreenSubmitLoading />}
 			{/* 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치 */}
 			<Header
 				variant="back"
