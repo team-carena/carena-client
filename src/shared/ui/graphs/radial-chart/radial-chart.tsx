@@ -54,6 +54,16 @@ export function RadialChart({ score, className }: RadialChartProps) {
 					{/* domain=[0, 100]으로 설정해 score가 100 기준 비율로 표시되도록 함 */}
 					<PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
 					<defs>
+						<linearGradient
+							id="scoreGradient"
+							x1="0%"
+							y1="0%"
+							x2="100%"
+							y2="100%"
+						>
+							<stop offset="0%" stopColor="#B674FF" />
+							<stop offset="100%" stopColor="#8A7DFF" />
+						</linearGradient>
 						<filter
 							id="chartShadow"
 							x="-50%"
@@ -64,8 +74,8 @@ export function RadialChart({ score, className }: RadialChartProps) {
 							<feDropShadow
 								dx="0"
 								dy="0"
-								stdDeviation="3"
-								floodColor="rgba(0, 0, 0, 0.4)"
+								stdDeviation="2.5"
+								floodColor="rgba(0, 0, 0, 0.25)"
 							/>
 						</filter>
 					</defs>
@@ -104,7 +114,7 @@ export function RadialChart({ score, className }: RadialChartProps) {
 					{/* background: 회색 배경(100%), RadialBar: 보라색 점수가 그 위에 겹쳐서 표시 */}
 					<RadialBar
 						dataKey="score"
-						fill="var(--color-score)"
+						fill="url(#scoreGradient)"
 						stroke="var(--color-white)"
 						strokeWidth={1}
 						cornerRadius={1.5}

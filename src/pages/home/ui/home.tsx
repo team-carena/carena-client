@@ -1,65 +1,58 @@
-import { useSearchParams } from "react-router";
-import HealthAnalysisPage from "@/pages/health-analysis/health-analysis";
+import { useNavigate } from "react-router";
+import { ROUTE_PATH } from "@/app/routes/paths";
 import { useMyInfo } from "@/shared/apis/member/use-my-info";
-import { Tabs } from "@/shared/ui/tabs/tabs";
+import { IcHospital, IcPaper } from "@/shared/assets/svg";
 import UserInfo from "./health-info/components/user-info";
 import HealthInfoPage from "./health-info/health-info";
 
-type HomeTab = "health-info" | "health-analysis";
+interface ActionButtonProps {
+	icon: React.ReactNode;
+	label: string;
+	onClick?: () => void;
+}
 
-const getTabFromQuery = (value: string | null): HomeTab => {
-	if (value === "health-analysis") return "health-analysis";
-	return "health-info";
-};
+const ActionButton = ({ icon, label, onClick }: ActionButtonProps) => (
+	<button
+		type="button"
+		onClick={onClick}
+		className="flex flex-1 items-center gap-[0.8rem] rounded-[1.2rem] bg-white px-[2rem] py-[1.6rem] shadow-[0_0_8px_rgba(0,0,0,0.10)]"
+	>
+		{icon}
+		<span className="head03-sb-16 text-gray-900">{label}</span>
+	</button>
+);
 
 export const HomePage = () => {
 	const { data: userInfo, isPending } = useMyInfo();
-	const [searchParams, setSearchParams] = useSearchParams();
-
-	const tabFromQuery = getTabFromQuery(searchParams.get("tab"));
-
-	// query(tab)가 바뀔 때 Tabs를 remount해서 defaultTab이 다시 반영되도록 key 사용
-	const tabsKey = tabFromQuery;
-
-	// 탭 클릭 시 query 업데이트
-	const setTabQuery = (tab: HomeTab) => {
-		const next = new URLSearchParams(searchParams);
-		next.set("tab", tab);
-		setSearchParams(next);
-	};
+	const navigate = useNavigate();
 
 	return (
 		<div className="flex h-full w-full flex-col">
 			<UserInfo userInfo={userInfo} isPending={isPending} />
 
-			{/* TODO: key={tabsKey}로 인해 탭 전환 시 Tabs가 remount되어 스크롤 위치 기억 로직이 동작 안 함. */}
-			<Tabs key={tabsKey} defaultTab={tabFromQuery}>
-				<Tabs.List>
-					<Tabs.Trigger
-						value="health-info"
-						onClick={() => setTabQuery("health-info")}
-						type="button"
-					>
-						건강정보
-					</Tabs.Trigger>
+			<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2rem]">
+				{/* 버튼 영역 */}
+				<div className="flex gap-[0.9rem]">
+					<ActionButton
+						icon={
+							<IcHospital
+								className="h-[2.4rem] w-[2.4rem] shrink-0"
+								aria-hidden
+							/>
+						}
+						label="검진 기관 조회"
+					/>
+					<ActionButton
+						icon={
+							<IcPaper className="h-[2.4rem] w-[2.4rem] shrink-0" aria-hidden />
+						}
+						label="검진 결과 추가"
+						onClick={() => void navigate(ROUTE_PATH.CHECKUP_RESULT)}
+					/>
+				</div>
+			</div>
 
-					<Tabs.Trigger
-						value="health-analysis"
-						onClick={() => setTabQuery("health-analysis")}
-						type="button"
-					>
-						검진결과분석
-					</Tabs.Trigger>
-				</Tabs.List>
-
-				<Tabs.Content value="health-info">
-					<HealthInfoPage userInfo={userInfo} isPending={isPending} />
-				</Tabs.Content>
-
-				<Tabs.Content value="health-analysis">
-					<HealthAnalysisPage />
-				</Tabs.Content>
-			</Tabs>
+			<HealthInfoPage userInfo={userInfo} isPending={isPending} />
 		</div>
 	);
 };

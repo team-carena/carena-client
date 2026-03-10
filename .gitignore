@@ -54,3 +54,4 @@ storybook-static
 # Claude
 .claude
 CLAUDE.md
+.mcp.json
