@@ -17,6 +17,8 @@ export const API_ENDPOINTS = {
 	// 건강 검진 결과
 	healthReport: {
 		create: "/api/v1/health-report",
+		update: (healthReportId: string) =>
+			`/api/v1/health-report/${healthReportId}`,
 		ocr: "/api/v1/health-report/ocr",
 		entire: (healthReportId: string) =>
 			`/api/v1/health-report/${healthReportId}`,
