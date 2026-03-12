@@ -10,35 +10,7 @@
  * ---------------------------------------------------------------
  */
 
-export interface SuccessResponseVoid {
-	/** @format int32 */
-	status?: number;
-	code?: string;
-	message?: string;
-	data?: any;
-}
-
-export interface SignUpRequest {
-	/** @minLength 1 */
-	name: string;
-	/** @format date */
-	birthdate: string;
-	gender: "MALE" | "FEMALE";
-}
-
-export interface CreateHealthTipRequest {
-	/** @minLength 1 */
-	title: string;
-	/** @minLength 1 */
-	subTitle: string;
-	/** @minLength 1 */
-	content: string;
-	/** @minLength 1 */
-	reference: string;
-	hashtags: string[];
-}
-
-export interface CreateHealthReportRequest {
+export interface WriteHealthReportRequest {
 	/** @format date */
 	healthCheckDate: string;
 	/** @minLength 1 */
@@ -77,6 +49,34 @@ export interface CreateHealthReportRequest {
 	alt?: number;
 	/** @format double */
 	gammaGtp?: number;
+}
+
+export interface SuccessResponseVoid {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: any;
+}
+
+export interface SignUpRequest {
+	/** @minLength 1 */
+	name: string;
+	/** @format date */
+	birthdate: string;
+	gender: "MALE" | "FEMALE";
+}
+
+export interface CreateHealthTipRequest {
+	/** @minLength 1 */
+	title: string;
+	/** @minLength 1 */
+	subTitle: string;
+	/** @minLength 1 */
+	content: string;
+	/** @minLength 1 */
+	reference: string;
+	hashtags: string[];
 }
 
 export interface ExtractedTextView {
@@ -407,6 +407,10 @@ export interface SuccessResponseDietDetailResponse {
 	data?: DietDetailResponse;
 }
 
+export type GetEntireHealthReportData = SuccessResponseEntireHealthReportView;
+
+export type UpdateHealthReportData = SuccessResponseVoid;
+
 export type GetLatestRecommendedMealsData = SuccessResponseRecommendedMealView;
 
 export type CreateRecommendedMealData = SuccessResponseVoid;
@@ -453,8 +457,6 @@ export type ReadHealthTipDetailData = SuccessResponseReadHealthTipDetailView;
 export type DeleteHealthTipData = SuccessResponseVoid;
 
 export type ReadHealthTipTickerData = SuccessResponseReadHealthTipTickerView;
-
-export type GetEntireHealthReportData = SuccessResponseEntireHealthReportView;
 
 export type GetWeightHistoryData = SuccessResponseHealthReportHistoryView;
 
