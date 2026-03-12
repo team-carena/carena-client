@@ -9,7 +9,8 @@ import {
 	type CheckupFormInput,
 	checkupSchema,
 } from "@/pages/checkup-result/model/checkup-schema";
-import type { CreateHealthReportRequest } from "@/shared/apis/generated/data-contracts";
+import type { WriteHealthReportRequest } from "@/shared/apis/generated/data-contracts";
+import { toNumberOrUndefined } from "@/shared/libs/to-number-or-undefined";
 import { Button } from "@/shared/ui/buttons/button";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
@@ -143,7 +144,7 @@ export const CheckupResultPage = () => {
 		const agreed = await openPrivacyConsentSheet();
 		if (!agreed) return;
 
-		const requestBody: CreateHealthReportRequest = {
+		const requestBody: WriteHealthReportRequest = {
 			healthCheckDate: `${data.checkupDate.year}-${data.checkupDate.month}-${data.checkupDate.day}`,
 			institutionName: data.hospital!,
 
@@ -170,14 +171,6 @@ export const CheckupResultPage = () => {
 	// 날짜 에러 메시지 추출 (refine 에러는 root에 저장됨)
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
-
-	const toNumberOrUndefined = (value?: string | number): number | undefined => {
-		if (value === undefined || value === null) return undefined;
-		const normalized = typeof value === "string" ? value.trim() : String(value);
-		if (normalized === "") return undefined;
-		const num = Number(normalized);
-		return Number.isFinite(num) ? num : undefined;
-	};
 
 	const handleOcrComplete = useCallback(
 		(data: Record<string, string>) => {
