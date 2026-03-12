@@ -200,7 +200,7 @@ export const CheckupResultPage = () => {
 			<form
 				id="checkup-form"
 				onSubmit={(e) => void handleSubmit(onSubmit)(e)}
-				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[11.2rem]"
+				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[13.2rem]"
 			>
 				{/* 기본정보 */}
 				<section className="flex flex-col gap-[2rem]">
@@ -281,7 +281,7 @@ export const CheckupResultPage = () => {
 					</div>
 
 					{/* 고혈압 */}
-					<div className="flex flex-col gap-[2rem]">
+					<div className="mt-[2rem] flex flex-col gap-[2rem]">
 						<span className="head02-b-16 text-black">고혈압</span>
 						<InputSmall
 							left={{

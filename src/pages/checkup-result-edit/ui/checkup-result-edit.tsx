@@ -216,7 +216,7 @@ export const CheckupResultEditPage = () => {
 			<form
 				id="checkup-edit-form"
 				onSubmit={(e) => void handleSubmit(onSubmit)(e)}
-				className="flex min-h-dvh w-full flex-col bg-white pb-[16.4rem]"
+				className="flex min-h-dvh w-full flex-col bg-white pb-[13.2rem]"
 			>
 				<section className="flex flex-col gap-[1.2rem] px-[2rem] py-[4rem]">
 					<div className="flex flex-col gap-[0.8rem]">
