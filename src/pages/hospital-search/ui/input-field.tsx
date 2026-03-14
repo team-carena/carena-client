@@ -4,18 +4,25 @@ import { SectionHeader } from "./section-header";
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	title: string;
 	icon?: boolean;
+	onHeaderClick?: () => void;
 }
 
 export function InputField({
 	title,
 	icon,
 	className,
+	onHeaderClick,
 	...props
 }: InputFieldProps) {
 	const headerAs = icon ? undefined : "h2";
 	return (
 		<section className="flex flex-col gap-[0.8rem]">
-			<SectionHeader as={headerAs} title={title} icon={icon} />
+			<SectionHeader
+				onClick={onHeaderClick}
+				as={headerAs}
+				title={title}
+				icon={icon}
+			/>
 
 			<input
 				className={cn(

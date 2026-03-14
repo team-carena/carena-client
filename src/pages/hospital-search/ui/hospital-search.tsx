@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "@/shared/ui/buttons/button";
 import Chip from "@/shared/ui/chips/chip";
+import { BottomSheet } from "@/shared/ui/overlays/bottom-sheet/bottom-sheet";
+import { BottomSheetContent } from "./bottom-sheet-content";
+import { BottomSheetFooter } from "./bottom-sheets-footer";
 import { InputField } from "./input-field";
 import { SectionHeader } from "./section-header";
 
@@ -18,16 +21,25 @@ const screeningTypeChips = [
 
 export const HospitalSearchPage = () => {
 	const navigate = useNavigate();
+
+	const [sidoCode] = useState("11"); // TODO: 서울 하드코딩 -> 주소 검색 클릭 시 코드 불러오기
+	const [sigunguCode] = useState("11010");
+
+	const [selectedSido, setSelectedSido] = useState<string | null>(null);
+	const [selectedSigungu, setSelectedSigungu] = useState<string | null>(null);
+	const [tempSelectedSido, setTempSelectedSido] = useState<string | null>(null);
+
+	const [isAddressSheetOpen, setIsAddressSheetOpen] = useState(false);
+
 	const [hospitalName, setHospitalName] = useState("");
 	const [selectedScreeningTypeChip, setSelectedScreeningTypeChip] =
 		useState<string>("전체");
 
-	const [sidoCode] = useState("11"); // 서울
-	const [sigunguCode] = useState("11010"); // 종로구
-
-	const handleScreeningTypeChipClick = (value: string) => {
-		setSelectedScreeningTypeChip(value);
-	};
+	const addressValue = selectedSigungu
+		? `${selectedSido} ${selectedSigungu}`
+		: selectedSido
+			? `${selectedSido} 전체`
+			: "";
 
 	const handleSearchBtnClick = () => {
 		const params = new URLSearchParams();
@@ -36,9 +48,10 @@ export const HospitalSearchPage = () => {
 		params.set("sidoCode", sidoCode);
 		params.set("sigunguCode", sigunguCode);
 
-		// 병원 이름
+		// 병원 이름 -> 파라미터만 공백 제거, input은 ux 위해 띄어쓰기 유지
 		if (hospitalName) {
-			params.set("name", hospitalName);
+			const normalizedName = hospitalName.replace(/\s+/g, "");
+			params.set("name", normalizedName);
 		}
 
 		// 검진 타입
@@ -50,16 +63,21 @@ export const HospitalSearchPage = () => {
 	const handleResetBtnClick = () => {
 		setHospitalName("");
 		setSelectedScreeningTypeChip("전체");
+		setSelectedSido(null);
+		setSelectedSigungu(null);
+		setTempSelectedSido(null);
 	};
+
 	return (
 		<div className="mt-[2.45rem] flex flex-col gap-[4rem] px-[2rem]">
 			<InputField
 				title="주소 검색"
 				icon
 				readOnly
-				value="서울 종로구" // TODO: 바텀시트 붙이면 변경
+				value={addressValue}
 				placeholder="주소를 선택해주세요"
 				className="cursor-default bg-gray-100"
+				onHeaderClick={() => setIsAddressSheetOpen(true)}
 			/>
 
 			<InputField
@@ -77,7 +95,7 @@ export const HospitalSearchPage = () => {
 						<Chip
 							key={label}
 							status={selectedScreeningTypeChip === label ? "on" : "off"}
-							onClick={() => handleScreeningTypeChipClick(label)}
+							onClick={() => setSelectedScreeningTypeChip(label)}
 						>
 							{label}
 						</Chip>
@@ -103,6 +121,41 @@ export const HospitalSearchPage = () => {
 					</Button>
 				</div>
 			</div>
+
+			<BottomSheet
+				height="525px"
+				open={isAddressSheetOpen}
+				onClose={() => {
+					setIsAddressSheetOpen(false);
+					setTempSelectedSido(null);
+				}}
+				footer={
+					<BottomSheetFooter
+						tempSelectedSido={tempSelectedSido}
+						onConfirm={(sido) => {
+							setSelectedSido(sido);
+							setSelectedSigungu(null);
+						}}
+						onClose={() => {
+							setIsAddressSheetOpen(false);
+							setTempSelectedSido(null);
+						}}
+					/>
+				}
+			>
+				<BottomSheetContent
+					tempSelectedSido={tempSelectedSido}
+					onSelectTempSido={(sido) => {
+						setTempSelectedSido(sido);
+					}}
+					onSelectSigungu={(sido, sigungu) => {
+						setSelectedSido(sido);
+						setTempSelectedSido(null);
+						setSelectedSigungu(sigungu);
+						setIsAddressSheetOpen(false);
+					}}
+				/>
+			</BottomSheet>
 		</div>
 	);
 };
