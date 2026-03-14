@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router";
 import { OauthCallBack } from "@/pages/auth/ui/oauth-callback";
 import { CheckupResultPage } from "@/pages/checkup-result/ui/checkup-result";
 import { CheckupResultEditPage } from "@/pages/checkup-result-edit/ui/checkup-result-edit";
+import HealthAnalysisPage from "@/pages/health-analysis/health-analysis";
 import { HealthAnalysisCriteria } from "@/pages/health-analysis/health-analysis-criteria";
 import { HealthMenuPage } from "@/pages/health-menu/ui/health-menu";
 import { MenuDetailPage } from "@/pages/health-menu/ui/health-menu-detail";
@@ -108,6 +109,14 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "건강 팁 상세",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HEALTH_ANALYSIS,
+						element: <HealthAnalysisPage />,
+						handle: {
+							header: "back",
+							title: "검진 결과 분석",
 						} satisfies RouteHandle,
 					},
 					{
