@@ -16,3 +16,16 @@
 
 /* shadcn CSS variables */
 @import '@styles/shadcn.css';
+
+.bottom-sheets-scrollbar::-webkit-scrollbar {
+  width: 5px; /* 스크롤 막대 길이는 조절 불가... */
+}
+
+.bottom-sheets-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-gray-200);
+  border-radius: 999px;
+}
+
+.bottom-sheets-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
