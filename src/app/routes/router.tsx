@@ -10,6 +10,7 @@ import { HealthReportDetailPage } from "@/pages/health-report-detail/ui/health-r
 import { HealthTipPage } from "@/pages/health-tip/ui/health-tip";
 import { HealthTipDetailPage } from "@/pages/health-tip/ui/health-tip-detail";
 import { HomePage } from "@/pages/home/ui/home";
+import { HospitalSearchPage } from "@/pages/hospital-search/ui/hospital-search";
 import { HospitalSearchResultPage } from "@/pages/hospital-search-result/ui/hospital-search-result";
 import { LoginPage } from "@/pages/login/ui/login";
 import { MyPage } from "@/pages/my-page/ui/my-page";
@@ -146,6 +147,14 @@ export const router = createBrowserRouter([
 						element: <CheckupResultEditPage />,
 						handle: {
 							header: "none",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HOSPITAL_SEARCH,
+						element: <HospitalSearchPage />,
+						handle: {
+							header: "back",
+							title: "검진기관 조회",
 						} satisfies RouteHandle,
 					},
 					{

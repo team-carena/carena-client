@@ -16,6 +16,7 @@ export const ROUTE_PATH = {
 	CHECKUP_RESULT: "/checkup-result",
 	HOSPITAL_SEARCH_RESULT: "/hospital-search-result",
 	CHECKUP_RESULT_EDIT: "/checkup-result-edit",
+	HOSPITAL_SEARCH: "/hospital-search",
 } as const;
 
 export type Routes = (typeof ROUTE_PATH)[keyof typeof ROUTE_PATH];

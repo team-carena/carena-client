@@ -182,7 +182,7 @@ export const BottomSheet = ({
 
 					{/* 스크롤 가능한 컨텐츠 영역 */}
 					<div
-						className="min-h-0 flex-1 overflow-y-auto px-[2rem]"
+						className="bottom-sheets-scrollbar min-h-0 flex-1 overflow-y-auto px-[2rem]"
 						style={{ touchAction: "pan-y" }}
 					>
 						{children}
