@@ -49,8 +49,8 @@ export const HospitalSearchPage = () => {
 		params.set("sigunguCode", sigunguCode);
 
 		// 병원 이름 -> 파라미터만 공백 제거, input은 ux 위해 띄어쓰기 유지
-		if (hospitalName) {
-			const normalizedName = hospitalName.replace(/\s+/g, "");
+		const normalizedName = hospitalName.replace(/\s+/g, "");
+		if (normalizedName) {
 			params.set("name", normalizedName);
 		}
 
