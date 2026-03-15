@@ -27,21 +27,19 @@ const sigunguMap: Record<string, string[]> = {
 };
 
 type BottomSheetContentProps = {
-	tempSelectedSido: string | null;
+	tempSido: string | null;
 	onSelectSigungu: (sido: string, sigungu: string) => void;
 	onSelectTempSido: (sido: string) => void;
 };
 
 export const BottomSheetContent = ({
-	tempSelectedSido,
+	tempSido,
 	onSelectSigungu,
 	onSelectTempSido,
 }: BottomSheetContentProps) => {
-	const sigunguList = tempSelectedSido
-		? (sigunguMap[tempSelectedSido] ?? [])
-		: [];
+	const sigunguList = tempSido ? (sigunguMap[tempSido] ?? []) : [];
 
-	const isSidoStep = !tempSelectedSido;
+	const isSidoStep = !tempSido;
 
 	return (
 		<div className="mt-[0.9rem] flex flex-col gap-[2rem]">
@@ -50,7 +48,7 @@ export const BottomSheetContent = ({
 					<span className="text-gray-300">시/도</span>
 				) : (
 					<span className="flex items-center gap-[1.2rem]">
-						<span className="text-black">{tempSelectedSido}</span>
+						<span className="text-black">{tempSido}</span>
 						<ChevronMRightGray color="text-gray-300" />
 						<span className="text-gray-300">시/군/구</span>
 					</span>
@@ -81,7 +79,7 @@ export const BottomSheetContent = ({
 							type="button"
 							key={sigungu}
 							onClick={() => {
-								onSelectSigungu(tempSelectedSido, sigungu);
+								onSelectSigungu(tempSido, sigungu);
 							}}
 							className="body03-r-16 flex w-full items-center justify-center rounded-[1.2rem] border border-gray-300 bg-white px-[2rem] py-[1.2rem]"
 						>

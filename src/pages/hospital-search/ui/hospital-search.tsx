@@ -19,26 +19,36 @@ const screeningTypeChips = [
 	"영유아",
 ] as const;
 
+type Region = {
+	sido: string | null;
+	sigungu: string | null;
+};
+
 export const HospitalSearchPage = () => {
 	const navigate = useNavigate();
 
 	const [sidoCode] = useState("11"); // TODO: 서울 하드코딩 -> 주소 검색 클릭 시 코드 불러오기
 	const [sigunguCode] = useState("11010");
 
-	const [selectedSido, setSelectedSido] = useState<string | null>(null);
-	const [selectedSigungu, setSelectedSigungu] = useState<string | null>(null);
-	const [tempSelectedSido, setTempSelectedSido] = useState<string | null>(null);
+	const [selectedRegion, setSelectedRegion] = useState<Region>({
+		sido: null,
+		sigungu: null,
+	});
 
+	const [tempRegion, setTempRegion] = useState<Region>({
+		sido: null,
+		sigungu: null,
+	});
 	const [isAddressSheetOpen, setIsAddressSheetOpen] = useState(false);
 
 	const [hospitalName, setHospitalName] = useState("");
 	const [selectedScreeningTypeChip, setSelectedScreeningTypeChip] =
 		useState<string>("전체");
 
-	const addressValue = selectedSigungu
-		? `${selectedSido} ${selectedSigungu}`
-		: selectedSido
-			? `${selectedSido} 전체`
+	const addressValue = selectedRegion.sigungu
+		? `${selectedRegion.sido} ${selectedRegion.sigungu}`
+		: selectedRegion.sido
+			? `${selectedRegion.sido} 전체`
 			: "";
 
 	const handleSearchBtnClick = () => {
@@ -63,9 +73,8 @@ export const HospitalSearchPage = () => {
 	const handleResetBtnClick = () => {
 		setHospitalName("");
 		setSelectedScreeningTypeChip("전체");
-		setSelectedSido(null);
-		setSelectedSigungu(null);
-		setTempSelectedSido(null);
+		setSelectedRegion({ sido: null, sigungu: null });
+		setTempRegion({ sido: null, sigungu: null });
 	};
 
 	return (
@@ -127,31 +136,43 @@ export const HospitalSearchPage = () => {
 				open={isAddressSheetOpen}
 				onClose={() => {
 					setIsAddressSheetOpen(false);
-					setTempSelectedSido(null);
+					setTempRegion({ sido: null, sigungu: null });
 				}}
 				footer={
 					<BottomSheetFooter
-						tempSelectedSido={tempSelectedSido}
+						tempSido={tempRegion.sido}
 						onConfirm={(sido) => {
-							setSelectedSido(sido);
-							setSelectedSigungu(null);
+							setSelectedRegion({
+								sido,
+								sigungu: null,
+							});
 						}}
 						onClose={() => {
 							setIsAddressSheetOpen(false);
-							setTempSelectedSido(null);
+							setTempRegion({ sido: null, sigungu: null });
 						}}
 					/>
 				}
 			>
 				<BottomSheetContent
-					tempSelectedSido={tempSelectedSido}
+					tempSido={tempRegion.sido}
 					onSelectTempSido={(sido) => {
-						setTempSelectedSido(sido);
+						setTempRegion({
+							sido,
+							sigungu: null,
+						});
 					}}
 					onSelectSigungu={(sido, sigungu) => {
-						setSelectedSido(sido);
-						setTempSelectedSido(null);
-						setSelectedSigungu(sigungu);
+						setSelectedRegion({
+							sido,
+							sigungu,
+						});
+
+						setTempRegion({
+							sido: null,
+							sigungu: null,
+						});
+
 						setIsAddressSheetOpen(false);
 					}}
 				/>
