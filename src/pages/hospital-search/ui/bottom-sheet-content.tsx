@@ -49,11 +49,11 @@ export const BottomSheetContent = ({
 				{isSidoStep ? (
 					<span className="text-gray-300">시/도</span>
 				) : (
-					<div className="flex items-center gap-[1.2rem]">
+					<span className="flex items-center gap-[1.2rem]">
 						<span className="text-black">{tempSelectedSido}</span>
 						<ChevronMRightGray color="text-gray-300" />
 						<span className="text-gray-300">시/군/구</span>
-					</div>
+					</span>
 				)}
 			</h2>
 
