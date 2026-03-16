@@ -364,7 +364,7 @@ export const CheckupResultPage = () => {
 					type="submit"
 					form="checkup-form"
 					size="lg"
-					disabled={!isRequiredFilled || !isValid || isSubmitting}
+					disabled={!isRequiredFilled || !isValid || isSubmitting || isPending}
 				>
 					저장
 				</Button>
