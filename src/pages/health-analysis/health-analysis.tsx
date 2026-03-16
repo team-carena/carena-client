@@ -401,7 +401,7 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 			<div className="mt-[4rem] flex justify-center">
 				<button
 					type="button"
-					className="body05-r-12 text-gray-700"
+					className="body05-r-12 flex items-center text-gray-700"
 					onClick={() => {
 						void navigate(
 							`${ROUTE_PATH.CHECKUP_RESULT_EDIT}?reportId=${selectedReportId}`,
@@ -410,8 +410,8 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 					}}
 				>
 					결과 수정하기
+					<ChevronXSRight />
 				</button>
-				<ChevronXSRight />
 			</div>
 		</div>
 	);

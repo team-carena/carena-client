@@ -13,9 +13,10 @@ export const useWithdrawal = () => {
 
 	return useMutation({
 		mutationFn: postWithdrawal,
-		onSuccess: () => {
-			queryClient.clear();
+		onSuccess: async () => {
+			await queryClient.cancelQueries();
 			logoutStore();
+			queryClient.clear();
 			void navigate(ROUTE_PATH.LOGIN, { replace: true });
 			notify("탈퇴되었습니다");
 		},
