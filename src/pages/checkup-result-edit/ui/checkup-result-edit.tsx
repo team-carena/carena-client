@@ -39,7 +39,11 @@ export const CheckupResultEditPage = () => {
 	const institutionName =
 		(location.state as { institutionName?: string })?.institutionName ?? "";
 
-	const { data: report, isPending: isReportPending } = useEntireHealthReport({
+	const {
+		data: report,
+		isPending: isReportPending,
+		isError: isReportError,
+	} = useEntireHealthReport({
 		healthReportId: reportId,
 		enabled: reportId !== "",
 	});
@@ -59,33 +63,9 @@ export const CheckupResultEditPage = () => {
 		return { year, month, day };
 	}, [report?.healthCheckDate]);
 
-	// useBlocker가 true일 때 모든 라우트 이동 차단
-	const blocker = useBlocker(reportId !== "" && !isSubmitting);
-
 	useEffect(() => {
 		window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 	}, []);
-
-	// Header/브라우저 뒤로가기 시 React Router가 navigate를 감지해 내부적으로 blocker.state를 "idle" → "blocked"로 변경 → useEffect 실행
-	useEffect(() => {
-		// 라우트 이동이 차단된 상태
-		if (blocker.state === "blocked") {
-			openModal({
-				size: "sm",
-				description: "검진 결과를 수정하지 않고\n이동하시겠어요?",
-				secondaryAction: {
-					label: "취소",
-					// 차단된 네비게이션 취소 (페이지에 머무르기)
-					onClick: () => blocker.reset(),
-				},
-				primaryAction: {
-					label: "이동하기",
-					// 차단된 네비게이션 허용 (페이지 이동 허용)
-					onClick: () => blocker.proceed(),
-				},
-			});
-		}
-	}, [blocker.state, blocker.reset, blocker.proceed]);
 
 	const {
 		register,
@@ -93,7 +73,7 @@ export const CheckupResultEditPage = () => {
 		watch,
 		setValue,
 		reset,
-		formState: { errors },
+		formState: { errors, isDirty },
 	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
 		resolver: zodResolver(checkupSchema),
 		mode: "onBlur",
@@ -120,6 +100,30 @@ export const CheckupResultEditPage = () => {
 		if (!formDefaults) return;
 		reset(formDefaults);
 	}, [formDefaults, reset]);
+
+	// useBlocker가 true일 때 모든 라우트 이동 차단
+	const blocker = useBlocker(reportId !== "" && isDirty && !isSubmitting);
+
+	// Header/브라우저 뒤로가기 시 React Router가 navigate를 감지해 내부적으로 blocker.state를 "idle" → "blocked"로 변경 → useEffect 실행
+	useEffect(() => {
+		// 라우트 이동이 차단된 상태
+		if (blocker.state === "blocked") {
+			openModal({
+				size: "sm",
+				description: "검진 결과를 수정하지 않고\n이동하시겠어요?",
+				secondaryAction: {
+					label: "취소",
+					// 차단된 네비게이션 취소 (페이지에 머무르기)
+					onClick: () => blocker.reset(),
+				},
+				primaryAction: {
+					label: "이동하기",
+					// 차단된 네비게이션 허용 (페이지 이동 허용)
+					onClick: () => blocker.proceed(),
+				},
+			});
+		}
+	}, [blocker.state, blocker.reset, blocker.proceed]);
 
 	useEffect(() => {
 		if (!reportId) {
@@ -199,7 +203,14 @@ export const CheckupResultEditPage = () => {
 		updateHealthReport({ healthReportId: reportId, data: requestBody });
 	};
 
-	if (isReportPending) return null;
+	useEffect(() => {
+		if (isReportError) {
+			notifyError("검진 결과를 불러오지 못했어요");
+			void navigate(ROUTE_PATH.HEALTH_ANALYSIS, { replace: true });
+		}
+	}, [isReportError, navigate]);
+
+	if (isReportPending || isReportError) return null;
 
 	return (
 		<>
