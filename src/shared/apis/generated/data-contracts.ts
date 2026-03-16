@@ -10,35 +10,7 @@
  * ---------------------------------------------------------------
  */
 
-export interface SuccessResponseVoid {
-	/** @format int32 */
-	status?: number;
-	code?: string;
-	message?: string;
-	data?: any;
-}
-
-export interface SignUpRequest {
-	/** @minLength 1 */
-	name: string;
-	/** @format date */
-	birthdate: string;
-	gender: "MALE" | "FEMALE";
-}
-
-export interface CreateHealthTipRequest {
-	/** @minLength 1 */
-	title: string;
-	/** @minLength 1 */
-	subTitle: string;
-	/** @minLength 1 */
-	content: string;
-	/** @minLength 1 */
-	reference: string;
-	hashtags: string[];
-}
-
-export interface CreateHealthReportRequest {
+export interface WriteHealthReportRequest {
 	/** @format date */
 	healthCheckDate: string;
 	/** @minLength 1 */
@@ -77,6 +49,34 @@ export interface CreateHealthReportRequest {
 	alt?: number;
 	/** @format double */
 	gammaGtp?: number;
+}
+
+export interface SuccessResponseVoid {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: any;
+}
+
+export interface SignUpRequest {
+	/** @minLength 1 */
+	name: string;
+	/** @format date */
+	birthdate: string;
+	gender: "MALE" | "FEMALE";
+}
+
+export interface CreateHealthTipRequest {
+	/** @minLength 1 */
+	title: string;
+	/** @minLength 1 */
+	subTitle: string;
+	/** @minLength 1 */
+	content: string;
+	/** @minLength 1 */
+	reference: string;
+	hashtags: string[];
 }
 
 export interface ExtractedTextView {
@@ -192,6 +192,72 @@ export interface SuccessResponseMemberInfoResponse {
 	code?: string;
 	message?: string;
 	data?: MemberInfoResponse;
+}
+
+export interface InstitutionInfo {
+	institutionName?: string;
+	institutionAddress?: string;
+	/** @format double */
+	latitude?: number;
+	/** @format double */
+	longitude?: number;
+	types?: string[];
+}
+
+export interface InstitutionListView {
+	result?: InstitutionInfo[];
+	/** @format int32 */
+	currentPage?: number;
+	/** @format int32 */
+	totalPage?: number;
+	/** @format int32 */
+	totalCount?: number;
+}
+
+export interface SuccessResponseInstitutionListView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: InstitutionListView;
+}
+
+export interface SigunguCodeInfo {
+	sigunguName?: string;
+	/** @format int32 */
+	sidoCode?: number;
+	/** @format int32 */
+	sigunguCode?: number;
+}
+
+export interface SigunguCodeView {
+	result?: SigunguCodeInfo[];
+}
+
+export interface SuccessResponseSigunguCodeView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: SigunguCodeView;
+}
+
+export interface SidoCodeInfo {
+	sidoName?: string;
+	/** @format int32 */
+	sidoCode?: number;
+}
+
+export interface SidoCodeView {
+	result?: SidoCodeInfo[];
+}
+
+export interface SuccessResponseSidoCodeView {
+	/** @format int32 */
+	status?: number;
+	code?: string;
+	message?: string;
+	data?: SidoCodeView;
 }
 
 export interface HealthTipListElement {
@@ -341,9 +407,15 @@ export interface SuccessResponseDietDetailResponse {
 	data?: DietDetailResponse;
 }
 
+export type GetEntireHealthReportData = SuccessResponseEntireHealthReportView;
+
+export type UpdateHealthReportData = SuccessResponseVoid;
+
 export type GetLatestRecommendedMealsData = SuccessResponseRecommendedMealView;
 
 export type CreateRecommendedMealData = SuccessResponseVoid;
+
+export type WithdrawalData = SuccessResponseVoid;
 
 export type AfterLoginData = SuccessResponseVoid;
 
@@ -374,13 +446,17 @@ export type MyPageData = SuccessResponseMyPageResponse;
 
 export type MemberInfoData = SuccessResponseMemberInfoResponse;
 
+export type GetInstitutionInfoData = SuccessResponseInstitutionListView;
+
+export type GetSigunguCodeData = SuccessResponseSigunguCodeView;
+
+export type GetSidoCodeData = SuccessResponseSidoCodeView;
+
 export type ReadHealthTipDetailData = SuccessResponseReadHealthTipDetailView;
 
 export type DeleteHealthTipData = SuccessResponseVoid;
 
 export type ReadHealthTipTickerData = SuccessResponseReadHealthTipTickerView;
-
-export type GetEntireHealthReportData = SuccessResponseEntireHealthReportView;
 
 export type GetWeightHistoryData = SuccessResponseHealthReportHistoryView;
 

@@ -9,7 +9,8 @@ import {
 	type CheckupFormInput,
 	checkupSchema,
 } from "@/pages/checkup-result/model/checkup-schema";
-import type { CreateHealthReportRequest } from "@/shared/apis/generated/data-contracts";
+import type { WriteHealthReportRequest } from "@/shared/apis/generated/data-contracts";
+import { toNumberOrUndefined } from "@/shared/libs/to-number-or-undefined";
 import { Button } from "@/shared/ui/buttons/button";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
@@ -19,6 +20,7 @@ import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { useHealthReportMutation } from "../apis/mutations/use-health-report-mutation";
+import { FullScreenSubmitLoading } from "./full-screen-submit-loading";
 import { OcrSection } from "./ocr-section";
 import { openPrivacyConsentSheet } from "./privacy-consent-sheet";
 
@@ -26,7 +28,7 @@ export const CheckupResultPage = () => {
 	// TODO: OCR 로직과 입력값 검증 로직 나누기
 
 	const navigate = useNavigate();
-	const { mutate: createHealthReport } = useHealthReportMutation();
+	const { mutate: createHealthReport, isPending } = useHealthReportMutation();
 
 	// 이탈방지 모달 열기
 	const openExitModal = useCallback(() => {
@@ -142,7 +144,7 @@ export const CheckupResultPage = () => {
 		const agreed = await openPrivacyConsentSheet();
 		if (!agreed) return;
 
-		const requestBody: CreateHealthReportRequest = {
+		const requestBody: WriteHealthReportRequest = {
 			healthCheckDate: `${data.checkupDate.year}-${data.checkupDate.month}-${data.checkupDate.day}`,
 			institutionName: data.hospital!,
 
@@ -170,14 +172,6 @@ export const CheckupResultPage = () => {
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
 
-	const toNumberOrUndefined = (value?: string | number): number | undefined => {
-		if (value === undefined || value === null) return undefined;
-		const normalized = typeof value === "string" ? value.trim() : String(value);
-		if (normalized === "") return undefined;
-		const num = Number(normalized);
-		return Number.isFinite(num) ? num : undefined;
-	};
-
 	const handleOcrComplete = useCallback(
 		(data: Record<string, string>) => {
 			OCR_FIELD_KEYS.forEach((key) => {
@@ -195,6 +189,7 @@ export const CheckupResultPage = () => {
 
 	return (
 		<>
+			{isPending && <FullScreenSubmitLoading />}
 			{/* 헤더 동작 커스텀 필요(이탈방지 모달)→ CheckupResult 페이지에 별도로 헤더 배치 */}
 			<Header
 				variant="back"
@@ -205,7 +200,7 @@ export const CheckupResultPage = () => {
 			<form
 				id="checkup-form"
 				onSubmit={(e) => void handleSubmit(onSubmit)(e)}
-				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[11.2rem]"
+				className="flex min-h-dvh w-full flex-col gap-[4rem] bg-white px-[2rem] pt-[4rem] pb-[13.2rem]"
 			>
 				{/* 기본정보 */}
 				<section className="flex flex-col gap-[2rem]">
@@ -286,7 +281,7 @@ export const CheckupResultPage = () => {
 					</div>
 
 					{/* 고혈압 */}
-					<div className="flex flex-col gap-[2rem]">
+					<div className="mt-[2rem] flex flex-col gap-[2rem]">
 						<span className="head02-b-16 text-black">고혈압</span>
 						<InputSmall
 							left={{
@@ -369,7 +364,7 @@ export const CheckupResultPage = () => {
 					type="submit"
 					form="checkup-form"
 					size="lg"
-					disabled={!isRequiredFilled || !isValid || isSubmitting}
+					disabled={!isRequiredFilled || !isValid || isSubmitting || isPending}
 				>
 					저장
 				</Button>

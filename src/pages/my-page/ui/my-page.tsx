@@ -5,6 +5,7 @@ import { useAuthStore } from "@/shared/store/auth-store";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
 import { notifyError } from "@/shared/ui/overlays/toast/toast";
 import { useLogout } from "../apis/mutations/use-logout";
+import { useWithdrawal } from "../apis/mutations/use-withdrawal";
 import { useMyPageInfo } from "../apis/queries/use-my-page-info";
 import { ActionSection } from "./action-section";
 
@@ -17,6 +18,7 @@ export const MyPage = () => {
 	const navigate = useNavigate();
 	const logoutStore = useAuthStore((state) => state.logout);
 	const { mutate: logout } = useLogout();
+	const { mutate: withdraw } = useWithdrawal();
 	// TODO: useSuspenseQuery 사용 or 스켈레톤 추가
 	const { data: userInfo } = useMyPageInfo();
 
@@ -86,7 +88,7 @@ export const MyPage = () => {
 회원 정보가 소멸되어 복구가 불가능합니다.`,
 							primaryAction: {
 								label: "탈퇴하기",
-								onClick: () => {}, // TODO: 탈퇴 핸들러 연결, 토스트 추가
+								onClick: () => withdraw(),
 							},
 							secondaryAction: { label: "취소", onClick: () => {} },
 						}),
