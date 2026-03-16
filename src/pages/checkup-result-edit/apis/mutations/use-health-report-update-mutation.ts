@@ -23,13 +23,15 @@ export const useHealthReportUpdateMutation = () => {
 		mutationFn: ({ healthReportId, data }: UpdateHealthReportParams) =>
 			putHealthReport(healthReportId, data),
 		throwOnError: false,
-		onSuccess: (_data, variables) => {
-			void queryClient.invalidateQueries({
-				queryKey: queryKeys.member.info(),
-			});
-			void queryClient.invalidateQueries({
-				queryKey: queryKeys.healthReport.all,
-			});
+		onSuccess: async (_data, variables) => {
+			await Promise.all([
+				queryClient.invalidateQueries({
+					queryKey: queryKeys.member.info(),
+				}),
+				queryClient.invalidateQueries({
+					queryKey: queryKeys.healthReport.all,
+				}),
+			]);
 			notifySuccess("검진 결과가 수정되었습니다");
 			void navigate(
 				`${ROUTE_PATH.HEALTH_ANALYSIS}?reportId=${variables.healthReportId}`,
