@@ -27,7 +27,7 @@ const HealthTipTicker = () => {
 };
 
 const DEFAULT_DIET_TITLE = "허혈성 심장질환";
-const DEFAULT_DIET_ID = "802517378946048511";
+const DEFAULT_DIET_ID = "821008481726226994";
 
 const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
@@ -37,13 +37,13 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 	});
 
 	// 검진결과 있음 + mealData 있음: 실제 데이터 표시
-	// 검진결과 있음 + mealData 없음 (에러/빈 응답): "-" 표시
+	// 검진결과 있음 + mealData 없음 (gpt 에러 등으로 에러/빈 응답): 기본 식단 표시
 	// 검진결과 없음: 기본 식단 표시
 	const dietLabel = hasHealthReport
-		? (mealData?.baseDietTitle ?? "-")
+		? (mealData?.baseDietTitle ?? DEFAULT_DIET_TITLE)
 		: DEFAULT_DIET_TITLE;
 	const dietId = hasHealthReport
-		? (mealData?.baseDietDocumentId ?? "")
+		? (mealData?.baseDietDocumentId ?? DEFAULT_DIET_ID)
 		: DEFAULT_DIET_ID;
 
 	return (
@@ -81,7 +81,7 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 									</p>
 								) : (
 									<p className="head04-m-16 mt-[0.8rem] text-gray-900">
-										{mealData?.meal ?? "-"}
+										{mealData?.meal ?? "맞춤 식단을 추천받지 못했어요"}
 									</p>
 								)}
 							</>
