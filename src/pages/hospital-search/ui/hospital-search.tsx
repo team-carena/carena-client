@@ -1,71 +1,120 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
+import { useGetSidoCodeQuery } from "@/pages/hospital-search/apis/queries/use-get-sido-code-query";
+import { useGetSigunguCodeQuery } from "@/pages/hospital-search/apis/queries/use-get-sigungu-code-query";
+import { BottomSheetContent } from "@/pages/hospital-search/ui/bottom-sheet-content";
+import { BottomSheetFooter } from "@/pages/hospital-search/ui/bottom-sheets-footer";
+import { InputField } from "@/pages/hospital-search/ui/input-field";
+import { SectionHeader } from "@/pages/hospital-search/ui/section-header";
+import type {
+	SidoCodeInfo,
+	SigunguCodeInfo,
+} from "@/shared/apis/generated/data-contracts";
 import { Button } from "@/shared/ui/buttons/button";
 import Chip from "@/shared/ui/chips/chip";
 import { BottomSheet } from "@/shared/ui/overlays/bottom-sheet/bottom-sheet";
-import { BottomSheetContent } from "./bottom-sheet-content";
-import { BottomSheetFooter } from "./bottom-sheets-footer";
-import { InputField } from "./input-field";
-import { SectionHeader } from "./section-header";
 
-// TODO: 시도, 시군구 조회는 조회 페이지에서 받아와 url 파라미터로 조회 결과 페이지에 시도, 시군구, 칩, 타입 넘기기
-const screeningTypeChips = [
-	"전체",
-	"일반",
-	"암검진",
-	"일반+암검진",
-	"구강",
-	"출장검진",
-	"영유아",
+const screeningTypes = [
+	{ label: "전체", code: "0" },
+	{ label: "일반", code: "1" },
+	{ label: "암검진", code: "3" },
+	{ label: "일반+암검진", code: "4" },
+	{ label: "구강", code: "2" },
+	{ label: "출장검진", code: "5" },
+	{ label: "영유아", code: "6" },
 ] as const;
 
+type ScreeningTypeChip = (typeof screeningTypes)[number]["label"];
+
 type Region = {
-	sido: string | null;
-	sigungu: string | null;
+	sidoName: string | null;
+	sidoCode: number | null;
+	sigunguName: string | null;
+	sigunguCode: number | null;
+};
+
+const INITIAL_REGION: Region = {
+	sidoName: null,
+	sidoCode: null,
+	sigunguName: null,
+	sigunguCode: null,
+};
+
+const getScreeningTypeCode = (label: ScreeningTypeChip) => {
+	return screeningTypes.find((type) => type.label === label)?.code ?? null;
 };
 
 export const HospitalSearchPage = () => {
 	const navigate = useNavigate();
 
-	const [sidoCode] = useState("11"); // TODO: 서울 하드코딩 -> 주소 검색 클릭 시 코드 불러오기
-	const [sigunguCode] = useState("11010");
-
-	const [selectedRegion, setSelectedRegion] = useState<Region>({
-		sido: null,
-		sigungu: null,
-	});
-
-	const [tempRegion, setTempRegion] = useState<Region>({
-		sido: null,
-		sigungu: null,
-	});
+	const [selectedRegion, setSelectedRegion] = useState<Region>(INITIAL_REGION);
+	const [tempRegion, setTempRegion] = useState<Region>(INITIAL_REGION);
 	const [isAddressSheetOpen, setIsAddressSheetOpen] = useState(false);
-
 	const [hospitalName, setHospitalName] = useState("");
 	const [selectedScreeningTypeChip, setSelectedScreeningTypeChip] =
-		useState<string>("전체");
+		useState<ScreeningTypeChip>("전체");
 
-	const addressValue = selectedRegion.sigungu
-		? `${selectedRegion.sido} ${selectedRegion.sigungu}`
-		: selectedRegion.sido
-			? `${selectedRegion.sido} 전체`
-			: "";
+	const tempSidoCode = tempRegion.sidoCode ?? 0;
+
+	const { data: sidoList = [] } = useGetSidoCodeQuery();
+	const { data: sigunguList = [] } = useGetSigunguCodeQuery({
+		sidoCode: tempSidoCode,
+	});
+
+	const addressValue = useMemo(() => {
+		if (selectedRegion.sigunguName) {
+			return `${selectedRegion.sidoName} ${selectedRegion.sigunguName}`;
+		}
+
+		if (selectedRegion.sidoName) {
+			return `${selectedRegion.sidoName} 전체`;
+		}
+
+		return "";
+	}, [selectedRegion]);
+
+	const resetRegionState = () => {
+		setSelectedRegion(INITIAL_REGION);
+		setTempRegion(INITIAL_REGION);
+	};
+
+	const closeAddressSheet = () => {
+		setIsAddressSheetOpen(false);
+		setTempRegion(INITIAL_REGION);
+	};
 
 	const handleSearchBtnClick = () => {
 		const params = new URLSearchParams();
+		const normalizedName = hospitalName.trim();
+		const screeningTypeCode = getScreeningTypeCode(selectedScreeningTypeChip);
 
-		// 시도 / 시군구
-		params.set("sidoCode", sidoCode);
-		params.set("sigunguCode", sigunguCode);
+		params.set("page", "1");
 
-		// 병원 이름 -> 파라미터만 공백 제거, input은 ux 위해 띄어쓰기 유지
-		const normalizedName = hospitalName.replace(/\s+/g, "");
+		if (selectedRegion.sidoCode !== null) {
+			params.set("sidoCode", String(selectedRegion.sidoCode));
+		}
+
+		if (selectedRegion.sigunguCode !== null) {
+			params.set("sigunguCode", String(selectedRegion.sigunguCode));
+		}
+
 		if (normalizedName) {
 			params.set("name", normalizedName);
 		}
 
-		// 검진 타입
-		params.set("type", selectedScreeningTypeChip);
+		if (screeningTypeCode) {
+			params.set("type", screeningTypeCode);
+		}
+
+		if (selectedRegion.sidoName) {
+			params.set("sidoName", selectedRegion.sidoName);
+		}
+
+		if (selectedRegion.sigunguName) {
+			params.set("sigunguName", selectedRegion.sigunguName);
+		}
+
+		params.set("chip", selectedScreeningTypeChip);
 
 		void navigate(`/hospital-search-result?${params.toString()}`);
 	};
@@ -73,8 +122,42 @@ export const HospitalSearchPage = () => {
 	const handleResetBtnClick = () => {
 		setHospitalName("");
 		setSelectedScreeningTypeChip("전체");
-		setSelectedRegion({ sido: null, sigungu: null });
-		setTempRegion({ sido: null, sigungu: null });
+		resetRegionState();
+	};
+
+	const handleSelectTempSido = (sido: SidoCodeInfo) => {
+		setTempRegion({
+			sidoName: sido.sidoName ?? null,
+			sidoCode: sido.sidoCode ?? null,
+			sigunguName: null,
+			sigunguCode: null,
+		});
+	};
+
+	const handleSelectSigungu = (sigungu: SigunguCodeInfo) => {
+		setSelectedRegion({
+			sidoName: tempRegion.sidoName,
+			sidoCode: tempRegion.sidoCode,
+			sigunguName: sigungu.sigunguName ?? null,
+			sigunguCode: sigungu.sigunguCode ?? null,
+		});
+
+		closeAddressSheet();
+	};
+
+	const handleConfirmSido = () => {
+		if (!tempRegion.sidoName || tempRegion.sidoCode === null) {
+			return;
+		}
+
+		setSelectedRegion({
+			sidoName: tempRegion.sidoName,
+			sidoCode: tempRegion.sidoCode,
+			sigunguName: null,
+			sigunguCode: null,
+		});
+
+		closeAddressSheet();
 	};
 
 	return (
@@ -100,7 +183,7 @@ export const HospitalSearchPage = () => {
 				<SectionHeader as="h2" title="검진항목 구분" />
 
 				<div className="flex flex-wrap gap-[0.8rem]">
-					{screeningTypeChips.map((label) => (
+					{screeningTypes.map(({ label }) => (
 						<Chip
 							key={label}
 							status={selectedScreeningTypeChip === label ? "on" : "off"}
@@ -123,6 +206,7 @@ export const HospitalSearchPage = () => {
 					</button>
 
 					<Button
+						type="button"
 						onClick={handleSearchBtnClick}
 						className="flex-1 rounded-[1.2rem]"
 					>
@@ -134,47 +218,21 @@ export const HospitalSearchPage = () => {
 			<BottomSheet
 				height="525px"
 				open={isAddressSheetOpen}
-				onClose={() => {
-					setIsAddressSheetOpen(false);
-					setTempRegion({ sido: null, sigungu: null });
-				}}
+				onClose={closeAddressSheet}
 				footer={
 					<BottomSheetFooter
-						tempSido={tempRegion.sido}
-						onConfirm={(sido) => {
-							setSelectedRegion({
-								sido,
-								sigungu: null,
-							});
-						}}
-						onClose={() => {
-							setIsAddressSheetOpen(false);
-							setTempRegion({ sido: null, sigungu: null });
-						}}
+						tempSido={tempRegion.sidoName}
+						onConfirm={handleConfirmSido}
+						onClose={closeAddressSheet}
 					/>
 				}
 			>
 				<BottomSheetContent
-					tempSido={tempRegion.sido}
-					onSelectTempSido={(sido) => {
-						setTempRegion({
-							sido,
-							sigungu: null,
-						});
-					}}
-					onSelectSigungu={(sido, sigungu) => {
-						setSelectedRegion({
-							sido,
-							sigungu,
-						});
-
-						setTempRegion({
-							sido: null,
-							sigungu: null,
-						});
-
-						setIsAddressSheetOpen(false);
-					}}
+					tempSido={tempRegion.sidoName}
+					sidoList={sidoList}
+					sigunguList={sigunguList}
+					onSelectTempSido={handleSelectTempSido}
+					onSelectSigungu={handleSelectSigungu}
 				/>
 			</BottomSheet>
 		</div>

@@ -66,4 +66,11 @@ export const API_ENDPOINTS = {
 	recommendedMeal: {
 		recommended: "/api/v1/recommend",
 	},
+
+	// 건강검진 기관
+	institution: {
+		list: "/api/v1/institution",
+		sidoCode: "/api/v1/institution/sido-code",
+		sigunguCode: "/api/v1/institution/sigungu-code",
+	},
 } as const;

@@ -1,44 +1,24 @@
+import type {
+	SidoCodeInfo,
+	SigunguCodeInfo,
+} from "@/shared/apis/generated/data-contracts";
 import { ChevronMRightGray } from "@/shared/assets/svg";
-
-const sidoList = [
-	"서울",
-	"부산",
-	"대구",
-	"인천",
-	"광주",
-	"대전",
-	"울산",
-	"세종",
-	"경기",
-	"강원",
-	"충북",
-	"충남",
-	"전북",
-	"전남",
-	"경북",
-	"경남",
-	"제주",
-];
-
-const sigunguMap: Record<string, string[]> = {
-	서울: ["종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구"],
-	부산: ["해운대구", "수영구", "동래구", "남구", "부산진구"],
-	대구: ["중구", "동구", "서구", "남구", "북구"],
-};
 
 type BottomSheetContentProps = {
 	tempSido: string | null;
-	onSelectSigungu: (sido: string, sigungu: string) => void;
-	onSelectTempSido: (sido: string) => void;
+	sidoList: SidoCodeInfo[];
+	sigunguList: SigunguCodeInfo[];
+	onSelectSigungu: (sigungu: SigunguCodeInfo) => void;
+	onSelectTempSido: (sido: SidoCodeInfo) => void;
 };
 
 export const BottomSheetContent = ({
 	tempSido,
+	sidoList,
+	sigunguList,
 	onSelectSigungu,
 	onSelectTempSido,
 }: BottomSheetContentProps) => {
-	const sigunguList = tempSido ? (sigunguMap[tempSido] ?? []) : [];
-
 	const isSidoStep = !tempSido;
 
 	return (
@@ -60,13 +40,11 @@ export const BottomSheetContent = ({
 					{sidoList.map((sido) => (
 						<button
 							type="button"
-							key={sido}
-							onClick={() => {
-								onSelectTempSido(sido);
-							}}
+							key={sido.sidoCode}
+							onClick={() => onSelectTempSido(sido)}
 							className="body03-r-16 flex w-full items-center justify-center rounded-[1.2rem] border border-gray-300 bg-white px-[2rem] py-[1.2rem]"
 						>
-							{sido}
+							{sido.sidoName}
 						</button>
 					))}
 				</div>
@@ -77,13 +55,11 @@ export const BottomSheetContent = ({
 					{sigunguList.map((sigungu) => (
 						<button
 							type="button"
-							key={sigungu}
-							onClick={() => {
-								onSelectSigungu(tempSido, sigungu);
-							}}
+							key={sigungu.sigunguCode}
+							onClick={() => onSelectSigungu(sigungu)}
 							className="body03-r-16 flex w-full items-center justify-center rounded-[1.2rem] border border-gray-300 bg-white px-[2rem] py-[1.2rem]"
 						>
-							{sigungu}
+							{sigungu.sigunguName}
 						</button>
 					))}
 				</div>
