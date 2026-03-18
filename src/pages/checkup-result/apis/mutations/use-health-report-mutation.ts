@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import { API_ENDPOINTS } from "@/shared/apis/api-endpoints";
 import type {
-	CreateHealthReportRequest,
 	SuccessResponseVoid,
+	WriteHealthReportRequest,
 } from "@/shared/apis/generated/data-contracts";
 import { queryKeys } from "@/shared/apis/query-keys";
 import { HTTP_METHOD, request } from "@/shared/apis/request";
@@ -16,7 +16,7 @@ export const useHealthReportMutation = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (data: CreateHealthReportRequest) => postHealthReport(data),
+		mutationFn: (data: WriteHealthReportRequest) => postHealthReport(data),
 		throwOnError: false,
 		onSuccess: () => {
 			void queryClient.invalidateQueries({
@@ -40,7 +40,7 @@ export const useHealthReportMutation = () => {
 	});
 };
 
-const postHealthReport = (data: CreateHealthReportRequest) => {
+const postHealthReport = (data: WriteHealthReportRequest) => {
 	return request<SuccessResponseVoid>({
 		method: HTTP_METHOD.POST,
 		url: API_ENDPOINTS.healthReport.create,

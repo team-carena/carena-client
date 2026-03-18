@@ -1,7 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import {
+	useBlocker,
+	useLocation,
+	useNavigate,
+	useSearchParams,
+} from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import { OCR_FIELD_KEYS } from "@/pages/checkup-result/apis/constants/ocr-field-keys";
 import {
@@ -9,7 +14,11 @@ import {
 	type CheckupFormInput,
 	checkupSchema,
 } from "@/pages/checkup-result/model/checkup-schema";
+import { FullScreenSubmitLoading } from "@/pages/checkup-result/ui/full-screen-submit-loading";
 import { OcrSection } from "@/pages/checkup-result/ui/ocr-section";
+import { useEntireHealthReport } from "@/pages/home/apis/queries/use-entire-health-report";
+import type { WriteHealthReportRequest } from "@/shared/apis/generated/data-contracts";
+import { toNumberOrUndefined } from "@/shared/libs/to-number-or-undefined";
 import { Button } from "@/shared/ui/buttons/button";
 import { DateInput } from "@/shared/ui/inputs/date-input";
 import { InputLarge } from "@/shared/ui/inputs/input-large";
@@ -17,115 +26,110 @@ import { InputMedium } from "@/shared/ui/inputs/input-medium";
 import { InputSmall } from "@/shared/ui/inputs/input-small";
 import { Header } from "@/shared/ui/navigations/header";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
-import { notifyError, notifySuccess } from "@/shared/ui/overlays/toast/toast";
-
-type CheckupResultData = {
-	checkupDate: {
-		year: string;
-		month: string;
-		day: string;
-	};
-	hospital: string;
-	height: string | null;
-	weight: string | null;
-	bmi: string | null;
-	waistCircumference: string | null;
-	systolicBp: string | null;
-	diastolicBp: string | null;
-	hemoglobin: string | null;
-	fastingGlucose: string | null;
-	serumCreatinine: string | null;
-	egfr: string | null;
-	ast: string | null;
-	alt: string | null;
-	gammaGtp: string | null;
-};
-
-const initialResult: CheckupResultData = {
-	// TODO: API 연동 시 기존 검진 결과 데이터로 교체
-	checkupDate: {
-		year: "2026",
-		month: "03",
-		day: "06",
-	},
-	hospital: "케어나 병원",
-	height: "180",
-	weight: "70",
-	bmi: "19.5",
-	waistCircumference: null,
-	systolicBp: "118",
-	diastolicBp: "76",
-	hemoglobin: "13.2",
-	fastingGlucose: null,
-	serumCreatinine: "0.72",
-	egfr: null,
-	ast: "21",
-	alt: "18",
-	gammaGtp: null,
-};
+import { notifyError } from "@/shared/ui/overlays/toast/toast";
+import { useHealthReportUpdateMutation } from "../apis/mutations/use-health-report-update-mutation";
+import { toCheckupFormInput } from "../model/to-checkup-form-input";
 
 export const CheckupResultEditPage = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const [searchParams] = useSearchParams();
 
-	const openExitModal = useCallback(() => {
-		openModal({
-			size: "sm",
-			description:
-				"검진 결과를 수정하지 않고\n결과 분석 화면으로 이동하시겠어요?",
-			secondaryAction: {
-				label: "취소",
-				onClick: () => {},
-			},
-			primaryAction: {
-				label: "이동하기",
-				onClick: () => navigate(ROUTE_PATH.CHECKUP_RESULT, { replace: true }),
-			},
-		});
-	}, [navigate]);
+	const reportId = searchParams.get("reportId") ?? "";
+	const institutionName =
+		(location.state as { institutionName?: string })?.institutionName ?? "";
+
+	const {
+		data: report,
+		isPending: isReportPending,
+		isError: isReportError,
+	} = useEntireHealthReport({
+		healthReportId: reportId,
+		enabled: reportId !== "",
+	});
+
+	const { mutate: updateHealthReport, isPending: isSubmitting } =
+		useHealthReportUpdateMutation();
+
+	const formDefaults = useMemo(() => {
+		if (!report) return undefined;
+		return toCheckupFormInput(report, institutionName);
+	}, [report, institutionName]);
+
+	const checkupDate = useMemo(() => {
+		const [year = "", month = "", day = ""] = (
+			report?.healthCheckDate ?? ""
+		).split("-");
+		return { year, month, day };
+	}, [report?.healthCheckDate]);
 
 	useEffect(() => {
-		window.history.pushState(null, "", window.location.href);
-
-		const handlePopState = () => {
-			window.history.pushState(null, "", window.location.href);
-			openExitModal();
-		};
-
-		window.addEventListener("popstate", handlePopState);
-
-		return () => {
-			window.removeEventListener("popstate", handlePopState);
-		};
-	}, [openExitModal]);
+		window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+	}, []);
 
 	const {
 		register,
 		handleSubmit,
 		watch,
 		setValue,
-		formState: { errors },
+		reset,
+		formState: { errors, isDirty },
 	} = useForm<CheckupFormInput, unknown, CheckupFormData>({
 		resolver: zodResolver(checkupSchema),
 		mode: "onBlur",
 		defaultValues: {
-			// TODO: API 연동 시 조회한 기존 검진 결과를 defaultValues로 설정
-			checkupDate: initialResult.checkupDate,
-			hospital: initialResult.hospital,
-			height: initialResult.height ?? "",
-			weight: initialResult.weight ?? "",
-			bmi: initialResult.bmi ?? "",
-			waistCircumference: initialResult.waistCircumference ?? "",
-			systolicBp: initialResult.systolicBp ?? "",
-			diastolicBp: initialResult.diastolicBp ?? "",
-			hemoglobin: initialResult.hemoglobin ?? "",
-			fastingGlucose: initialResult.fastingGlucose ?? "",
-			serumCreatinine: initialResult.serumCreatinine ?? "",
-			egfr: initialResult.egfr ?? "",
-			ast: initialResult.ast ?? "",
-			alt: initialResult.alt ?? "",
-			gammaGtp: initialResult.gammaGtp ?? "",
+			checkupDate: { year: "", month: "", day: "" },
+			hospital: "",
+			height: "",
+			weight: "",
+			bmi: "",
+			waistCircumference: "",
+			systolicBp: "",
+			diastolicBp: "",
+			hemoglobin: "",
+			fastingGlucose: "",
+			serumCreatinine: "",
+			egfr: "",
+			ast: "",
+			alt: "",
+			gammaGtp: "",
 		},
 	});
+
+	useEffect(() => {
+		if (!formDefaults) return;
+		reset(formDefaults);
+	}, [formDefaults, reset]);
+
+	// useBlocker가 true일 때 모든 라우트 이동 차단
+	const blocker = useBlocker(reportId !== "" && isDirty && !isSubmitting);
+
+	// Header/브라우저 뒤로가기 시 React Router가 navigate를 감지해 내부적으로 blocker.state를 "idle" → "blocked"로 변경 → useEffect 실행
+	useEffect(() => {
+		// 라우트 이동이 차단된 상태
+		if (blocker.state === "blocked") {
+			openModal({
+				size: "sm",
+				description: "검진 결과를 수정하지 않고\n이동하시겠어요?",
+				secondaryAction: {
+					label: "취소",
+					// 차단된 네비게이션 취소 (페이지에 머무르기)
+					onClick: () => blocker.reset(),
+				},
+				primaryAction: {
+					label: "이동하기",
+					// 차단된 네비게이션 허용 (페이지 이동 허용)
+					onClick: () => blocker.proceed(),
+				},
+			});
+		}
+	}, [blocker.state, blocker.reset, blocker.proceed]);
+
+	useEffect(() => {
+		if (!reportId) {
+			void navigate(ROUTE_PATH.HEALTH_ANALYSIS, { replace: true });
+		}
+	}, [reportId, navigate]);
 
 	const height = watch("height");
 	const weight = watch("weight");
@@ -172,31 +176,58 @@ export const CheckupResultEditPage = () => {
 		[setValue],
 	);
 
-	const onSubmit = () => {
+	const onSubmit = (data: CheckupFormData) => {
 		if (!hasAnyTestResult) {
 			notifyError("검사 결과를 한 개 이상 입력하세요");
 			return;
 		}
 
-		// TODO: API 연동 시 수정 요청 payload 가공 후 수정 API 호출
-		notifySuccess("검진 결과가 수정되었습니다");
-		void navigate(ROUTE_PATH.CHECKUP_RESULT);
+		const requestBody: WriteHealthReportRequest = {
+			healthCheckDate: `${data.checkupDate.year}-${data.checkupDate.month}-${data.checkupDate.day}`,
+			institutionName: data.hospital!,
+			height: toNumberOrUndefined(data.height),
+			weight: toNumberOrUndefined(data.weight),
+			waistCircumference: toNumberOrUndefined(data.waistCircumference),
+			bmi: toNumberOrUndefined(data.bmi),
+			systolicBp: toNumberOrUndefined(data.systolicBp),
+			diastolicBp: toNumberOrUndefined(data.diastolicBp),
+			hemoglobin: toNumberOrUndefined(data.hemoglobin),
+			fastingGlucose: toNumberOrUndefined(data.fastingGlucose),
+			serumCreatinine: toNumberOrUndefined(data.serumCreatinine),
+			egfr: toNumberOrUndefined(data.egfr),
+			ast: toNumberOrUndefined(data.ast),
+			alt: toNumberOrUndefined(data.alt),
+			gammaGtp: toNumberOrUndefined(data.gammaGtp),
+		};
+
+		updateHealthReport({ healthReportId: reportId, data: requestBody });
 	};
+
+	useEffect(() => {
+		if (isReportError) {
+			notifyError("검진 결과를 불러오지 못했어요");
+			void navigate(ROUTE_PATH.HEALTH_ANALYSIS, { replace: true });
+		}
+	}, [isReportError, navigate]);
+
+	if (isReportPending || isReportError) return null;
 
 	return (
 		<>
+			{isSubmitting && <FullScreenSubmitLoading />}
+
 			<Header
 				variant="back"
 				title="검진 결과 수정"
-				onBackClick={openExitModal}
+				onBackClick={() => void navigate(-1)}
 			/>
 
 			<OcrSection onOcrComplete={handleOcrComplete} />
 
 			<form
 				id="checkup-edit-form"
-				onSubmit={handleSubmit(onSubmit)}
-				className="flex min-h-dvh w-full flex-col bg-white pb-[16.4rem]"
+				onSubmit={(e) => void handleSubmit(onSubmit)(e)}
+				className="flex min-h-dvh w-full flex-col bg-white pb-[13.2rem]"
 			>
 				<section className="flex flex-col gap-[1.2rem] px-[2rem] py-[4rem]">
 					<div className="flex flex-col gap-[0.8rem]">
@@ -205,19 +236,19 @@ export const CheckupResultEditPage = () => {
 						</span>
 						<DateInput
 							year={{
-								value: initialResult.checkupDate.year,
+								value: checkupDate.year,
 								placeholder: "YYYY",
 								maxLength: 4,
 								readOnly: true,
 							}}
 							month={{
-								value: initialResult.checkupDate.month,
+								value: checkupDate.month,
 								placeholder: "MM",
 								maxLength: 2,
 								readOnly: true,
 							}}
 							day={{
-								value: initialResult.checkupDate.day,
+								value: checkupDate.day,
 								placeholder: "DD",
 								maxLength: 2,
 								readOnly: true,
@@ -229,7 +260,7 @@ export const CheckupResultEditPage = () => {
 						<span className="body03-r-16 text-black">
 							검진병원 <span aria-hidden="true">*</span>
 						</span>
-						<InputLarge value={initialResult.hospital} readOnly />
+						<InputLarge value={institutionName} readOnly />
 					</div>
 				</section>
 

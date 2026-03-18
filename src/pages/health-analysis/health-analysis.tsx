@@ -230,13 +230,16 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 	// 이전 첫 번째 항목 ID를 저장 (새 검진 추가 시 첫 번째가 변경되었는지 감지용)
 	const prevFirstOptionIdRef = useRef<string | null>(null);
 
-	// 선택된 reportId로 healthCheckDate 찾기 (상세페이지로 넘길 값)
-	const selectedHealthCheckDate = useMemo(() => {
-		const found = (data?.reportDates ?? []).find(
-			(d) => String(d.healthReportId) === selectedReportId,
-		);
-		return found?.healthCheckDate ?? "";
-	}, [data?.reportDates, selectedReportId]);
+	// 선택된 reportId로 healthCheckDate, institutionName 찾기
+	const selectedReportDate = useMemo(
+		() =>
+			(data?.reportDates ?? []).find(
+				(d) => String(d.healthReportId) === selectedReportId,
+			),
+		[data?.reportDates, selectedReportId],
+	);
+	const selectedHealthCheckDate = selectedReportDate?.healthCheckDate ?? "";
+	const selectedInstitutionName = selectedReportDate?.institutionName ?? "";
 
 	// 유효한 ID가 있을 때에 조회 API 호출
 	const hasValidReportId = selectedReportId !== "";
@@ -396,8 +399,19 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 				})}
 			</div>
 			<div className="mt-[4rem] flex justify-center">
-				<button className="body05-r-12 text-gray-700">결과 수정하기</button>
-				<ChevronXSRight />
+				<button
+					type="button"
+					className="body05-r-12 flex items-center text-gray-700"
+					onClick={() => {
+						void navigate(
+							`${ROUTE_PATH.CHECKUP_RESULT_EDIT}?reportId=${selectedReportId}`,
+							{ state: { institutionName: selectedInstitutionName } },
+						);
+					}}
+				>
+					결과 수정하기
+					<ChevronXSRight />
+				</button>
 			</div>
 		</div>
 	);
