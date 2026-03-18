@@ -110,7 +110,7 @@ export const queryKeys = {
 					name: params?.name ?? "",
 					type: params?.type ?? "all",
 					page: params?.page ?? 1,
-					size: params?.size ?? 10,
+					size: params?.size ?? 20,
 				},
 			] as const,
 	},

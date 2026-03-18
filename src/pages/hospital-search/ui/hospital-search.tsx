@@ -85,7 +85,7 @@ export const HospitalSearchPage = () => {
 
 	const handleSearchBtnClick = () => {
 		const params = new URLSearchParams();
-		const normalizedName = hospitalName.replace(/\s+/g, "");
+		const normalizedName = hospitalName.trim();
 		const screeningTypeCode = getScreeningTypeCode(selectedScreeningTypeChip);
 
 		params.set("page", "1");

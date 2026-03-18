@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router";
 import { useGetInstitutionListQuery } from "@/pages/hospital-search/apis/queries/use-get-institution-list-query";
 import { CardHospital } from "@/pages/hospital-search-result/ui/card-hospital";
@@ -7,11 +7,11 @@ import { usePagination } from "@/pages/hospital-search-result/ui/pagination/use-
 
 const UI_ITEMS_PER_PAGE = 10;
 const SERVER_ITEMS_PER_PAGE = 20;
+const PAGES_PER_SERVER_PAGE = SERVER_ITEMS_PER_PAGE / UI_ITEMS_PER_PAGE;
 
 const parsePage = (value: string | null) => {
-	const page = Number(value);
+	const page = Math.floor(Number(value));
 
-	// 잘못된 page 값(0, 음수, NaN)은 1페이지로 보정
 	if (Number.isNaN(page) || page < 1) {
 		return 1;
 	}
@@ -20,24 +20,24 @@ const parsePage = (value: string | null) => {
 };
 
 const clampPage = (page: number, totalPages: number) => {
-	return Math.min(Math.max(page, 1), Math.max(totalPages, 1));
+	return Math.min(Math.max(Math.floor(page), 1), Math.max(totalPages, 1));
 };
 
 export const HospitalSearchResultPage = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const uiPage = parsePage(searchParams.get("page"));
+	const rawPage = searchParams.get("page");
+	const requestedPage = parsePage(rawPage);
 	const sidoCode = searchParams.get("sidoCode") ?? undefined;
 	const sigunguCode = searchParams.get("sigunguCode") ?? undefined;
 	const name = searchParams.get("name") ?? undefined;
 	const type = searchParams.get("type") ?? undefined;
 
-	const serverPage = Math.ceil(
-		uiPage / (SERVER_ITEMS_PER_PAGE / UI_ITEMS_PER_PAGE),
-	);
+	const requestedServerPage = Math.ceil(requestedPage / PAGES_PER_SERVER_PAGE);
 
 	const { data, isPending } = useGetInstitutionListQuery({
-		page: serverPage,
+		page: requestedServerPage,
+		size: SERVER_ITEMS_PER_PAGE,
 		sidoCode,
 		sigunguCode,
 		name,
@@ -46,23 +46,38 @@ export const HospitalSearchResultPage = () => {
 
 	const totalCount = data?.totalCount ?? 0;
 	const totalPages = Math.max(1, Math.ceil(totalCount / UI_ITEMS_PER_PAGE));
+	const currentPage = data
+		? clampPage(requestedPage, totalPages)
+		: requestedPage;
+
+	useEffect(() => {
+		if (!data) {
+			return;
+		}
+
+		if (rawPage === String(currentPage)) {
+			return;
+		}
+
+		const nextParams = new URLSearchParams(searchParams);
+		nextParams.set("page", String(currentPage));
+		setSearchParams(nextParams, { replace: true });
+	}, [currentPage, data, rawPage, searchParams, setSearchParams]);
 
 	const pagination = usePagination({
 		totalCount,
 		itemsPerPage: UI_ITEMS_PER_PAGE,
-		controlledPage: uiPage,
+		controlledPage: currentPage,
 	});
 
 	const hospitalList = useMemo(() => {
 		const result = data?.result ?? [];
-
-		const pagesPerServerPage = SERVER_ITEMS_PER_PAGE / UI_ITEMS_PER_PAGE;
-		const pageIndexInServerPage = (uiPage - 1) % pagesPerServerPage;
+		const pageIndexInServerPage = (currentPage - 1) % PAGES_PER_SERVER_PAGE;
 		const startIndex = pageIndexInServerPage * UI_ITEMS_PER_PAGE;
 		const endIndex = startIndex + UI_ITEMS_PER_PAGE;
 
 		return result.slice(startIndex, endIndex);
-	}, [data?.result, uiPage]);
+	}, [currentPage, data?.result]);
 
 	const updatePage = (page: number) => {
 		const nextParams = new URLSearchParams(searchParams);
@@ -97,7 +112,7 @@ export const HospitalSearchResultPage = () => {
 				<ul className="flex flex-col gap-[0.8rem]">
 					{hospitalList.map((hospital, index) => (
 						<li
-							key={`${hospital.institutionName ?? "hospital"}-${uiPage}-${index}`}
+							key={`${hospital.institutionName ?? "hospital"}-${currentPage}-${index}`}
 						>
 							<CardHospital
 								hospitalName={hospital.institutionName ?? ""}
