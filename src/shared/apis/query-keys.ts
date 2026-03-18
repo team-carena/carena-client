@@ -77,4 +77,41 @@ export const queryKeys = {
 		all: ["recommendedMeal"] as const,
 		latest: () => [...queryKeys.recommendedMeal.all, "latest"] as const,
 	},
+
+	// Institution
+	institution: {
+		all: ["institution"] as const,
+
+		sidoCodes: () => [...queryKeys.institution.all, "sidoCodes"] as const,
+
+		sigunguCodes: (sidoCode?: number | string) =>
+			[
+				...queryKeys.institution.all,
+				"sigunguCodes",
+				sidoCode ?? "all",
+			] as const,
+
+		lists: () => [...queryKeys.institution.all, "list"] as const,
+
+		list: (params?: {
+			sidoCode?: number | string;
+			sigunguCode?: number | string;
+			name?: string;
+			type?: string;
+			page?: number;
+			size?: number;
+		}) =>
+			[
+				...queryKeys.institution.lists(),
+				{
+					...params,
+					sidoCode: params?.sidoCode ?? "all",
+					sigunguCode: params?.sigunguCode ?? "all",
+					name: params?.name ?? "",
+					type: params?.type ?? "all",
+					page: params?.page ?? 1,
+					size: params?.size ?? 10,
+				},
+			] as const,
+	},
 } as const;
