@@ -41,6 +41,7 @@ export const HomePage = () => {
 							/>
 						}
 						label="검진 기관 조회"
+						onClick={() => void navigate(ROUTE_PATH.HOSPITAL_SEARCH)}
 					/>
 					<ActionButton
 						icon={
