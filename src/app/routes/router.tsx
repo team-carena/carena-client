@@ -28,6 +28,7 @@ import { ProtectedRoute } from "./protected-route";
 export interface RouteHandle {
 	header?: HeaderVariant;
 	title?: string;
+	backTo?: string;
 }
 
 export const router = createBrowserRouter([
@@ -135,14 +136,6 @@ export const router = createBrowserRouter([
 						} satisfies RouteHandle,
 					},
 					{
-						path: ROUTE_PATH.HOSPITAL_SEARCH_RESULT,
-						element: <HospitalSearchResultPage />,
-						handle: {
-							header: "back",
-							title: "검진기관 조회",
-						} satisfies RouteHandle,
-					},
-					{
 						path: ROUTE_PATH.CHECKUP_RESULT_EDIT,
 						element: <CheckupResultEditPage />,
 						handle: {
@@ -155,6 +148,15 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "검진기관 조회",
+						} satisfies RouteHandle,
+					},
+					{
+						path: ROUTE_PATH.HOSPITAL_SEARCH_RESULT,
+						element: <HospitalSearchResultPage />,
+						handle: {
+							header: "back",
+							title: "검진기관 조회",
+							backTo: ROUTE_PATH.HOSPITAL_SEARCH,
 						} satisfies RouteHandle,
 					},
 					{
