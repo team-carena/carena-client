@@ -27,7 +27,7 @@ export const HomePage = () => {
 	const navigate = useNavigate();
 
 	return (
-		<div className="flex h-full w-full flex-col">
+		<div className="flex h-full w-full flex-col pb-[2rem]">
 			<UserInfo userInfo={userInfo} isPending={isPending} />
 
 			<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2rem]">
