@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
+import { useMyInfo } from "@/shared/apis/member/use-my-info";
 import { DefaultProfile } from "@/shared/assets/svg";
 import { useAuthStore } from "@/shared/store/auth-store";
 import { openModal } from "@/shared/ui/overlays/modal/open-modal";
@@ -14,6 +15,18 @@ const formatBirthdate = (date: string) => {
 	return `${year}년 ${month}월 ${day}일`;
 };
 
+const formatGender = (gender?: "MALE" | "FEMALE") => {
+	if (gender === "MALE") {
+		return "남";
+	}
+
+	if (gender === "FEMALE") {
+		return "여";
+	}
+
+	return null;
+};
+
 export const MyPage = () => {
 	const navigate = useNavigate();
 	const logoutStore = useAuthStore((state) => state.logout);
@@ -21,6 +34,9 @@ export const MyPage = () => {
 	const { mutate: withdraw } = useWithdrawal();
 	// TODO: useSuspenseQuery 사용 or 스켈레톤 추가
 	const { data: userInfo } = useMyPageInfo();
+	const { data: memberInfo } = useMyInfo();
+	const genderLabel = formatGender(memberInfo?.gender);
+	const displayName = userInfo?.name ?? memberInfo?.name ?? "-";
 
 	const handleLogout = () => {
 		logout(undefined, {
@@ -115,8 +131,10 @@ export const MyPage = () => {
 			<section className="flex items-center gap-[2rem] pt-[2.4rem] pb-[4rem]">
 				<DefaultProfile className="rounded-[12px]" />
 				<div className="flex flex-col gap-[2rem]">
-					<h3 className="head03-sb-16">{userInfo?.name ?? "-"} (여)</h3>{" "}
-					{/* TODO: api 연동 시, {userInfo?.sex ?? ''} 추가 */}
+					<h3 className="head03-sb-16">
+						{displayName}
+						{genderLabel ? ` (${genderLabel})` : ""}
+					</h3>
 					<p className="label02-m-14">
 						{userInfo?.birthdate ? formatBirthdate(userInfo.birthdate) : "-"}
 					</p>
