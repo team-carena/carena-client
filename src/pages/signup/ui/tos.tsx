@@ -311,9 +311,8 @@ const ToSPage = () => {
 
 				{/* 안내 문구 */}
 				<p className="body05-r-12 pb-[2rem] text-gray-900">
-					{/* TODO: href에 개인정보 처리 방침 외부 URL 입력 필요 */}
 					<a
-						href="#"
+						href="https://petalite-biplane-c36.notion.site/2eb5365471d180fcb539d7caf1ca2310"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="underline underline-offset-2"
