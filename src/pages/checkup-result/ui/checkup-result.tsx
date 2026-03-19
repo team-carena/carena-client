@@ -13,6 +13,7 @@ import type { WriteHealthReportRequest } from "@/shared/apis/generated/data-cont
 import { toNumberOrUndefined } from "@/shared/libs/to-number-or-undefined";
 import { Button } from "@/shared/ui/buttons/button";
 import { DateInput } from "@/shared/ui/inputs/date-input";
+import { InputLarge } from "@/shared/ui/inputs/input-large";
 import { InputMedium } from "@/shared/ui/inputs/input-medium";
 import { InputSmall } from "@/shared/ui/inputs/input-small";
 import { CategoryLabel } from "@/shared/ui/labels/category-label";
@@ -235,13 +236,16 @@ export const CheckupResultPage = () => {
 							/>
 						</div>
 
-						<InputMedium
-							label="검진병원"
-							required
-							placeholder="병원명 입력"
-							{...register("hospital")}
-							errorMessage={errors.hospital?.message}
-						/>
+						<div className="flex flex-col gap-[0.8rem]">
+							<span className="body03-r-16 text-black">
+								검진병원 <span aria-hidden="true">*</span>
+							</span>
+							<InputLarge
+								placeholder="기관 또는 병원명을 입력해주세요"
+								{...register("hospital")}
+								errorMessage={errors.hospital?.message}
+							/>
+						</div>
 					</div>
 				</section>
 
