@@ -37,16 +37,18 @@ export const BottomSheetContent = ({
 
 			{isSidoStep && (
 				<div className="grid grid-cols-2 gap-x-[0.7rem] gap-y-[1.2rem]">
-					{sidoList.map((sido) => (
-						<button
-							type="button"
-							key={sido.sidoCode}
-							onClick={() => onSelectTempSido(sido)}
-							className="body03-r-16 flex w-full items-center justify-center rounded-[1.2rem] border border-gray-300 bg-white px-[2rem] py-[1.2rem]"
-						>
-							{sido.sidoName}
-						</button>
-					))}
+					{sidoList
+						.filter((sido) => sido.sidoName !== "황해도")
+						.map((sido) => (
+							<button
+								type="button"
+								key={sido.sidoCode}
+								onClick={() => onSelectTempSido(sido)}
+								className="body03-r-16 flex w-full items-center justify-center rounded-[1.2rem] border border-gray-300 bg-white px-[2rem] py-[1.2rem]"
+							>
+								{sido.sidoName}
+							</button>
+						))}
 				</div>
 			)}
 
