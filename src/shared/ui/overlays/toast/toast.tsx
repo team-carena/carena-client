@@ -3,14 +3,17 @@ import { Alert, Correct } from "@/shared/assets/svg";
 
 export const toasterProps = {
 	position: "bottom-center" as const,
+	offset: { bottom: 84 },
+	mobileOffset: { bottom: 84 },
 	toastOptions: {
 		unstyled: true, // sooner 기본 스타일 제거
 		className:
-			"flex w-[calc(100vw-4rem)] items-center gap-[0.4rem] rounded-[8px] bg-gray-800 px-[1.2rem] py-[0.8rem] text-white",
+			"flex items-center gap-[0.4rem] rounded-[8px] bg-gray-800 px-[1.2rem] py-[0.8rem] text-white",
+		style: { width: "33.5rem", margin: "0 auto" },
 		duration: 3000,
 	},
 	style: {
-		bottom: "84px",
+		"--width": "33.5rem",
 	} as React.CSSProperties,
 };
 
