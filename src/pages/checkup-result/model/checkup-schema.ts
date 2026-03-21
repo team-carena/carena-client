@@ -14,33 +14,25 @@ export const checkupSchema = z
 		hospital: hospitalSchema,
 
 		// 신체 계측
-		height: decimalOnePlace(100, 250, ERROR_MESSAGES.measurement.height),
-		weight: decimalOnePlace(0, 600, ERROR_MESSAGES.measurement.weight),
-		bmi: decimalOnePlace(0, 100, ERROR_MESSAGES.measurement.bmi),
+		height: decimalOnePlace(100, 250, ERROR_MESSAGES.measurement.default),
+		weight: decimalOnePlace(0, 600, ERROR_MESSAGES.measurement.default),
+		bmi: decimalOnePlace(0, 100, ERROR_MESSAGES.measurement.default),
 		waistCircumference: decimalOnePlace(
 			20,
 			250,
-			ERROR_MESSAGES.measurement.waist,
+			ERROR_MESSAGES.measurement.default,
 		),
-		systolicBp: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.systolic),
-		diastolicBp: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.diastolic),
+		systolicBp: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.default),
+		diastolicBp: decimalOnePlace(0, 300, ERROR_MESSAGES.measurement.default),
 
 		// 혈액 검사
-		hemoglobin: decimalOnePlace(0, 30, ERROR_MESSAGES.bloodTest.hemoglobin),
-		fastingGlucose: decimalOnePlace(
-			30,
-			700,
-			ERROR_MESSAGES.bloodTest.fastingGlucose,
-		),
-		serumCreatinine: decimalTwoPlaces(
-			0,
-			20,
-			ERROR_MESSAGES.bloodTest.serumCreatinine,
-		),
-		egfr: decimalOnePlace(0, 200, ERROR_MESSAGES.bloodTest.gfr),
-		ast: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.ast),
-		alt: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.alt),
-		gammaGtp: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.ggt),
+		hemoglobin: decimalOnePlace(0, 30, ERROR_MESSAGES.bloodTest.default),
+		fastingGlucose: decimalOnePlace(30, 700, ERROR_MESSAGES.bloodTest.default),
+		serumCreatinine: decimalTwoPlaces(0, 20, ERROR_MESSAGES.bloodTest.default),
+		egfr: decimalOnePlace(0, 200, ERROR_MESSAGES.bloodTest.default),
+		ast: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.default),
+		alt: decimalOnePlace(0, 10000, ERROR_MESSAGES.bloodTest.default),
+		gammaGtp: decimalOnePlace(0, 3000, ERROR_MESSAGES.bloodTest.default),
 	})
 	// 검진일자 필수 검증
 	.refine(

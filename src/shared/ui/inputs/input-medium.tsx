@@ -74,7 +74,13 @@ export const InputMedium = ({
 	return (
 		<div className="flex items-center justify-between">
 			{/* label */}
-			<label htmlFor={inputId} className="body03-r-16 shrink-0 text-black">
+			<label
+				htmlFor={inputId}
+				className={cn(
+					"body03-r-16 shrink-0",
+					errorMessage ? "text-red-500" : "text-black",
+				)}
+			>
 				{label}
 				{required && (
 					<span className="ml-[0.2rem]" aria-hidden="true">
