@@ -72,25 +72,24 @@ export const InputMedium = ({
 	const fieldState = readOnly ? "readonly" : "default";
 
 	return (
-		<div className="flex items-center justify-between">
-			{/* label */}
-			<label
-				htmlFor={inputId}
-				className={cn(
-					"body03-r-16 shrink-0",
-					errorMessage ? "text-red-500" : "text-black",
-				)}
-			>
-				{label}
-				{required && (
-					<span className="ml-[0.2rem]" aria-hidden="true">
-						*
-					</span>
-				)}
-			</label>
+		<div className="flex flex-col">
+			{/* label + input row */}
+			<div className="grid grid-cols-[1fr_22.2rem] items-center gap-x-4">
+				<label
+					htmlFor={inputId}
+					className={cn(
+						"body03-r-16",
+						errorMessage ? "text-red-500" : "text-black",
+					)}
+				>
+					{label}
+					{required && (
+						<span className="ml-[0.2rem]" aria-hidden="true">
+							*
+						</span>
+					)}
+				</label>
 
-			{/* input + error wrapper */}
-			<div className="flex w-[22.2rem] shrink-0 flex-col">
 				<div className={cn(inputMediumVariants({ state: wrapperState }))}>
 					<input
 						id={inputId}
@@ -123,9 +122,12 @@ export const InputMedium = ({
 						{unit ?? ""}
 					</span>
 				</div>
+			</div>
 
-				{/* error message */}
-				{hasError && (
+			{/* error message -> input 컬럼에만 */}
+			{hasError && (
+				<div className="grid grid-cols-[1fr_22.2rem] gap-x-4">
+					<div aria-hidden="true" />
 					<div
 						className="label06-r-12 mt-[0.2rem] flex items-center gap-[0.4rem] text-red-500"
 						role="alert"
@@ -138,10 +140,9 @@ export const InputMedium = ({
 						/>
 						<span>{errorMessage}</span>
 					</div>
-				)}
-			</div>
+				</div>
+			)}
 		</div>
 	);
 };
-
 InputMedium.displayName = "InputMedium";
