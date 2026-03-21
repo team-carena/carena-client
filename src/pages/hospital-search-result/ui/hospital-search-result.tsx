@@ -83,7 +83,7 @@ export const HospitalSearchResultPage = () => {
 		const nextParams = new URLSearchParams(searchParams);
 		// 잘못된 페이지로 이동하지 않도록 보정 후 url 반영
 		nextParams.set("page", String(clampPage(page, totalPages)));
-		setSearchParams(nextParams);
+		setSearchParams(nextParams, { replace: true });
 	};
 
 	const handleCopyAddress = (address: string) => {
