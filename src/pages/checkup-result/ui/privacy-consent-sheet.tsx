@@ -15,14 +15,12 @@ const PrivacyConsentContent = () => (
 				<li>
 					건강검진 결과의 분석 및 건강점수 산출(동일 검진일자 결과 수정 포함)
 				</li>
-				<li>
-					AI 기술을 활용한 맞춤형 식단 추천 제공
-					<p className="mt-[0.4rem] pl-[0.4rem]">
-						※ AI 활용 과정에서는 이름·생년월일 등 개인을 식별할 수 있는 정보가
-						제공되지 않습니다.
-					</p>
-				</li>
+				<li>AI 기술을 활용한 맞춤형 식단 추천 제공</li>
 			</ul>
+			<p className="mt-[0.4rem] pl-[0.4rem]">
+				※ AI 활용 과정에서는 이름·생년월일 등{" "}
+				<b>개인을 식별할 수 있는 정보가 제공되지 않습니다.</b>
+			</p>
 		</section>
 
 		<section>
@@ -48,6 +46,11 @@ const PrivacyConsentContent = () => (
 					따릅니다.
 				</li>
 			</ul>
+			<p>
+				{" "}
+				※ 이용자는 개인정보 수집·이용에 대한 동의를 철회할 수 있으며, 동의
+				철회는 회원 탈퇴를 통해 이루어집니다.
+			</p>
 		</section>
 
 		<section>
@@ -57,8 +60,11 @@ const PrivacyConsentContent = () => (
 			<ul className="flex list-disc flex-col gap-[0.4rem] pl-[2rem]">
 				<li>귀하는 민감정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.</li>
 				<li>
-					단, 동의하지 않을 경우 검진 결과 저장 및 결과 분석 서비스, AI 맞춤
-					식단 추천 이용이 불가합니다.
+					단, 동의를 거부할 경우{" "}
+					<b>
+						검진 결과 저장 및 건강 분석 서비스, AI 맞춤 식단 추천 기능 이용이
+						제한될 수 있습니다.
+					</b>
 				</li>
 			</ul>
 		</section>
