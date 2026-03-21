@@ -99,8 +99,6 @@ export const CheckupResultPage = () => {
 	const hospital = watch("hospital");
 
 	// 검사 결과 필드 감시
-	const height = watch("height");
-	const weight = watch("weight");
 	const bmi = watch("bmi");
 	const waistCircumference = watch("waistCircumference");
 	const systolicBp = watch("systolicBp");
@@ -120,10 +118,8 @@ export const CheckupResultPage = () => {
 		checkupDate.day !== "" &&
 		(hospital?.trim() ?? "") !== "";
 
-	// 검사 결과가 하나라도 입력되었는지 확인
+	// 키/몸무게를 제외한 검사 결과가 하나라도 입력되었는지 확인
 	const hasAnyTestResult =
-		height !== "" ||
-		weight !== "" ||
 		bmi !== "" ||
 		waistCircumference !== "" ||
 		systolicBp !== "" ||

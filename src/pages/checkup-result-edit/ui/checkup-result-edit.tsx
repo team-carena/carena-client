@@ -131,8 +131,6 @@ export const CheckupResultEditPage = () => {
 		}
 	}, [reportId, navigate]);
 
-	const height = watch("height");
-	const weight = watch("weight");
 	const bmi = watch("bmi");
 	const waistCircumference = watch("waistCircumference");
 	const systolicBp = watch("systolicBp");
@@ -145,9 +143,8 @@ export const CheckupResultEditPage = () => {
 	const alt = watch("alt");
 	const gammaGtp = watch("gammaGtp");
 
+	// 키/몸무게를 제외한 검사 결과가 하나라도 입력되었는지 확인
 	const hasAnyTestResult =
-		height !== "" ||
-		weight !== "" ||
 		bmi !== "" ||
 		waistCircumference !== "" ||
 		systolicBp !== "" ||
