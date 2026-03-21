@@ -35,7 +35,7 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 						저장 전 반드시 내용을 확인해 주세요.
 					</span>
 					{"\n\n"}• 원활한 인식을 위해{" "}
-					<span className="text-primary-400">검진 결과서 2페이지를</span>{" "}
+					<span className="text-primary-400">검진 결과서 두 번째 페이지를</span>{" "}
 					캡처하여 등록해 주세요.
 				</>
 			),

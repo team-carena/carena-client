@@ -4,6 +4,7 @@ import { useGetInstitutionListQuery } from "@/pages/hospital-search/apis/queries
 import { CardHospital } from "@/pages/hospital-search-result/ui/card-hospital";
 import { Pagination } from "@/pages/hospital-search-result/ui/pagination/pagination";
 import { usePagination } from "@/pages/hospital-search-result/ui/pagination/use-pagination";
+import { notify } from "@/shared/ui/overlays/toast/toast";
 
 const UI_ITEMS_PER_PAGE = 10;
 const SERVER_ITEMS_PER_PAGE = 20;
@@ -88,6 +89,7 @@ export const HospitalSearchResultPage = () => {
 
 	const handleCopyAddress = (address: string) => {
 		navigator.clipboard.writeText(address);
+		notify("주소가 복사되었어요");
 	};
 
 	if (isPending) {

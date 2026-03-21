@@ -302,7 +302,7 @@ export const CheckupResultEditPage = () => {
 					</section>
 
 					<section className="flex flex-col gap-[2rem]">
-						<span className="head01-b-18 text-black">고혈압</span>
+						<span className="head01-b-18 text-black">혈압검사</span>
 
 						<InputSmall
 							left={{

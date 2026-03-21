@@ -286,7 +286,7 @@ export const CheckupResultPage = () => {
 
 					{/* 고혈압 */}
 					<div className="mt-[2rem] flex flex-col gap-[2rem]">
-						<span className="head02-b-16 text-black">고혈압</span>
+						<span className="head02-b-16 text-black">혈압검사</span>
 						<InputSmall
 							left={{
 								label: "수축기",
