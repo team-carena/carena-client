@@ -57,7 +57,10 @@ export const MenuDetailPage = () => {
 					aria-labelledby="caution-title"
 					className={`${SECTION_LAYOUT} gap-[1.2rem] pt-[4rem]`}
 				>
-					<p id="caution-title" className="head03-sb-16 text-gray-900">
+					<p
+						id="caution-title"
+						className="head03-sb-16 ml-[0.4rem] text-gray-900"
+					>
 						주의 식품
 					</p>
 
