@@ -10,7 +10,7 @@ export const toasterProps = {
 		duration: 3000,
 	},
 	style: {
-		bottom: "84px",
+		bottom: "16px",
 	} as React.CSSProperties,
 };
 
