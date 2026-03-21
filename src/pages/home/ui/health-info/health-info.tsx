@@ -25,8 +25,8 @@ const HealthTipTicker = () => {
 	return <Ticker tips={tips} />;
 };
 
-const DEFAULT_DIET_TITLE = "허혈성 심장질환";
-const DEFAULT_DIET_ID = "821008481726226994";
+const DEFAULT_DIET_TITLE = "열량조절식";
+const DEFAULT_DIET_ID = "821008910660919821";
 
 const LoadingDietCard = () => {
 	return (
