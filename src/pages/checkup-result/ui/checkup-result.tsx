@@ -99,8 +99,6 @@ export const CheckupResultPage = () => {
 	const hospital = watch("hospital");
 
 	// 검사 결과 필드 감시
-	const height = watch("height");
-	const weight = watch("weight");
 	const bmi = watch("bmi");
 	const waistCircumference = watch("waistCircumference");
 	const systolicBp = watch("systolicBp");
@@ -120,10 +118,8 @@ export const CheckupResultPage = () => {
 		checkupDate.day !== "" &&
 		(hospital?.trim() ?? "") !== "";
 
-	// 검사 결과가 하나라도 입력되었는지 확인
+	// 키/몸무게를 제외한 검사 결과가 하나라도 입력되었는지 확인
 	const hasAnyTestResult =
-		height !== "" ||
-		weight !== "" ||
 		bmi !== "" ||
 		waistCircumference !== "" ||
 		systolicBp !== "" ||
@@ -286,7 +282,7 @@ export const CheckupResultPage = () => {
 
 					{/* 고혈압 */}
 					<div className="mt-[2rem] flex flex-col gap-[2rem]">
-						<span className="head02-b-16 text-black">고혈압</span>
+						<span className="head02-b-16 text-black">혈압검사</span>
 						<InputSmall
 							left={{
 								label: "수축기",
