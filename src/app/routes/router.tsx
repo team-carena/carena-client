@@ -117,7 +117,6 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "검진 결과 분석",
-							backTo: ROUTE_PATH.HOME,
 						} satisfies RouteHandle,
 					},
 					{
