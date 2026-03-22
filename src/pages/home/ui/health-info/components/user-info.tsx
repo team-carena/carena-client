@@ -72,9 +72,8 @@ const UserInfo = ({ userInfo, isPending }: UserInfoProps) => {
 								<RadialChart score={displayScore} />
 								<div className="absolute right-[-0.5rem] bottom-[-0.7rem]">
 									<Tooltip side="bottom" align="end" className="z-[30]">
-										건강점수는 체형, 혈압, 혈당, 간·신장 관련 최근 검진 항목을
-										점수로 변환해 종합한 지표로, 현재 건강 상태를 이해하기 쉽게
-										보여줍니다. 자세한 산출 기준은{" "}
+										건강점수는 최근 검진 항목을 점수로 변환해 종합한 지표로 현재
+										건강 상태를 이해하기 쉽게 보여줍니다. 자세한 산출 기준은{" "}
 										<a
 											href="https://petalite-biplane-c36.notion.site/2eb5365471d18031bef8cf286084a362?source=copy_link"
 											target="_blank"

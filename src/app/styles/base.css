@@ -162,3 +162,16 @@
     animation: text-shimmer 2s linear infinite;
   }
 }
+
+/* sonner Toaster를 앱 영역 중앙에 고정 */
+[data-sonner-toaster] {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: calc(100vw - 40px) !important;
+  max-width: calc(var(--app-max-width) - 40px) !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast] {
+  width: 100% !important;
+}

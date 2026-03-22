@@ -1,5 +1,5 @@
-import { Suspense, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { Suspense, useMemo } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import { useHealthTipList } from "@/pages/health-tip/apis/queries/use-health-tip-list";
 import { useMyInfo } from "@/shared/apis/member/use-my-info";
@@ -20,6 +20,7 @@ interface HealthTipListProps {
 
 const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const hashtagName = selectedChip === "전체" ? undefined : selectedChip;
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
 		useHealthTipList({ hashtagName });
@@ -50,7 +51,7 @@ const HealthTipList = ({ selectedChip }: HealthTipListProps) => {
 										`${ROUTE_PATH.HEALTH_TIP_DETAIL.replace(
 											":healthTipId",
 											healthTipId,
-										)}`,
+										)}${location.search}`,
 									)
 								}
 							>
@@ -86,10 +87,16 @@ export const HealthTipPage = () => {
 		[ageGroup],
 	);
 
-	const [selectedChip, setSelectedChip] = useState<string>("전체");
+	const [searchParams, setSearchParams] = useSearchParams();
+	const selectedChip = searchParams.get("tag") ?? "전체";
 
 	const handleChipClick = (value: string) => {
-		setSelectedChip(value);
+		if (value === "전체") {
+			setSearchParams({}, { replace: true });
+			return;
+		}
+
+		setSearchParams({ tag: value }, { replace: true });
 	};
 
 	return (

@@ -126,6 +126,17 @@ export const HospitalSearchPage = () => {
 	};
 
 	const handleSelectTempSido = (sido: SidoCodeInfo) => {
+		if (sido.sidoName === "세종특별자치시") {
+			setSelectedRegion({
+				sidoName: sido.sidoName ?? null,
+				sidoCode: sido.sidoCode ?? null,
+				sigunguName: null,
+				sigunguCode: null,
+			});
+			closeAddressSheet();
+			return;
+		}
+
 		setTempRegion({
 			sidoName: sido.sidoName ?? null,
 			sidoCode: sido.sidoCode ?? null,
@@ -216,7 +227,7 @@ export const HospitalSearchPage = () => {
 			</div>
 
 			<BottomSheet
-				height="525px"
+				snapPoints={{ collapsed: "500px", expanded: "calc(100dvh - 40px)" }}
 				open={isAddressSheetOpen}
 				onClose={closeAddressSheet}
 				footer={

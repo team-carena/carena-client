@@ -153,7 +153,7 @@ export const LongTextWithTwoButtons: Story = {
 
 • 일부 수치는 정확하지 않을 수 있으니 저장 전 확인해 주세요.
 
-• 원활한 인식을 위해 검진 결과서 2페이지를 캡처하여 등록해 주세요.`,
+• 원활한 인식을 위해 검진 결과서 두 번째 페이지를 캡처하여 등록해 주세요.`,
 		primaryAction: {
 			label: "동의",
 			onClick: () => undefined,
