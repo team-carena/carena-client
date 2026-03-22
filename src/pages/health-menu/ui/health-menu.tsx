@@ -95,8 +95,6 @@ export const HealthMenuPage = () => {
 		enabled: hasHealthReport,
 	});
 
-	const userName = myInfo?.name ?? "";
-
 	return (
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
 			{/* 상단 영역 */}
@@ -112,7 +110,6 @@ export const HealthMenuPage = () => {
 						<CardAiDietRecommendation
 							dietName={mealData?.meal ?? "-"}
 							description={mealData?.description ?? "-"}
-							userName={userName}
 						/>
 					)
 				) : (
