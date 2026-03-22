@@ -5,14 +5,11 @@ export interface CardAiDietRecommendationProps {
 	dietName: string;
 	// AI 추천 설명 텍스트(추천 이유 한 문장)
 	description: string;
-	// 사용자 이름
-	userName: string;
 }
 
 const CardAiDietRecommendation = ({
 	dietName,
 	description,
-	userName,
 }: CardAiDietRecommendationProps) => {
 	return (
 		<article className="w-full" aria-labelledby="diet-recommendation-title">
