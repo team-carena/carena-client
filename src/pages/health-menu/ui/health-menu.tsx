@@ -109,6 +109,7 @@ export const HealthMenuPage = () => {
 	// 검진결과 있을 때만 추천식단 조회
 	const { data: mealData, pollingStatus } = useRecommendedMeal({
 		enabled: hasHealthReport,
+		polling: false,
 	});
 
 	const userName = myInfo?.name ?? "";

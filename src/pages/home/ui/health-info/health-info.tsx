@@ -1,5 +1,6 @@
 import cardDietBg from "@img/card-diet-bg.png";
 import { Suspense } from "react";
+import { useSearchParams } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
@@ -63,10 +64,14 @@ const LoadingDietCard = () => {
 };
 
 const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
+	// polling 파라미터 읽기 (새로운 검진결과생성 후 /home에 접근했을 때만 true)
+	const [searchParams] = useSearchParams();
+	const polling = searchParams.get("polling") === "true";
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
 	const hasHealthReport = userInfo?.score != null && userInfo.score !== 0;
 	const { data: mealData, pollingStatus } = useRecommendedMeal({
 		enabled: hasHealthReport,
+		polling,
 	});
 
 	// 검진결과 있음 + mealData 있음: 실제 데이터 표시

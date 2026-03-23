@@ -25,8 +25,13 @@ export const useHealthReportMutation = () => {
 			void queryClient.invalidateQueries({
 				queryKey: queryKeys.healthReport.all,
 			});
+			// 검진결과생성 시 추천식단도 invalidate
+			void queryClient.invalidateQueries({
+				queryKey: queryKeys.recommendedMeal.all,
+			});
 			notifySuccess("검진 결과가 추가되었습니다");
-			void navigate(ROUTE_PATH.HOME, { replace: true });
+			// 검진결과생성 시 /home으로 이동할 때 polling=true 전달 -> 건강식단 API 활성화
+			void navigate(`${ROUTE_PATH.HOME}?polling=true`, { replace: true });
 		},
 		onError: (error) => {
 			if (error instanceof AxiosError) {
