@@ -60,7 +60,7 @@ const EmptyRecommendation = () => {
 			<div className="mt-[1.6rem] mb-[2rem] flex items-start gap-[1.2rem]">
 				<Ai className="shrink-0" aria-hidden />
 				<p className="body04-r-14 whitespace-pre-line text-gray-900">
-					{"검진 결과를 추가하고\n맞춤 식단을 추천받아보세요!"}
+					{"검진 결과를 추가하고\n맞춤 식단을 추천 받아보세요!"}
 				</p>
 			</div>
 		</div>
@@ -83,17 +83,35 @@ const LoadingRecommendation = () => {
 	);
 };
 
+// 폴링 타임아웃
+const TimeoutRecommendation = () => {
+	return (
+		<div className="w-full">
+			<p className="head03-sb-16 text-gray-900">
+				사용자님의 건강상태에 맞는 요리
+			</p>
+
+			<div className="mt-[1.6rem] mb-[2rem] flex items-start gap-[1.2rem]">
+				<Ai className="shrink-0" aria-hidden />
+				<p className="body04-r-14 text-gray-900">맞춤 식단 생성에 실패했어요</p>
+			</div>
+		</div>
+	);
+};
+
 export const HealthMenuPage = () => {
 	// 사용자 score 확인
 	const { data: myInfo } = useMyInfo();
 
-	// score 없거나 0이면 “검진결과 없음”
+	// score 없거나 0이면 "검진결과 없음"
 	const hasHealthReport = myInfo?.score != null && myInfo.score !== 0;
 
 	// 검진결과 있을 때만 추천식단 조회
-	const { data: mealData, isPending: isMealPending } = useRecommendedMeal({
+	const { data: mealData, pollingStatus } = useRecommendedMeal({
 		enabled: hasHealthReport,
 	});
+
+	const userName = myInfo?.name ?? "";
 
 	return (
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
@@ -104,13 +122,15 @@ export const HealthMenuPage = () => {
 				aria-label="AI 추천 식단"
 			>
 				{hasHealthReport ? (
-					isMealPending ? (
-						<LoadingRecommendation />
-					) : (
+					pollingStatus === "success" ? (
 						<CardAiDietRecommendation
-							dietName={mealData?.meal ?? "-"}
-							description={mealData?.description ?? "-"}
+							dietName={mealData?.meal ?? ""}
+							description={mealData?.description ?? ""}
 						/>
+					) : pollingStatus === "timeout" ? (
+						<TimeoutRecommendation />
+					) : (
+						<LoadingRecommendation />
 					)
 				) : (
 					<EmptyRecommendation />
