@@ -28,6 +28,7 @@ import { ProtectedRoute } from "./protected-route";
 export interface RouteHandle {
 	header?: HeaderVariant;
 	title?: string;
+	backPath?: string;
 }
 
 export const router = createBrowserRouter([
@@ -117,6 +118,7 @@ export const router = createBrowserRouter([
 						handle: {
 							header: "back",
 							title: "검진 결과 분석",
+							backPath: ROUTE_PATH.HOME,
 						} satisfies RouteHandle,
 					},
 					{

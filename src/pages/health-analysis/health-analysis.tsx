@@ -405,7 +405,10 @@ const HealthAnalysisContent = ({ userSex }: HealthAnalysisContentProps) => {
 					onClick={() => {
 						void navigate(
 							`${ROUTE_PATH.CHECKUP_RESULT_EDIT}?reportId=${selectedReportId}`,
-							{ state: { institutionName: selectedInstitutionName } },
+							{
+								replace: true,
+								state: { institutionName: selectedInstitutionName },
+							},
 						);
 					}}
 				>

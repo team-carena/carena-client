@@ -216,7 +216,11 @@ export const CheckupResultEditPage = () => {
 			<Header
 				variant="back"
 				title="검진 결과 수정"
-				onBackClick={() => void navigate(-1)}
+				onBackClick={() =>
+					void navigate(`${ROUTE_PATH.HEALTH_ANALYSIS}?reportId=${reportId}`, {
+						replace: true,
+					})
+				}
 			/>
 
 			<OcrSection onOcrComplete={handleOcrComplete} />

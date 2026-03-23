@@ -1,4 +1,4 @@
-import { Outlet, useMatches } from "react-router";
+import { Outlet, useMatches, useNavigate } from "react-router";
 import type { HealthReportType } from "@/pages/health-report-detail/config/health-report-types";
 import { HEALTH_REPORT_TITLE_MAP } from "@/pages/health-report-detail/model/health-report-config";
 import { cn } from "@/shared/libs/cn";
@@ -12,6 +12,7 @@ export const Layout = () => {
 	 *
 	 * matches[matches.length - 1]: 가장 마지막(가장 깊은) 라우트 = 현재 페이지
 	 */
+	const navigate = useNavigate();
 	const matches = useMatches();
 
 	const currentMatch = matches[matches.length - 1];
@@ -35,9 +36,17 @@ export const Layout = () => {
 	const title =
 		headerConfig?.title ?? (type ? HEALTH_REPORT_TITLE_MAP[type] : undefined);
 
+	const backPath = headerConfig?.backPath;
+
 	return (
 		<>
-			<Header variant={headerConfig?.header} title={title} />
+			<Header
+				variant={headerConfig?.header}
+				title={title}
+				onBackClick={
+					backPath ? () => navigate(backPath, { replace: true }) : undefined
+				}
+			/>
 			<main
 				className={cn("min-h-dvh", showHeader && "pt-[var(--header-height)]")}
 			>
