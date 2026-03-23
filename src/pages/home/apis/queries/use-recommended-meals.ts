@@ -27,12 +27,7 @@ export const useRecommendedMeal = (options?: UseRecommendedMealOptions) => {
 		throwOnError: false,
 		retry: false,
 		placeholderData: keepPreviousData,
-		refetchInterval: (q) => {
-			if (hasMealData(q.state.data)) {
-				pollingStartRef.current = null;
-				return false;
-			}
-
+		refetchInterval: () => {
 			if (pollingStartRef.current === null) {
 				pollingStartRef.current = Date.now();
 			}
@@ -60,6 +55,15 @@ export const useRecommendedMeal = (options?: UseRecommendedMealOptions) => {
 	} else {
 		pollingStatus = "loading";
 	}
+
+	// biome-ignore lint/suspicious/noConsole: 디버깅용 임시 로그
+	console.log("[useRecommendedMeal]", {
+		pollingStatus,
+		pollingStart: pollingStartRef.current,
+		data: query.data,
+		isError: query.isError,
+		isPending: query.isPending,
+	});
 
 	return {
 		...query,
