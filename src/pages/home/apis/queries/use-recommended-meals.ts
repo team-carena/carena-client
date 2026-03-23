@@ -10,6 +10,7 @@ export type PollingStatus = "loading" | "timeout" | "success" | "idle";
 interface UseRecommendedMealOptions {
 	enabled?: boolean;
 	polling?: boolean;
+	pollingInterval?: number;
 }
 
 const POLLING_TIMEOUT_MS = 60_000; // 최대 1분
@@ -21,6 +22,7 @@ export const useRecommendedMeal = (options?: UseRecommendedMealOptions) => {
 	const pollingStartRef = useRef<number | null>(null);
 	const enabled = options?.enabled ?? true;
 	const polling = options?.polling ?? false;
+	const pollingInterval = options?.pollingInterval ?? 15000;
 
 	const query = useQuery({
 		queryKey: queryKeys.recommendedMeal.latest(),
@@ -40,7 +42,7 @@ export const useRecommendedMeal = (options?: UseRecommendedMealOptions) => {
 						return false;
 					}
 
-					return 15000;
+					return pollingInterval;
 				}
 			: false,
 		refetchIntervalInBackground: false,

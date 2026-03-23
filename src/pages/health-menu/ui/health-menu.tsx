@@ -68,32 +68,16 @@ const EmptyRecommendation = () => {
 };
 
 // AI 로딩 중
-const LoadingRecommendation = () => {
+const LoadingRecommendation = ({ userName }: { userName: string }) => {
 	return (
 		<div className="w-full">
 			<p className="head03-sb-16 text-gray-900">
-				사용자님의 건강상태에 맞는 요리
+				{userName}님의 건강상태에 맞는 요리
 			</p>
 
 			<div className="mt-[1.6rem] mb-[2rem] flex items-start gap-[1.2rem]">
 				<Ai className="shrink-0" aria-hidden />
-				<p className="body04-r-14 text-gray-900">AI가 요리를 찾는 중이에요</p>
-			</div>
-		</div>
-	);
-};
-
-// 폴링 타임아웃
-const TimeoutRecommendation = () => {
-	return (
-		<div className="w-full">
-			<p className="head03-sb-16 text-gray-900">
-				사용자님의 건강상태에 맞는 요리
-			</p>
-
-			<div className="mt-[1.6rem] mb-[2rem] flex items-start gap-[1.2rem]">
-				<Ai className="shrink-0" aria-hidden />
-				<p className="body04-r-14 text-gray-900">맞춤 식단 생성에 실패했어요</p>
+				<p className="body04-r-14 text-shimmer">AI가 요리를 찾는 중이에요</p>
 			</div>
 		</div>
 	);
@@ -106,13 +90,14 @@ export const HealthMenuPage = () => {
 	// score 없거나 0이면 "검진결과 없음"
 	const hasHealthReport = myInfo?.score != null && myInfo.score !== 0;
 
-	// 검진결과 있을 때만 추천식단 조회
-	const { data: mealData, pollingStatus } = useRecommendedMeal({
+	// 검진결과 있을 때만 추천식단 조회 (30초 간격 폴링)
+	const { data: mealData } = useRecommendedMeal({
 		enabled: hasHealthReport,
-		polling: false,
+		polling: true,
+		pollingInterval: 30000,
 	});
 
-	const userName = myInfo?.name ?? "";
+	const userName = myInfo?.name ?? "사용자";
 
 	return (
 		<main className="overflow-y-auto" aria-label="건강 식단 메뉴">
@@ -123,15 +108,13 @@ export const HealthMenuPage = () => {
 				aria-label="AI 추천 식단"
 			>
 				{hasHealthReport ? (
-					pollingStatus === "success" ? (
+					mealData?.meal ? (
 						<CardAiDietRecommendation
-							dietName={mealData?.meal ?? ""}
+							dietName={mealData.meal}
 							description={mealData?.description ?? ""}
 						/>
-					) : pollingStatus === "timeout" ? (
-						<TimeoutRecommendation />
 					) : (
-						<LoadingRecommendation />
+						<LoadingRecommendation userName={userName} />
 					)
 				) : (
 					<EmptyRecommendation />
