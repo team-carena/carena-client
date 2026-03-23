@@ -128,9 +128,10 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 											건강식단을 생성하지 못했어요.
 										</p>
 									)}
-									{pollingStatus === "success" && (
+									{(pollingStatus === "success" ||
+										pollingStatus === "idle") && (
 										<p className="head04-m-16 mt-[0.8rem] text-gray-900">
-											{mealData?.meal}
+											{mealData?.meal || "맞춤 식단을 준비 중이에요"}
 										</p>
 									)}
 								</>

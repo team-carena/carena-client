@@ -63,7 +63,7 @@ export const useRecommendedMeal = (options?: UseRecommendedMealOptions) => {
 	} else if (polling) {
 		pollingStatus = "loading";
 	} else {
-		pollingStatus = "success";
+		pollingStatus = "idle";
 	}
 
 	return {

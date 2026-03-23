@@ -83,6 +83,22 @@ const LoadingRecommendation = ({ userName }: { userName: string }) => {
 	);
 };
 
+// 폴링 타임아웃
+const TimeoutRecommendation = ({ userName }: { userName: string }) => {
+	return (
+		<div className="w-full">
+			<p className="head03-sb-16 text-gray-900">
+				{userName}님의 건강상태에 맞는 요리
+			</p>
+
+			<div className="mt-[1.6rem] mb-[2rem] flex items-start gap-[1.2rem]">
+				<Ai className="shrink-0" aria-hidden />
+				<p className="body04-r-14 text-gray-900">맞춤 식단 생성에 실패했어요</p>
+			</div>
+		</div>
+	);
+};
+
 export const HealthMenuPage = () => {
 	// 사용자 score 확인
 	const { data: myInfo } = useMyInfo();
@@ -91,7 +107,7 @@ export const HealthMenuPage = () => {
 	const hasHealthReport = myInfo?.score != null && myInfo.score !== 0;
 
 	// 검진결과 있을 때만 추천식단 조회 (30초 간격 폴링)
-	const { data: mealData } = useRecommendedMeal({
+	const { data: mealData, pollingStatus } = useRecommendedMeal({
 		enabled: hasHealthReport,
 		polling: true,
 		pollingInterval: 30000,
@@ -113,6 +129,8 @@ export const HealthMenuPage = () => {
 							dietName={mealData.meal}
 							description={mealData?.description ?? ""}
 						/>
+					) : pollingStatus === "timeout" ? (
+						<TimeoutRecommendation userName={userName} />
 					) : (
 						<LoadingRecommendation userName={userName} />
 					)
