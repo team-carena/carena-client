@@ -169,6 +169,8 @@ export const BottomSheet = ({
 					)}
 					aria-describedby={undefined}
 				>
+					<Drawer.Title className="sr-only">바텀시트</Drawer.Title>
+
 					{/* 드래그 핸들 */}
 					<div
 						onPointerDown={handlePointerDown}
