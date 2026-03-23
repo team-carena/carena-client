@@ -1,5 +1,6 @@
 import cardDietBg from "@img/card-diet-bg.png";
 import { Suspense } from "react";
+import { useSearchParams } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
 import type { MemberInfoResponse } from "@/shared/apis/generated/data-contracts";
 import { NaviRow } from "@/shared/ui/navigations/navi-row";
@@ -63,10 +64,14 @@ const LoadingDietCard = () => {
 };
 
 const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
+	// polling 파라미터 읽기 (새로운 검진결과생성 후 /home에 접근했을 때만 true)
+	const [searchParams] = useSearchParams();
+	const polling = searchParams.get("polling") === "true";
 	const displayName = isPending ? "-" : (userInfo?.name ?? "-");
 	const hasHealthReport = userInfo?.score != null && userInfo.score !== 0;
-	const { data: mealData, isPending: isMealPending } = useRecommendedMeal({
+	const { data: mealData, pollingStatus } = useRecommendedMeal({
 		enabled: hasHealthReport,
+		polling,
 	});
 
 	// 검진결과 있음 + mealData 있음: 실제 데이터 표시
@@ -82,6 +87,7 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 	return (
 		<div className="flex w-full flex-col gap-[2rem] px-[2rem] pt-[2.4rem]">
 			{/* 건강 식단 */}
+			{/* userInfo API의 로딩 상태 */}
 			{isPending ? (
 				<LoadingDietCard />
 			) : (
@@ -111,13 +117,21 @@ const HealthInfoPage = ({ userInfo, isPending }: HealthInfoPageProps) => {
 									<p className="body01-sb-12 text-gray-700">
 										{displayName}님 맞춤 식단
 									</p>
-									{isMealPending ? (
+									{/* 추천식단 폴링 상태 */}
+									{pollingStatus === "loading" && (
 										<p className="head04-m-16 mt-[0.8rem] text-shimmer">
 											AI가 요리를 찾는 중이에요
 										</p>
-									) : (
+									)}
+									{pollingStatus === "timeout" && (
 										<p className="head04-m-16 mt-[0.8rem] text-gray-900">
-											{mealData?.meal ?? "맞춤 식단을 추천받지 못했어요"}
+											건강식단을 생성하지 못했어요.
+										</p>
+									)}
+									{(pollingStatus === "success" ||
+										pollingStatus === "idle") && (
+										<p className="head04-m-16 mt-[0.8rem] text-gray-900">
+											{mealData?.meal || "맞춤 식단을 준비 중이에요"}
 										</p>
 									)}
 								</>

@@ -31,6 +31,9 @@ export const useHealthReportUpdateMutation = () => {
 				queryClient.invalidateQueries({
 					queryKey: queryKeys.healthReport.all,
 				}),
+				queryClient.invalidateQueries({
+					queryKey: queryKeys.recommendedMeal.all,
+				}),
 			]);
 			notifySuccess("검진 결과가 수정되었습니다");
 			void navigate(
