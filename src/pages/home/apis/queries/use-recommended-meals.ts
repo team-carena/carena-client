@@ -22,7 +22,7 @@ export const useRecommendedMeal = (options?: UseRecommendedMealOptions) => {
 	const pollingStartRef = useRef<number | null>(null);
 	const enabled = options?.enabled ?? true;
 	const polling = options?.polling ?? false;
-	const pollingInterval = options?.pollingInterval ?? 15000;
+	const pollingInterval = options?.pollingInterval ?? 20000;
 
 	const query = useQuery({
 		queryKey: queryKeys.recommendedMeal.latest(),
