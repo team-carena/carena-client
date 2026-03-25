@@ -69,7 +69,7 @@ export const router = createBrowserRouter([
 						element: <MyPage />,
 						handle: {
 							header: "back",
-							title: "마이페이지",
+							title: "설정",
 						} satisfies RouteHandle,
 					},
 					{
