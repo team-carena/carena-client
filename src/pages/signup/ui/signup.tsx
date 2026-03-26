@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "@shared/libs/cn";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -97,7 +98,12 @@ export const Signup = () => {
 
 						{/* 생년월일 */}
 						<div className="flex flex-col gap-[0.8rem]">
-							<span className="body03-r-16 text-black">
+							<span
+								className={cn(
+									"body03-r-16",
+									birthdateError ? "text-red-500" : "text-black",
+								)}
+							>
 								생년월일 <span aria-hidden="true">*</span>
 							</span>
 							<DateInput
