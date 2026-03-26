@@ -170,6 +170,8 @@ export const CheckupResultPage = () => {
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
 
+	const hospitalError = errors.hospital?.message;
+
 	const handleOcrComplete = useCallback(
 		(data: Record<string, string>) => {
 			OCR_FIELD_KEYS.forEach((key) => {
@@ -242,7 +244,7 @@ export const CheckupResultPage = () => {
 							<span
 								className={cn(
 									"body03-r-16",
-									errors.hospital?.message ? "text-red-500" : "text-black",
+									hospitalError ? "text-red-500" : "text-black",
 								)}
 							>
 								검진병원 <span aria-hidden="true">*</span>
