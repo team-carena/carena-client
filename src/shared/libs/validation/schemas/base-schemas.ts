@@ -78,6 +78,9 @@ const toNumber = (val: string) => (val === "" ? undefined : Number(val));
 export const decimalOnePlace = (min: number, max: number, errorMsg: string) =>
 	z
 		.string()
+		.refine((val) => val === "" || /^[\d.]+$/.test(val), {
+			message: ERROR_MESSAGES.decimal.onlyNumber,
+		})
 		.refine((val) => val === "" || /^\d+(\.\d)?$/.test(val), {
 			message: ERROR_MESSAGES.decimal.onePlace,
 		})
@@ -88,6 +91,9 @@ export const decimalOnePlace = (min: number, max: number, errorMsg: string) =>
 export const decimalTwoPlaces = (min: number, max: number, errorMsg: string) =>
 	z
 		.string()
+		.refine((val) => val === "" || /^[\d.]+$/.test(val), {
+			message: ERROR_MESSAGES.decimal.onlyNumber,
+		})
 		.refine((val) => val === "" || /^\d+(\.\d{1,2})?$/.test(val), {
 			message: ERROR_MESSAGES.decimal.twoPlaces,
 		})
