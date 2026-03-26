@@ -231,6 +231,7 @@ const ToSPage = () => {
 			title: "회원가입이 완료되었어요",
 			description:
 				"이미 건강 검진을 받아보셨다면,\n결과를 계속해서 입력할까요?",
+			descriptionAlign: "left",
 			secondaryAction: {
 				label: "메인으로 가기",
 				onClick: () => {

@@ -7,6 +7,7 @@ type ModalAction = {
 };
 
 type ModalSize = "sm" | "lg";
+type ModalDescriptionAlign = "left" | "center";
 
 export type ModalProps = {
 	open: boolean;
@@ -18,6 +19,7 @@ export type ModalProps = {
 	onClose?: () => void;
 	/** 스크롤이 끝에 도달했을 때 호출되는 콜백 (size="lg"일 때만 동작) */
 	onScrollEnd?: () => void;
+	descriptionAlign?: ModalDescriptionAlign;
 };
 
 export const Modal = ({
@@ -28,6 +30,7 @@ export const Modal = ({
 	secondaryAction,
 	size = "lg",
 	onScrollEnd,
+	descriptionAlign,
 }: ModalProps) => {
 	const endMarkerRef = React.useRef<HTMLDivElement>(null);
 	const previousActiveElement = React.useRef<Element | null>(null);
@@ -69,6 +72,9 @@ export const Modal = ({
 
 	const hasTitle = Boolean(title);
 
+	const resolvedDescriptionAlign =
+		descriptionAlign ?? (size === "sm" ? "center" : "left");
+
 	return (
 		<div
 			className={cn(
@@ -106,10 +112,20 @@ export const Modal = ({
 					)}
 					<div
 						className={cn(
-							"body04-r-14 text-gray-900",
+							"body04-r-14 whitespace-pre-wrap text-gray-900",
 							size === "sm"
-								? "flex h-[5.2rem] items-center justify-center whitespace-pre-wrap text-center"
-								: "min-h-0 flex-1 overflow-y-auto whitespace-pre-wrap",
+								? cn(
+										"flex h-[5.2rem] items-center",
+										resolvedDescriptionAlign === "center"
+											? "justify-center text-center"
+											: "text-left",
+									)
+								: cn(
+										"min-h-0 flex-1 overflow-y-auto",
+										resolvedDescriptionAlign === "center"
+											? "text-center"
+											: "text-left",
+									),
 						)}
 					>
 						{description}
