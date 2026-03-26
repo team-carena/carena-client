@@ -67,6 +67,8 @@
 
     display: flex;
     flex-direction: column;
+
+    background-color: var(--color-gray-50)
   }
 
   /* 이미지/미디어 기본 설정 */
