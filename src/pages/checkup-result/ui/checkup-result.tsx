@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "@shared/libs/cn";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
@@ -169,6 +170,8 @@ export const CheckupResultPage = () => {
 	const checkupDateError =
 		errors.checkupDate?.root?.message || errors.checkupDate?.message;
 
+	const hospitalError = errors.hospital?.message;
+
 	const handleOcrComplete = useCallback(
 		(data: Record<string, string>) => {
 			OCR_FIELD_KEYS.forEach((key) => {
@@ -203,7 +206,12 @@ export const CheckupResultPage = () => {
 				<section className="flex flex-col gap-[2rem]">
 					<div className="flex flex-col gap-[1.2rem]">
 						<div className="flex flex-col gap-[0.8rem]">
-							<span className="body03-r-16 text-black">
+							<span
+								className={cn(
+									"body03-r-16",
+									checkupDateError ? "text-red-500" : "text-black",
+								)}
+							>
 								검진일자 <span aria-hidden="true">*</span>
 							</span>
 							<DateInput
@@ -233,7 +241,12 @@ export const CheckupResultPage = () => {
 						</div>
 
 						<div className="flex flex-col gap-[0.8rem]">
-							<span className="body03-r-16 text-black">
+							<span
+								className={cn(
+									"body03-r-16",
+									hospitalError ? "text-red-500" : "text-black",
+								)}
+							>
 								검진병원 <span aria-hidden="true">*</span>
 							</span>
 							<InputLarge
