@@ -26,7 +26,7 @@ export const ERROR_MESSAGES = {
 		default: "수치를 다시 한 번 확인해주세요.",
 	},
 	decimal: {
-		onlyNumber: "숫자만 입력 가능해요.",
+		onlyNumber: "수치를 다시 한 번 확인해주세요.",
 		onePlace: "소수점 첫째자리까지만 입력 가능해요.",
 		twoPlaces: "소수점 둘째자리까지만 입력 가능해요.",
 	},
