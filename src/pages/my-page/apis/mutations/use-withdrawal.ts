@@ -1,3 +1,4 @@
+import { trackWithdrawal } from "@shared/libs/analytics";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -14,6 +15,7 @@ export const useWithdrawal = () => {
 	return useMutation({
 		mutationFn: postWithdrawal,
 		onSuccess: async () => {
+			trackWithdrawal();
 			await queryClient.cancelQueries();
 			logoutStore();
 			queryClient.clear();

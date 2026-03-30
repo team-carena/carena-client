@@ -1,3 +1,4 @@
+import { trackHealthReportView } from "@shared/libs/analytics";
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router";
 import { useMyInfo } from "@/shared/apis/member/use-my-info";
@@ -11,12 +12,16 @@ const DOUBLE_NOTICE_TYPES: HealthReportType[] = ["basic", "liver", "anemia"];
 const DEFAULT_SEX: Sex = "FEMALE";
 
 export const HealthReportDetailPage = () => {
+	const { type } = useParams<{ type: HealthReportType }>();
+
 	// 페이지 진입 시 스크롤을 맨 위로 이동 (중간부터 보이는 현상 방지)
 	useEffect(() => {
 		window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 	}, []);
 
-	const { type } = useParams<{ type: HealthReportType }>();
+	useEffect(() => {
+		if (type) trackHealthReportView(type);
+	}, [type]);
 	const [searchParams] = useSearchParams();
 	const healthCheckDate = searchParams.get("healthCheckDate") ?? "";
 	const { data: userInfo, isPending } = useMyInfo();

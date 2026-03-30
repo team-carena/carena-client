@@ -1,3 +1,4 @@
+import { trackOcrUploadComplete } from "@shared/libs/analytics";
 import { useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -68,6 +69,7 @@ export const OcrSection = ({ onOcrComplete }: OcrSectionProps) => {
 				]),
 			);
 
+			trackOcrUploadComplete();
 			onOcrComplete?.(stringifiedData);
 		} catch (_err) {
 			notifyError("OCR 변환에 실패했어요. 잠시 후 다시 시도해 주세요.");

@@ -1,3 +1,4 @@
+import { trackCheckupSubmit } from "@shared/libs/analytics";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
@@ -19,6 +20,7 @@ export const useHealthReportMutation = () => {
 		mutationFn: (data: WriteHealthReportRequest) => postHealthReport(data),
 		throwOnError: false,
 		onSuccess: () => {
+			trackCheckupSubmit();
 			void queryClient.invalidateQueries({
 				queryKey: queryKeys.member.info(),
 			});
