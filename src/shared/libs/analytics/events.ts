@@ -1,16 +1,16 @@
 import { trackEvent } from "./gtag";
 
 const GA_EVENTS = {
-	KAKAO_LOGIN_CLICK: "kakao_login_click",
-	SIGNUP_COMPLETE: "signup_complete",
-	CHECKUP_SUBMIT: "checkup_submit",
-	CHECKUP_EDIT: "checkup_edit",
-	OCR_UPLOAD_COMPLETE: "ocr_upload_complete",
-	HEALTH_ANALYSIS_VIEW: "health_analysis_view",
-	HEALTH_REPORT_VIEW: "health_report_view",
-	HOSPITAL_SEARCH_VIEW: "hospital_search_view",
-	LOGOUT: "logout",
-	WITHDRAWAL: "withdrawal",
+	KAKAO_LOGIN_CLICK: "custom_kakao_login_click",
+	SIGNUP_COMPLETE: "custom_signup_complete",
+	CHECKUP_SUBMIT: "custom_checkup_submit",
+	CHECKUP_EDIT: "custom_checkup_edit",
+	OCR_UPLOAD_COMPLETE: "custom_ocr_upload_complete",
+	HEALTH_ANALYSIS_VIEW: "custom_health_analysis_view",
+	HEALTH_REPORT_VIEW: "custom_health_report_view",
+	HOSPITAL_SEARCH_VIEW: "custom_hospital_search_view",
+	LOGOUT: "custom_logout",
+	WITHDRAWAL: "custom_withdrawal",
 } as const;
 
 export const trackKakaoLoginClick = () => {
