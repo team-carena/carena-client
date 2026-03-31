@@ -1,3 +1,4 @@
+import { trackLogout } from "@shared/libs/analytics";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { API_ENDPOINTS } from "@/shared/apis/api-endpoints";
 import { HTTP_METHOD, request } from "@/shared/apis/request";
@@ -8,6 +9,7 @@ export const useLogout = () => {
 	return useMutation({
 		mutationFn: postLogout,
 		onSuccess: () => {
+			trackLogout();
 			// 캐시된 모든 쿼리 데이터 삭제
 			queryClient.clear();
 		},

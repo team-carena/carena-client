@@ -1,3 +1,4 @@
+import { trackHealthAnalysisView } from "@shared/libs/analytics";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -425,6 +426,10 @@ const DEFAULT_SEX: Sex = "FEMALE";
 const HealthAnalysisPage = () => {
 	const { data: userInfo, isPending } = useMyInfo();
 	const userSex = isPending ? DEFAULT_SEX : (userInfo?.gender ?? DEFAULT_SEX);
+
+	useEffect(() => {
+		trackHealthAnalysisView();
+	}, []);
 
 	return <HealthAnalysisContent userSex={userSex} />;
 };

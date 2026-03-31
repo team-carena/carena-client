@@ -1,3 +1,4 @@
+import { trackKakaoLoginClick } from "@shared/libs/analytics";
 import Lottie from "react-lottie-player";
 import LoginBackGround from "@/shared/assets/img/login-bg.png";
 import LandingGraphic from "@/shared/assets/lottie/landing-graphic.json";
@@ -42,7 +43,12 @@ export const LoginPage = () => {
 				</section>
 
 				<div className="pb-[4rem]">
-					<LoginButton onClick={requestKakaoAuthorize} />
+					<LoginButton
+						onClick={() => {
+							trackKakaoLoginClick();
+							requestKakaoAuthorize();
+						}}
+					/>
 				</div>
 			</div>
 		</div>

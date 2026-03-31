@@ -1,3 +1,4 @@
+import { trackCheckupEdit } from "@shared/libs/analytics";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { ROUTE_PATH } from "@/app/routes/paths";
@@ -24,6 +25,7 @@ export const useHealthReportUpdateMutation = () => {
 			putHealthReport(healthReportId, data),
 		throwOnError: false,
 		onSuccess: async (_data, variables) => {
+			trackCheckupEdit();
 			await Promise.all([
 				queryClient.invalidateQueries({
 					queryKey: queryKeys.member.info(),

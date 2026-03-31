@@ -1,5 +1,6 @@
 // tos(terms-of-services), 약관동의 페이지
 
+import { trackSignupComplete } from "@shared/libs/analytics";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import { useLocation, useNavigate } from "react-router";
@@ -253,6 +254,7 @@ const ToSPage = () => {
 		if (!signupData || isPending) return;
 		mutate(signupData, {
 			onSuccess: () => {
+				trackSignupComplete();
 				openSignupCompleteModal();
 			},
 			onError: () => {

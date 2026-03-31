@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { trackHospitalSearchView } from "@shared/libs/analytics";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { useGetSidoCodeQuery } from "@/pages/hospital-search/apis/queries/use-get-sido-code-query";
 import { useGetSigunguCodeQuery } from "@/pages/hospital-search/apis/queries/use-get-sigungu-code-query";
@@ -46,6 +47,10 @@ const getScreeningTypeCode = (label: ScreeningTypeChip) => {
 
 export const HospitalSearchPage = () => {
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		trackHospitalSearchView();
+	}, []);
 
 	const [selectedRegion, setSelectedRegion] = useState<Region>(INITIAL_REGION);
 	const [tempRegion, setTempRegion] = useState<Region>(INITIAL_REGION);
